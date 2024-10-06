@@ -1,9 +1,9 @@
-import { logger } from '@/lib/logger';
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
+import { logger } from "@/lib/logger";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
 
-const StripeWebhookSchema = z.object({
+const ResendWebhookSchema = z.object({
   type: z.string(),
   created_at: z.string(),
   data: z.any(),
@@ -16,21 +16,20 @@ const StripeWebhookSchema = z.object({
  * @docs Event type https://resend.com/docs/dashboard/webhooks/event-types
  */
 export const POST = async (req: NextRequest) => {
-  const body: unknown = await req.json();
+  const body = await req.json();
 
-  const event = StripeWebhookSchema.parse(body);
+  const event = ResendWebhookSchema.parse(body);
 
   switch (event.type) {
-    case 'email.complained':
-      logger.info('Email bounced', event);
-      logger.warn('Email complained', event.data);
+    case "email.complained":
+      logger.warn("Email complained", event.data);
       break;
-    case 'email.bounced':
-      logger.warn('Email bounced', event.data);
+    case "email.bounced":
+      logger.warn("Email bounced", event.data);
       break;
   }
 
-  NextResponse.redirect('');
+  NextResponse.redirect("");
   return NextResponse.json({
     ok: true,
   });

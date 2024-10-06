@@ -1,5 +1,5 @@
-import { baseAuth } from '@/lib/auth/auth';
-import type { User } from '@prisma/client';
+import type { User } from "@prisma/client";
+import { baseAuth } from "./auth";
 
 export class AuthError extends Error {
   constructor(message: string) {
@@ -22,7 +22,7 @@ export const requiredAuth = async () => {
   const user = await auth();
 
   if (!user) {
-    throw new AuthError('You must be authenticated to access this resource.');
+    throw new AuthError("You must be authenticated to access this resource.");
   }
 
   return user;

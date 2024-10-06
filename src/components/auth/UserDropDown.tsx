@@ -1,110 +1,73 @@
-import { AvatarIcon } from '@/components/profile/avatarIcon';
-import { UserDisplayNameSchema } from '@/types/userDisplayName.schema';
-import { displayName } from '@/utils/format/displayName';
-import { LINKS } from '@/utils/NavigationLinks';
+"use client";
+
 import {
-  ActionIcon,
-  Group,
-  Menu,
-  MenuDivider,
-  MenuDropdown,
-  MenuItem,
-  MenuLabel,
-  MenuTarget,
-  Paper,
-  rem,
-  Text,
-} from '@mantine/core';
-import { IconChevronRight, IconShieldLock } from '@tabler/icons-react';
-import type { User } from 'next-auth';
-import Link from 'next/link';
-import LogoutMenuItem from './LogoutMenuItem';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Loader } from "@/components/ui/loader";
+import { Typography } from "@/components/ui/typography";
+import { useMutation } from "@tanstack/react-query";
+import { LayoutDashboard, LogOut, Settings } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import type { PropsWithChildren } from "react";
 
-export type UserDropDownVariant = 'outline' | 'minimal';
+export const UserDropdown = ({ children }: PropsWithChildren) => {
+  const logout = useMutation({
+    mutationFn: () =>
+      signOut({
+        redirect: true,
+        callbackUrl: "/",
+      }),
+  });
+  const session = useSession();
 
-type UserDropDownProps = {
-  user: User;
-  variant?: UserDropDownVariant;
-};
-
-const UserDropDown = ({ user, variant = 'minimal' }: UserDropDownProps) => {
   return (
-    <Group>
-      <Menu
-        withArrow
-        width={300}
-        position="bottom-end"
-        transitionProps={{ transition: 'pop' }}
-        withinPortal
-        trigger="click-hover"
-      >
-        <MenuTarget>
-          {variant === 'minimal' ? (
-            <ActionIcon variant="transparent" radius="xl" size="xl">
-              <AvatarIcon user={user} />
-            </ActionIcon>
-          ) : (
-            <Group
-              align="center"
-              justify="center"
-              style={{ cursor: 'pointer' }}
-            >
-              <Paper>
-                <Group>
-                  <ActionIcon variant="transparent" radius="xl" size="xl">
-                    <AvatarIcon user={user} />
-                  </ActionIcon>
-                  <Text>{displayName(UserDisplayNameSchema.parse(user))}</Text>
-                </Group>
-              </Paper>
-            </Group>
-          )}
-        </MenuTarget>
-        <MenuDropdown>
-          <MenuItem
-            key="UserProfileSection"
-            rightSection={
-              <IconChevronRight
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-            component={Link}
-            href={LINKS.Account.MyAccount.href}
-          >
-            <Group>
-              <AvatarIcon user={user} />
-              <div>
-                <Text fw={500}>{user.name}</Text>
-                <Text size="xs" c="dimmed">
-                  {user.email}
-                </Text>
-              </div>
-            </Group>
-          </MenuItem>
-
-          <MenuDivider />
-
-          <MenuLabel>Application</MenuLabel>
-          <MenuItem
-            leftSection={
-              <IconShieldLock
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-            component={Link}
-            href={LINKS.Dashboard.Dashboard.href}
-          >
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>
+          <Typography variant="small">{session.data?.user.name}</Typography>
+          <Typography variant="muted">{session.data?.user.email}</Typography>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/orgs">
+            <LayoutDashboard className="mr-2 size-4" />
             Dashboard
-          </MenuItem>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/account">
+            <Settings className="mr-2 size-4" />
+            Account Settings
+          </Link>
+        </DropdownMenuItem>
 
-          <MenuLabel>Settings</MenuLabel>
-          <LogoutMenuItem />
-        </MenuDropdown>
-      </Menu>
-    </Group>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              logout.mutate();
+            }}
+          >
+            {logout.isPending ? (
+              <Loader className="mr-2 size-4" />
+            ) : (
+              <LogOut className="mr-2 size-4" />
+            )}
+            <span>Logout</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
-
-export default UserDropDown;

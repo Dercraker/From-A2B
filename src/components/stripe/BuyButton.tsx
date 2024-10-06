@@ -1,58 +1,63 @@
-'use client';
+"use client";
 
-import { buyButtonAction } from '@/features/stripe/buyButton.action';
-import useNotify from '@/hook/useNotify';
-import { LINKS } from '@/utils/NavigationLinks';
-import { getServerUrl } from '@/utils/server-url';
-import type { ButtonProps } from '@mantine/core';
-import { Button } from '@mantine/core';
-import { useMutation } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { buyButtonAction } from "@/features/stripe/buy-button.action";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import type { ButtonProps } from "../../components/ui/button";
+import { LoadingButton } from "../form/LoadingButton";
 
-export type BuyButtonProps = {
+type BuyButtonProps = {
   priceId: string;
+  orgSlug: string;
 } & ButtonProps;
 
-export const BuyButton = ({ priceId, ...props }: BuyButtonProps) => {
-  const { ErrorNotify } = useNotify();
+/**
+ * This is a button that will create a Stripe checkout session and redirect the user to the checkout page
+ * To test the integration, you can use the component like this :
+ *
+ * ```tsx
+ * <BuyButton priceId={env.NODE_ENV === "production" ? "real-price-id" : "dev-price-id"}>Buy now !</BuyButton>
+ * ```
+ *
+ * @param props Button props and Stripe Price Id
+ * @param props.priceId This is the Stripe price ID to use for the checkout session
+ * @returns
+ */
+export const BuyButton = ({ priceId, orgSlug, ...props }: BuyButtonProps) => {
+  const router = useRouter();
   const session = useSession();
 
-  const router = useRouter();
-  const { mutateAsync, isPending } = useMutation({
+  const mutation = useMutation({
     mutationFn: async () => {
-      const { data, serverError } = await buyButtonAction({
-        priceId,
-      });
-
-      if (data) {
-        router.push(data.url);
+      if (session.status !== "authenticated") {
+        router.push("/auth/signin");
+        toast.error("You must be authenticated to buy a plan");
         return;
       }
 
-      ErrorNotify({
-        title: serverError ?? 'Something went wrong',
+      const result = await buyButtonAction({
+        priceId: priceId,
+        orgSlug: orgSlug,
       });
+
+      if (!isActionSuccessful(result)) {
+        toast.error(result?.serverError ?? "Something went wrong");
+        return;
+      }
+
+      router.push(result.data.url);
     },
   });
 
-  const handleClickButton = async () => {
-    if (!session.data) {
-      router.push(
-        `${LINKS.Auth.SignIn.href}?callbackUrl=${getServerUrl()}/#pricing`
-      );
-      return;
-    }
-
-    await mutateAsync();
-  };
-
   return (
-    <Button
-      onClick={handleClickButton}
+    <LoadingButton
+      onClick={() => mutation.mutate()}
       {...props}
-      disabled={isPending}
-      loading={isPending}
+      loading={mutation.isPending}
+      disabled={session.status === "loading" || props.disabled}
     />
   );
 };

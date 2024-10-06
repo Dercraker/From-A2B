@@ -1,0 +1,328 @@
+"use client";
+
+import { SectionLayout } from "@/components/layout/SectionLayout";
+import { BentoGrid, BentoGridItem } from "@/components/ui/Bento";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Loader } from "@/components/ui/loader";
+import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
+import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import {
+  Calendar,
+  CalendarCheck,
+  CheckCircle,
+  MapPinPlus,
+  Route,
+  Sparkles,
+} from "lucide-react";
+
+export function BentoGridSection() {
+  return (
+    <SectionLayout id="features">
+      <BentoGrid className="mx-auto max-w-4xl md:auto-rows-[20rem]">
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={cn("[&>p:text-lg]", item.className)}
+            icon={item.icon}
+          />
+        ))}
+      </BentoGrid>
+    </SectionLayout>
+  );
+}
+
+const Skeleton1 = () => {
+  const variants: Variants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+  };
+
+  return (
+    <motion.div
+      initial="initial"
+      whileHover="animate"
+      className="flex h-full flex-col gap-2"
+    >
+      <motion.div className="flex flex-row items-start gap-2 rounded-2xl border border-border bg-background p-3">
+        <img
+          alt="avatar"
+          src="https://api.dicebear.com/9.x/adventurer/svg?seed=Avery"
+          className="size-6 shrink-0 rounded-full"
+        />
+        <div>
+          <p className="text-xs text-neutral-500">
+            I would like to visit unusual places in Indonesia
+          </p>
+        </div>
+      </motion.div>
+      <motion.div
+        variants={variants}
+        className="flex flex-row items-start justify-end gap-2 rounded-2xl border border-border bg-background p-3"
+      >
+        <p className="text-xs text-neutral-500">
+          What kind of places would you like to visit ? Do you know the ... or
+          ... ? And the ...
+        </p>
+        <div className="size-6 shrink-0 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Skeleton2 = () => {
+  const variants: Variants = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0 },
+  };
+  return (
+    <motion.div
+      initial="initial"
+      whileHover="animate"
+      className="flex h-full flex-col gap-2"
+    >
+      <motion.div>
+        <Alert variant="default" className="">
+          <Loader size={20} />
+          <AlertTitle>Schedule your tasks...</AlertTitle>
+        </Alert>
+      </motion.div>
+      <motion.div variants={variants}>
+        <Alert variant="success" className="">
+          <CheckCircle size={20} />
+          <AlertTitle>Your activity are now scheduled for 8:30 AM</AlertTitle>
+        </Alert>
+      </motion.div>
+    </motion.div>
+  );
+};
+const Skeleton3 = () => {
+  const variants = {
+    initial: {
+      backgroundPosition: "0 50%",
+    },
+    animate: {
+      backgroundPosition: ["0, 50%", "100% 50%", "0 50%"],
+    },
+  };
+  return (
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={variants}
+      transition={{
+        duration: 5,
+        repeat: Infinity,
+        repeatType: "reverse",
+      }}
+      className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex size-full min-h-24 flex-1 flex-col space-y-2 rounded-lg"
+      style={{
+        background:
+          "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
+        backgroundSize: "400% 400%",
+      }}
+    >
+      <motion.div className="size-full rounded-lg"></motion.div>
+    </motion.div>
+  );
+};
+const Skeleton4 = () => {
+  const first = {
+    initial: {
+      x: 20,
+      rotate: -5,
+    },
+    hover: {
+      x: 0,
+      rotate: 0,
+    },
+  };
+  const second = {
+    initial: {
+      x: -20,
+      rotate: 5,
+    },
+    hover: {
+      x: 0,
+      rotate: 0,
+    },
+  };
+  return (
+    <motion.div
+      initial="initial"
+      animate="animate"
+      whileHover="hover"
+      className="flex flex-1 flex-row gap-4"
+    >
+      <motion.div
+        variants={first}
+        className="flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-border bg-background p-4"
+      >
+        <div className="mb-auto flex h-14 w-full items-center justify-center rounded-md bg-gradient-to-r from-indigo-500 to-purple-500">
+          <Typography className="text-xl font-bold">Imagine</Typography>
+        </div>
+        <Typography variant={"muted"}>
+          Get assistance from an AI tailored to your preferences to create your
+          dream trips whenever you want
+        </Typography>
+      </motion.div>
+      <motion.div className="flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-border bg-background p-4">
+        <div className="mb-auto flex h-14 w-full items-center justify-center rounded-md bg-gradient-to-r from-amber-500 to-red-500">
+          <Typography className="text-xl font-bold">Plan your trip</Typography>
+        </div>
+        <Typography variant={"muted"}>
+          With our platform created by travelers, for travelers. Never miss
+          anything when planning your trip
+        </Typography>
+      </motion.div>
+      <motion.div
+        variants={second}
+        className="flex h-full w-1/3 flex-col items-center justify-center rounded-2xl border border-border bg-background p-4"
+      >
+        <div className="mb-auto flex h-14 w-full items-center justify-center rounded-md bg-gradient-to-r from-teal-500 to-emerald-500">
+          <Typography className="text-xl font-bold">Go to</Typography>
+        </div>
+        <Typography variant={"muted"}>
+          With the tracking assistant, don't miss anything from your trip
+        </Typography>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Skeleton5 = () => {
+  const variants = {
+    initial: {
+      x: 0,
+    },
+    animate: {
+      x: 10,
+      rotate: 5,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+  const variantsSecond = {
+    initial: {
+      x: 0,
+    },
+    animate: {
+      x: -10,
+      rotate: -5,
+      transition: {
+        duration: 0.2,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      initial="initial"
+      whileHover="animate"
+      className="flex flex-col gap-2"
+    >
+      <motion.div
+        variants={variants}
+        className="flex items-center gap-2 rounded-2xl border border-border bg-background p-3"
+      >
+        <img
+          src="https://api.dicebear.com/9.x/adventurer/svg?seed=Amaya"
+          alt="avatar"
+          height="100"
+          width="100"
+          className="size-10 rounded-full"
+        />
+        <p className="text-xs text-neutral-500">
+          I'd like to make a trip to Asia
+        </p>
+      </motion.div>
+      <motion.div
+        variants={variantsSecond}
+        className="flex flex-row items-start justify-end gap-2 rounded-2xl border border-border bg-background p-3"
+      >
+        <div>
+          <p className="text-xs text-neutral-500">Searching...</p>
+          <motion.p
+            className="text-xs text-neutral-500"
+            variants={{
+              initial: {
+                opacity: 0,
+              },
+              animate: {
+                opacity: 1,
+              },
+            }}
+          >
+            All right, let's see what pleases you. Where would you like to leave
+            ? Over what period of time ? For how long ?
+          </motion.p>
+        </div>
+        <div className="size-6 shrink-0 rounded-full bg-gradient-to-r from-pink-500 to-violet-500" />
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const items = [
+  {
+    title: "Create your dream trip",
+    description: (
+      <span className="text-sm">
+        Never run out of things to Create, Plan, Enjoy, of your travels
+      </span>
+    ),
+    header: <Skeleton4 />,
+    className: "md:col-span-2",
+    icon: <MapPinPlus size={20} />,
+  },
+
+  {
+    title: "Let us guide you",
+    description: (
+      <span className="text-sm">
+        Specific tools have been created exclusively for you.
+      </span>
+    ),
+    header: <Skeleton5 />,
+    className: "md:col-span-1",
+    icon: <Route className="size-4" />,
+  },
+  {
+    title: "AI Content Generation",
+    description: (
+      <span className="text-sm">
+        Experience the power of AI in generating unique content.
+      </span>
+    ),
+    header: <Skeleton1 />,
+    className: "md:col-span-1",
+    icon: <Sparkles size={20} />,
+  },
+  {
+    title: "Schedule with ease",
+    description: (
+      <span className="text-sm">
+        We help you schedule your todos with ease.
+      </span>
+    ),
+    header: <Skeleton2 />,
+    className: "md:col-span-1",
+    icon: <Calendar size={20} />,
+  },
+  {
+    title: "Calendar View",
+    description: (
+      <span className="text-sm">
+        See what you have planned for the day with our calendar view.
+      </span>
+    ),
+    header: <Skeleton3 />,
+    className: "md:col-span-1",
+    icon: <CalendarCheck size={20} />,
+  },
+];

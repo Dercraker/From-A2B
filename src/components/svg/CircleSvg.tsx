@@ -1,11 +1,16 @@
-import type { ComponentPropsWithoutRef } from 'react';
+import { cn } from "@/lib/utils";
+import type { ComponentPropsWithoutRef } from "react";
 
 export const CircleSvg = ({
   className,
   ...props
-}: ComponentPropsWithoutRef<'svg'>) => {
+}: ComponentPropsWithoutRef<"svg">) => {
   return (
     <svg
+      className={cn(
+        "absolute -z-10 w-[calc(100%+1rem)] top-0 left-0 fill-foreground",
+        className,
+      )}
       xmlns="http://www.w3.org/2000/svg"
       width="223"
       height="62"

@@ -1,7 +1,0 @@
-{
-  "Pause": {
-    "prefix": "pause",
-    "body": ["await new Promise((resolve) => setTimeout(resolve, $1));"],
-    "description": "Pause",
-  },
-}

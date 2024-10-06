@@ -1,35 +1,30 @@
-import { queryClient } from '@/lib/ReactQuery';
-import { env } from '@/lib/env/server';
-import { themes } from '@/styles/themes';
-import { MantineBreakpointIndicator } from '@/utils/MantineBreakpointIndicator';
-import { MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
-import '@mantine/core/styles.layer.css';
-import '@mantine/dates/styles.css';
-import { Notifications } from '@mantine/notifications';
-import '@mantine/notifications/styles.css';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { SessionProvider } from 'next-auth/react';
-import type { PropsWithChildren } from 'react';
-import './globals.scss';
-import '@mantine/core/styles.css';
-import '@mantine/core/styles.layer.css';
-import '@mantine/notifications/styles.css';
-import '@mantine/carousel/styles.css';
+"use client";
+
+import { GlobalDialogLazy } from "@/components/globalDialog/GlobalDialogLazy";
+import { SearchParamsMessageToastSuspended } from "@/components/searchparams-message/SearchParamsMessageToast";
+import { Toaster } from "@/components/ui/sonner";
+import { AlertDialogRenderer } from "@/features/alert-dialog/AlertDialogRenderer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
+import type { PropsWithChildren } from "react";
+
+const queryClient = new QueryClient();
 
 export const Providers = ({ children }: PropsWithChildren) => {
   return (
-    <MantineProvider theme={themes} defaultColorScheme="auto" withGlobalClasses>
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider>
-          <Notifications limit={5} position="top-right" />
-          <ReactQueryDevtools initialIsOpen={false} />
-
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <AlertDialogRenderer />
+          <GlobalDialogLazy />
+          <SearchParamsMessageToastSuspended />
+          <ReactQueryDevtools />
           {children}
-          {env.NODE_ENV === 'development' && <MantineBreakpointIndicator />}
-        </SessionProvider>
-      </QueryClientProvider>
-    </MantineProvider>
+        </QueryClientProvider>
+      </SessionProvider>
+    </ThemeProvider>
   );
 };

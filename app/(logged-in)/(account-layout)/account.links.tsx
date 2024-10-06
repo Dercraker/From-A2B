@@ -1,0 +1,22 @@
+import { LINKS } from "@/features/navigation/Links";
+import {
+  NavigationLinks,
+  NavigationLinksGroup,
+  NavigationLinksGroups,
+} from "@/features/navigation/navigation.type";
+
+export const getAccountNavigation = (): NavigationLinksGroups => {
+  return ACCOUNT_LINKS;
+};
+
+const ACCOUNT_LINKS: NavigationLinksGroups = [
+  {
+    title: "Your profile",
+    links: [
+      LINKS.Account.Profile,
+      LINKS.Account.Mail,
+      LINKS.Account.Danger,
+      LINKS.Account.Billing,
+    ] satisfies NavigationLinks,
+  } satisfies NavigationLinksGroup,
+] satisfies NavigationLinksGroups;
