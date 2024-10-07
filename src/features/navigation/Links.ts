@@ -77,4 +77,8 @@ export const LINKS = {
       Icon: CreditCard,
     },
   },
+  Trip: {
+    href: `${ORGANIZATION_PATH}/trips/:tripId`,
+    label: "Trip",
+  },
 } satisfies GenericLinkSchema;

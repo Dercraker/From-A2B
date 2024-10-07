@@ -19,12 +19,19 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { contactSupportAction } from "@/features/contact/support/contact-support.action";
-import { ContactSupportSchemaType } from "@/features/contact/support/contact-support.schema";
+import { AddTripAction } from "@/features/trip/addTrip.action";
 import { AddTripSchema } from "@/features/trip/addTrip.schema";
+import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { LoadingButton } from "../form/LoadingButton";
+import { Calendar } from "../ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Textarea } from "../ui/textarea";
 
 type AddTripDialogProps = PropsWithChildren;
@@ -33,21 +40,31 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
   const [open, setOpen] = useState(false);
   const form = useZodForm({
     schema: AddTripSchema,
-    defaultValues: {},
+    defaultValues: {
+      startDate: new Date(),
+    },
   });
+  const router = useRouter();
 
-  const onSubmit = async (values: ContactSupportSchemaType) => {
-    const result = await contactSupportAction(values);
+  const { mutateAsync: addTripMutationAsync, isPending } = useMutation({
+    mutationFn: async (values: AddTripSchema) => {
+      const result = await AddTripAction(values);
+      if (!result?.data) {
+        toast.error(result?.serverError);
+        return;
+      }
 
-    if (!result?.data) {
-      toast.error(result?.serverError);
-      return;
-    }
+      toast.success("Your trip as been created.");
+      form.reset();
+      setOpen(false);
 
-    toast.success("Your message has been sent.");
-    form.reset();
-    setOpen(false);
-  };
+      return result.data;
+    },
+    onSuccess(data) {
+      if (data) router.push(data);
+      else router.refresh();
+    },
+  });
 
   return (
     <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
@@ -67,12 +84,12 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
         </DialogHeader>
         <Form
           form={form}
-          onSubmit={async (v) => onSubmit(v)}
+          onSubmit={async (v) => await addTripMutationAsync(v)}
           className="flex flex-col gap-4"
         >
           <FormField
             control={form.control}
-            name="title"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Title</FormLabel>
@@ -100,16 +117,46 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             control={form.control}
             name="startDate"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>Start Date</FormLabel>
-                <FormControl>
-                  {/* //TODO: https://shadcn-calendar-component.vercel.app/ */}
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "border-input",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto size-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto -translate-y-1/2"
+                    align="center"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Send</Button>
+          <LoadingButton type="submit" loading={isPending}>
+            Create new trip
+          </LoadingButton>
         </Form>
       </DialogContent>
     </Dialog>
