@@ -34,14 +34,9 @@ export const LINKS = {
   },
   Organization: {
     Dashboard: {
-      href: "/Dashboard",
+      href: `${ORGANIZATION_PATH}`,
       label: "Dashboard",
       Icon: Home,
-    },
-    Statistics: {
-      href: `${ORGANIZATION_PATH}/statistics`,
-      label: "Statistics",
-      Icon: ChartArea,
     },
     Trips: {
       href: `${ORGANIZATION_PATH}/trips`,

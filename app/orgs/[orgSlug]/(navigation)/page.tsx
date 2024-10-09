@@ -5,12 +5,14 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { isInRoles } from "@/lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import { SiteConfig } from "@/site-config";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
+import { DonutChart } from "./_components/donuts-chart";
+import { UsersChart } from "./_components/users-chart";
 
 export default async function RoutePage(
   props: PageParams<{
@@ -33,9 +35,12 @@ export default async function RoutePage(
             Invite member
           </Link>
         ) : null}
+        <Button variant="filled">Delete</Button>
+        <Button variant="invert">Create</Button>
       </LayoutActions>
-      <LayoutContent className="flex flex-col gap-4 lg:gap-8">
-        Dashboard Content here
+      <LayoutContent className="flex  gap-6">
+        <UsersChart />
+        <DonutChart />
       </LayoutContent>
     </Layout>
   );

@@ -38,7 +38,6 @@ export const ORGANIZATION_LINKS: NavigationLinksGroups = [
     title: "Menu",
     links: [
       LINKS.Organization.Dashboard,
-      LINKS.Organization.Statistics,
       LINKS.Organization.Trips,
       LINKS.Organization.History,
     ] satisfies NavigationLinks,

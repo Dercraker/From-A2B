@@ -1,0 +1,25 @@
+import { prisma } from "@/lib/prisma";
+import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
+import { Prisma } from "@prisma/client";
+import { TripsListDtoSchema } from "./dto/tripsListDto.schema";
+
+type GetTripsByCurrentOrgQueryProps = {
+  order?:
+    | Prisma.TripOrderByWithRelationInput
+    | Prisma.TripOrderByWithRelationInput[];
+};
+
+export const GetTripsByCurrentOrgQuery = async ({
+  order,
+}: GetTripsByCurrentOrgQueryProps) => {
+  const { org } = await getRequiredCurrentOrgCache();
+  const trips = await prisma.trip.findMany({
+    where: {
+      organizationId: org.id,
+      deletedAt: null,
+    },
+    orderBy: order,
+  });
+
+  return TripsListDtoSchema.parse(trips);
+};

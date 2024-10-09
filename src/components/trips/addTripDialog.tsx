@@ -19,8 +19,8 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AddTripAction } from "@/features/trip/addTrip.action";
-import { AddTripSchema } from "@/features/trip/addTrip.schema";
+import { AddTripAction } from "@/features/trip/add/addTrip.action";
+import { AddTripSchema } from "@/features/trip/add/addTrip.schema";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -61,8 +61,9 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       return result.data;
     },
     onSuccess(data) {
-      if (data) router.push(data);
-      else router.refresh();
+      // TODO UNCOMMENT ME
+      // if (data) router.push(data);
+      // else router.refresh();
     },
   });
 

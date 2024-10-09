@@ -84,8 +84,10 @@ export const AlertDialogRenderedDialog = (
           <div>
             <Typography>
               Please type{" "}
-              <Typography variant="code">{props.confirmText}</Typography> to
-              confirm the action.
+              <Typography variant="code" className="select-none">
+                {props.confirmText}
+              </Typography>{" "}
+              to confirm the action.
             </Typography>
             <Input value={text} onChange={(e) => setText(e.target.value)} />
           </div>
