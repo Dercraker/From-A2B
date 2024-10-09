@@ -3,6 +3,7 @@ import { z } from "zod";
 export const TripListDtoSchema = z.object({
   id: z.string(),
   organizationId: z.string(),
+  orgSlug: z.string(),
   name: z.string(),
   startDate: z.date(),
   endDate: z.date(),

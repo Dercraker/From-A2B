@@ -1,12 +1,12 @@
 import { LINKS } from "../navigation/Links";
 
 export const GenerateTripLink = ({
-  orgId,
+  orgSlug,
   tripId,
 }: {
-  orgId: string;
+  orgSlug: string;
   tripId: string;
 }) =>
   LINKS.Trip.href
-    .replace(":organizationSlug", orgId)
+    .replace(":organizationSlug", orgSlug)
     .replace(":tripId", tripId);

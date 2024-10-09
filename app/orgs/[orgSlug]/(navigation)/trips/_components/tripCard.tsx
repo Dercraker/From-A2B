@@ -13,7 +13,7 @@ export type TripCardProps = {
 };
 
 export const TripCard = ({
-  trip: { endDate, id: tripId, image, name, organizationId: orgId, startDate },
+  trip: { endDate, id: tripId, image, name, startDate, orgSlug },
 }: TripCardProps) => {
   return (
     <Card className="group max-h-96 max-w-[422px]">
@@ -21,7 +21,7 @@ export const TripCard = ({
         <div className="flex items-center justify-between">
           <CardTitle>
             <Typography variant="link">
-              <Link href={GenerateTripLink({ orgId, tripId })}>
+              <Link href={GenerateTripLink({ orgSlug, tripId })}>
                 <div>{name}</div>
               </Link>
             </Typography>

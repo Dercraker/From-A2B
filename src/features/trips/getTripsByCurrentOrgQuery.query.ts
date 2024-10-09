@@ -21,5 +21,7 @@ export const GetTripsByCurrentOrgQuery = async ({
     orderBy: order,
   });
 
-  return TripsListDtoSchema.parse(trips);
+  return TripsListDtoSchema.parse(
+    trips.map((trip) => ({ ...trip, orgSlug: org.slug })),
+  );
 };

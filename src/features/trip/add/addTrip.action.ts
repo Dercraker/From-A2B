@@ -20,5 +20,5 @@ export const AddTripAction = orgAction
       },
     });
 
-    return GenerateTripLink({ orgId: ctx.org.id, tripId });
+    return GenerateTripLink({ orgSlug: ctx.org.slug, tripId });
   });
