@@ -1,5 +1,6 @@
 model Trip {
   id              String   @id @unique @default(cuid())
+  slug            String   @unique
   organizationId  String
   name            String
   startDate       DateTime

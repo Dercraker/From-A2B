@@ -61,9 +61,8 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       return result.data;
     },
     onSuccess(data) {
-      // TODO UNCOMMENT ME
-      // if (data) router.push(data);
-      // else router.refresh();
+      router.refresh();
+      if (data) router.push(data);
     },
   });
 

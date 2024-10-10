@@ -13,17 +13,23 @@ export type TripCardProps = {
 };
 
 export const TripCard = ({
-  trip: { endDate, id: tripId, image, name, startDate, orgSlug },
+  trip: {
+    endDate,
+    id: tripId,
+    slug: tripSlug,
+    image,
+    name,
+    startDate,
+    orgSlug,
+  },
 }: TripCardProps) => {
   return (
     <Card className="group max-h-96 max-w-[422px]">
       <CardHeader className="flex flex-col">
         <div className="flex items-center justify-between">
-          <CardTitle>
+          <CardTitle className="overflow-hidden truncate whitespace-nowrap text-primary">
             <Typography variant="link">
-              <Link href={GenerateTripLink({ orgSlug, tripId })}>
-                <div>{name}</div>
-              </Link>
+              <Link href={GenerateTripLink({ orgSlug, tripSlug })}>{name}</Link>
             </Typography>
           </CardTitle>
           <CardDeleteButton tripId={tripId} tripName={name} />

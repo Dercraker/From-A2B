@@ -6,12 +6,14 @@ import {
   History,
   Home,
   Mail,
+  Map,
   Plane,
   User2,
 } from "lucide-react";
 import { GenericLinkSchema } from "./navigation.type";
 
 const ORGANIZATION_PATH = `/orgs/:organizationSlug`;
+const TRIP_PATH = `/trips/:tripSlug`;
 
 export const LINKS = {
   Landing: {
@@ -72,8 +74,20 @@ export const LINKS = {
       Icon: CreditCard,
     },
   },
-  Trip: {
-    href: `${ORGANIZATION_PATH}/trips/:tripId`,
-    label: "Trip",
+  Trips: {
+    Trip: {
+      href: `${ORGANIZATION_PATH}${TRIP_PATH}`,
+      label: "Trip",
+    },
+    Itinerary: {
+      href: `${ORGANIZATION_PATH}${TRIP_PATH}`,
+      label: "Itinerary",
+      Icon: Map,
+    },
+    Details: {
+      href: `${ORGANIZATION_PATH}${TRIP_PATH}/details`,
+      label: "Details",
+      Icon: ChartArea,
+    },
   },
 } satisfies GenericLinkSchema;

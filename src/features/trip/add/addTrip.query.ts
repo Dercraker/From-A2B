@@ -2,14 +2,14 @@ import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 
 export const AddTripQuery = async (params: Prisma.TripCreateInput) => {
-  const { id: tripId } = await prisma.trip.create({
+  const { slug } = await prisma.trip.create({
     data: {
       ...params,
     },
-    select: { id: true },
+    select: { slug: true },
   });
 
-  return tripId;
+  return slug;
 };
 
 export type AddTripQuery = NonNullable<

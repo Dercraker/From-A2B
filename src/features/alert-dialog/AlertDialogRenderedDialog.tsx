@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import { useState, type ReactElement, type ReactNode } from "react";
 type DialogBaseProps = {
   loading?: boolean;
@@ -73,7 +74,9 @@ export const AlertDialogRenderedDialog = (
     <AlertDialog open={true}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{props.title ?? ""}</AlertDialogTitle>
+          <AlertDialogTitle className={cn(props.confirmText && "select-none")}>
+            {props.title ?? ""}
+          </AlertDialogTitle>
           {typeof props.description === "string" ? (
             <AlertDialogDescription>{props.description}</AlertDialogDescription>
           ) : (

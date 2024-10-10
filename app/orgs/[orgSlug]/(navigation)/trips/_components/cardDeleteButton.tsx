@@ -34,7 +34,7 @@ export const CardDeleteButton = ({
   });
 
   return (
-    <InlineTooltip title="Delete Trip">
+    <InlineTooltip title="Delete Trip" className="select-none">
       <Trash2
         onClick={(e) => {
           e.stopPropagation();
@@ -64,7 +64,7 @@ export const CardDeleteButton = ({
           });
         }}
         size={24}
-        className="hidden cursor-pointer text-red-400 group-hover:block "
+        className="ml-1 hidden cursor-pointer text-red-400 group-hover:block"
       />
     </InlineTooltip>
   );
