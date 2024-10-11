@@ -1,7 +1,21 @@
-export default async function RoutePage() {
+import { GetTripQuery } from "@/features/trip/get/getTrip.query";
+import { PageParams } from "@/types/next";
+import { StepList } from "./_component/stepList";
+import { TripMap } from "./_component/tripMap";
+
+const RoutePage = async ({
+  params: { orgSlug, tripSlug },
+}: PageParams<{ orgSlug: string; tripSlug: string }>) => {
+  const trip = await GetTripQuery({
+    where: { slug: tripSlug, Organization: { slug: orgSlug } },
+  });
+
   return (
     <>
-      <h1>tirp</h1>
+      <StepList tripId={trip.id} tripSlug={tripSlug} orgSlug={orgSlug} />
+      <TripMap />
     </>
   );
-}
+};
+
+export default RoutePage;

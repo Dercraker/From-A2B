@@ -7,6 +7,7 @@ import {
   validatePassword,
 } from "@/lib/auth/credentials-provider";
 import { requiredAuth } from "@/lib/auth/helper";
+import { env } from "@/lib/env/server";
 import { sendEmail } from "@/lib/mail/sendEmail";
 import { prisma } from "@/lib/prisma";
 import MarkdownEmail from "@email/Markdown.email";
@@ -17,7 +18,6 @@ import {
   EditPasswordFormSchema,
   ProfileFormSchema,
 } from "./edit-profile.schema";
-import { env } from "@/lib/env/server";
 
 export const updateProfileAction = authAction
   .schema(ProfileFormSchema.and(z.object({ token: z.string().optional() })))

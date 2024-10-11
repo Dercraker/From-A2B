@@ -6,6 +6,7 @@ import {
   LayoutTitle,
 } from "@/components/page/layout";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { combineWithParentMetadata } from "@/lib/metadata";
 import { isInRoles } from "@/lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import { SiteConfig } from "@/site-config";
@@ -14,11 +15,16 @@ import Link from "next/link";
 import { DonutChart } from "./_components/donuts-chart";
 import { UsersChart } from "./_components/users-chart";
 
-export default async function RoutePage(
+export const generateMetadata = combineWithParentMetadata({
+  title: "Dashboard",
+  description: "Dashboard",
+});
+
+const RoutePage = async (
   props: PageParams<{
     orgSlug: string;
   }>,
-) {
+) => {
   const org = await getRequiredCurrentOrgCache();
   return (
     <Layout>
@@ -44,4 +50,6 @@ export default async function RoutePage(
       </LayoutContent>
     </Layout>
   );
-}
+};
+
+export default RoutePage;

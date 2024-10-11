@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingButton } from "@/components/form/LoadingButton";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Form,
@@ -19,7 +20,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createOrganizationAction } from "./new-org.action";
 import { NewOrganizationSchemaType, NewOrgsSchema } from "./new-org.schema";
-import { LoadingButton } from "@/components/form/LoadingButton";
 
 export const NewOrganizationForm = () => {
   const form = useZodForm({

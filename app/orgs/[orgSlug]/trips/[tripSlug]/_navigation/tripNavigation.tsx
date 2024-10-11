@@ -52,9 +52,7 @@ export const TripNavigation = async ({
             {topBarCornerLeftChildren}
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 overflow-auto lg:gap-6 lg:p-6">
-          {children}
-        </main>
+        <main className="flex h-full ">{children}</main>
       </div>
     </div>
   );

@@ -33,6 +33,9 @@ export const getOrganizationNavigation = (
   });
 };
 
+export const GenerateOrganizationLink = (href: string, orgSlug: string) =>
+  replaceSlug(href, orgSlug);
+
 export const ORGANIZATION_LINKS: NavigationLinksGroups = [
   {
     title: "Menu",
