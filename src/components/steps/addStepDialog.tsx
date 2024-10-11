@@ -30,6 +30,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { AutocompleteComponent } from "../address/autocompleteComponent";
 import { LoadingButton } from "../form/LoadingButton";
 import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
@@ -39,7 +40,6 @@ export type AddStepDialogProps = PropsWithChildren;
 
 export const AddStepDialog = ({ children }: AddStepDialogProps) => {
   const [open, setOpen] = useState(true);
-  const [isOneDay, setIsOneDay] = useState(true);
 
   const form = useZodForm({
     schema: AddStepSchema,
@@ -136,13 +136,17 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
 
           <FormField
             control={form.control}
-            name="latitude"
-            render={({ field }) => (
+            name="placeId"
+            render={() => (
               <FormItem>
                 <FormLabel>Address</FormLabel>
-                <FormControl>
-                  <Input placeholder="48.858844" {...field} />
-                </FormControl>
+                <AutocompleteComponent
+                  onChange={(address) => {
+                    form.setValue("latitude", address.lat);
+                    form.setValue("longitude", address.lng);
+                    form.setValue("placeId", address.placeId);
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}
