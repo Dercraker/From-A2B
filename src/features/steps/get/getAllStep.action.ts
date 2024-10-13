@@ -15,10 +15,11 @@ export const GetAllStepAction = orgAction
       where: {
         tripId,
       },
+      orderBy: {
+        rank: "asc",
+      },
     });
 
-    if (!steps.success)
-      throw new ActionError(`Failed to fetch steps ${steps.error}`);
-
+    if (!steps.success) throw new ActionError(steps.error.message);
     return steps;
   });

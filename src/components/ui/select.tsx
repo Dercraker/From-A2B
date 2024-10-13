@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -88,7 +88,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="size-4" />
+        <Check className="size-4 text-primary" />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -111,11 +111,11 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
   Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
   SelectContent,
-  SelectLabel,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectSeparator,
+  SelectTrigger,
+  SelectValue,
 };

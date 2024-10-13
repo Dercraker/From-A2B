@@ -5,12 +5,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 export const GET = authRoute
-  .params(z.object({ placeId: z.string() }))
-  .handler(async (req, { params }) => {
+  .query(z.object({ placeId: z.string() }))
+  .handler(async (req, { query }) => {
+    console.log("🚀 ~ .handler ~ query:", query);
     if (!env.GOOGLE_PLACES_API_KEY)
       return NextResponse.json({ error: "Missing API Key", data: null });
 
-    const url = `https://places.googleapis.com/v1/${params.placeId}`;
+    const url = `https://places.googleapis.com/v1/places/${query.placeId}`;
 
     try {
       const response = await fetch(url, {

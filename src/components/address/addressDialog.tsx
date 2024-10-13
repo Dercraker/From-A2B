@@ -239,7 +239,7 @@ const AddressDialog = ({
             <Loader2 className="size-6 animate-spin" />
           </div>
         ) : (
-          <form onSubmit={handleSave}>
+          <form>
             <div className="space-y-4 py-7">
               <div className="space-y-0.5">
                 <Label htmlFor="address1">Address line 1</Label>
@@ -324,11 +324,7 @@ const AddressDialog = ({
                     placeholder="Postal Code"
                   />
                   {errorMap.postalCode && (
-                    <FormMessages
-                      type="error"
-                      className="pt-1 text-sm"
-                      messages={[errorMap.postalCode]}
-                    />
+                    <FormMessage>{errorMap.postalCode}</FormMessage>
                   )}
                 </div>
                 <div className="flex-1 space-y-0.5">
@@ -352,7 +348,7 @@ const AddressDialog = ({
               >
                 Cancel
               </Button>
-              <Button type="submit">Save</Button>
+              <Button onClick={handleSave}>Save</Button>
             </DialogFooter>
           </form>
         )}

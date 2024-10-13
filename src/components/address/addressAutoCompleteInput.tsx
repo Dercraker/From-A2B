@@ -58,6 +58,7 @@ export const AddressAutoCompleteInput = ({
   });
 
   useEffect(() => {
+    if (!debouncedSearchInput || debouncedSearchInput === "") return;
     refetch();
   }, [debouncedSearchInput]);
 
@@ -105,9 +106,12 @@ export const AddressAutoCompleteInput = ({
                         <CommandPrimitive.Item
                           value={prediction.placePrediction.text.text}
                           onSelect={() => {
-                            setSearchInput("");
+                            console.log(
+                              "🚀 ~ prediction.placePrediction:",
+                              prediction.placePrediction,
+                            );
                             setSelectedPlaceId(
-                              prediction.placePrediction.place,
+                              prediction.placePrediction.placeId,
                             );
                             setIsOpenDialog(true);
                           }}

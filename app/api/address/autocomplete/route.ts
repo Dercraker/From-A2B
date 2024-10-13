@@ -1,6 +1,5 @@
 import { env } from "@/lib/env/server";
 import { authRoute, RouteError } from "@/lib/safe-route";
-import { getPlaces } from "@/utils/api/placeApi.utils";
 import { getGeolocation } from "@/utils/getGeolocation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -18,9 +17,6 @@ export const GET = authRoute
     const country = await getGeolocation();
 
     try {
-      const res = await getPlaces(query.input, [country || "US"]);
-      console.log("🚀 ~ .handler ~ res:", res);
-
       const response = await fetch(
         "https://places.googleapis.com/v1/places:autocomplete",
         {
@@ -38,12 +34,11 @@ export const GET = authRoute
               "street_number",
               "landmark",
             ],
-            includedRegionCodes: [country || "US"],
+            includedRegionCodes: [country || "FR"],
           }),
         },
       );
 
-      console.log("🚀 ~ .handler ~ response:", response);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

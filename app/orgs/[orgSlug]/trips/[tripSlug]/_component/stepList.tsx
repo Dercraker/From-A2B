@@ -22,10 +22,9 @@ export type StepListProps = {
 
 export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
   const { data: steps, isPending } = useQuery({
-    queryKey: STEP_KEY_FACTORY.All(tripId),
+    queryKey: STEP_KEY_FACTORY.All(tripSlug),
     queryFn: async () => {
       const result = await GetAllStepAction({ tripId });
-
       if (!isActionSuccessful(result)) {
         toast.error("Failed to fetch steps. Please try again later.");
         return null;
@@ -35,7 +34,7 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
     },
   });
 
-  if (isPending || steps == undefined)
+  if (isPending)
     return (
       <div className="flex w-2/5 items-center justify-center border-r bg-card">
         <div className="flex select-none items-center gap-2">
@@ -45,9 +44,9 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
       </div>
     );
 
-  if (steps === null)
+  if (!steps)
     return (
-      <div className="flex w-2/5 items-center justify-center border-r bg-card">
+      <div className="flex w-2/5 items-center justify-center border-r bg-card p-4">
         <div className="flex select-none flex-col">
           <Typography variant="lead">
             Failed to fetch steps. Please try again later.
@@ -67,7 +66,14 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
 
   return (
     <div className="w-2/5 border-r bg-card">
-      {!!steps.length && steps.map((s) => <StepItem key={s.id} step={s} />)}
+      {!!steps.length &&
+        // Array.from({ length: 10 }).map((_, idx) => {
+        //   const s = steps[0];
+        //   return <StepItem key={s.id} step={s} idx={idx} />;
+        // })
+        steps.map((step, idx) => (
+          <StepItem key={step.id} step={step} idx={idx} />
+        ))}
 
       {!steps.length && (
         <div className="mt-4 flex select-none flex-col items-center justify-center">

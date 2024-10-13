@@ -21,13 +21,15 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AddStepAction } from "@/features/steps/add/addStep.action";
 import { AddStepSchema } from "@/features/steps/add/addStep.schema";
-import { AddTripAction } from "@/features/trip/add/addTrip.action";
-import { AddTripSchema } from "@/features/trip/add/addTrip.schema";
+import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AutocompleteComponent } from "../address/autocompleteComponent";
@@ -35,10 +37,12 @@ import { LoadingButton } from "../form/LoadingButton";
 import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import { Typography } from "../ui/typography";
 
 export type AddStepDialogProps = PropsWithChildren;
 
 export const AddStepDialog = ({ children }: AddStepDialogProps) => {
+  const params = useParams();
   const [open, setOpen] = useState(true);
 
   const form = useZodForm({
@@ -47,27 +51,30 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
       startDate: new Date(),
       endDate: new Date(),
       TransportMode: TransportMode.Car,
+      tripSlug: String(params.tripSlug),
     },
   });
-  const router = useRouter();
 
-  const { mutateAsync: addTripMutationAsync, isPending } = useMutation({
-    mutationFn: async (values: AddTripSchema) => {
-      const result = await AddTripAction(values);
-      if (!result?.data) {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: addStepAsync, isPending } = useMutation({
+    mutationFn: async (values: AddStepSchema) => {
+      const result = await AddStepAction(AddStepSchema.parse(values));
+      if (!isActionSuccessful(result)) {
         toast.error(result?.serverError);
         return;
       }
 
-      toast.success("Your trip as been created.");
+      toast.success(`The step ${result.data} as been added.`);
       form.reset();
       setOpen(false);
 
       return result.data;
     },
-    onSuccess(data) {
-      router.refresh();
-      if (data) router.push(data);
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(params.tripSlug.toString()),
+      });
     },
   });
 
@@ -83,7 +90,14 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
             Fill the form bellow to add a step in your trip.
           </DialogDescription>
         </DialogHeader>
-        <Form form={form} onSubmit={() => {}} className="flex flex-col gap-4">
+        <Form
+          form={form}
+          onSubmit={() => {}}
+          className="flex flex-col gap-4"
+          onReset={() => {
+            setOpen(false);
+          }}
+        >
           <FormField
             control={form.control}
             name="name"
@@ -171,11 +185,31 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={TransportMode.Car}>Car</SelectItem>
-                    <SelectItem value={TransportMode.Bike}>Bike</SelectItem>
-                    <SelectItem value={TransportMode.Boat}>Boat</SelectItem>
-                    <SelectItem value={TransportMode.Walk}>Walk</SelectItem>
-                    <SelectItem value={TransportMode.Plane}>Plane</SelectItem>
+                    <SelectItem value={TransportMode.Car}>
+                      <Typography className="flex items-center gap-2">
+                        <Car /> Car
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Bike}>
+                      <Typography className="flex items-center gap-2">
+                        <Bike /> Bike
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Boat}>
+                      <Typography className="flex items-center gap-2">
+                        <Sailboat /> Boat
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Walk}>
+                      <Typography className="flex items-center gap-2">
+                        <Footprints /> Walk
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Plane}>
+                      <Typography className="flex items-center gap-2">
+                        <Plane /> Plane
+                      </Typography>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -183,10 +217,18 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
             )}
           />
           <div className="flex justify-between gap-2">
-            <Button className="flex-1" variant="outline-destructive">
-              Reset form
+            <Button
+              className="flex-1"
+              variant="outline-destructive"
+              type="reset"
+            >
+              Cancel
             </Button>
-            <LoadingButton className="flex-1" type="submit" loading={isPending}>
+            <LoadingButton
+              className="flex-1"
+              onClick={async () => await addStepAsync(form.getValues())}
+              loading={isPending}
+            >
               Add new step
             </LoadingButton>
           </div>

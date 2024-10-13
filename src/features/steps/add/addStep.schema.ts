@@ -2,7 +2,7 @@ import { TransportMode } from "@prisma/client";
 import { z } from "zod";
 
 export const AddStepSchema = z.object({
-  tripId: z.string(),
+  tripSlug: z.string(),
   name: z.string(),
   startDate: z.date(),
   endDate: z.date(),
