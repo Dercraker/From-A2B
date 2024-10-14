@@ -1,0 +1,253 @@
+"use client";
+
+import { PropsWithChildren } from "react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useZodForm,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
+import { EditStepAction } from "@/features/steps/update/editStep.action";
+import { EditStepSchema } from "@/features/steps/update/editStep.schema";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { TransportMode } from "@prisma/client";
+import { SelectValue } from "@radix-ui/react-select";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import { AutocompleteComponent } from "../address/autocompleteComponent";
+import { LoadingButton } from "../form/LoadingButton";
+import { CalendarDatePicker } from "../ui/calendar-date-picker";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
+import { Textarea } from "../ui/textarea";
+import { Typography } from "../ui/typography";
+
+export type EditStepDialogProps = PropsWithChildren<{
+  step: StepDto;
+}>;
+
+export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
+  const params = useParams();
+  const [open, setOpen] = useState(false);
+
+  const form = useZodForm({
+    schema: EditStepSchema,
+    defaultValues: {
+      tripSlug: params.tripSlug.toString(),
+      stepId: step.id,
+
+      name: step.name,
+      description: step.description || undefined,
+
+      startDate: step.startDate || undefined,
+      endDate: step.endDate || undefined,
+
+      latitude: step.latitude || undefined,
+      longitude: step.longitude || undefined,
+
+      placeId: step.placeId,
+      transportMode: step.transportMode as TransportMode,
+    },
+  });
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: addStepAsync, isPending } = useMutation({
+    mutationFn: async (values: EditStepSchema) => {
+      const result = await EditStepAction(EditStepSchema.parse(values));
+      if (!isActionSuccessful(result)) {
+        toast.error(result?.serverError);
+        return;
+      }
+
+      toast.success(`The step ${result.data} as been updated.`);
+      form.reset();
+      setOpen(false);
+
+      return result.data;
+    },
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(params.tripSlug.toString()),
+      });
+    },
+  });
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit step</DialogTitle>
+          <DialogDescription>
+            Change the value of step bellow.
+          </DialogDescription>
+        </DialogHeader>
+        <Form
+          form={form}
+          onSubmit={() => {}}
+          className="flex flex-col gap-4"
+          onReset={() => {
+            setOpen(false);
+          }}
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Go to the airport" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Any description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="startDate"
+            render={() => (
+              <FormItem>
+                <FormLabel>Dates of step</FormLabel>
+                <FormControl>
+                  <CalendarDatePicker
+                    date={{
+                      from: form.getValues().startDate ?? undefined,
+                      to: form.getValues().endDate ?? undefined,
+                    }}
+                    onDateSelect={(v) => {
+                      form.setValue("startDate", v.from);
+                      form.setValue("endDate", v.to);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="placeId"
+            render={() => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <AutocompleteComponent
+                  onChange={(address) => {
+                    form.setValue("latitude", address.lat);
+                    form.setValue("longitude", address.lng);
+                    form.setValue("placeId", address.placeId);
+                  }}
+                  placeId={form.getValues().placeId}
+                  lat={form.getValues().latitude}
+                  lon={form.getValues().longitude}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="transportMode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Transport Mode</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        className="text-muted"
+                        placeholder="Select your transport mode to this step"
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={TransportMode.Car}>
+                      <Typography className="flex items-center gap-2">
+                        <Car /> Car
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Bike}>
+                      <Typography className="flex items-center gap-2">
+                        <Bike /> Bike
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Boat}>
+                      <Typography className="flex items-center gap-2">
+                        <Sailboat /> Boat
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Walk}>
+                      <Typography className="flex items-center gap-2">
+                        <Footprints /> Walk
+                      </Typography>
+                    </SelectItem>
+                    <SelectItem value={TransportMode.Plane}>
+                      <Typography className="flex items-center gap-2">
+                        <Plane /> Plane
+                      </Typography>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-between gap-2">
+            <Button
+              className="flex-1"
+              variant="outline-destructive"
+              type="reset"
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              className="flex-1"
+              onClick={async () => await addStepAsync(form.getValues())}
+              loading={isPending}
+            >
+              Save edit's
+            </LoadingButton>
+          </div>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+};

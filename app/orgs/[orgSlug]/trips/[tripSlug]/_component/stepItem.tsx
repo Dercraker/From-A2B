@@ -1,8 +1,9 @@
 import { InlineTooltip } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
 import { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { Edit2, GripVertical } from "lucide-react";
+import { EllipsisVertical, GripVertical } from "lucide-react";
 import { StepCounter } from "./stepCounter";
+import { StepItemMenu } from "./stepItemMenu";
 
 export type StepItemProps = {
   step: StepDto;
@@ -20,7 +21,9 @@ export const StepItem = ({ step, idx }: StepItemProps) => {
         <InlineTooltip title={step.name}>
           <Typography variant="lead">{step.name}</Typography>
         </InlineTooltip>
-        <Edit2 className="h-8 cursor-pointer text-muted-foreground hover:-translate-y-0.5" />
+        <StepItemMenu step={step}>
+          <EllipsisVertical className="h-8 cursor-pointer rounded-lg text-muted-foreground active:bg-muted-foreground/10" />
+        </StepItemMenu>
       </div>
     </div>
   );

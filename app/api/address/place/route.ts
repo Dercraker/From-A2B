@@ -7,13 +7,12 @@ import { z } from "zod";
 export const GET = authRoute
   .query(z.object({ placeId: z.string() }))
   .handler(async (req, { query }) => {
-    console.log("🚀 ~ .handler ~ query:", query);
     if (!env.GOOGLE_PLACES_API_KEY)
       return NextResponse.json({ error: "Missing API Key", data: null });
 
-    const url = `https://places.googleapis.com/v1/places/${query.placeId}`;
-
+    
     try {
+      const url = `https://places.googleapis.com/v1/places/${query.placeId}`;
       const response = await fetch(url, {
         headers: {
           "X-Goog-Api-Key": env.GOOGLE_PLACES_API_KEY,
@@ -44,7 +43,7 @@ export const GET = authRoute
       const country = dataFinderRegx("country-name");
       const lat = data.location.latitude;
       const lng = data.location.longitude;
-      const placeId = data.placeId;
+      const placeId = query.placeId;
 
       const formattedAddress = data.formattedAddress;
 

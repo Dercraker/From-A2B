@@ -1,6 +1,7 @@
 "use client";
 
 import { AddressType } from "@/features/address/address.schema";
+import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
 import { useQuery } from "@tanstack/react-query";
 import { Delete, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ type AddressAutoCompleteProps = {
   dialogTitle: string;
   showInlineError?: boolean;
   placeholder?: string;
+  isLoading: boolean;
 };
 
 export default function AddressAutoComplete({
@@ -27,12 +29,13 @@ export default function AddressAutoComplete({
   setSearchInput,
   placeholder,
   showInlineError = true,
+  isLoading,
 }: AddressAutoCompleteProps) {
   const [selectedPlaceId, setSelectedPlaceId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const { data, isPending, refetch } = useQuery({
-    queryKey: ["place", selectedPlaceId],
+    queryKey: ADDRESS_KEY_FACTORY.PlaceId(selectedPlaceId),
     queryFn: async () => {
       if (!selectedPlaceId) return;
       const response = await fetch(
@@ -64,7 +67,7 @@ export default function AddressAutoComplete({
           <Input value={address?.formattedAddress} readOnly />
 
           <AddressDialog
-            isLoading={isPending}
+            isLoading={isPending || isLoading}
             dialogTitle={dialogTitle}
             adrAddress={adrAddress}
             address={address}
@@ -73,7 +76,7 @@ export default function AddressAutoComplete({
             setOpen={setIsOpen}
           >
             <Button
-              disabled={isPending}
+              disabled={isPending || isLoading}
               size="icon"
               variant="outline"
               className="shrink-0"
@@ -114,6 +117,7 @@ export default function AddressAutoComplete({
           setIsOpenDialog={setIsOpen}
           showInlineError={showInlineError}
           placeholder={placeholder}
+          isLoading={isLoading}
         />
       )}
     </>

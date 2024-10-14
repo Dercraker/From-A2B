@@ -13,6 +13,7 @@ import {
   CommandList,
 } from "../ui/command";
 import { FormMessage } from "../ui/form";
+import { Skeleton } from "../ui/skeleton";
 
 type AddressAutoCompleteInputProps = {
   selectedPlaceId: string;
@@ -22,6 +23,7 @@ type AddressAutoCompleteInputProps = {
   searchInput: string;
   setSearchInput: (searchInput: string) => void;
   placeholder?: string;
+  isLoading: boolean;
 };
 
 export const AddressAutoCompleteInput = ({
@@ -32,6 +34,7 @@ export const AddressAutoCompleteInput = ({
   setSelectedPlaceId,
   placeholder,
   showInlineError,
+  isLoading,
 }: AddressAutoCompleteInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -70,16 +73,22 @@ export const AddressAutoCompleteInput = ({
       onKeyDown={handleKeyDown}
       className="overflow-visible"
     >
-      <div className="flex w-full items-center justify-between rounded-lg border bg-background text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-        <CommandPrimitive.Input
-          value={searchInput}
-          onValueChange={setSearchInput}
-          onBlur={close}
-          onFocus={open}
-          placeholder={placeholder || "Enter address"}
-          className="w-full rounded-lg p-3 outline-none"
-        />
-      </div>
+      {isLoading ? (
+        <div className="flex w-full items-center justify-between rounded-lg border bg-background text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+          <Skeleton className="h-10 w-full rounded-lg p-3" />
+        </div>
+      ) : (
+        <div className="flex w-full items-center justify-between rounded-lg border bg-background text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+          <CommandPrimitive.Input
+            value={searchInput}
+            onValueChange={setSearchInput}
+            onBlur={close}
+            onFocus={open}
+            placeholder={placeholder || "Enter address"}
+            className="w-full rounded-lg p-3 outline-none"
+          />
+        </div>
+      )}
       {searchInput !== "" && !isOpen && !selectedPlaceId && showInlineError && (
         <FormMessage>Select a valid address from the list</FormMessage>
       )}
@@ -106,10 +115,6 @@ export const AddressAutoCompleteInput = ({
                         <CommandPrimitive.Item
                           value={prediction.placePrediction.text.text}
                           onSelect={() => {
-                            console.log(
-                              "🚀 ~ prediction.placePrediction:",
-                              prediction.placePrediction,
-                            );
                             setSelectedPlaceId(
                               prediction.placePrediction.placeId,
                             );
