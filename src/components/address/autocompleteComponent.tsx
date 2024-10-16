@@ -66,7 +66,7 @@ export const AutocompleteComponent = ({
       setAddress(result.data);
       return result;
     },
-    enabled: !!placeId && placeId === "",
+    enabled: !!placeId && placeId !== "",
   });
 
   useEffect(() => {

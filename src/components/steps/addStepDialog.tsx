@@ -43,7 +43,7 @@ export type AddStepDialogProps = PropsWithChildren;
 
 export const AddStepDialog = ({ children }: AddStepDialogProps) => {
   const params = useParams();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const form = useZodForm({
     schema: AddStepSchema,

@@ -66,14 +66,20 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
 
   return (
     <div className="w-2/5 border-r bg-card">
-      {!!steps.length &&
-        // Array.from({ length: 10 }).map((_, idx) => {
-        //   const s = steps[0];
-        //   return <StepItem key={s.id} step={s} idx={idx} />;
-        // })
-        steps.map((step, idx) => (
-          <StepItem key={step.id} step={step} idx={idx} />
-        ))}
+      {!!steps.length && (
+        <>
+          {steps.map((step, idx) => (
+            <StepItem key={step.id} step={step} idx={idx} />
+          ))}
+          <AddStepDialog>
+            <div className="my-2  flex w-full justify-center px-4">
+              <Button variant="outline" className="w-full">
+                Add new step
+              </Button>
+            </div>
+          </AddStepDialog>
+        </>
+      )}
 
       {!steps.length && (
         <div className="mt-4 flex select-none flex-col items-center justify-center">

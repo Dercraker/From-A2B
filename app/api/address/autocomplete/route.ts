@@ -1,6 +1,5 @@
 import { env } from "@/lib/env/server";
 import { authRoute, RouteError } from "@/lib/safe-route";
-import { getGeolocation } from "@/utils/getGeolocation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -13,8 +12,6 @@ export const GET = authRoute
   .handler(async (req, { query }) => {
     if (!env.GOOGLE_PLACES_API_KEY)
       throw new RouteError("Missing API Key", 400);
-
-    const country = await getGeolocation();
 
     try {
       const response = await fetch(
@@ -34,7 +31,6 @@ export const GET = authRoute
               "street_number",
               "landmark",
             ],
-            includedRegionCodes: [country || "FR"],
           }),
         },
       );

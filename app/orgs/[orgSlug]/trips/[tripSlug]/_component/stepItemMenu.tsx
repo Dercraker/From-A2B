@@ -1,3 +1,4 @@
+import { DeleteStepAlertDialog } from "@/components/steps/deleteStepAlertDialog";
 import { EditStepDialog } from "@/components/steps/editStepDialog";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
@@ -24,7 +25,7 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-2">
+      <PopoverContent className="flex select-none flex-col gap-2">
         <EditStepDialog step={step}>
           <Button variant="filled" className="flex items-center gap-2">
             <Edit3 />
@@ -46,10 +47,12 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
           Add step after
         </Button>
         <Divider />
-        <Button variant="filled" className="flex items-center gap-2" disabled>
-          <Delete />
-          Delete step
-        </Button>
+        <DeleteStepAlertDialog stepId={step.id} name={step.name}>
+          <Button variant="filled" className="flex w-full items-center gap-2">
+            <Delete />
+            Delete step
+          </Button>
+        </DeleteStepAlertDialog>
       </PopoverContent>
     </Popover>
   );
