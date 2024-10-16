@@ -38,10 +38,18 @@ import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
+import { StepDto } from "@/features/steps/dto/stepDto.schema";
 
-export type AddStepDialogProps = PropsWithChildren;
+export type AddStepDialogProps = PropsWithChildren<{
+  beforeStep?: StepDto;
+  afterStep?: StepDto;
+}>;
 
-export const AddStepDialog = ({ children }: AddStepDialogProps) => {
+export const AddStepDialog = ({
+  children,
+  beforeStep,
+  afterStep,
+}: AddStepDialogProps) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
 
@@ -52,6 +60,9 @@ export const AddStepDialog = ({ children }: AddStepDialogProps) => {
       endDate: new Date(),
       TransportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
+
+      stepAfterId: beforeStep,
+      stepBeforeId: afterStep,
     },
   });
 

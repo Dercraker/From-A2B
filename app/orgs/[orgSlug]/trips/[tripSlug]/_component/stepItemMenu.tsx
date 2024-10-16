@@ -1,3 +1,4 @@
+import { AddStepDialog } from "@/components/steps/addStepDialog";
 import { DeleteStepAlertDialog } from "@/components/steps/deleteStepAlertDialog";
 import { EditStepDialog } from "@/components/steps/editStepDialog";
 import { Button } from "@/components/ui/button";
@@ -38,14 +39,18 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
           Center map
         </Button>
         <Divider />
-        <Button variant="filled" className="flex items-center gap-2" disabled>
-          <ArrowUpFromLine />
-          Add step before
-        </Button>
-        <Button variant="filled" className="flex items-center gap-2" disabled>
-          <ArrowDownFromLine />
-          Add step after
-        </Button>
+        <AddStepDialog beforeStep={step}>
+          <Button variant="filled" className="flex items-center gap-2">
+            <ArrowUpFromLine />
+            Add step before
+          </Button>
+        </AddStepDialog>
+        <AddStepDialog afterStep={step}>
+          <Button variant="filled" className="flex items-center gap-2">
+            <ArrowDownFromLine />
+            Add step after
+          </Button>
+        </AddStepDialog>
         <Divider />
         <DeleteStepAlertDialog stepId={step.id} name={step.name}>
           <Button variant="filled" className="flex w-full items-center gap-2">

@@ -20,6 +20,8 @@ export const AddStepAction = orgAction
         tripSlug,
         description,
         placeId,
+        stepAfter,
+        stepBefore,
       },
       ctx,
     }) => {
@@ -27,7 +29,10 @@ export const AddStepAction = orgAction
         tripId: tripSlug,
       });
 
-      const newRank = getMiddleRank(undefined, lastTripStep?.rank);
+      const newRank = getMiddleRank(
+        stepBefore?.rank ?? undefined,
+        stepAfter?.rank ?? lastTripStep?.rank,
+      );
 
       const newStep = await AddStepQuery({
         step: {
