@@ -12,9 +12,9 @@ export type StepItemProps = {
 
 export const StepItem = ({ step, idx }: StepItemProps) => {
   return (
-    <div className="flex h-16 select-none items-center justify-between gap-2 border border-x-0 border-t-2 border-input px-4 first:border-t-0">
+    <div className="flex h-16 cursor-default select-none items-center justify-between gap-2 border border-x-0 border-y-2 border-input bg-card px-4 shadow-md shadow-card">
       <div className="flex items-center gap-1">
-        <GripVertical className="cursor-pointer text-muted-foreground" />
+        <GripVertical className="cursor-grabbing text-muted-foreground" />
         <StepCounter order={idx + 1} />
       </div>
       <div className="flex items-center gap-2">

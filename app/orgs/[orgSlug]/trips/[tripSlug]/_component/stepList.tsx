@@ -3,11 +3,19 @@
 import { AddStepDialog } from "@/components/steps/addStepDialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Typography } from "@/components/ui/typography";
 import { LINKS } from "@/features/navigation/Links";
 import { GetAllStepAction } from "@/features/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import {
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -21,6 +29,28 @@ export type StepListProps = {
 };
 
 export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    console.log("🚀 ~ handleDragEnd ~ over:", over);
+    console.log("🚀 ~ handleDragEnd ~ active:", active);
+
+    // if (active.id !== over.id) {
+    //   setItems((items) => {
+    //     const oldIndex = items.indexOf(active.id);
+    //     const newIndex = items.indexOf(over.id);
+
+    //     return arrayMove(items, oldIndex, newIndex);
+    //   });
+    // }
+  }
+
   const { data: steps, isPending } = useQuery({
     queryKey: STEP_KEY_FACTORY.All(tripSlug),
     queryFn: async () => {
@@ -36,7 +66,7 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
 
   if (isPending)
     return (
-      <div className="flex w-2/5 items-center justify-center border-r bg-card">
+      <div className="flex w-2/5 items-center justify-center border-r bg-muted/40">
         <div className="flex select-none items-center gap-2">
           <Typography variant="lead">Loading steps in progress</Typography>
           <Loader className="text-primary" />
@@ -46,7 +76,7 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
 
   if (!steps)
     return (
-      <div className="flex w-2/5 items-center justify-center border-r bg-card p-4">
+      <div className="flex w-2/5 items-center justify-center border-r bg-muted/40 p-4">
         <div className="flex select-none flex-col">
           <Typography variant="lead">
             Failed to fetch steps. Please try again later.
@@ -65,19 +95,21 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
     );
 
   return (
-    <div className="w-2/5 border-r bg-card">
+    <div className="flex h-full w-2/5 flex-col overflow-hidden border-r">
       {!!steps.length && (
         <>
-          {steps.map((step, idx) => (
-            <StepItem key={step.id} step={step} idx={idx} />
-          ))}
-          <AddStepDialog>
-            <div className="my-2  flex w-full justify-center px-4">
+          <ScrollArea className="flex h-full grow">
+            {steps.map((step, idx) => (
+              <StepItem key={step.id} step={step} idx={idx} />
+            ))}
+          </ScrollArea>
+          <div className="my-2  flex w-full justify-center px-4">
+            <AddStepDialog>
               <Button variant="outline" className="w-full">
                 Add new step
               </Button>
-            </div>
-          </AddStepDialog>
+            </AddStepDialog>
+          </div>
         </>
       )}
 

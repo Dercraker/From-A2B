@@ -56,7 +56,6 @@ const RouteLayout = async ({
         }
         topBarCornerLeftChildren={
           <>
-            {/* TODO Premimu card here */}
             <UserDropdown>
               <Button
                 variant="ghost"

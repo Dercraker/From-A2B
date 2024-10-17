@@ -25,7 +25,7 @@ export const TripNavigation = async ({
   return (
     <div className="grid min-h-screen w-full">
       <div className="flex max-h-screen flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:min-h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="filled" size="icon" className="shrink-0">
@@ -52,7 +52,7 @@ export const TripNavigation = async ({
             {topBarCornerLeftChildren}
           </div>
         </header>
-        <main className="flex h-full ">{children}</main>
+        <main className="flex h-full overflow-hidden">{children}</main>
       </div>
     </div>
   );
