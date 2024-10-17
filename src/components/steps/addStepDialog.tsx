@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { AddStepAction } from "@/features/steps/add/addStep.action";
 import { AddStepSchema } from "@/features/steps/add/addStep.schema";
+import { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { TransportMode } from "@prisma/client";
@@ -38,7 +39,6 @@ import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
 
 export type AddStepDialogProps = PropsWithChildren<{
   beforeStep?: StepDto;
@@ -61,8 +61,8 @@ export const AddStepDialog = ({
       TransportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
-      stepAfterId: beforeStep,
-      stepBeforeId: afterStep,
+      stepAfter: afterStep,
+      stepBefore: beforeStep,
     },
   });
 

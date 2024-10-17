@@ -39,13 +39,13 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
           Center map
         </Button>
         <Divider />
-        <AddStepDialog beforeStep={step}>
+        <AddStepDialog afterStep={step}>
           <Button variant="filled" className="flex items-center gap-2">
             <ArrowUpFromLine />
             Add step before
           </Button>
         </AddStepDialog>
-        <AddStepDialog afterStep={step}>
+        <AddStepDialog beforeStep={step}>
           <Button variant="filled" className="flex items-center gap-2">
             <ArrowDownFromLine />
             Add step after
