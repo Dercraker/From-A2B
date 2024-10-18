@@ -2,7 +2,7 @@
 
 import { ActionError, orgAction } from "@/lib/actions/safe-actions";
 import { getMiddleRank } from "@/utils/getMiddleRank";
-import { GetLastStepQueryByTripId } from "../get/getLastStep.query";
+import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
 import { ReorderAllStepQuery } from "../update/reorderAllStep.query";
@@ -26,7 +26,6 @@ export const AddStepAction = orgAction
         stepAfter,
         stepBefore,
       },
-      ctx,
     }) => {
       console.log("🚀 ~ stepBefore:", stepBefore);
       console.log("🚀 ~ stepAfter:", stepAfter);
@@ -39,9 +38,10 @@ export const AddStepAction = orgAction
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
           ? await GetStepBeforeQuery({ id: stepAfter.id })
-          : await GetLastStepQueryByTripId({
-              tripId: tripSlug,
+          : await GetLastStepQueryByTripSlug({
+              tripSlug,
             });
+      console.log("🚀 ~ tripSlug:", tripSlug);
       console.log("🚀 ~ otherStep:", otherStep?.rank);
       console.log(
         "🚀 ~ stepBefore?.rank ?? undefined:",
@@ -78,6 +78,7 @@ export const AddStepAction = orgAction
           },
         });
 
+        console.log("🚀 ~ newStep.name:", newStep.name);
         return newStep.name;
       } catch {
         await ReorderAllStepQuery({ tripSlug });

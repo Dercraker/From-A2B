@@ -13,7 +13,6 @@ export default async function AuthNavigationWrapper(props: PropsWithChildren) {
   if (!user) {
     return <NavigationWrapper>{props.children}</NavigationWrapper>;
   }
-
   const userOrgs = await getUsersOrgs();
 
   return (

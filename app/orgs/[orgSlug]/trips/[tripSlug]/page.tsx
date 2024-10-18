@@ -13,7 +13,7 @@ const RoutePage = async ({
   return (
     <>
       <StepList tripId={trip.id} tripSlug={tripSlug} orgSlug={orgSlug} />
-      <TripMap />
+      <TripMap className="hidden size-full items-center justify-center border bg-slate-500 md:flex" />
     </>
   );
 };
