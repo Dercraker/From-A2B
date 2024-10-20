@@ -34,7 +34,12 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
           </Button>
         </EditStepDialog>
         <Divider />
-        <Button variant="filled" className="flex items-center gap-2" disabled>
+        <Button
+          variant="filled"
+          className="flex items-center gap-2"
+          disabled
+          // disabled={step.longitude !== 0 && step.latitude !== 0}
+        >
           <LocateFixed />
           Center map
         </Button>

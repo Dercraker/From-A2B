@@ -26,11 +26,13 @@ export const StepItemSortable = ({ step, idx }: StepItemSortableProps) => {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
       className="flex h-16 cursor-default select-none items-center justify-between gap-2 border border-x-0 border-y-2 border-input bg-card px-4 shadow-md shadow-card"
     >
       <div className="flex items-center gap-1">
-        <GripVertical className="cursor-grabbing text-muted-foreground" />
+        <GripVertical
+          className="cursor-grabbing text-muted-foreground"
+          {...listeners}
+        />
         <StepCounter order={idx + 1} />
       </div>
       <div className="flex items-center gap-2">
