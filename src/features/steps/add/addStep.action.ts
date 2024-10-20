@@ -27,8 +27,6 @@ export const AddStepAction = orgAction
         stepBefore,
       },
     }) => {
-      console.log("🚀 ~ stepBefore:", stepBefore);
-      console.log("🚀 ~ stepAfter:", stepAfter);
       if (stepAfter && stepBefore)
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
@@ -38,27 +36,16 @@ export const AddStepAction = orgAction
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
           ? await GetStepBeforeQuery({ id: stepAfter.id })
-          : await GetLastStepQueryByTripSlug({
-              tripSlug,
-            });
-      console.log("🚀 ~ tripSlug:", tripSlug);
-      console.log("🚀 ~ otherStep:", otherStep?.rank);
-      console.log(
-        "🚀 ~ stepBefore?.rank ?? undefined:",
-        stepBefore?.rank ?? otherStep?.rank,
-      );
-      console.log(
-        "🚀 ~ stepAfter?.rank ?? lastTripStep?.rank:",
-        stepAfter?.rank ?? otherStep?.rank,
-      );
+          : null;
 
+      const lastTripStep = await GetLastStepQueryByTripSlug({
+        tripSlug,
+      });
       try {
         const newRank = getMiddleRank({
           downRank: stepBefore?.rank ?? otherStep?.rank,
-          upRank: stepAfter?.rank ?? otherStep?.rank,
+          upRank: stepAfter?.rank ?? otherStep?.rank ?? lastTripStep?.rank,
         });
-
-        console.log("🚀 ~ newRank:", newRank);
         const newStep = await AddStepQuery({
           step: {
             name,
@@ -77,8 +64,6 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
-
-        console.log("🚀 ~ newStep.name:", newStep.name);
         return newStep.name;
       } catch {
         await ReorderAllStepQuery({ tripSlug });
