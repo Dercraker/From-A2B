@@ -49,7 +49,7 @@ export const TripCard = ({
       </CardHeader>
       <CardContent>
         <Image
-          src={image ?? "https://loremflickr.com/600/400"}
+          src={image ?? "https://picsum.photos/600/400"}
           alt={"Trip Picture"}
           width={600}
           height={400}

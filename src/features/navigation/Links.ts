@@ -88,6 +88,8 @@ export const LINKS = {
       href: `${ORGANIZATION_PATH}${TRIP_PATH}/details`,
       label: "Details",
       Icon: ChartArea,
+      hidden: true,
+      disabled: true,
     },
   },
 } satisfies GenericLinkSchema;

@@ -125,7 +125,6 @@ export const EditProfileCardForm = ({
                 onChange={(url) => form.setValue("image", url)}
                 imageUrl={image}
               />
-
               <CardTitle>
                 {displayName({
                   email,

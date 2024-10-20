@@ -30,6 +30,7 @@ import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { LoadingButton } from "../form/LoadingButton";
+import { ImageFormItem } from "../images/ImageFormItem";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Textarea } from "../ui/textarea";
@@ -42,6 +43,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
     schema: AddTripSchema,
     defaultValues: {
       startDate: new Date(),
+      image: "https://picsum.photos/600/400",
     },
   });
   const router = useRouter();
@@ -150,6 +152,23 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Picture</FormLabel>
+                <FormControl>
+                  <ImageFormItem
+                    className="h-[200px] w-[300px] rounded-md"
+                    onChange={(url) => field.onChange(url)}
+                    imageUrl={field.value}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

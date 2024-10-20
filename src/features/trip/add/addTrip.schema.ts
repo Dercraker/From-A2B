@@ -10,6 +10,7 @@ export const AddTripSchema = z.object({
     .max(1000, "The description must be less than 1000 characters long")
     .optional(),
   startDate: z.date(),
+  image: z.string().url().optional(),
 });
 
 export type AddTripSchema = z.infer<typeof AddTripSchema>;

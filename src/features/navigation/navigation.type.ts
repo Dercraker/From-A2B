@@ -14,6 +14,7 @@ const NavigationLinkSchema = z.object({
   label: z.string(),
   roles: z.array(z.nativeEnum(OrganizationMembershipRole)).optional(),
   hidden: z.boolean().optional(),
+  disabled: z.boolean().optional(),
 });
 
 const NavigationLinksSchema = z.array(NavigationLinkSchema);
