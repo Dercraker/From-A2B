@@ -9,8 +9,8 @@ export const StepDtoSchema = z.object({
   description: z.string().nullable(),
   startDate: z.date().nullable(),
   endDate: z.date().nullable(),
-  latitude: z.number().nullable(),
-  longitude: z.number().nullable(),
+  latitude: z.number(),
+  longitude: z.number(),
 
   placeId: z.string(),
   transportMode: z.string(),

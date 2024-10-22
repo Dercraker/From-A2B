@@ -1,6 +1,7 @@
 import { FloatingLegalFooter } from "@/components/legal/FloatingLegalFooter";
 import { NextTopLoader } from "@/components/page/NextTopLoader";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
+import { env } from "@/lib/env/server";
 import { getServerUrl } from "@/lib/server-url";
 import { cn } from "@/lib/utils";
 import { SiteConfig } from "@/site-config";
@@ -34,7 +35,7 @@ export default function RootLayout({
             GeistSans.variable,
           )}
         >
-          <Providers>
+          <Providers GOOGLE_MAPS_JS_API_KEY={env.GOOGLE_MAPS_JS_API_KEY}>
             <NextTopLoader
               delay={100}
               showSpinner={false}

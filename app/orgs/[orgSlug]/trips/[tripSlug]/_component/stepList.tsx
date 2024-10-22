@@ -14,6 +14,7 @@ import {
   ReSortStepsAction,
   ReSortStepsSchema,
 } from "@/features/steps/update/reSortSteps.action";
+import { useTripStore } from "@/features/trip/trip.store";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import {
   closestCenter,
@@ -33,6 +34,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useShallow } from "zustand/react/shallow";
 import { GenerateOrganizationLink } from "../../../(navigation)/_navigation/org-navigation.links";
 import { StepItemSortable } from "./stepItemSortable";
 
@@ -43,7 +45,7 @@ export type StepListProps = {
 };
 
 export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
-  const [steps, SetSteps] = useState<StepDto[] | null | undefined>(undefined);
+  const {steps,SetSteps} = useTripStore(useShallow((s) => s));
 
   const queryClient = useQueryClient();
 

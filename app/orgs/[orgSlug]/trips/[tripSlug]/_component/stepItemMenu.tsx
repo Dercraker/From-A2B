@@ -14,9 +14,9 @@ import {
   ArrowUpFromLine,
   Delete,
   Edit3,
-  LocateFixed,
 } from "lucide-react";
 import { PropsWithChildren } from "react";
+import { CenterMapMenuButton } from "./centerMapMenuButton";
 
 export type StepItemMenuProps = PropsWithChildren<{
   step: StepDto;
@@ -34,15 +34,7 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
           </Button>
         </EditStepDialog>
         <Divider />
-        <Button
-          variant="filled"
-          className="flex items-center gap-2"
-          disabled
-          // disabled={step.longitude !== 0 && step.latitude !== 0}
-        >
-          <LocateFixed />
-          Center map
-        </Button>
+        <CenterMapMenuButton step={step} />
         <Divider />
         <AddStepDialog afterStep={step}>
           <Button variant="filled" className="flex items-center gap-2">
