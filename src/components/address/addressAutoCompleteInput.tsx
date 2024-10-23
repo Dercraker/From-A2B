@@ -1,11 +1,14 @@
 "use client";
 
 import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
+import { SearchPlacesAction } from "@/features/places/searchPlaces.action";
 import { useDebounce } from "@/hooks/use-debounce";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Command as CommandPrimitive } from "cmdk";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   Command,
   CommandEmpty,
@@ -52,10 +55,13 @@ export const AddressAutoCompleteInput = ({
   const { data, isPending, refetch } = useQuery({
     queryKey: ADDRESS_KEY_FACTORY.AutoComplete(debouncedSearchInput),
     queryFn: async () => {
-      const response = await fetch(
-        `/api/address/autocomplete?input=${debouncedSearchInput}`,
-      );
-      return response.json() ?? {};
+      const res = await SearchPlacesAction({ textQuery: debouncedSearchInput });
+      if (!isActionSuccessful(res)) {
+        toast.error(res?.serverError || "Failed to fetch places");
+        return [];
+      }
+
+      return res.data;
     },
     enabled: !!debouncedSearchInput,
   });
@@ -65,7 +71,7 @@ export const AddressAutoCompleteInput = ({
     refetch();
   }, [debouncedSearchInput]);
 
-  const predictions = data?.data || [];
+  const predictions = data || [];
 
   return (
     <Command
@@ -84,7 +90,7 @@ export const AddressAutoCompleteInput = ({
             onValueChange={setSearchInput}
             onBlur={close}
             onFocus={open}
-            placeholder={placeholder || "Enter address"}
+            placeholder={placeholder || "Enter place"}
             className="w-full rounded-lg p-3 outline-none"
           />
         </div>
@@ -104,30 +110,20 @@ export const AddressAutoCompleteInput = ({
                   </div>
                 ) : (
                   <>
-                    {predictions.map(
-                      (prediction: {
-                        placePrediction: {
-                          placeId: string;
-                          place: string;
-                          text: { text: string };
-                        };
-                      }) => (
-                        <CommandPrimitive.Item
-                          value={prediction.placePrediction.text.text}
-                          onSelect={() => {
-                            setSelectedPlaceId(
-                              prediction.placePrediction.placeId,
-                            );
-                            setIsOpenDialog(true);
-                          }}
-                          className="flex h-max cursor-pointer select-text flex-col items-start gap-0.5 rounded-md p-2 px-3 hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground"
-                          key={prediction.placePrediction.placeId}
-                          onMouseDown={(e) => e.preventDefault()}
-                        >
-                          {prediction.placePrediction.text.text}
-                        </CommandPrimitive.Item>
-                      ),
-                    )}
+                    {predictions.map(({ name, formattedAddress }) => (
+                      <CommandPrimitive.Item
+                        value={formattedAddress}
+                        onSelect={() => {
+                          setSelectedPlaceId(name);
+                          setIsOpenDialog(true);
+                        }}
+                        className="flex h-max cursor-pointer select-text flex-col items-start gap-0.5 rounded-md p-2 px-3 hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground"
+                        key={name}
+                        onMouseDown={(e) => e.preventDefault()}
+                      >
+                        {formattedAddress}
+                      </CommandPrimitive.Item>
+                    ))}
                   </>
                 )}
 
@@ -135,7 +131,7 @@ export const AddressAutoCompleteInput = ({
                   {!isPending && predictions.length === 0 && (
                     <div className="flex items-center justify-center py-4">
                       {searchInput === ""
-                        ? "Please enter an address"
+                        ? "Please enter an place"
                         : "No address found"}
                     </div>
                   )}

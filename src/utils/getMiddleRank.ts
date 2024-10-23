@@ -1,9 +1,6 @@
 const STEP = 5000;
 
 export const isLessThan = (downRank: number, upRank: number) => {
-  console.log("🚀 ~ isLessThan ~ upRank:", upRank);
-  console.log("🚀 ~ isLessThan ~ downRank:", downRank);
-  console.log("🚀 ~ upRank > downRank:", upRank > downRank);
   return upRank > downRank;
 };
 

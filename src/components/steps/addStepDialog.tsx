@@ -161,10 +161,10 @@ export const AddStepDialog = ({
 
           <FormField
             control={form.control}
-            name="placeId"
+            name="latitude"
             render={() => (
               <FormItem>
-                <FormLabel>Address</FormLabel>
+                <FormLabel>Place</FormLabel>
                 <AutocompleteComponent
                   onChange={(address) => {
                     form.setValue("latitude", address.lat);
@@ -239,6 +239,7 @@ export const AddStepDialog = ({
               className="flex-1"
               onClick={async () => await addStepAsync(form.getValues())}
               loading={isPending}
+              disabled={!form.formState.isValid}
             >
               Add new step
             </LoadingButton>

@@ -14,6 +14,7 @@ import { GenericLinkSchema } from "./navigation.type";
 
 const ORGANIZATION_PATH = `/orgs/:organizationSlug`;
 const TRIP_PATH = `/trips/:tripSlug`;
+const STEP_PATH = `/steps/:stepSlug`;
 
 export const LINKS = {
   Landing: {
@@ -90,6 +91,10 @@ export const LINKS = {
       Icon: ChartArea,
       hidden: true,
       disabled: true,
+    },
+    Step: {
+      href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}`,
+      label: "Step",
     },
   },
 } satisfies GenericLinkSchema;

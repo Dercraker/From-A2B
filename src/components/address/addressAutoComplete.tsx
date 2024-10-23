@@ -1,10 +1,13 @@
 "use client";
 
 import { AddressType } from "@/features/address/address.schema";
+import { AddressByPlaceIdAction } from "@/features/address/addressByPlaceId.action";
 import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Delete, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { AddressAutoCompleteInput } from "./addressAutoCompleteInput";
@@ -38,10 +41,13 @@ export default function AddressAutoComplete({
     queryKey: ADDRESS_KEY_FACTORY.PlaceId(selectedPlaceId),
     queryFn: async () => {
       if (!selectedPlaceId) return;
-      const response = await fetch(
-        `/api/address/place?placeId=${selectedPlaceId}`,
-      );
-      return response.json();
+      const res = await AddressByPlaceIdAction({ placeId: selectedPlaceId });
+      if (!isActionSuccessful(res)) {
+        toast.error(res?.serverError || "Failed to fetch place");
+        return;
+      }
+
+      return res.data;
     },
     enabled: !!selectedPlaceId,
   });
@@ -52,11 +58,11 @@ export default function AddressAutoComplete({
     refetch();
   }, [selectedPlaceId]);
 
-  const adrAddress = data?.data.adrAddress;
+  const adrAddress = data?.formattedAddress || "";
 
   useEffect(() => {
-    if (data?.data.address) {
-      setAddress(data.data.address as AddressType);
+    if (data) {
+      setAddress(data as AddressType);
     }
   }, [data, setAddress]);
 

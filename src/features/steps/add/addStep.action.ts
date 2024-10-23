@@ -1,6 +1,7 @@
 "use server";
 
 import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { generateSlug } from "@/lib/format/id";
 import { getMiddleRank } from "@/utils/getMiddleRank";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
@@ -49,6 +50,7 @@ export const AddStepAction = orgAction
         const newStep = await AddStepQuery({
           step: {
             name,
+            slug: generateSlug(name),
             latitude,
             longitude,
             startDate,

@@ -7,7 +7,6 @@ import { LoadingOverlay } from "@/components/ui/loadingOverlay";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Typography } from "@/components/ui/typography";
 import { LINKS } from "@/features/navigation/Links";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { GetAllStepAction } from "@/features/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import {
@@ -32,7 +31,6 @@ import {
 } from "@dnd-kit/sortable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
 import { GenerateOrganizationLink } from "../../../(navigation)/_navigation/org-navigation.links";
@@ -45,7 +43,7 @@ export type StepListProps = {
 };
 
 export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
-  const {steps,SetSteps} = useTripStore(useShallow((s) => s));
+  const { steps, SetSteps } = useTripStore(useShallow((s) => s));
 
   const queryClient = useQueryClient();
 
@@ -149,7 +147,13 @@ export const StepList = ({ tripId, orgSlug, tripSlug }: StepListProps) => {
                 strategy={verticalListSortingStrategy}
               >
                 {steps.map((step, idx) => (
-                  <StepItemSortable key={step.id} step={step} idx={idx} />
+                  <StepItemSortable
+                    key={step.id}
+                    step={step}
+                    idx={idx}
+                    orgSlug={orgSlug}
+                    tripSlug={tripSlug}
+                  />
                 ))}
               </SortableContext>
             </DndContext>

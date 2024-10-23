@@ -9,8 +9,6 @@ import { AddTripSchema } from "./addTrip.schema";
 export const AddTripAction = orgAction
   .schema(AddTripSchema)
   .action(async ({ parsedInput, ctx }) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     const tripSlug = await AddTripQuery({
       ...parsedInput,
       slug: generateSlug(parsedInput.name),

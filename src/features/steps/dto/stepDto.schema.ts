@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const StepDtoSchema = z.object({
   id: z.string(),
+  slug: z.string(),
   tripId: z.string(),
 
   rank: z.number(),

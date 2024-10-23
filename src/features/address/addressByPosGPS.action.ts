@@ -14,11 +14,7 @@ export const AddressByPosGPSAction = orgAction
   .schema(AddressByPosGPSSchema)
   .action(async ({ parsedInput: { lat, lng } }) => {
     const result = await reverseGeoCoding(lat, lng);
-    console.log("🚀 ~ .action ~ result:", result);
-
     const data = result[0];
-    console.log("🚀 ~ .action ~ data:", data);
-
     const dataFinderRegx = (c: string) => {
       const regx = new RegExp(`<span class="${c}">([^<]+)<\/span>`);
       const match = data.adrFormatAddress?.match(regx);

@@ -19,6 +19,7 @@ model Trip {
 
 model Step {
   id            String    @id @unique @default(cuid())
+  slug          String    @unique
   tripId        String
   trip          Trip? @relation(fields: [tripId], references: [id], onDelete: Cascade)
 

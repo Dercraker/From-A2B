@@ -54,7 +54,6 @@ export const AutocompleteComponent = ({
   const { isLoading: placeIdLoading } = useQuery({
     queryKey: ADDRESS_KEY_FACTORY.PlaceId(String(placeId)),
     queryFn: async () => {
-      console.log("🚀 ~ queryFn: ~ placeId:", placeId);
       if (!placeId) throw new Error("No placeId provided");
 
       const result = await AddressByPlaceIdAction({ placeId });
@@ -82,7 +81,7 @@ export const AutocompleteComponent = ({
       setAddress={setAddress}
       searchInput={searchInput}
       setSearchInput={setSearchInput}
-      dialogTitle="Enter Address"
+      dialogTitle="Enter place"
       isLoading={placeIdLoading || gpsLoading}
     />
   );
