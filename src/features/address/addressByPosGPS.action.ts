@@ -40,6 +40,7 @@ export const AddressByPosGPSAction = orgAction
       country,
       lat: Number(lat),
       lng: Number(lng),
+      placeId: null,
     };
 
     return formattedData;

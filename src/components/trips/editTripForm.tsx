@@ -128,7 +128,11 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Any description" {...field} />
+                    <Textarea
+                      {...field}
+                      value={field.value || ""}
+                      placeholder="Any description"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

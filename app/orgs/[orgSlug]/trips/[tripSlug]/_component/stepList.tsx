@@ -16,6 +16,7 @@ import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import {
   closestCenter,
   DndContext,
+  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -84,12 +85,12 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
     }),
   );
 
-  const handleDragEnd = async (event) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id && !!steps) {
+    if (active.id !== over?.id && !!steps) {
       const oldIndex = steps.findIndex((s) => s.id === active.id);
-      const newIndex = steps.findIndex((s) => s.id === over.id);
+      const newIndex = steps.findIndex((s) => s.id === over?.id);
 
       const newSteps = arrayMove(steps, oldIndex, newIndex);
 

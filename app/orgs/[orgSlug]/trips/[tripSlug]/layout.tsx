@@ -1,8 +1,8 @@
-import { UserDropdown } from "@/components/auth/UserDropdown";
+import { UserDropdown } from "@/components/auth/UserDropDown";
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
 import { Layout } from "@/components/page/layout";
 import { Alert } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { IsTripExistQuery } from "@/features/trip/get/isTripExist.query";

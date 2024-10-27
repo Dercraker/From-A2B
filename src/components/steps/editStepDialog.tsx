@@ -132,7 +132,11 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Any description" {...field} />
+                  <Textarea
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="Any description"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -194,7 +198,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
                     form.setValue("longitude", address.lng);
                     form.setValue("placeId", address.placeId);
                   }}
-                  placeId={form.getValues().placeId}
+                  placeId={form.getValues().placeId || undefined}
                   lat={form.getValues().latitude}
                   lon={form.getValues().longitude}
                 />

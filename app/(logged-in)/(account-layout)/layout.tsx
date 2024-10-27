@@ -9,7 +9,7 @@ import { CircleAlert, Rabbit } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { VerifyEmailButton } from "./account/verify-email/VerifyEmailButton";
-import { AccountNavigation } from "./AccountNavigation";
+import { AccountNavigation } from "./accountNavigation";
 
 export const metadata: Metadata = {
   title: "Account",

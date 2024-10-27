@@ -162,6 +162,7 @@ const RoutePage = ({
                   <FormControl>
                     <Textarea
                       {...field}
+                      value={field.value || ""}
                       placeholder="Any description"
                       className="bg-card"
                     />
@@ -225,7 +226,7 @@ const RoutePage = ({
                   onChange={(address) => {
                     form.setValue("latitude", address.lat);
                     form.setValue("longitude", address.lng);
-                    form.setValue("placeId", address.placeId || null);
+                    form.setValue("placeId", address.placeId);
                   }}
                   placeId={form.getValues().placeId || undefined}
                   lat={form.getValues().latitude}
@@ -241,9 +242,7 @@ const RoutePage = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>
-                <Select
-                  {...field}
-                >
+                <Select {...field}>
                   <SelectTrigger>
                     <FormControl>
                       <SelectValue

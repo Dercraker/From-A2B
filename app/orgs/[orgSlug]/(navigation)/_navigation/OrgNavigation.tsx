@@ -1,7 +1,7 @@
-import { UserDropdown } from "@/components/auth/UserDropdown";
+import { UserDropdown } from "@/components/auth/UserDropDown";
 import { ContactFeedbackPopover } from "@/components/contact/feedback/ContactFeedbackPopover";
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getUsersOrgs } from "@/features/org/get-users-orgs.query";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";

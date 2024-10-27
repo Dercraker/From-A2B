@@ -1,5 +1,11 @@
 import { ContactSupportDialog } from "@/components/contact/support/ContactSupportDialog";
-import { Layout, LayoutContent, LayoutDescription, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutDescription,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,7 +14,7 @@ export default function CancelPaymentPage() {
   return (
     <Layout>
       <LayoutHeader>
-        <Badge variant="filled">Payment failed</Badge>
+        <Badge variant="destructive">Payment failed</Badge>
         <LayoutTitle>
           We're sorry, but we couldn't process your payment
         </LayoutTitle>

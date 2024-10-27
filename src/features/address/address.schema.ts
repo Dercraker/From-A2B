@@ -10,7 +10,7 @@ export const AddressSchema = z.object({
   country: z.string(),
   lat: z.number(),
   lng: z.number(),
-  placeId: z.string().optional(),
+  placeId: z.string().nullable(),
 });
 
 export type AddressType = z.infer<typeof AddressSchema>;

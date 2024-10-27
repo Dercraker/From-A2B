@@ -1,11 +1,11 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserDropdown } from "@/components/auth/UserDropDown";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { useIsClient } from "@/hooks/useIsClient";
 import type { VariantProps } from "class-variance-authority";
 import Link from "next/link";
-import { UserDropdown } from "./UserDropdown";
 
 const useHref = () => {
   const isClient = useIsClient();

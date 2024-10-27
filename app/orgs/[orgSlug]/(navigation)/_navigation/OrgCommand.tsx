@@ -66,17 +66,15 @@ export function OrganizationCommand() {
           <CommandEmpty>No results found.</CommandEmpty>
           {ORGANIZATION_LINKS.map((link, idx) => (
             <CommandGroup heading={link.title} key={idx}>
-              {link.links.map((link) => (
+              {link.links.map(({ href, label, Icon }) => (
                 <CommandItem
-                  key={link.href}
+                  key={href}
                   onSelect={() => {
-                    router.push(
-                      link.href.replace(":organizationSlug", orgSlug),
-                    );
+                    router.push(href.replace(":organizationSlug", orgSlug));
                   }}
                 >
-                  <link.Icon className="mr-2 size-4" />
-                  <span>{link.label}</span>
+                  {Icon && <Icon className="mr-2 size-4" />}
+                  <span>{label}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

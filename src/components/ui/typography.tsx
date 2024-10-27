@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from "@/lib/utils";
 import type { VariantProps } from "class-variance-authority";
@@ -102,7 +100,7 @@ const InnerTypography = <
   >,
   ref: ForwardedRef<any>,
 ) => {
-  const Comp = as ?? defaultElementMapping[variant ?? "default"];
+  const Comp: ElementType = as ?? defaultElementMapping[variant ?? "default"];
   return (
     <Comp
       {...props}

@@ -284,13 +284,7 @@ const AddressDialog = ({
                     name="city"
                     placeholder="City"
                   />
-                  {errorMap.city && (
-                    <FormMessages
-                      type="error"
-                      className="pt-1 text-sm"
-                      messages={[errorMap.city]}
-                    />
-                  )}
+                  {errorMap.city && <FormMessage />}
                 </div>
                 <div className="flex-1 space-y-0.5">
                   <Label htmlFor="region">State / Province / Region</Label>
@@ -302,13 +296,7 @@ const AddressDialog = ({
                     name="region"
                     placeholder="Region"
                   />
-                  {errorMap.region && (
-                    <FormMessages
-                      type="error"
-                      className="pt-1 text-sm"
-                      messages={[errorMap.region]}
-                    />
-                  )}
+                  {errorMap.region && <FormMessage />}
                 </div>
               </div>
 

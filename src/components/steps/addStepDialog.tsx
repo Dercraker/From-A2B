@@ -188,7 +188,7 @@ export const AddStepDialog = ({
                   onChange={(address) => {
                     form.setValue("latitude", address.lat);
                     form.setValue("longitude", address.lng);
-                    form.setValue("placeId", address.placeId);
+                    form.setValue("placeId", address.placeId || undefined);
                   }}
                 />
                 <FormMessage />

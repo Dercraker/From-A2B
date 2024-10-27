@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
