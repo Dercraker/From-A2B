@@ -30,12 +30,13 @@ import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AutocompleteComponent } from "../address/autocompleteComponent";
 import { LoadingButton } from "../form/LoadingButton";
 import { CalendarDatePicker } from "../ui/calendar-date-picker";
+import { DateTimePicker } from "../ui/DateTimePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
@@ -47,6 +48,7 @@ export type EditStepDialogProps = PropsWithChildren<{
 export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const form = useZodForm({
     schema: EditStepSchema,
@@ -88,6 +90,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
       queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(params.tripSlug.toString()),
       });
+      router.refresh();
     },
   });
 
@@ -131,6 +134,26 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
                 <FormControl>
                   <Textarea placeholder="Any description" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="startDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-1 flex-col">
+                <DateTimePicker
+                  value={field.value ?? new Date()}
+                  className="w-full"
+                  onChange={(date) => {
+                    form.setValue("startDate", date || new Date(), {
+                      shouldDirty: true,
+                    });
+                  }}
+                />
+
                 <FormMessage />
               </FormItem>
             )}

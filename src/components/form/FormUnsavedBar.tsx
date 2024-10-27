@@ -10,16 +10,21 @@ import { Typography } from "@/components/ui/typography";
 import { useWarnIfUnsavedChanges } from "@/hooks/useWarnIfUnsavedChanges";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { RotateCcw } from "lucide-react";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
 import type { FieldValues } from "react-hook-form";
 import { useKey } from "react-use";
+import { Button } from "../ui/button";
+import { InlineTooltip } from "../ui/tooltip";
 import { LoadingButton } from "./LoadingButton";
 
 export const FormUnsavedBar = <T extends FieldValues>(props: FormProps<T>) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const resetButtonRef = useRef<HTMLButtonElement>(null);
 
-  const submit = () => buttonRef.current?.click();
+  const submit = () => submitButtonRef.current?.click();
+  const reset = () => resetButtonRef.current?.click();
 
   const isDirty = props.form.formState.isDirty;
 
@@ -41,7 +46,8 @@ export const FormUnsavedBar = <T extends FieldValues>(props: FormProps<T>) => {
     <>
       <Form {...props} className={cn(props.className)}>
         {props.children}
-        <button type="submit" className="hidden" ref={buttonRef} />
+        <button type="submit" className="hidden" ref={submitButtonRef} />
+        <button type="reset" className="hidden" ref={resetButtonRef} />
       </Form>
       {createPortal(
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center overflow-hidden py-4">
@@ -78,11 +84,21 @@ export const FormUnsavedBar = <T extends FieldValues>(props: FormProps<T>) => {
                   }}
                 >
                   Save{" "}
-                  <KeyboardShortcut eventKey="cmd">
+                  <KeyboardShortcut eventKey="ctrl">
                     <CmdOrOption />
                   </KeyboardShortcut>
                   <KeyboardShortcut eventKey="s">S</KeyboardShortcut>
                 </LoadingButton>
+                <Button
+                  variant="outline-destructive"
+                  onClick={() => {
+                    reset();
+                  }}
+                >
+                  <InlineTooltip title="Discard Changes">
+                    <RotateCcw className="text-red-400" />
+                  </InlineTooltip>
+                </Button>
               </motion.div>
             ) : null}
           </AnimatePresence>

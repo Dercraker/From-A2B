@@ -35,7 +35,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { AutocompleteComponent } from "../address/autocompleteComponent";
 import { LoadingButton } from "../form/LoadingButton";
-import { CalendarDatePicker } from "../ui/calendar-date-picker";
+import { DateTimePicker } from "../ui/DateTimePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
@@ -139,21 +139,40 @@ export const AddStepDialog = ({
           <FormField
             control={form.control}
             name="startDate"
-            render={() => (
-              <FormItem>
-                <FormLabel>Dates of step</FormLabel>
-                <FormControl>
-                  <CalendarDatePicker
-                    date={{
-                      from: form.getValues().startDate ?? undefined,
-                      to: form.getValues().endDate ?? undefined,
-                    }}
-                    onDateSelect={(v) => {
-                      form.setValue("startDate", v.from);
-                      form.setValue("endDate", v.to);
-                    }}
-                  />
-                </FormControl>
+            render={({ field }) => (
+              <FormItem className="flex flex-1 flex-col">
+                <FormLabel>Start Date</FormLabel>
+                <DateTimePicker
+                  value={field.value ?? new Date()}
+                  className="w-full"
+                  onChange={(date) => {
+                    form.setValue("startDate", date || new Date(), {
+                      shouldDirty: true,
+                    });
+                  }}
+                />
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="endDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-1 flex-col">
+                <FormLabel>End Date</FormLabel>
+                <DateTimePicker
+                  value={field.value ?? new Date()}
+                  className="w-full"
+                  onChange={(date) => {
+                    form.setValue("endDate", date || new Date(), {
+                      shouldDirty: true,
+                    });
+                  }}
+                />
+
                 <FormMessage />
               </FormItem>
             )}

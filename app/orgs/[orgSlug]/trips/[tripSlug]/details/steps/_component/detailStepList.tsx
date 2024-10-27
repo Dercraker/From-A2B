@@ -13,6 +13,7 @@ import { ReSortStepsSchema } from "@/features/steps/update/reSortStep.schema";
 import { ReSortStepsAction } from "@/features/steps/update/reSortSteps.action";
 import { useTripStore } from "@/features/trip/trip.store";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { cn } from "@/lib/utils";
 import {
   closestCenter,
   DndContext,
@@ -29,17 +30,20 @@ import {
 } from "@dnd-kit/sortable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { GenerateOrganizationLink } from "../../../(navigation)/_navigation/org-navigation.links";
-import { StepItemSortable } from "./stepItemSortable";
+import { GenerateOrganizationLink } from "../../../../../(navigation)/_navigation/org-navigation.links";
+import { StepItemSortable } from "../../../_component/stepItemSortable";
 
 export type StepListProps = {
   tripSlug: string;
   orgSlug: string;
 };
 
-export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
+export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
+  const params = useParams();
+
   const { steps, SetSteps } = useTripStore(useShallow((s) => s));
 
   const queryClient = useQueryClient();
@@ -144,14 +148,20 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
                 strategy={verticalListSortingStrategy}
               >
                 {steps.map((step, idx) => (
-                  <StepItemSortable
-                    key={step.id}
-                    step={step}
-                    idx={idx}
-                    orgSlug={orgSlug}
-                    tripSlug={tripSlug}
-                    className=" h-16  border border-x-0 border-y-2 border-input bg-card px-4 shadow-md shadow-card"
-                  />
+                  <>
+                    <StepItemSortable
+                      key={step.id}
+                      step={step}
+                      idx={idx}
+                      orgSlug={orgSlug}
+                      tripSlug={tripSlug}
+                      className={cn(
+                        "m-4 ml-0 first:mt-0 last:mb-0 h-16",
+                        params.stepSlug === step.slug &&
+                          "border border-border rounded-lg bg-primary/5",
+                      )}
+                    />
+                  </>
                 ))}
               </SortableContext>
             </DndContext>

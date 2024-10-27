@@ -2,7 +2,7 @@
 
 import { orgAction } from "@/lib/actions/safe-actions";
 import { generateSlug } from "@/lib/format/id";
-import { GenerateTripLink } from "../../trips/trips.link";
+import { ConstructTripLink, GenerateTripLink } from "../../trips/trips.link";
 import { AddTripQuery } from "./addTrip.query";
 import { AddTripSchema } from "./addTrip.schema";
 

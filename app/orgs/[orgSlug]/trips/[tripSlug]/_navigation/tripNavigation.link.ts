@@ -34,7 +34,8 @@ export const TRIP_LINKS: NavigationLinksGroups = [
     title: "Current Trip",
     links: [
       LINKS.Trips.Itinerary,
-      // LINKS.Trips.Details,
+      LINKS.Trips.Details,
+      LINKS.Trips.StepDetail,
     ] satisfies NavigationLinks,
   },
   {

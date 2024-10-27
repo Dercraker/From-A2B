@@ -8,12 +8,12 @@ export const EditStepSchema = z.object({
   name: z.string(),
   startDate: z.date(),
   endDate: z.date(),
-  description: z.string().optional(),
+  description: z.string().nullable(),
 
   latitude: z.number(),
   longitude: z.number(),
 
-  placeId: z.string().optional(),
+  placeId: z.string().nullable(),
   transportMode: z.nativeEnum(TransportMode).default(TransportMode.Car),
 });
 

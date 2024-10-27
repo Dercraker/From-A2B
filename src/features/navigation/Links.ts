@@ -8,6 +8,7 @@ import {
   Mail,
   Map,
   Plane,
+  StepForwardIcon,
   User2,
 } from "lucide-react";
 import { GenericLinkSchema } from "./navigation.type";
@@ -89,8 +90,11 @@ export const LINKS = {
       href: `${ORGANIZATION_PATH}${TRIP_PATH}/details`,
       label: "Details",
       Icon: ChartArea,
-      hidden: true,
-      disabled: true,
+    },
+    StepDetail: {
+      href: `${ORGANIZATION_PATH}${TRIP_PATH}/details/steps`,
+      label: "Steps",
+      Icon: StepForwardIcon,
     },
     Step: {
       href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}`,

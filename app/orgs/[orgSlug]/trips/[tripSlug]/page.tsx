@@ -12,7 +12,7 @@ const RoutePage = async ({
 
   return (
     <>
-      <StepList tripId={trip.id} tripSlug={tripSlug} orgSlug={orgSlug} />
+      <StepList tripSlug={tripSlug} orgSlug={orgSlug} />
       <TripMap
         tripId={trip.id}
         tripSlug={tripSlug}

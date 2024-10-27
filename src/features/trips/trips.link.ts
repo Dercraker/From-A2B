@@ -10,3 +10,13 @@ export const GenerateTripLink = ({
   LINKS.Trips.Trip.href
     .replace(":organizationSlug", orgSlug)
     .replace(":tripSlug", tripSlug);
+
+export const ConstructTripLink = ({
+  orgSlug,
+  tripSlug,
+  href,
+}: {
+  orgSlug: string;
+  tripSlug: string;
+  href: string;
+}) => href.replace(":organizationSlug", orgSlug).replace(":tripSlug", tripSlug);

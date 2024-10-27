@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { TripListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { GenerateTripLink } from "@/features/trips/trips.link";
+import { ConstructTripLink, GenerateTripLink } from "@/features/trips/trips.link";
 import { format } from "date-fns";
 import { PlaneLanding, PlaneTakeoff } from "lucide-react";
 import Image from "next/image";

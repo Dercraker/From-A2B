@@ -2,18 +2,19 @@ import { InlineTooltip } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
 import { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { GenerateStepLink } from "@/features/steps/steps.link";
+import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { EllipsisVertical, GripVertical } from "lucide-react";
+import { GripVertical } from "lucide-react";
 import Link from "next/link";
 import { StepCounter } from "./stepCounter";
-import { StepItemMenu } from "./stepItemMenu";
 
 export type StepItemSortableProps = {
   tripSlug: string;
   orgSlug: string;
   step: StepDto;
   idx: number;
+  className?: string;
 };
 
 export const StepItemSortable = ({
@@ -21,6 +22,7 @@ export const StepItemSortable = ({
   idx,
   orgSlug,
   tripSlug,
+  className,
 }: StepItemSortableProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: step.id });
@@ -35,7 +37,10 @@ export const StepItemSortable = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className="flex h-16 cursor-default select-none items-center justify-between gap-2 border border-x-0 border-y-2 border-input bg-card px-4 shadow-md shadow-card"
+      className={cn(
+        "flex cursor-default select-none items-center justify-between gap-2",
+        className,
+      )}
     >
       <div className="flex items-center gap-1">
         <GripVertical
@@ -44,21 +49,16 @@ export const StepItemSortable = ({
         />
         <StepCounter order={idx + 1} />
       </div>
-      <div className="flex items-center gap-2">
-        <InlineTooltip title={step.name}>
-          <Typography
-            as={Link}
-            href={GenerateStepLink({ orgSlug, tripSlug, stepSlug: step.slug })}
-            variant="link"
-            className="overflow-hidden text-ellipsis text-nowrap text-xl"
-          >
-            {step.name}
-          </Typography>
-        </InlineTooltip>
-        <StepItemMenu step={step}>
-          <EllipsisVertical className="h-8 cursor-pointer rounded-lg text-muted-foreground active:bg-muted-foreground/10" />
-        </StepItemMenu>
-      </div>
+      <InlineTooltip title={step.name}>
+        <Typography
+          as={Link}
+          href={GenerateStepLink({ orgSlug, tripSlug, stepSlug: step.slug })}
+          variant="link"
+          className="mr-2 overflow-hidden text-ellipsis text-nowrap text-xl"
+        >
+          {step.name}
+        </Typography>
+      </InlineTooltip>
     </div>
   );
 };

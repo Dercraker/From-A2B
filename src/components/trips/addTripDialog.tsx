@@ -21,18 +21,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { AddTripAction } from "@/features/trip/add/addTrip.action";
 import { AddTripSchema } from "@/features/trip/add/addTrip.schema";
-import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { LoadingButton } from "../form/LoadingButton";
 import { ImageFormItem } from "../images/ImageFormItem";
-import { Calendar } from "../ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { DateTimePicker } from "../ui/DateTimePicker";
 import { Textarea } from "../ui/textarea";
 
 type AddTripDialogProps = PropsWithChildren;
@@ -121,37 +117,16 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Start Date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "border-input",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto size-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="w-auto -translate-y-1/2"
-                    align="center"
-                  >
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <DateTimePicker
+                    value={field.value ?? new Date()}
+                    onChange={(date) => {
+                      form.setValue("startDate", date || new Date(), {
+                        shouldDirty: true,
+                      });
+                    }}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

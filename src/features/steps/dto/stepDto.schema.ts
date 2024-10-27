@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export const StepDtoSchema = z.object({
@@ -10,8 +11,14 @@ export const StepDtoSchema = z.object({
   description: z.string().nullable(),
   startDate: z.date().nullable(),
   endDate: z.date().nullable(),
-  latitude: z.number(),
-  longitude: z.number(),
+  latitude: z.preprocess((val) => {
+    if (typeof val === "string") return Number(new Prisma.Decimal(val));
+    return Number(val);
+  }, z.number()),
+  longitude: z.preprocess((val) => {
+    if (typeof val === "string") return Number(new Prisma.Decimal(val));
+    return Number(val);
+  }, z.number()),
 
   placeId: z.string(),
   transportMode: z.string(),

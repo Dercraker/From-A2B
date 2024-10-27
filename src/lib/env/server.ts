@@ -18,6 +18,7 @@ export const env = createEnv({
     GOOGLE_PLACES_API_KEY: z.string().min(1),
     GOOGLE_GEOCODING_API_KEY: z.string().min(1),
     GOOGLE_MAPS_JS_API_KEY: z.string().min(1),
+    OPENAI_API_KEY: z.string().min(1),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
@@ -35,5 +36,6 @@ export const env = createEnv({
     GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
     GOOGLE_GEOCODING_API_KEY: process.env.GOOGLE_GEOCODING_API_KEY,
     GOOGLE_MAPS_JS_API_KEY: process.env.GOOGLE_MAPS_JS_API_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
 });

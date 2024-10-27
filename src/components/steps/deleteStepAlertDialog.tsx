@@ -13,12 +13,14 @@ import { Typography } from "../ui/typography";
 export type DeleteStepAlertDialogProps = PropsWithChildren<{
   name: string;
   stepId: string;
+  onDeleted?: () => void;
 }>;
 
 export const DeleteStepAlertDialog = ({
   name,
   stepId,
   children,
+  onDeleted,
 }: DeleteStepAlertDialogProps) => {
   const queryClient = useQueryClient();
   const params = useParams();
@@ -38,6 +40,7 @@ export const DeleteStepAlertDialog = ({
       queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
+      if (onDeleted) onDeleted();
     },
   });
 

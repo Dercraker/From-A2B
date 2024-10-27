@@ -5,15 +5,17 @@ import { z } from "zod";
 import { GetAllStepQuery } from "./getAllSteps.query";
 
 const GetAllStepSchema = z.object({
-  tripId: z.string(),
+  tripSlug: z.string(),
 });
 
 export const GetAllStepAction = orgAction
   .schema(GetAllStepSchema)
-  .action(async ({ parsedInput: { tripId } }) => {
+  .action(async ({ parsedInput: { tripSlug } }) => {
     const steps = await GetAllStepQuery({
       where: {
-        tripId,
+        trip: {
+          slug: tripSlug,
+        },
       },
       orderBy: {
         rank: "asc",
