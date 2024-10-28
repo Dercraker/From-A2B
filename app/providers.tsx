@@ -46,7 +46,7 @@ export const Providers = ({
               <GlobalDialogLazy />
               <SearchParamsMessageToastSuspended />
               <ReactQueryDevtools />
-              {/* <IdentifyUserPosthog /> */}
+              <IdentifyUserPosthog />
 
               {children}
             </QueryClientProvider>
