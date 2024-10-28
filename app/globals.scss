@@ -182,3 +182,7 @@
     }
   }
 }
+
+#LandingMap > div {
+  @apply rounded-3xl overflow-hidden;
+}
