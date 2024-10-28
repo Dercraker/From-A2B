@@ -5,9 +5,9 @@ import { BentoGridSection } from "./_components/BentoSection";
 import { CTAImageSection } from "./_components/cta/CTAImageSection";
 import { CtaSection } from "./_components/cta/CTASection";
 import { FAQSection } from "./_components/FAQSection";
-import { GlobeSection } from "./_components/GlobeSection";
 import { Hero } from "./_components/Hero";
 import { LandingHeader } from "./_components/LandingHeader";
+import { MapSection } from "./_components/mapSection";
 import { ReviewInfiniteCard } from "./_components/review/ReviewInfiniteCard";
 import { ReviewTriple } from "./_components/review/ReviewTriple";
 import { SectionDivider } from "./_components/SectionDivider";
@@ -25,7 +25,7 @@ export default function HomePage() {
 
       <StepSection />
 
-      <GlobeSection />
+      <MapSection />
 
       <StatsSection />
 

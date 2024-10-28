@@ -27,6 +27,7 @@ export const Providers = ({
       <APIProvider
         apiKey={GOOGLE_MAPS_JS_API_KEY}
         onLoad={() => logger.debug("Maps api logged")}
+        
       >
         <SessionProvider>
           <QueryClientProvider client={queryClient}>
