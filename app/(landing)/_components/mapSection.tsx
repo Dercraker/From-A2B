@@ -55,7 +55,7 @@ export const MapSection = () => {
       className="flex items-center gap-4 max-lg:flex-col"
     >
       <Map
-        id="map"
+        id="LandingMap"
         className="h-96 w-full md:h-[30rem]"
         reuseMaps
         renderingType={RenderingType.VECTOR}
@@ -64,7 +64,6 @@ export const MapSection = () => {
         mapId={"a18fd5fb0c24af78"}
         gestureHandling={"greedy"}
         maxZoom={19}
-        
         minZoom={4}
         zoomControl={false}
         mapTypeControl={false}
