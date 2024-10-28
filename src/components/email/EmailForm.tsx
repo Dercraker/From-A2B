@@ -1,53 +1,51 @@
-'use client';
+"use client";
 
-import { addEmailAction } from '@/features/email/addEmail.action';
-import type { EmailActionSchemaType } from '@/features/email/addEmail.schema';
-import { EmailActionSchema } from '@/features/email/addEmail.schema';
-import useNotify from '@/hook/useNotify';
-import { Alert, Button, Group, Text, TextInput } from '@mantine/core';
-import { useForm, zodResolver } from '@mantine/form';
-import { IconCircleCheck } from '@tabler/icons-react';
-import { useMutation } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  useZodForm,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertCircle, CheckCircle } from "lucide-react";
+import { addEmailAction } from "../../features/email/email.action";
+import type { EmailActionSchemaType } from "../../features/email/email.schema";
+import { EmailActionSchema } from "../../features/email/email.schema";
+import { LoadingButton } from "../form/LoadingButton";
 
-export type EmailFormProps = {
+type EmailFormProps = {
+  submitButtonLabel?: string;
   successMessage?: string;
 };
 
 export const EmailForm = ({
-  successMessage = 'You have subscribed to our newsletter.',
+  submitButtonLabel = "Subscribe",
+  successMessage = "You have subscribed to our newsletter.",
 }: EmailFormProps) => {
-  const { ErrorNotify } = useNotify();
-
-  const emailForm = useForm<EmailActionSchemaType>({
-    validateInputOnChange: true,
-    initialValues: {
-      email: '',
-    },
-    validate: zodResolver(EmailActionSchema),
+  const form = useZodForm({
+    schema: EmailActionSchema,
   });
 
-  const { mutateAsync, isPending, isSuccess } = useMutation({
+  const submit = useMutation({
     mutationFn: async ({ email }: EmailActionSchemaType) => {
-      const { serverError, data } = await addEmailAction({ email });
+      const result = await addEmailAction({ email });
 
-      if (data) {
-        return data;
+      if (result?.data) {
+        return result.data;
       } else {
-        throw new Error(serverError);
+        throw new Error(result?.serverError || "Unknown error");
       }
-    },
-    onError: () => {
-      ErrorNotify({
-        title: 'An error occurred while subscribing to our newsletter.',
-        message: 'Try another email address or contact us',
-      });
     },
   });
 
   return (
     <AnimatePresence mode="wait">
-      {isSuccess ? (
+      {submit.isSuccess ? (
         <motion.div
           key="success"
           initial={{
@@ -55,26 +53,20 @@ export const EmailForm = ({
             opacity: 0,
           }}
           animate={{
-            height: 'auto',
+            height: "auto",
             opacity: 1,
           }}
         >
-          <Alert
-            variant="outline"
-            color="var(--mantine-color-teal-6)"
-            c="var(--mantine-color-teal-6)"
-          >
-            <Group>
-              <IconCircleCheck color="var(--mantine-color-teal-6)" />
-              <Text>{successMessage}</Text>
-            </Group>
+          <Alert variant="success">
+            <CheckCircle size={20} />
+            <AlertTitle>{successMessage}</AlertTitle>
           </Alert>
         </motion.div>
       ) : (
         <motion.div
           key="form"
           animate={{
-            height: 'auto',
+            height: "auto",
             opacity: 1,
           }}
           exit={{
@@ -82,22 +74,47 @@ export const EmailForm = ({
             opacity: 0,
           }}
         >
-          <Group justify="center" align="start" w="100%">
-            <TextInput
-              type="email"
-              withAsterisk
-              placeholder="Ton Email"
-              {...emailForm.getInputProps('email')}
-              w={300}
-            />
-            <Button
-              onClick={() => mutateAsync({ email: emailForm.values.email })}
-              loading={isPending}
-              disabled={isPending || !emailForm.isValid()}
-            >
-              Join
-            </Button>
-          </Group>
+          <Form
+            form={form}
+            onSubmit={async (v) => submit.mutate(v)}
+            className="flex flex-col gap-4"
+            disabled={submit.isPending}
+          >
+            <div className="flex items-center gap-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="relative w-full">
+                    <FormControl>
+                      <Input
+                        className="rounded-lg border-accent-foreground/20 bg-accent px-4 py-6 text-lg focus-visible:ring-foreground"
+                        placeholder="You email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="absolute -bottom-5" />
+                  </FormItem>
+                )}
+              />
+              <LoadingButton
+                className="px-4 py-6 text-lg font-normal"
+                variant="invert"
+                loading={submit.isPending}
+              >
+                {submitButtonLabel}
+              </LoadingButton>
+            </div>
+            {submit.isError && (
+              <Alert variant="destructive">
+                <AlertCircle size={20} />
+                <AlertTitle>{submit.error.message}</AlertTitle>
+                <AlertDescription>
+                  Try another email address or contact us.
+                </AlertDescription>
+              </Alert>
+            )}
+          </Form>
         </motion.div>
       )}
     </AnimatePresence>

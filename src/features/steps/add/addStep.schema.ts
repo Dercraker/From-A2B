@@ -1,16 +1,22 @@
-import { TransportMode } from '@/types/transportMode.type';
-import { z } from 'zod';
+import { TransportMode } from "@prisma/client";
+import { z } from "zod";
+import { StepDtoSchema } from "../dto/stepDto.schema";
 
 export const AddStepSchema = z.object({
-  rank: z.number().default(-10000),
-  name: z.string().min(3),
-  startDate: z.date().optional(),
-  endDate: z.date().optional(),
+  tripSlug: z.string(),
+  name: z.string().min(3).max(255),
+  startDate: z.date(),
+  endDate: z.date(),
   description: z.string().optional(),
-  latitude: z.number().refine((value) => value != 0),
-  longitude: z.number().refine((value) => value != 0),
-  placeId: z.string().min(3),
-  transportMode: TransportMode,
+
+  latitude: z.number(),
+  longitude: z.number(),
+
+  placeId: z.string().optional(),
+  TransportMode: z.nativeEnum(TransportMode).default(TransportMode.Car),
+
+  stepBefore: StepDtoSchema.optional(),
+  stepAfter: StepDtoSchema.optional(),
 });
 
 export type AddStepSchema = z.infer<typeof AddStepSchema>;

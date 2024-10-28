@@ -1,45 +1,17 @@
-import { prisma } from '@/lib/prisma';
-import type { Prisma } from '@prisma/client';
-import { z } from 'zod';
-import { AddStepSchema } from './addStep.schema';
+import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
+import { StepDtoSchema } from "../dto/stepDto.schema";
 
-export const AddStepQuerySchema = z.object({
-  tripId: z.string(),
-  newStep: AddStepSchema,
-});
+type AddStepQueryType = {
+  step: Prisma.StepCreateInput;
+};
 
-export type AddStepQuerySchema = z.infer<typeof AddStepQuerySchema>;
-
-export const AddStepQuery = async ({
-  tripId,
-  newStep: {
-    latitude,
-    longitude,
-    name,
-    description,
-    endDate,
-    startDate,
-    rank,
-    placeId,
-    transportMode,
-  },
-}: AddStepQuerySchema) => {
+export const AddStepQuery = async ({ step }: AddStepQueryType) => {
   const newStep = await prisma.step.create({
-    data: {
-      tripId,
-      rank,
-      name,
-      startDate,
-      endDate,
-      description,
-      latitude,
-      longitude,
-      placeId,
-      transportMode,
-    },
+    data: step,
   });
 
-  return newStep;
+  return StepDtoSchema.parseAsync(newStep);
 };
 
 export type AddStepQuery = NonNullable<

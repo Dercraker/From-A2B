@@ -1,22 +1,26 @@
-const STEP = 1000;
+const STEP = 5000;
 
-export const isLessThan = (upRank: number, downRank: number) =>
-  upRank < downRank;
+export const isLessThan = (downRank: number, upRank: number) => {
+  return upRank > downRank;
+};
 
-export const getMiddleRank = (upRank?: number, downRank?: number) => {
-  if (!upRank && downRank) return downRank / 2;
-  if (!downRank && upRank) return upRank * 2;
+type GetMiddleRankProps = {
+  downRank?: number;
+  upRank?: number;
+};
+export const getMiddleRank = ({ downRank, upRank }: GetMiddleRankProps) => {
+  if (!upRank && downRank) return downRank - STEP;
+  if (!downRank && upRank) return upRank + STEP;
   if (!upRank && !downRank) return STEP;
 
-  if (upRank === downRank || upRank! + 1 === downRank)
+  if (upRank === downRank || downRank! + 1 === upRank)
     throw new Error(
-      `No middle rank between upRank ${upRank} and downRank ${downRank}`
+      `No middle rank between upRank ${upRank} and downRank ${downRank}`,
     );
 
-  if (!isLessThan(upRank!, downRank!))
-    throw new Error(
-      `The upRank ${upRank} must be lower than downRank ${downRank}`
-    );
+  if (!isLessThan(downRank!, upRank!)) {
+    throw new Error("upRank must be greater than downRank");
+  }
 
   return Math.floor((upRank! + downRank!) / 2);
 };

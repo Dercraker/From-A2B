@@ -1,0 +1,20 @@
+import { TransportMode } from "@prisma/client";
+import { z } from "zod";
+
+export const EditStepSchema = z.object({
+  tripSlug: z.string(),
+  stepId: z.string(),
+
+  name: z.string(),
+  startDate: z.date(),
+  endDate: z.date(),
+  description: z.string().nullable(),
+
+  latitude: z.number(),
+  longitude: z.number(),
+
+  placeId: z.string().nullable(),
+  transportMode: z.nativeEnum(TransportMode).default(TransportMode.Car),
+});
+
+export type EditStepSchema = z.infer<typeof EditStepSchema>;

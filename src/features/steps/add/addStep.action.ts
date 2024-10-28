@@ -1,57 +1,78 @@
-'use server';
+"use server";
 
-import { ActionError, authAction } from '@/lib/server-actions/safe-actions';
-import { getMiddleRank } from '@/utils/getMiddleRank';
-import { z } from 'zod';
-import { GetStepByIdQuery } from '../get/getStepById.query';
-import { AddStepQuery } from './addStep.query';
-import { AddStepSchema } from './addStep.schema';
+import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { generateSlug } from "@/lib/format/id";
+import { getMiddleRank } from "@/utils/getMiddleRank";
+import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
+import { GetStepAfterQuery } from "../get/getStepAfter.query";
+import { GetStepBeforeQuery } from "../get/getStepBefore.query";
+import { ReorderAllStepQuery } from "../update/reorderAllStep.query";
+import { AddStepQuery } from "./addStep.query";
+import { AddStepSchema } from "./addStep.schema";
 
-const AddStepActionSchema = z.object({
-  tripId: z.string(),
-  beforeStepId: z.string().optional(),
-  afterStepId: z.string().optional(),
-  newStep: AddStepSchema,
-});
+export const AddStepAction = orgAction
+  .schema(AddStepSchema)
+  .action(
+    async ({
+      parsedInput: {
+        TransportMode,
+        endDate,
+        latitude,
+        longitude,
+        name,
+        startDate,
+        tripSlug,
+        description,
+        placeId,
+        stepAfter,
+        stepBefore,
+      },
+    }) => {
+      if (stepAfter && stepBefore)
+        return new ActionError(
+          "You must provide only one of stepAfter or stepBefore",
+        );
 
-export const AddStepAction = authAction(
-  AddStepActionSchema,
-  async ({ tripId, beforeStepId, afterStepId, newStep }, { user }) => {
-    let beforeStep;
+      const otherStep = stepBefore
+        ? await GetStepAfterQuery({ id: stepBefore.id })
+        : stepAfter
+          ? await GetStepBeforeQuery({ id: stepAfter.id })
+          : null;
 
-    if (beforeStepId)
-      beforeStep = await GetStepByIdQuery({
-        stepId: beforeStepId,
-        userId: user.id,
+      const lastTripStep = await GetLastStepQueryByTripSlug({
+        tripSlug,
       });
-
-    if (
-      (beforeStepId && !beforeStep) ||
-      (beforeStepId && beforeStep?.tripId !== tripId)
-    )
-      throw new ActionError(
-        `The search stage does not exist or is not present in the current trip`
-      );
-
-    let afterStep;
-    if (afterStepId)
-      afterStep = await GetStepByIdQuery({
-        stepId: afterStepId,
-        userId: user.id,
-      });
-
-    if (
-      (afterStepId && !afterStep) ||
-      (afterStepId && afterStep?.tripId !== tripId)
-    )
-      throw new ActionError(
-        `The search stage does not exist or is not present in the current trip`
-      );
-
-    const newRank = getMiddleRank(beforeStep?.rank, afterStep?.rank);
-
-    const step: AddStepSchema = { ...newStep, rank: newRank };
-
-    await AddStepQuery({ tripId: tripId, newStep: step });
-  }
-);
+      try {
+        const newRank = getMiddleRank({
+          downRank: stepBefore?.rank ?? otherStep?.rank,
+          upRank: stepAfter?.rank ?? otherStep?.rank ?? lastTripStep?.rank,
+        });
+        const newStep = await AddStepQuery({
+          step: {
+            name,
+            slug: generateSlug(name),
+            latitude,
+            longitude,
+            startDate,
+            endDate,
+            description,
+            placeId,
+            transportMode: TransportMode,
+            trip: {
+              connect: {
+                slug: tripSlug,
+              },
+            },
+            rank: newRank,
+          },
+        });
+        console.log("🚀 ~ newStep:", newStep);
+        return newStep.name;
+      } catch {
+        await ReorderAllStepQuery({ tripSlug });
+        return new ActionError(
+          "An error occurred while adding the step, please try again",
+        );
+      }
+    },
+  );

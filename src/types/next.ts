@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import type { ReactNode } from 'react';
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { ReactNode } from "react";
 
 /**
  * @name PageParams

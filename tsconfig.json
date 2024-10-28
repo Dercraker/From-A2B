@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "target": "es2015",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -20,18 +21,16 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@public/*": ["./public/*"],
       "@email/*": ["./emails/*"]
     }
   },
+
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "postcss.config.js",
-    "app/(base-layout)/support/_component",
-    "test/**/*.ts"
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules", ".next"]
 }
