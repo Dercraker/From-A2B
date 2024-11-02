@@ -12,6 +12,7 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 import { SessionProvider, useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
 import { useEffect, type PropsWithChildren } from "react";
 
 const queryClient = new QueryClient();
@@ -32,28 +33,28 @@ export const Providers = ({
   GOOGLE_MAPS_JS_API_KEY,
 }: ProvidersProps) => {
   return (
-    // <PostHogProvider client={posthog}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <APIProvider
-        apiKey={GOOGLE_MAPS_JS_API_KEY}
-        onLoad={() => logger.debug("Maps api logged")}
-      >
-        <SessionProvider>
-          <QueryClientProvider client={queryClient}>
-            <Toaster />
-            <AlertDialogRenderer />
-            <GlobalDialogLazy />
-            <SearchParamsMessageToastSuspended />
-            <ReactQueryDevtools />
-            {/* <IdentifyUserPosthog /> */}
+    <PostHogProvider client={posthog}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <APIProvider
+          apiKey={GOOGLE_MAPS_JS_API_KEY}
+          onLoad={() => logger.debug("Maps api logged")}
+        >
+          <SessionProvider>
+            <QueryClientProvider client={queryClient}>
+              <Toaster />
+              <AlertDialogRenderer />
+              <GlobalDialogLazy />
+              <SearchParamsMessageToastSuspended />
+              <ReactQueryDevtools />
+              <IdentifyUserPosthog />
 
-            {children}
-          </QueryClientProvider>
-        </SessionProvider>
-      </APIProvider>
-    </ThemeProvider>
-    // </PostHogProvider>
-  );
+              {children}
+            </QueryClientProvider>
+          </SessionProvider>
+        </APIProvider>
+      </ThemeProvider>
+    </PostHogProvider>
+);
 };
 
 const IdentifyUserPosthog = () => {

@@ -9,6 +9,7 @@ export const createOrganizationQuery = async (
     email: params.email,
     name: params.name,
   });
+  console.log("🚀 ~ customer:", customer)
 
   const organization = await prisma.organization.create({
     data: {
@@ -17,6 +18,7 @@ export const createOrganizationQuery = async (
       stripeCustomerId: customer.id,
     },
   });
+  console.log("🚀 ~ organization:", organization)
 
   return organization;
 };
