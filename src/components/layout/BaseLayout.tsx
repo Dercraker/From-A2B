@@ -2,7 +2,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import type { PropsWithChildren } from "react";
 
-export function BaseLayout(props: PropsWithChildren) {
+export const BaseLayout = (props: PropsWithChildren) => {
   return (
     <div className="flex min-h-full flex-col">
       <Header />
@@ -12,4 +12,4 @@ export function BaseLayout(props: PropsWithChildren) {
       <Footer />
     </div>
   );
-}
+};

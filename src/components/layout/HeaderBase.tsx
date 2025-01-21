@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 import { Layout } from "../page/layout";
 import { ThemeToggle } from "../theme/ThemeToggle";
 
-export function HeaderBase({ children }: PropsWithChildren) {
+export const HeaderBase = ({ children }: PropsWithChildren) => {
   return (
     <header className="sticky top-0 flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Layout className="my-2">
@@ -33,4 +33,4 @@ export function HeaderBase({ children }: PropsWithChildren) {
       </Layout>
     </header>
   );
-}
+};

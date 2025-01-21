@@ -19,7 +19,7 @@ import type { PropsWithChildren } from "react";
 
 export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
-    mutationFn: () =>
+    mutationFn: async () =>
       signOut({
         redirect: true,
         callbackUrl: "/",
@@ -32,8 +32,8 @@ export const UserDropdown = ({ children }: PropsWithChildren) => {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>
-          <Typography variant="small">{session.data?.user.name}</Typography>
-          <Typography variant="muted">{session.data?.user.email}</Typography>
+          <Typography variant="small">{session.data?.user?.name}</Typography>
+          <Typography variant="muted">{session.data?.user?.email}</Typography>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

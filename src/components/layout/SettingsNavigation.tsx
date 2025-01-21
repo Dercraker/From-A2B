@@ -2,7 +2,7 @@
 
 import { useMatchingPathname } from "@/hooks/useMatchingPathname";
 import { isInRoles } from "@/lib/organizations/isInRoles";
-import { OrganizationMembershipRole } from "@prisma/client";
+import type { OrganizationMembershipRole } from "@prisma/client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -36,6 +36,7 @@ export const SettingsNavigation = (props: SettingsNavigationProps) => {
           <div key={link.href} className="relative h-10">
             {isMatching && (
               <motion.div
+                // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
                 className="absolute inset-0 rounded-md bg-accent/50"
                 layoutId="settings-link-list"
               />

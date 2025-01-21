@@ -13,7 +13,7 @@ export const onOrganizationUpdate: DynamicQueryExtensionCb<
   "Organization",
   "update"
 > = async (...params) => {
-  syncOrganizationEmailWithStripe(...params);
+  await syncOrganizationEmailWithStripe(...params);
 
   const [{ args, query }] = params;
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { buttonVariants } from "../../components/ui/button";
 import { Typography } from "../../components/ui/typography";
 import { ContactSupportDialog } from "../contact/support/ContactSupportDialog";

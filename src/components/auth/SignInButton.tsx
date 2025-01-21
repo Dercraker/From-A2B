@@ -41,7 +41,7 @@ export const LoggedInButton = ({
 }: {
   user: {
     name?: string | null;
-    email: string;
+    email?: string | null;
     image?: string | null;
   };
 }) => {
@@ -50,7 +50,7 @@ export const LoggedInButton = ({
       <button className="group size-9 rounded-full">
         <Avatar className="mr-2 size-full group-active:scale-95">
           <AvatarFallback className="bg-card">
-            {user.email.slice(0, 1).toUpperCase()}
+            {user.email?.slice(0, 1).toUpperCase()}
           </AvatarFallback>
           {user.image && <AvatarImage src={user.image} />}
         </Avatar>

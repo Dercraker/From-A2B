@@ -107,7 +107,7 @@ export const AlertDialogRenderedDialog = (
             <AlertDialogAction asChild>
               <LoadingButton
                 loading={props.loading}
-                disabled={props.loading || isConfirmDisabled}
+                disabled={props.loading ?? isConfirmDisabled}
                 onClick={props.action.onClick}
               >
                 {props.action.label}

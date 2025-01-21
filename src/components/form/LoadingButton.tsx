@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Button, ButtonProps } from "../ui/button";
+import type { ButtonProps } from "../ui/button";
+import { Button } from "../ui/button";
 import { Loader } from "../ui/loader";
 
 export const LoadingButton = ({
@@ -15,6 +16,7 @@ export const LoadingButton = ({
   return (
     <Button {...props} className={cn(className, "relative select-none")}>
       <motion.span
+        // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
         className="flex items-center gap-1"
         animate={{
           opacity: loading ? 0 : 1,
@@ -36,6 +38,7 @@ export const LoadingButton = ({
           opacity: 0,
           y: 10,
         }}
+        // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
         className="absolute inset-0 flex items-center justify-center"
       >
         <Loader size={20} />

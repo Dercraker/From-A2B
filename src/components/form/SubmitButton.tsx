@@ -13,6 +13,3 @@ export const SubmitButton = (props: ButtonProps) => {
     </LoadingButton>
   );
 };
-
-
-

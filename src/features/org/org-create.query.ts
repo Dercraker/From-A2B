@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export const createOrganizationQuery = async (
   params: Prisma.OrganizationUncheckedCreateInput,
@@ -9,7 +9,6 @@ export const createOrganizationQuery = async (
     email: params.email,
     name: params.name,
   });
-  console.log("🚀 ~ customer:", customer)
 
   const organization = await prisma.organization.create({
     data: {
@@ -18,7 +17,6 @@ export const createOrganizationQuery = async (
       stripeCustomerId: customer.id,
     },
   });
-  console.log("🚀 ~ organization:", organization)
 
   return organization;
 };

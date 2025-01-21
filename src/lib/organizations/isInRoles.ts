@@ -1,4 +1,4 @@
-import { OrganizationMembershipRole } from "@prisma/client";
+import type { OrganizationMembershipRole } from "@prisma/client";
 
 /**
  *
