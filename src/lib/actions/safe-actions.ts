@@ -5,17 +5,13 @@ import { auth, AuthError } from "../auth/helper";
 import { logger } from "../logger";
 import { getRequiredCurrentOrg } from "../organizations/getOrg";
 
-export class ActionError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
+export class ActionError extends Error {}
 
 type handleServerError = (e: Error) => string;
 
 const handleServerError: handleServerError = (e) => {
   if (e instanceof ActionError) {
-    logger.warn("[DEV] - Action Error", e.message);
+    logger.info("[DEV] - Action Error", e.message);
     return e.message;
   }
 
@@ -24,7 +20,7 @@ const handleServerError: handleServerError = (e) => {
     return e.message;
   }
 
-  logger.error("[DEV] - Unknown Error", e);
+  logger.info("[DEV] - Unknown Error", e);
 
   return "An unexpected error occurred.";
 };

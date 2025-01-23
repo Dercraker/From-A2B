@@ -3,8 +3,10 @@ import { EditTripForm } from "@/components/trips/editTripForm";
 import type { PageParams } from "@/types/next";
 
 const RoutePage = async ({
-  params: { orgSlug, tripSlug },
+  params,
 }: PageParams<{ orgSlug: string; tripSlug: string }>) => {
+  const { tripSlug } = await params;
+
   return (
     <Layout>
       <LayoutContent>

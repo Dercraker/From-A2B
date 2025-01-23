@@ -2,21 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-    useZodForm,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,7 +35,7 @@ type ContactSupportDialogProps = PropsWithChildren;
 export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
   const [open, setOpen] = useState(false);
   const session = useSession();
-  const email = session.data?.user.email ?? "";
+  const email = session.data?.user?.email ?? "";
   const form = useZodForm({
     schema: ContactSupportSchema,
     defaultValues: {

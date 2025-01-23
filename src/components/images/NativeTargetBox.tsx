@@ -1,11 +1,7 @@
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
-import React, {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  useRef,
-  useState,
-} from "react";
+import type { ComponentPropsWithoutRef } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { toast } from "sonner";
 
 type DragAndDropProps = {
@@ -70,15 +66,17 @@ export const NativeTargetBox = forwardRef<HTMLDivElement, DragAndDropProps>(
           return;
         }
 
-        onDrop({ files });
+        void onDrop({ files });
       }, 100);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = async (
+      e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
       const files = Array.from(e.target.files ?? []);
 
       if (files.length) {
-        onDrop({ files });
+        await onDrop({ files });
       }
     };
 

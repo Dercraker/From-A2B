@@ -11,8 +11,10 @@ import { DetailStepList } from "./_component/detailStepList";
 const RouteLayout = async ({
   children,
 
-  params: { tripSlug, orgSlug },
+  params,
 }: LayoutParams<{ orgSlug: string; tripSlug: string }>) => {
+  const { tripSlug, orgSlug } = await params;
+
   return (
     <Layout>
       <LayoutHeader>

@@ -13,7 +13,8 @@ import { SignInCredentialsAndMagicLinkForm } from "./SignInCredentialsAndMagicLi
 
 export const SignInProviders = () => {
   const { data: providers, isPending } = useQuery({
-    queryFn: () => fetch(`/api/auth/providers`).then((res) => res.json()),
+    queryFn: async () =>
+      fetch(`/api/auth/providers`).then(async (res) => res.json()),
     queryKey: ["providers"],
   });
 

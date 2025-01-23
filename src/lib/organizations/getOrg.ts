@@ -1,11 +1,11 @@
-import { OrganizationMembershipRole, Prisma } from "@prisma/client";
+import type { OrganizationMembershipRole, Prisma } from "@prisma/client";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { auth } from "../auth/helper";
 import { prisma } from "../prisma";
 
-const getOrgSlugFromUrl = () => {
-  const headerList = headers();
+const getOrgSlugFromUrl = async () => {
+  const headerList = await headers();
   const xURL = headerList.get("x-url");
 
   if (!xURL) {

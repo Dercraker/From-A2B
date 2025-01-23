@@ -49,7 +49,7 @@ export const MagicLinkForm = () => {
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormControl className="w-full">
-                <Input className="w-full" placeholder="" {...field} />
+                <Input className="w-full" placeholder="your email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

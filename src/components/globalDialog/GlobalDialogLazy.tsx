@@ -1,6 +1,11 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 export const GlobalDialogLazy = dynamic(
-  () => import("./GlobalDialog").then((mod) => mod.GlobalDialog),
+  async () =>
+    import("./GlobalDialog").then((mod) => ({
+      default: mod.GlobalDialog,
+    })),
   { ssr: false },
 );

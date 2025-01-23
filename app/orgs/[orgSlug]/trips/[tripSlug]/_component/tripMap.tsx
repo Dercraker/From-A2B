@@ -1,15 +1,12 @@
 "use client";
 
 import { PoiMarkers } from "@/components/map/poiMarkers";
-import { Poi, Pois } from "@/features/map/poi.type";
+import type { Poi, Pois } from "@/features/map/poi.type";
 import { useTripStore } from "@/features/trip/trip.store";
 import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
-import {
-  Map,
-  MapCameraChangedEvent,
-  RenderingType,
-} from "@vis.gl/react-google-maps";
+import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
+import { Map, RenderingType } from "@vis.gl/react-google-maps";
 import { useMemo, type ComponentPropsWithoutRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 

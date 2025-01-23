@@ -55,10 +55,6 @@ export const orgRoute = authRoute.use(async () => {
   try {
     const organization = await getRequiredCurrentOrg();
 
-    if (!organization) {
-      throw new Error("Organization not found!");
-    }
-
     return {
       organization,
     };

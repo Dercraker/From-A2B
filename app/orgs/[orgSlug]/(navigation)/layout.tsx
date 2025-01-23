@@ -1,4 +1,5 @@
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
+import { Layout } from "@/components/page/layout";
 import { Alert } from "@/components/ui/alert";
 import { buttonVariants } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
@@ -8,11 +9,12 @@ import type { LayoutParams } from "@/types/next";
 import { Rabbit } from "lucide-react";
 import Link from "next/link";
 import { OrgNavigation } from "./_navigation/OrgNavigation";
-import { Layout } from "@/components/page/layout";
 
-export default async function RouteLayout(
-  props: LayoutParams<{ orgSlug: string }>,
-) {
+export default async function RouteLayout({
+  params,
+  children,
+}: LayoutParams<{ orgSlug: string }>) {
+  const { orgSlug } = await params;
   const org = await getCurrentOrgCache();
 
   if (!org) {
@@ -25,8 +27,7 @@ export default async function RouteLayout(
             <div>
               <Typography variant="large">
                 Oh! You are not logged in or the organization with the ID{" "}
-                <Typography variant="code">{props.params.orgSlug}</Typography>{" "}
-                was not found.
+                <Typography variant="code">{orgSlug}</Typography> was not found.
               </Typography>
               {user ? (
                 <Link
@@ -54,5 +55,5 @@ export default async function RouteLayout(
     );
   }
 
-  return <OrgNavigation>{props.children}</OrgNavigation>;
+  return <OrgNavigation>{children}</OrgNavigation>;
 }

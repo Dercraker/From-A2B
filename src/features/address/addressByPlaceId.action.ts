@@ -3,7 +3,7 @@
 import { orgAction } from "@/lib/actions/safe-actions";
 import { getPlace } from "@/lib/api/places/placeId";
 import { z } from "zod";
-import { AddressType } from "./address.schema";
+import type { AddressType } from "./address.schema";
 
 const AddressByPlaceIdSchema = z.object({
   placeId: z.string(),

@@ -31,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { InlineTooltip } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
 import { LINKS } from "@/features/navigation/Links";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { GetStepBySlugAction } from "@/features/steps/get/getStepBySlug.action";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { EditStepSchema } from "@/features/steps/update/editStep.schema";
@@ -46,8 +46,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const RoutePage = ({
-  params: { stepSlug, orgSlug, tripSlug },
+  params,
 }: PageParams<{ stepSlug: string; orgSlug: string; tripSlug: string }>) => {
+  const { stepSlug, orgSlug, tripSlug } = params;
+
   const rouer = useRouter();
 
   const form = useZodForm({
@@ -75,17 +77,12 @@ const RoutePage = ({
         throw new Error("Failed to fetch step. Please try again later");
       }
 
-      console.log(
-        "🚀 ~ queryFn: ~ res.data.transportMode:",
-        res.data.transportMode,
-      );
-
       form.reset({
         tripSlug: res.data.slug,
         name: res.data.name,
         description: res.data.description,
-        startDate: res.data.startDate || new Date(),
-        endDate: res.data.endDate || new Date(),
+        startDate: res.data.startDate ?? new Date(),
+        endDate: res.data.endDate ?? new Date(),
         latitude: res.data.latitude,
         longitude: res.data.longitude,
         placeId: res.data.placeId,
@@ -101,14 +98,13 @@ const RoutePage = ({
       tripSlug: data.slug,
       name: data.name,
       description: data.description,
-      startDate: data.startDate || new Date(),
-      endDate: data.endDate || new Date(),
+      startDate: data.startDate ?? new Date(),
+      endDate: data.endDate ?? new Date(),
       latitude: data.latitude,
       longitude: data.longitude,
       placeId: data.placeId,
       transportMode: data.transportMode as TransportMode,
     });
-    console.log("🚀 ~ handleReset ~ data.transportMode:", data.transportMode);
   };
 
   if (isPending) return <div>Loading...</div>;
@@ -162,7 +158,7 @@ const RoutePage = ({
                   <FormControl>
                     <Textarea
                       {...field}
-                      value={field.value || ""}
+                      value={field.value ?? ""}
                       placeholder="Any description"
                       className="bg-card"
                     />
@@ -185,7 +181,7 @@ const RoutePage = ({
                     value={field.value ?? new Date()}
                     className=" w-full"
                     onChange={(date) => {
-                      form.setValue("startDate", date || new Date(), {
+                      form.setValue("startDate", date ?? new Date(), {
                         shouldDirty: true,
                       });
                     }}
@@ -205,7 +201,7 @@ const RoutePage = ({
                     value={field.value ?? new Date()}
                     className=" w-full"
                     onChange={(date) => {
-                      form.setValue("endDate", date || new Date(), {
+                      form.setValue("endDate", date ?? new Date(), {
                         shouldDirty: true,
                       });
                     }}
@@ -228,7 +224,7 @@ const RoutePage = ({
                     form.setValue("longitude", address.lng);
                     form.setValue("placeId", address.placeId);
                   }}
-                  placeId={form.getValues().placeId || undefined}
+                  placeId={form.getValues().placeId ?? undefined}
                   lat={form.getValues().latitude}
                   lon={form.getValues().longitude}
                 />

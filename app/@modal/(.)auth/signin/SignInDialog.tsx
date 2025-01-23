@@ -11,7 +11,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { SignInProviders } from "../../../auth/signin/SignInProviders";
 
-export function SignInDialog() {
+export const SignInDialog = () => {
   const router = useRouter();
   const path = usePathname();
 
@@ -36,4 +36,4 @@ export function SignInDialog() {
       </DialogContent>
     </Dialog>
   );
-}
+};

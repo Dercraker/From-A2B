@@ -38,7 +38,7 @@ export const EmailForm = ({
       if (result?.data) {
         return result.data;
       } else {
-        throw new Error(result?.serverError || "Unknown error");
+        throw new Error(result?.serverError ?? "Unknown error");
       }
     },
   });

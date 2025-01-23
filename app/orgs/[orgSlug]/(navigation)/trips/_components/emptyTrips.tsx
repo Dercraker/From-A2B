@@ -13,11 +13,14 @@ export const EmptyTrips = ({
 }: EmptyTripsProps) => {
   return (
     <div
-      className={cn("flex items-center justify-center w-full", className)}
+      className={cn(
+        "flex items-center justify-center h-full w-full",
+        className,
+      )}
       {...props}
     >
-      <div className="flex gap-4">
-        <Typography variant="h2">No trips found</Typography>
+      <div className="flex items-center gap-4">
+        <Typography variant="lead">No trips found</Typography>
         <AddTripDialog>
           <Button variant="invert">Create</Button>
         </AddTripDialog>

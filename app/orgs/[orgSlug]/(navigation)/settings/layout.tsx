@@ -1,5 +1,11 @@
 import { SettingsNavigation } from "@/components/layout/SettingsNavigation";
-import { Layout, LayoutContent, LayoutDescription, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutDescription,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { createSearchParamsMessageUrl } from "@/features/searchparams-message/createSearchParamsMessageUrl";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
@@ -13,24 +19,24 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Manage your organization settings.",
 });
 
-export default async function RouteLayout(
-  props: LayoutParams<{ productId: string; orgSlug: string }>,
-) {
+export default async function RouteLayout({
+  params,
+  children,
+}: LayoutParams<{ productId: string; orgSlug: string }>) {
+  const { orgSlug } = await params;
+
   if (SiteConfig.features.enableSingleMemberOrg) {
     redirect(
-      createSearchParamsMessageUrl(
-        `${getServerUrl()}org/${props.params.orgSlug}`,
-        {
-          type: "message",
-          message: "You need to update your account settings.",
-        },
-      ),
+      createSearchParamsMessageUrl(`${getServerUrl()}org/${orgSlug}`, {
+        type: "message",
+        message: "You need to update your account settings.",
+      }),
     );
   }
 
   const { roles } = await getRequiredCurrentOrgCache();
 
-  const orgPath = `/orgs/${props.params.orgSlug}`;
+  const orgPath = `/orgs/${orgSlug}`;
 
   return (
     <Layout>
@@ -66,7 +72,7 @@ export default async function RouteLayout(
             },
           ]}
         />
-        <div className="mb-12 w-full flex-1">{props.children}</div>
+        <div className="mb-12 w-full flex-1">{children}</div>
       </LayoutContent>
     </Layout>
   );

@@ -10,8 +10,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import "./code-theme.scss";
-import "./globals.scss";
+import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -27,26 +26,26 @@ export default function RootLayout({
   return (
     <>
       <html lang="en" className="h-full" suppressHydrationWarning>
-          <body
-            suppressHydrationWarning
-            className={cn(
-              "h-full bg-background font-sans antialiased",
-              GeistMono.variable,
-              GeistSans.variable,
-            )}
-          >
-            <Providers GOOGLE_MAPS_JS_API_KEY={env.GOOGLE_MAPS_JS_API_KEY}>
-              <NextTopLoader
-                delay={100}
-                showSpinner={false}
-                color="hsl(var(--primary))"
-              />
-              {children}
-              {modal}
-              <TailwindIndicator />
-              <FloatingLegalFooter />
-            </Providers>
-          </body>
+        <body
+          suppressHydrationWarning
+          className={cn(
+            "h-full bg-background font-sans antialiased",
+            GeistMono.variable,
+            GeistSans.variable,
+          )}
+        >
+          <Providers GOOGLE_MAPS_JS_API_KEY={env.GOOGLE_MAPS_JS_API_KEY}>
+            <NextTopLoader
+              delay={100}
+              showSpinner={false}
+              color="hsl(var(--primary))"
+            />
+            {children}
+            {modal}
+            <TailwindIndicator />
+            <FloatingLegalFooter />
+          </Providers>
+        </body>
       </html>
     </>
   );

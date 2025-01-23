@@ -17,9 +17,9 @@ export const onUserUpdate: DynamicQueryExtensionCb<
   "update"
 > = async (...params) => {
   if (SiteConfig.features.enableSingleMemberOrg) {
-    syncWithOrganizations(...params);
+    await syncWithOrganizations(...params);
   }
-  syncWithResendContact(...params);
+  await syncWithResendContact(...params);
 
   const [{ args, query }] = params;
   return query(args);

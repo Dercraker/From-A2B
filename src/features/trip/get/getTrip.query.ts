@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { TripDto, TripDtoSchema } from "./dto/tripDto.schema";
+import type { TripDto } from "./dto/tripDto.schema";
+import { TripDtoSchema } from "./dto/tripDto.schema";
 
 type GetTripQueryProps = {
   where: Prisma.TripWhereUniqueInput;
