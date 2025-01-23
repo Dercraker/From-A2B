@@ -6,9 +6,15 @@ import { useTripStore } from "@/features/trip/trip.store";
 import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
-import { Map, RenderingType } from "@vis.gl/react-google-maps";
+import {
+  ControlPosition,
+  Map,
+  MapControl,
+  RenderingType,
+} from "@vis.gl/react-google-maps";
 import { useMemo, type ComponentPropsWithoutRef } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { CenterMapButton } from "./centerMapButton";
 
 export type TripMapProps = ComponentPropsWithoutRef<"div"> & {
   tripId: string;
@@ -59,6 +65,9 @@ export const TripMap = ({
         gestureHandling={"greedy"}
         minZoom={3}
       >
+        <MapControl position={ControlPosition.RIGHT_TOP}>
+          <CenterMapButton />
+        </MapControl>
         <PoiMarkers pois={poi} />
       </Map>
     </div>

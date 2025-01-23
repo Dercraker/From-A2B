@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { LocateFixed } from "lucide-react";
 
 export type CenterMapMenuButtonProps = {

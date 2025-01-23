@@ -1,4 +1,4 @@
-import { Pois } from "@/features/map/poi.type";
+import type { Pois } from "@/features/map/poi.type";
 import type { Marker } from "@googlemaps/markerclusterer";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { IconMapPinFilled } from "@tabler/icons-react";
@@ -13,17 +13,17 @@ export type PoiMarkersProps = {
 export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
   const map = useMap();
 
-  const [markers, setMarkers] = useState<{ [key: string]: Marker }>({});
-  const clusterer = useRef<MarkerClusterer | null>(null);
+  const [markers, setMarkers] = useState<Record<string, Marker>>({});
+  const clustered = useRef<MarkerClusterer | null>(null);
 
   useEffect(() => {
     if (!map) return;
-    if (!clusterer.current) clusterer.current = new MarkerClusterer({ map });
+    if (!clustered.current) clustered.current = new MarkerClusterer({ map });
   }, [map]);
 
   useEffect(() => {
-    clusterer.current?.clearMarkers();
-    clusterer.current?.addMarkers(Object.values(markers));
+    clustered.current?.clearMarkers();
+    clustered.current?.addMarkers(Object.values(markers));
   }, [markers]);
 
   const setMarkerRef = (marker: Marker | null, key: string) => {

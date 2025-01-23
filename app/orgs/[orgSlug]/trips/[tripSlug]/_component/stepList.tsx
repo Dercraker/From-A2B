@@ -9,14 +9,14 @@ import { Typography } from "@/components/ui/typography";
 import { LINKS } from "@/features/navigation/Links";
 import { GetAllStepAction } from "@/features/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { ReSortStepsSchema } from "@/features/steps/update/reSortStep.schema";
+import type { ReSortStepsSchema } from "@/features/steps/update/reSortStep.schema";
 import { ReSortStepsAction } from "@/features/steps/update/reSortSteps.action";
 import { useTripStore } from "@/features/trip/trip.store";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import type { DragEndEvent } from "@dnd-kit/core";
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
