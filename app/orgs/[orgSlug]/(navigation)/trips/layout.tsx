@@ -7,7 +7,7 @@ import {
 } from "@/components/page/layout";
 import { AddTripDialog } from "@/components/trips/addTripDialog";
 import { Button } from "@/components/ui/button";
-import { LayoutParams } from "@/types/next";
+import type { LayoutParams } from "@/types/next";
 
 const TripsLayout = async ({ children }: LayoutParams) => {
   return (
@@ -20,7 +20,7 @@ const TripsLayout = async ({ children }: LayoutParams) => {
           <Button variant="outline">Create</Button>
         </AddTripDialog>
       </LayoutActions>
-      <LayoutContent className="flex gap-6">{children}</LayoutContent>
+      <LayoutContent className="flex h-full gap-6">{children}</LayoutContent>
     </Layout>
   );
 };

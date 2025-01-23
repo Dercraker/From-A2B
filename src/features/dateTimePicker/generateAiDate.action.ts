@@ -40,19 +40,9 @@ export const generateAIDateAction = orgAction
     * JUST RETURN THE DATE IN UTC FORMAT
     `,
     });
-    logger.debug(`* User current date : ${localDateUTC}
-* User prompt : ${prompt}
-* User Timezone : ${timeZoneStr}`);
 
     const returnDate = new Date(date.text);
 
-    logger.debug("generateAIDateAction", {
-      text: date.text,
-      prompt,
-      timeZoneStr,
-      localDateUTC,
-      returnDate,
-    });
     if (isNaN(returnDate.getTime())) {
       logger.debug("generateAIDateAction", {
         text: date.text,

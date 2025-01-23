@@ -1,4 +1,4 @@
-import { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
+import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
 import { GetTripsByCurrentOrgQuery } from "@/features/trips/getTripsByCurrentOrgQuery.query";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import { EmptyTrips } from "./_components/emptyTrips";
@@ -6,7 +6,7 @@ import { TripsContainer } from "./_components/tripsContainer";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Trips",
-  description: "Trips",
+  description: "List of your trips.",
 });
 export default async function RoutePage() {
   const trips: TripsListDtoSchema = await GetTripsByCurrentOrgQuery({
@@ -15,7 +15,7 @@ export default async function RoutePage() {
     },
   });
 
-  if (!trips || !trips.length) return <EmptyTrips />;
+  if (!trips.length) return <EmptyTrips />;
 
   return <TripsContainer trips={trips} />;
 }

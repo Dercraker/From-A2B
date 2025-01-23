@@ -17,8 +17,10 @@ import { TripSelect } from "./_navigation/tripSelect";
 
 const RouteLayout = async ({
   children,
-  params: { tripSlug, orgSlug },
+  params,
 }: LayoutParams<{ orgSlug: string; tripSlug: string }>) => {
+  const { orgSlug, tripSlug } = await params;
+
   const { org, user } = await getRequiredCurrentOrgCache();
 
   const isTripExist = await IsTripExistQuery({
@@ -36,7 +38,7 @@ const RouteLayout = async ({
     },
   });
 
-  if (org && isTripExist)
+  if (isTripExist)
     return (
       <TripNavigation
         logoChildren={

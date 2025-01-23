@@ -1,7 +1,12 @@
 import { SubmitButton } from "@/components/form/SubmitButton";
 import AuthNavigationWrapper from "@/components/navigation/LogInNavigationWrapper";
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
-import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { Page400 } from "@/components/page/Page400";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -30,12 +35,14 @@ export const generateMetadata = combineWithParentMetadata({
   description: "You receive an invitation to join an organization.",
 });
 
-export default async function RoutePage(
-  props: PageParams<{ orgSlug: string; token: string }>,
-) {
+export default async function RoutePage({
+  params,
+}: PageParams<{ orgSlug: string; token: string }>) {
+  const { orgSlug, token } = await params;
+
   const organization = await prisma.organization.findFirst({
     where: {
-      slug: props.params.orgSlug,
+      slug: orgSlug,
     },
   });
 
@@ -45,7 +52,7 @@ export default async function RoutePage(
 
   const verificationToken = await prisma.verificationToken.findUnique({
     where: {
-      token: props.params.token,
+      token: token,
     },
   });
 
@@ -80,7 +87,7 @@ export default async function RoutePage(
               <CardContent>
                 <Link
                   className={buttonVariants({ size: "lg" })}
-                  href={`/auth/signin?callbackUrl=${getServerUrl()}/orgs/${organization.slug}/invitations/${props.params.token}&email=${tokenData.email}`}
+                  href={`/auth/signin?callbackUrl=${getServerUrl()}/orgs/${organization.slug}/invitations/${token}&email=${tokenData.email}`}
                 >
                   Sign in
                 </Link>
@@ -140,7 +147,7 @@ export default async function RoutePage(
                     });
                     await prisma.verificationToken.delete({
                       where: {
-                        token: props.params.token,
+                        token: token,
                       },
                     });
                     redirect(`/orgs/${organization.slug}`);

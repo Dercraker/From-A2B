@@ -1,11 +1,13 @@
 import { GetTripQuery } from "@/features/trip/get/getTrip.query";
-import { PageParams } from "@/types/next";
+import type { PageParams } from "@/types/next";
 import { StepList } from "./_component/stepList";
 import { TripMap } from "./_component/tripMap";
 
 const RoutePage = async ({
-  params: { orgSlug, tripSlug },
+  params,
 }: PageParams<{ orgSlug: string; tripSlug: string }>) => {
+  const { orgSlug, tripSlug } = await params;
+
   const trip = await GetTripQuery({
     where: { slug: tripSlug, Organization: { slug: orgSlug } },
   });

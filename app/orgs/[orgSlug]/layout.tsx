@@ -1,13 +1,15 @@
 import { orgMetadata } from "@/lib/metadata";
 import { getCurrentOrgCache } from "@/lib/react/cache";
 import type { LayoutParams, PageParams } from "@/types/next";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { InjectCurrentOrgStore } from "./useCurrentOrg";
 
 export async function generateMetadata({
   params,
 }: PageParams<{ orgSlug: string }>): Promise<Metadata> {
-  return orgMetadata(params.orgSlug);
+  const { orgSlug } = await params;
+
+  return orgMetadata(orgSlug);
 }
 
 export default async function RouteLayout(

@@ -20,11 +20,13 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Dashboard",
 });
 
-const RoutePage = async (
-  props: PageParams<{
-    orgSlug: string;
-  }>,
-) => {
+const RoutePage = async ({
+  params,
+}: PageParams<{
+  orgSlug: string;
+}>) => {
+  const { orgSlug } = await params;
+
   const org = await getRequiredCurrentOrgCache();
   return (
     <Layout>
@@ -35,7 +37,7 @@ const RoutePage = async (
         {isInRoles(org.roles, ["ADMIN"]) &&
         !SiteConfig.features.enableSingleMemberOrg ? (
           <Link
-            href={`/orgs/${props.params.orgSlug}/settings/members`}
+            href={`/orgs/${orgSlug}/settings/members`}
             className={buttonVariants({ variant: "filled" })}
           >
             Invite member
