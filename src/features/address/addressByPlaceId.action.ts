@@ -15,7 +15,7 @@ export const AddressByPlaceIdAction = orgAction
     const result = await getPlace(placeId);
     const data = result[0];
     const dataFinderRegx = (c: string) => {
-      const regx = new RegExp(`<span class="${c}">([^<]+)<\/span>`);
+      const regx = new RegExp(`<span class="${c}">([^<]+)</span>`);
       const match = data.adrFormatAddress?.match(regx);
       return match ? match[1] : "";
     };

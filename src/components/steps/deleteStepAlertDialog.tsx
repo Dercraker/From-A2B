@@ -6,7 +6,7 @@ import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { toast } from "sonner";
 import { Typography } from "../ui/typography";
 
@@ -35,9 +35,9 @@ export const DeleteStepAlertDialog = ({
         toast.error(result?.serverError);
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success(`Step "${name}" deleted successfully`);
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
       if (onDeleted) onDeleted();
@@ -65,7 +65,7 @@ export const DeleteStepAlertDialog = ({
           action: {
             label: "Delete",
             onClick: async () => {
-              deleteStepAsync();
+              await deleteStepAsync();
             },
           },
         })

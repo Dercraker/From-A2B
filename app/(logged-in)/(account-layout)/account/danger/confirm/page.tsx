@@ -1,19 +1,19 @@
 import { SubmitButton } from "@/components/form/SubmitButton";
 import { buttonVariants } from "@/components/ui/button";
 import {
-    Card,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { requiredAuth } from "@/lib/auth/helper";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import {
-    orgConfirmDeletionAction,
-    verifyDeleteAccountToken,
+  orgConfirmDeletionAction,
+  verifyDeleteAccountToken,
 } from "../delete-account.action";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -21,8 +21,9 @@ export const generateMetadata = combineWithParentMetadata({
   description: "One last step to delete your account.",
 });
 
-export default async function RoutePage(props: PageParams) {
-  const token = props.searchParams.token;
+const RoutePage = async (params: PageParams) => {
+  const searchParams = await params.searchParams;
+  const token = searchParams.token;
   const user = await requiredAuth();
 
   const invalidTokenCard = (
@@ -83,4 +84,6 @@ export default async function RoutePage(props: PageParams) {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default RoutePage;

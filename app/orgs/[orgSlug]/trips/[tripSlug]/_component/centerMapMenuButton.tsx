@@ -13,6 +13,7 @@ export const CenterMapMenuButton = ({ step }: CenterMapMenuButtonProps) => {
     <Button
       variant="filled"
       className="flex items-center gap-2"
+      //TODO: FIX THIS
       disabled
       // disabled={step.longitude === 0 || step.latitude === 0}
     >

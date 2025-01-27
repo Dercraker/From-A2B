@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { SiteConfig } from "@/site-config";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type OrganizationsSelectProps = {
   currentOrgSlug?: string;

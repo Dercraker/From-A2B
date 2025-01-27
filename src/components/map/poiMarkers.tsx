@@ -34,9 +34,8 @@ export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
       if (marker) {
         return { ...prev, [key]: marker };
       } else {
-        const newMarkers = { ...prev };
-        delete newMarkers[key];
-        return newMarkers;
+        const { [key]: _, ...remainingMarkers } = prev;
+        return remainingMarkers;
       }
     });
   };
@@ -45,7 +44,6 @@ export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
     (ev: google.maps.MapMouseEvent) => {
       if (!map) return;
       if (!ev.latLng) return;
-      console.log("marker clicked:", ev.latLng.toString());
       map.panTo(ev.latLng);
     },
     [map],

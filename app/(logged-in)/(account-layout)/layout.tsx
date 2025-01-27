@@ -6,7 +6,7 @@ import { Typography } from "@/components/ui/typography";
 import { auth } from "@/lib/auth/helper";
 import type { LayoutParams } from "@/types/next";
 import { CircleAlert, Rabbit } from "lucide-react";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { VerifyEmailButton } from "./account/verify-email/VerifyEmailButton";
 import { AccountNavigation } from "./accountNavigation";
@@ -47,7 +47,7 @@ export default async function RouteLayout(props: LayoutParams) {
 
   return (
     <div>
-      {!user?.emailVerified ? (
+      {!user.emailVerified ? (
         <div className="flex items-center gap-4 bg-primary px-4 py-1">
           <CircleAlert size={16} />
           <Typography variant="small">

@@ -4,7 +4,13 @@ import { requiredAuth } from "@/lib/auth/helper";
 import { SiteConfig } from "@/site-config";
 import { redirect } from "next/navigation";
 import { NewOrganizationForm } from "./NewOrgForm";
-import { Layout, LayoutContent, LayoutDescription, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutDescription,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 
 export default async function RoutePage() {
   await requiredAuth();

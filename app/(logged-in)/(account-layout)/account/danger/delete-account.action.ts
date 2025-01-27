@@ -55,9 +55,7 @@ export const accountAskDeletionAction = authAction.action(async ({ ctx }) => {
     subject: "[Action required] Confirm your account deletion",
     to: user.email,
     react: AccountAskDeletionEmail({
-      organizationsToDelete: user.organizations?.map(
-        (o) => o.organization.name,
-      ),
+      organizationsToDelete: user.organizations.map((o) => o.organization.name),
       confirmUrl: `${getServerUrl()}/account/delete/confirm?token=${token.token}`,
     }),
   });

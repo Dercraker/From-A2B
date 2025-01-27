@@ -19,7 +19,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createOrganizationAction } from "./new-org.action";
-import { NewOrganizationSchemaType, NewOrgsSchema } from "./new-org.schema";
+import type { NewOrganizationSchemaType } from "./new-org.schema";
+import { NewOrgsSchema } from "./new-org.schema";
 
 export const NewOrganizationForm = () => {
   const form = useZodForm({

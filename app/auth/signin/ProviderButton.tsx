@@ -69,7 +69,7 @@ export const ProviderButton = (props: ProviderButtonProps) => {
   const searchParams = useSearchParams();
 
   const githubSignInMutation = useMutation({
-    mutationFn: () =>
+    mutationFn: async () =>
       signIn(props.providerId, {
         callbackUrl: searchParams.get("callbackUrl") ?? `${getServerUrl()}/`,
       }),

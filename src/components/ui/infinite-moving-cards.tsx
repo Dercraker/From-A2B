@@ -2,10 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
-import {
-  ReviewItem,
-  ReviewItemProps,
-} from "../../../app/(landing)/_components/review/ReviewItem";
+import type { ReviewItemProps } from "../../../app/(landing)/_components/review/ReviewItem";
+import { ReviewItem } from "../../../app/(landing)/_components/review/ReviewItem";
 
 export const InfiniteMovingCards = ({
   items,

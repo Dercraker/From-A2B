@@ -82,7 +82,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
         </DialogHeader>
         <Form
           form={form}
-          onSubmit={async (v) => await addTripMutationAsync(v)}
+          onSubmit={async (v) => addTripMutationAsync(v)}
           className="flex flex-col gap-4"
         >
           <FormField
@@ -121,7 +121,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                   <DateTimePicker
                     value={field.value ?? new Date()}
                     onChange={(date) => {
-                      form.setValue("startDate", date || new Date(), {
+                      form.setValue("startDate", date ?? new Date(), {
                         shouldDirty: true,
                       });
                     }}

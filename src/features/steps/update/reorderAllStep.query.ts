@@ -19,14 +19,13 @@ export const ReorderAllStepQuery = async ({
 
   let previousRank = undefined;
 
-  for (let i = 0; i < steps.length; i++) {
-    const currentStep = steps[i];
-
+  for (const currentStep of steps) {
     const newRank = getMiddleRank({
       downRank: undefined,
       upRank: previousRank,
     });
 
+    // eslint-disable-next-line no-await-in-loop
     await prisma.step.update({
       where: { id: currentStep.id },
       data: { rank: newRank },

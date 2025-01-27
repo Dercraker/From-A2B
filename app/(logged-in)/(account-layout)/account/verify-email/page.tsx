@@ -12,11 +12,11 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Verify your email address.",
 });
 
-export default async function RoutePage(props: PageParams) {
+const RoutePage = async (params: PageParams) => {
+  const searchParams = await params.searchParams;
+
   const token =
-    typeof props.searchParams.token === "string"
-      ? props.searchParams.token
-      : null;
+    typeof searchParams.token === "string" ? searchParams.token : null;
 
   if (!token) {
     return (
@@ -107,4 +107,6 @@ export default async function RoutePage(props: PageParams) {
       message: "Your email has been verified.",
     }),
   );
-}
+};
+
+export default RoutePage;

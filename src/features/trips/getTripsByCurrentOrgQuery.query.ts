@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { TripsListDtoSchema } from "./dto/tripsListDto.schema";
 
 type GetTripsByCurrentOrgQueryProps = {

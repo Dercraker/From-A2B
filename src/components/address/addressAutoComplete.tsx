@@ -1,6 +1,6 @@
 "use client";
 
-import { AddressType } from "@/features/address/address.schema";
+import type { AddressType } from "@/features/address/address.schema";
 import { AddressByPlaceIdAction } from "@/features/address/addressByPlaceId.action";
 import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
@@ -43,7 +43,7 @@ export default function AddressAutoComplete({
       if (!selectedPlaceId) return;
       const res = await AddressByPlaceIdAction({ placeId: selectedPlaceId });
       if (!isActionSuccessful(res)) {
-        toast.error(res?.serverError || "Failed to fetch place");
+        toast.error(res?.serverError ?? "Failed to fetch place");
         return;
       }
 
@@ -55,10 +55,10 @@ export default function AddressAutoComplete({
   useEffect(() => {
     if (!selectedPlaceId) return;
 
-    refetch();
+    void refetch();
   }, [selectedPlaceId]);
 
-  const adrAddress = data?.formattedAddress || "";
+  const adrAddress = data?.formattedAddress ?? "";
 
   useEffect(() => {
     if (data) {
@@ -70,10 +70,10 @@ export default function AddressAutoComplete({
     <>
       {selectedPlaceId !== "" || address.formattedAddress ? (
         <div className="flex items-center gap-2">
-          <Input value={address?.formattedAddress} readOnly />
+          <Input value={address.formattedAddress} readOnly />
 
           <AddressDialog
-            isLoading={isPending || isLoading}
+            isLoading={isPending ?? isLoading}
             dialogTitle={dialogTitle}
             adrAddress={adrAddress}
             address={address}
@@ -82,7 +82,7 @@ export default function AddressAutoComplete({
             setOpen={setIsOpen}
           >
             <Button
-              disabled={isPending || isLoading}
+              disabled={isPending ?? isLoading}
               size="icon"
               variant="outline"
               className="shrink-0"

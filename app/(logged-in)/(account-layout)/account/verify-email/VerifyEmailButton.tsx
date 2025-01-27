@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonProps } from "@/components/ui/button";
+import type { ButtonProps } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { Check, X } from "lucide-react";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { DeleteTripSchema } from "./deleteTrip.schema";
+import type { DeleteTripSchema } from "./deleteTrip.schema";
 
 export const DeleteTripQuery = async ({ orgId, tripId }: DeleteTripSchema) => {
   await prisma.trip.update({

@@ -2,7 +2,8 @@
 
 "use client";
 
-import { cva, VariantProps } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import {
   endOfDay,
   endOfMonth,
@@ -17,7 +18,7 @@ import {
 import { formatInTimeZone, toDate } from "date-fns-tz";
 import { CalendarIcon } from "lucide-react";
 import * as React from "react";
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -50,6 +51,7 @@ const months = [
   "December",
 ];
 
+// eslint-disable-next-line tailwindcss/no-contradicting-classname
 const multiSelectVariants = cva(
   "flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-foreground ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
@@ -72,9 +74,7 @@ const multiSelectVariants = cva(
   },
 );
 
-interface CalendarDatePickerProps
-  extends React.HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof multiSelectVariants> {
+type CalendarDatePickerProps = {
   id?: string;
   className?: string;
   date: DateRange;
@@ -82,7 +82,8 @@ interface CalendarDatePickerProps
   numberOfMonths?: 1 | 2;
   yearsRange?: number;
   onDateSelect: (range: { from: Date; to: Date }) => void;
-}
+} & React.HTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof multiSelectVariants>;
 
 export const CalendarDatePicker = React.forwardRef<
   HTMLButtonElement,
@@ -107,18 +108,16 @@ export const CalendarDatePicker = React.forwardRef<
       numberOfMonths === 2 ? "This Year" : "Today",
     );
     const [monthFrom, setMonthFrom] = React.useState<Date | undefined>(
-      date?.from,
+      date.from,
     );
     const [yearFrom, setYearFrom] = React.useState<number | undefined>(
-      date?.from?.getFullYear(),
+      date.from?.getFullYear(),
     );
     const [monthTo, setMonthTo] = React.useState<Date | undefined>(
-      numberOfMonths === 2 ? date?.to : date?.from,
+      numberOfMonths === 2 ? date.to : date.from,
     );
     const [yearTo, setYearTo] = React.useState<number | undefined>(
-      numberOfMonths === 2
-        ? date?.to?.getFullYear()
-        : date?.from?.getFullYear(),
+      numberOfMonths === 2 ? date.to?.getFullYear() : date.from?.getFullYear(),
     );
     const [highlightedPart, setHighlightedPart] = React.useState<string | null>(
       null,
@@ -140,6 +139,7 @@ export const CalendarDatePicker = React.forwardRef<
       setYearFrom(from.getFullYear());
       setMonthTo(to);
       setYearTo(to.getFullYear());
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       closeOnSelect && setIsPopoverOpen(false);
     };
 
@@ -172,7 +172,7 @@ export const CalendarDatePicker = React.forwardRef<
           const from =
             numberOfMonths === 2
               ? startOfMonth(toDate(newMonth, { timeZone }))
-              : date?.from
+              : date.from
                 ? new Date(
                     date.from.getFullYear(),
                     newMonth.getMonth(),
@@ -316,6 +316,7 @@ export const CalendarDatePicker = React.forwardRef<
         const increment = event.deltaY > 0 ? -1 : 1;
         newDate.setDate(newDate.getDate() + increment);
         if (newDate <= (date.to as Date)) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           numberOfMonths === 2
             ? onDateSelect({ from: newDate, to: new Date(date.to as Date) })
             : onDateSelect({ from: newDate, to: newDate });
@@ -419,7 +420,7 @@ export const CalendarDatePicker = React.forwardRef<
             >
               <CalendarIcon className="mr-2 size-4" />
               <span>
-                {date?.from ? (
+                {date.from ? (
                   date.to ? (
                     <>
                       <span

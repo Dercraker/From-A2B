@@ -1,5 +1,5 @@
 import { LINKS } from "@/features/navigation/Links";
-import {
+import type {
   NavigationLink,
   NavigationLinks,
   NavigationLinksGroup,

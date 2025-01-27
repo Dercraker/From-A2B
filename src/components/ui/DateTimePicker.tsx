@@ -1,5 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+
 /* eslint-disable no-case-declarations */
 "use client";
+
 import { buttonVariants } from "@/components/ui/button";
 import type { CalendarProps } from "@/components/ui/calendar";
 import { Input, InputUnit } from "@/components/ui/input";
@@ -20,7 +24,6 @@ import {
 import * as React from "react";
 import { useImperativeHandle, useRef } from "react";
 
-import { Loader } from "@/components/ui/loader";
 import {
   Select,
   SelectContent,
@@ -28,43 +31,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Typography } from "@/components/ui/typography";
 import { generateAIDateAction } from "@/features/dateTimePicker/generateAiDate.action";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { logger } from "@/lib/logger";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { DayPicker } from "react-day-picker";
 import { useEffectOnce } from "react-use";
+import { Loader } from "./loader";
+import { Typography } from "./typography";
 
 // ---------- utils start ----------
 /**
  * regular expression to check for valid hour format (01-23)
  */
-const isValidHour = (value: string) => {
+function isValidHour(value: string) {
   return /^(0[0-9]|1[0-9]|2[0-3])$/.test(value);
-};
+}
 
 /**
  * regular expression to check for valid 12 hour format (01-12)
  */
-const isValid12Hour = (value: string) => {
+function isValid12Hour(value: string) {
   return /^(0[1-9]|1[0-2])$/.test(value);
-};
+}
 
 /**
  * regular expression to check for valid minute format (00-59)
  */
-const isValidMinuteOrSecond = (value: string) => {
+function isValidMinuteOrSecond(value: string) {
   return /^[0-5][0-9]$/.test(value);
-};
+}
 
 type GetValidNumberConfig = { max: number; min?: number; loop?: boolean };
 
-const getValidNumber = (
+function getValidNumber(
   value: string,
   { max, min = 0, loop = false }: GetValidNumberConfig,
-) => {
+) {
   let numericValue = parseInt(value, 10);
 
   if (!isNaN(numericValue)) {
@@ -79,22 +82,22 @@ const getValidNumber = (
   }
 
   return "00";
-};
+}
 
-const getValidHour = (value: string) => {
+function getValidHour(value: string) {
   if (isValidHour(value)) return value;
   return getValidNumber(value, { max: 23 });
-};
+}
 
-const getValid12Hour = (value: string) => {
+function getValid12Hour(value: string) {
   if (isValid12Hour(value)) return value;
   return getValidNumber(value, { min: 1, max: 12 });
-};
+}
 
-const getValidMinuteOrSecond = (value: string) => {
+function getValidMinuteOrSecond(value: string) {
   if (isValidMinuteOrSecond(value)) return value;
   return getValidNumber(value, { max: 59 });
-};
+}
 
 type GetValidArrowNumberConfig = {
   min: number;
@@ -102,64 +105,64 @@ type GetValidArrowNumberConfig = {
   step: number;
 };
 
-const getValidArrowNumber = (
+function getValidArrowNumber(
   value: string,
   { min, max, step }: GetValidArrowNumberConfig,
-) => {
+) {
   let numericValue = parseInt(value, 10);
   if (!isNaN(numericValue)) {
     numericValue += step;
     return getValidNumber(String(numericValue), { min, max, loop: true });
   }
   return "00";
-};
+}
 
-const getValidArrowHour = (value: string, step: number) => {
+function getValidArrowHour(value: string, step: number) {
   return getValidArrowNumber(value, { min: 0, max: 23, step });
-};
+}
 
-const getValidArrow12Hour = (value: string, step: number) => {
+function getValidArrow12Hour(value: string, step: number) {
   return getValidArrowNumber(value, { min: 1, max: 12, step });
-};
+}
 
-const getValidArrowMinuteOrSecond = (value: string, step: number) => {
+function getValidArrowMinuteOrSecond(value: string, step: number) {
   return getValidArrowNumber(value, { min: 0, max: 59, step });
-};
+}
 
-const setMinutes = (date: Date, value: string) => {
+function setMinutes(date: Date, value: string) {
   const minutes = getValidMinuteOrSecond(value);
   date.setMinutes(parseInt(minutes, 10));
   return date;
-};
+}
 
-const setSeconds = (date: Date, value: string) => {
+function setSeconds(date: Date, value: string) {
   const seconds = getValidMinuteOrSecond(value);
   date.setSeconds(parseInt(seconds, 10));
   return date;
-};
+}
 
-const setHours = (date: Date, value: string) => {
+function setHours(date: Date, value: string) {
   const hours = getValidHour(value);
   date.setHours(parseInt(hours, 10));
   return date;
-};
+}
 
-const set12Hours = (date: Date, value: string, period: Period) => {
+function set12Hours(date: Date, value: string, period: Period) {
   const hours = parseInt(getValid12Hour(value), 10);
   const convertedHours = convert12HourTo24Hour(hours, period);
   date.setHours(convertedHours);
   return date;
-};
+}
 
 type TimePickerType = "minutes" | "seconds" | "hours" | "12hours";
 type Period = "AM" | "PM";
 
-const setDateByType = (
+function setDateByType(
   date: Date,
   value: string,
   type: TimePickerType,
   period?: Period,
-) => {
+) {
   switch (type) {
     case "minutes":
       return setMinutes(date, value);
@@ -174,9 +177,9 @@ const setDateByType = (
     default:
       return date;
   }
-};
+}
 
-const getDateByType = (date: Date | null, type: TimePickerType) => {
+function getDateByType(date: Date | null, type: TimePickerType) {
   if (!date) return "00";
   switch (type) {
     case "minutes":
@@ -191,9 +194,9 @@ const getDateByType = (date: Date | null, type: TimePickerType) => {
     default:
       return "00";
   }
-};
+}
 
-const getArrowByType = (value: string, step: number, type: TimePickerType) => {
+function getArrowByType(value: string, step: number, type: TimePickerType) {
   switch (type) {
     case "minutes":
       return getValidArrowMinuteOrSecond(value, step);
@@ -206,14 +209,14 @@ const getArrowByType = (value: string, step: number, type: TimePickerType) => {
     default:
       return "00";
   }
-};
+}
 
 /**
  * handles value change of 12-hour input
  * 12:00 PM is 12:00
  * 12:00 AM is 00:00
  */
-const convert12HourTo24Hour = (hour: number, period: Period) => {
+function convert12HourTo24Hour(hour: number, period: Period) {
   if (period === "PM") {
     if (hour <= 11) {
       return hour + 12;
@@ -225,49 +228,52 @@ const convert12HourTo24Hour = (hour: number, period: Period) => {
     return hour;
   }
   return hour;
-};
+}
 
 /**
  * time is stored in the 24-hour form,
  * but needs to be displayed to the user
  * in its 12-hour representation
  */
-const display12HourValue = (hours: number) => {
+function display12HourValue(hours: number) {
   if (hours === 0 || hours === 12) return "12";
   if (hours >= 22) return `${hours - 12}`;
   if (hours % 12 > 9) return `${hours}`;
   return `0${hours % 12}`;
-};
+}
 
-const genMonths = (locale: Locale) => {
+function genMonths(locale: Locale) {
   return Array.from({ length: 12 }, (_, i) => ({
     value: i,
     label: format(new Date(2021, i), "MMMM", { locale }),
   }));
-};
+}
 
-const genYears = (locale: Locale, yearRange = 50) => {
+function genYears(locale: Locale, yearRange = 50) {
   const today = new Date();
   return Array.from({ length: yearRange * 2 + 1 }, (_, i) => ({
     value: today.getFullYear() - yearRange + i,
     label: (today.getFullYear() - yearRange + i).toString(),
   }));
-};
+}
 
 // ---------- utils end ----------
 
-const Calendar = ({
+function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   yearRange = 50,
   ...props
-}: CalendarProps & { yearRange?: number }) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const MONTHS = React.useMemo(() => genMonths(props.locale || enUS), []);
-
+}: CalendarProps & { yearRange?: number }) {
+  const MONTHS = React.useMemo(
+    () => genMonths((props.locale || enUS) as Locale),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
   const YEARS = React.useMemo(
-    () => genYears(props.locale || enUS, yearRange),
+    () => genYears((props.locale || enUS) as Locale, yearRange),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -364,7 +370,7 @@ const Calendar = ({
       {...props}
     />
   );
-};
+}
 Calendar.displayName = "Calendar";
 
 type PeriodSelectorProps = {
@@ -658,6 +664,7 @@ TimePicker.displayName = "TimePicker";
 type Granularity = "day" | "hour" | "minute" | "second";
 
 type DateTimePickerProps = {
+  hideTimezone?: boolean;
   value?: Date;
   onChange?: (date: Date | undefined) => void;
   disabled?: boolean;
@@ -699,6 +706,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       onChange,
       hourCycle = 24,
       yearRange = 50,
+      hideTimezone = false,
       displayFormat,
       granularity = "second",
       className,
@@ -771,11 +779,6 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
           throw new Error(result?.serverError ?? "Something went wrong");
         }
 
-        logger.debug({
-          localDateUTC,
-          result,
-        });
-
         const date = new Date(result.data);
 
         onChange?.(date);
@@ -824,9 +827,11 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
               }
             }}
           />
-          <Typography variant="muted">
-            Current Timezone: {timeZoneStr}
-          </Typography>
+          {!hideTimezone ? (
+            <Typography variant="muted">
+              Current Timezone: {timeZoneStr}
+            </Typography>
+          ) : null}
         </div>
         <PopoverContent className="w-auto p-0">
           <Calendar

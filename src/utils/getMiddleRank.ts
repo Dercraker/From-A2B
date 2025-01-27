@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 const STEP = 5000;
 
 export const isLessThan = (downRank: number, upRank: number) => {

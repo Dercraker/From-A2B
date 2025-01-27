@@ -1,12 +1,12 @@
 "use client";
 
+import { SectionLayout } from "@/components/layout/SectionLayout";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { SectionLayout } from "@/components/layout/SectionLayout";
 
 type Feature = {
   label: string;
@@ -76,6 +76,7 @@ export const FeaturesPreviewSection = (props: FeaturesPreviewProps) => {
                 exit={{ opacity: 0 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
                 alt="feature-preview"
                 src={props.features[currentFeature].gif}
                 className="size-full overflow-hidden rounded-md object-contain object-center"

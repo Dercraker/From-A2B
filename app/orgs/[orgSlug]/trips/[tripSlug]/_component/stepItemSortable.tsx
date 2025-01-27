@@ -1,6 +1,6 @@
 import { InlineTooltip } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { GenerateStepLink } from "@/features/steps/steps.link";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";

@@ -32,6 +32,7 @@ export const TimelineAnimation = () => {
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>
             <motion.div
+              // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
               className={`animate-step-${step.id} max-lg:hidden`}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}

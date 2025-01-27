@@ -3,13 +3,12 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Typography } from "@/components/ui/typography";
-import { TripDto, TripDtoSchema } from "@/features/trip/get/dto/tripDto.schema";
+import type { TripDto } from "@/features/trip/get/dto/tripDto.schema";
+import { TripDtoSchema } from "@/features/trip/get/dto/tripDto.schema";
 import { GetTripAction } from "@/features/trip/get/getTrip.action";
 import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
-import {
-  EditTrip,
-  EditTripSchema,
-} from "@/features/trip/update/editTrip.schema";
+import type { EditTrip } from "@/features/trip/update/editTrip.schema";
+import { EditTripSchema } from "@/features/trip/update/editTrip.schema";
 import { UpdateTripAction } from "@/features/trip/update/updateTrip.action";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { logger } from "@/lib/logger";
@@ -76,7 +75,7 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
         toast.error("Failed to update trip. Please try again later.");
       }
 
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: TRIP_KEY_Factory.byId(tripSlug),
       });
       toast.success("Trip updated successfully");
@@ -130,7 +129,7 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
                   <FormControl>
                     <Textarea
                       {...field}
-                      value={field.value || ""}
+                      value={field.value ?? ""}
                       placeholder="Any description"
                     />
                   </FormControl>
@@ -151,7 +150,7 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
                   value={field.value ?? new Date()}
                   className="w-full"
                   onChange={(date) => {
-                    editTripForm.setValue("startDate", date || new Date(), {
+                    editTripForm.setValue("startDate", date ?? new Date(), {
                       shouldDirty: true,
                     });
                   }}

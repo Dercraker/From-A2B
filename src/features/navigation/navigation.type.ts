@@ -1,5 +1,5 @@
 import { OrganizationMembershipRole } from "@prisma/client";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { z } from "zod";
 
 export type NavigationGroup = {

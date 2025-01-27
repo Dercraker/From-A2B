@@ -3,7 +3,7 @@
 import { orgAction } from "@/lib/actions/safe-actions";
 import { reverseGeoCoding } from "@/lib/api/geocoding/reverseGeocoding";
 import { z } from "zod";
-import { AddressType } from "./address.schema";
+import type { AddressType } from "./address.schema";
 
 const AddressByPosGPSSchema = z.object({
   lat: z.number(),
@@ -16,7 +16,7 @@ export const AddressByPosGPSAction = orgAction
     const result = await reverseGeoCoding(lat, lng);
     const data = result[0];
     const dataFinderRegx = (c: string) => {
-      const regx = new RegExp(`<span class="${c}">([^<]+)<\/span>`);
+      const regx = new RegExp(`<span class="${c}">([^<]+)</span>`);
       const match = data.adrFormatAddress?.match(regx);
       return match ? match[1] : "";
     };

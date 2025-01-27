@@ -8,10 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ConstructTripLink, GenerateTripLink } from "@/features/trips/trips.link";
+import { GenerateTripLink } from "@/features/trips/trips.link";
 import { SiteConfig } from "@/site-config";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type TripsSelectProps = {
   currentTripSlug?: string;

@@ -58,7 +58,7 @@ export const CardDeleteButton = ({
             action: {
               label: "Delete",
               onClick: async () => {
-                deleteTripAsync();
+                await deleteTripAsync();
               },
             },
           });

@@ -1,4 +1,9 @@
-import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { requiredAuth } from "@/lib/auth/helper";
 import type { LayoutParams } from "@/types/next";
 

@@ -10,5 +10,5 @@ export const DeleteTripAction = orgAction
   })
   .schema(z.object({ tripId: z.string() }))
   .action(async ({ parsedInput: { tripId }, ctx }) => {
-    return await DeleteTripQuery({ orgId: ctx.org.id, tripId });
+    return DeleteTripQuery({ orgId: ctx.org.id, tripId });
   });

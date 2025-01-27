@@ -8,7 +8,6 @@ import { FAQSection } from "./_components/FAQSection";
 import { Hero } from "./_components/Hero";
 import { LandingHeader } from "./_components/LandingHeader";
 import { MapSection } from "./_components/mapSection";
-import { ReviewInfiniteCard } from "./_components/review/ReviewInfiniteCard";
 import { ReviewTriple } from "./_components/review/ReviewTriple";
 import { SectionDivider } from "./_components/SectionDivider";
 import { StatsSection } from "./_components/StatsSection";
@@ -78,7 +77,8 @@ export default function HomePage() {
         ]}
       />
 
-      <ReviewInfiniteCard />
+      {/* //TODO: CHECK this  */}
+      {/* <ReviewInfiniteCard /> */}
 
       <EmailFormSection />
 
