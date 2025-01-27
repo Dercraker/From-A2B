@@ -1,4 +1,3 @@
-import { ErrorBoundary } from "@/components/utils/ErrorBoundaries";
 import { cn } from "@/lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 import Markdown from "react-markdown";
@@ -12,15 +11,13 @@ export const ClientMarkdown = ({
   ...props
 }: ClientMarkdownProps) => {
   return (
-    <ErrorBoundary>
-      <Markdown
-        rehypePlugins={rehypePlugins}
-        remarkPlugins={remarkPlugins}
-        className={cn("prose dark:prose-invert", className)}
-        {...props}
-      >
-        {children}
-      </Markdown>
-    </ErrorBoundary>
+    <Markdown
+      rehypePlugins={rehypePlugins}
+      remarkPlugins={remarkPlugins}
+      className={cn("prose dark:prose-invert", className)}
+      {...props}
+    >
+      {children}
+    </Markdown>
   );
 };

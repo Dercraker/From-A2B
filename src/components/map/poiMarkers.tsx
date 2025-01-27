@@ -1,3 +1,5 @@
+"use client";
+
 import type { Pois } from "@/features/map/poi.type";
 import type { Marker } from "@googlemaps/markerclusterer";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";

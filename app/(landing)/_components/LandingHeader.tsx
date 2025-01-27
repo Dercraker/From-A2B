@@ -42,7 +42,7 @@ function useBoundedScroll(threshold: number) {
   return { scrollYBounded, scrollYBoundedProgress };
 }
 
-export function LandingHeader() {
+export const LandingHeader = () => {
   const { scrollYBoundedProgress } = useBoundedScroll(400);
   const scrollYBoundedProgressDelayed = useTransform(
     scrollYBoundedProgress,
@@ -93,7 +93,7 @@ export function LandingHeader() {
       </div>
     </motion.header>
   );
-}
+};
 
 const clamp = (number: number, min: number, max: number) =>
   Math.min(Math.max(number, min), max);
