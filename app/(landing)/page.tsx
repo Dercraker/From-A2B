@@ -8,10 +8,10 @@ import { FAQSection } from "./_components/FAQSection";
 import { Hero } from "./_components/Hero";
 import { LandingHeader } from "./_components/LandingHeader";
 import { MapSection } from "./_components/mapSection";
-import { ReviewTriple } from "./_components/review/ReviewTriple";
 import { SectionDivider } from "./_components/SectionDivider";
 import { StatsSection } from "./_components/StatsSection";
 import { StepSection } from "./_components/StepSection";
+import { ReviewTriple } from "./_components/review/ReviewTriple";
 
 export default function HomePage() {
   return (

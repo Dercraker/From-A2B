@@ -17,7 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-export function BentoGridSection() {
+export const BentoGridSection = () => {
   return (
     <SectionLayout id="features">
       <BentoGrid className="mx-auto max-w-4xl md:auto-rows-[20rem]">
@@ -34,7 +34,7 @@ export function BentoGridSection() {
       </BentoGrid>
     </SectionLayout>
   );
-}
+};
 
 const Skeleton1 = () => {
   const variants: Variants = {

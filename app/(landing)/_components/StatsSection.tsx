@@ -9,7 +9,7 @@ type StatProps = {
   text: string;
 };
 
-export function StatsSection() {
+export const StatsSection = () => {
   const stats: StatProps[] = [
     {
       number: 421,
@@ -53,4 +53,4 @@ export function StatsSection() {
       </div>
     </SectionLayout>
   );
-}
+};

@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import Link from "next/link";
 
-export function CtaSection() {
+export const CtaSection = () => {
   return (
     <SectionLayout className="lg:flex lg:items-center lg:justify-between lg:px-8">
       <Typography variant="h3">
@@ -20,4 +20,4 @@ export function CtaSection() {
       </div>
     </SectionLayout>
   );
-}
+};
