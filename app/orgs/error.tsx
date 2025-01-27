@@ -1,7 +1,12 @@
 "use client";
 
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
-import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { Page400 } from "@/components/page/Page400";
 import { logger } from "@/lib/logger";
 import type { ErrorParams } from "@/types/next";

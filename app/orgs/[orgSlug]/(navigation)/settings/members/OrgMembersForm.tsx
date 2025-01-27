@@ -5,20 +5,20 @@ import { Alert } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { FormField, useZodForm } from "@/components/ui/form";
 import {
-    MultiSelector,
-    MultiSelectorContent,
-    MultiSelectorInput,
-    MultiSelectorItem,
-    MultiSelectorList,
-    MultiSelectorTrigger,
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
 } from "@/components/ui/multi-select";
 import { Progress } from "@/components/ui/progress";
 import { InlineTooltip } from "@/components/ui/tooltip";
@@ -87,7 +87,7 @@ export const OrgMembersForm = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col">
-          {form.getValues("members")?.map((baseMember, index) => {
+          {form.getValues("members").map((baseMember, index) => {
             const member = members.find((m) => m.id === baseMember.id);
             if (!member) {
               return null;

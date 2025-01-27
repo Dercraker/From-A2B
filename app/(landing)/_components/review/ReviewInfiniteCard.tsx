@@ -1,7 +1,7 @@
 import { SectionLayout } from "@/components/layout/SectionLayout";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import type { ComponentPropsWithoutRef } from "react";
-import { ReviewItemProps } from "./ReviewItem";
+import type { ReviewItemProps } from "./ReviewItem";
 
 export type ReviewInfiniteCardProps = ComponentPropsWithoutRef<"div"> & {};
 

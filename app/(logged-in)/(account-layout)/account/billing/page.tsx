@@ -17,10 +17,7 @@ const RoutePage = async () => {
     select: OrgSelectQuery(user.id),
   });
 
-  console.log(org);
-
   if (!org) {
-    console.log("no org", org);
     notFound();
   }
 

@@ -36,7 +36,7 @@ const useCurrentPath = (links: NavigationLinksSchema) => {
   return mostMatchingLink.url || links[0].href;
 };
 
-const MotionLink = motion.create(Link);
+const MotionLink = motion(Link);
 
 export const NavigationLinks = ({
   navigation,
@@ -77,6 +77,7 @@ export const NavigationLinks = ({
                     {currentPath === link.href && (
                       <motion.div
                         layoutId={"motion-link"}
+                        // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
                         className="absolute inset-0 rounded-lg bg-accent"
                       ></motion.div>
                     )}

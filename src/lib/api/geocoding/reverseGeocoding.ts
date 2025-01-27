@@ -10,5 +10,5 @@ export const reverseGeoCoding = async (lat: number, lon: number) => {
       },
     },
   );
-  return await response.json();
+  return response.json();
 };

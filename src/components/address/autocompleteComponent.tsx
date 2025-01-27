@@ -1,6 +1,6 @@
 "use client";
 
-import { AddressType } from "@/features/address/address.schema";
+import type { AddressType } from "@/features/address/address.schema";
 import { AddressByPlaceIdAction } from "@/features/address/addressByPlaceId.action";
 import { AddressByPosGPSAction } from "@/features/address/addressByPosGPS.action";
 import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";

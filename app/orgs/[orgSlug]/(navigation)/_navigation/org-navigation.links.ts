@@ -1,12 +1,12 @@
 import { LINKS } from "@/features/navigation/Links";
-import {
+import type {
   NavigationLink,
   NavigationLinks,
   NavigationLinksGroup,
   NavigationLinksGroups,
 } from "@/features/navigation/navigation.type";
 import { isInRoles } from "@/lib/organizations/isInRoles";
-import { OrganizationMembershipRole } from "@prisma/client";
+import type { OrganizationMembershipRole } from "@prisma/client";
 
 const replaceSlug = (href: string, slug: string) => {
   return href.replace(":organizationSlug", slug);

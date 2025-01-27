@@ -1,6 +1,11 @@
 "use client";
 
-import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { logger } from "@/lib/logger";

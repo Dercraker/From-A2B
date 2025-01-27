@@ -8,14 +8,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import {
   ArrowDownFromLine,
   ArrowUpFromLine,
   Delete,
   Edit3,
 } from "lucide-react";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { CenterMapMenuButton } from "./centerMapMenuButton";
 
 export type StepItemMenuProps = PropsWithChildren<{

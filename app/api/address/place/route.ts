@@ -1,4 +1,4 @@
-import { AddressType } from "@/features/address/address.schema";
+import type { AddressType } from "@/features/address/address.schema";
 import { env } from "@/lib/env/server";
 import { authRoute } from "@/lib/safe-route";
 import { NextResponse } from "next/server";
@@ -10,7 +10,6 @@ export const GET = authRoute
     if (!env.GOOGLE_PLACES_API_KEY)
       return NextResponse.json({ error: "Missing API Key", data: null });
 
-    
     try {
       const url = `https://places.googleapis.com/v1/places/${query.placeId}`;
       const response = await fetch(url, {
@@ -30,7 +29,7 @@ export const GET = authRoute
       const data = await response.json();
 
       const dataFinderRegx = (c: string) => {
-        const regx = new RegExp(`<span class="${c}">([^<]+)<\/span>`);
+        const regx = new RegExp(`<span class="${c}">([^<]+)</span>`);
         const match = data.adrFormatAddress.match(regx);
         return match ? match[1] : "";
       };
@@ -67,7 +66,6 @@ export const GET = authRoute
         error: null,
       });
     } catch (err) {
-      console.error("Error fetching place details:", err);
       return NextResponse.json({ error: err, data: null });
     }
   });

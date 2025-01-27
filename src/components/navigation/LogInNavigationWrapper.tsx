@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/button";
 import { getUsersOrgs } from "@/features/org/get-users-orgs.query";
 import { auth } from "@/lib/auth/helper";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { OrgsSelect } from "../../../app/orgs/[orgSlug]/(navigation)/_navigation/OrgsSelect";
 import { UserDropdown } from "../auth/UserDropDown";
 import { NavigationWrapper } from "./NavigationWrapper";

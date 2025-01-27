@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Typography } from "@/components/ui/typography";
 import { Menu } from "lucide-react";
 import Link from "next/link";
-import { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type TripNavigationProps = PropsWithChildren<{
   logoChildren?: ReactNode;

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { formatDate } from "@/lib/format/date";
-import { CurrentOrgPayload } from "@/lib/organizations/getOrg";
+import type { CurrentOrgPayload } from "@/lib/organizations/getOrg";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
 import { Separator } from "@radix-ui/react-separator";
@@ -30,8 +30,8 @@ export const PremiumCard = async ({ org }: PremiumCardProps) => {
   });
 
   const firstSubscription = subscriptions.data[0];
-  const nextRenewDate = firstSubscription?.current_period_end;
-  const price = firstSubscription?.items.data[0].price;
+  const nextRenewDate = firstSubscription.current_period_end;
+  const price = firstSubscription.items.data[0].price;
 
   const customerPortal = await stripe.billingPortal.sessions.create({
     customer: stripeCustomer.id,
@@ -43,7 +43,7 @@ export const PremiumCard = async ({ org }: PremiumCardProps) => {
       <CardHeader>
         <CardDescription>Plan</CardDescription>
         <CardTitle>
-          {org.plan.name} {firstSubscription?.cancel_at ? "(Canceled)" : ""}
+          {org.plan.name} {firstSubscription.cancel_at ? "(Canceled)" : ""}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 md:flex-row">

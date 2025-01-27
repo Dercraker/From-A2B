@@ -38,7 +38,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function UsersChart() {
+export const UsersChart = () => {
   return (
     <Card>
       <CardHeader>
@@ -102,4 +102,4 @@ export function UsersChart() {
       </CardFooter>
     </Card>
   );
-}
+};

@@ -43,7 +43,6 @@ export const GET = authRoute
 
       return NextResponse.json({ data: data.suggestions, error: null });
     } catch (error) {
-      console.error("Error fetching autocomplete suggestions:", error);
       return NextResponse.json({ error: error, data: null });
     }
   });

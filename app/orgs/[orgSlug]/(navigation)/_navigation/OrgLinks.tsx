@@ -1,8 +1,8 @@
 "use client";
 
-import { NavigationLinksGroups } from "@/features/navigation/navigation.type";
+import type { NavigationLinksGroups } from "@/features/navigation/navigation.type";
 import { NavigationLinks } from "@/features/navigation/navigationLinks";
-import { OrganizationMembershipRole } from "@prisma/client";
+import type { OrganizationMembershipRole } from "@prisma/client";
 import { getOrganizationNavigation } from "./org-navigation.links";
 
 export const OrganizationNavigationLinks = ({

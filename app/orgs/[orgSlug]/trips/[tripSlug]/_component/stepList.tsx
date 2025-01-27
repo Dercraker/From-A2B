@@ -70,9 +70,9 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
           );
         }
       },
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success("Steps reordered successfully");
-        queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
           queryKey: STEP_KEY_FACTORY.All(tripSlug),
         });
       },
@@ -138,7 +138,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
-              onDragEnd={async (event) => await handleDragEnd(event)}
+              onDragEnd={async (event) => handleDragEnd(event)}
             >
               <SortableContext
                 items={steps}

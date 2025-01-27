@@ -5,11 +5,11 @@ import type { ErrorInfo, ReactNode } from "react";
 import { Component } from "react";
 import { Button } from "../ui/button";
 import {
-    Card,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "../ui/card";
 
 type Props = {
@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
     logger.error("Uncaught error:", error, errorInfo);
   }
 
-  public render() {
+  public async render() {
     if (!this.state.hasError) {
       return this.props.children;
     }

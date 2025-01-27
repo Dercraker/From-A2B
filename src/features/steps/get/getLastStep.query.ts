@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { StepDto, StepDtoSchema } from "../dto/stepDto.schema";
+import type { StepDto } from "../dto/stepDto.schema";
+import { StepDtoSchema } from "../dto/stepDto.schema";
 
 type GetLastStepQueryType = {
   tripSlug: string;

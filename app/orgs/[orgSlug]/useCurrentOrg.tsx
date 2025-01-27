@@ -1,7 +1,7 @@
 "use client";
 
-import { OrganizationPlan } from "@prisma/client";
-import { PropsWithChildren } from "react";
+import type { OrganizationPlan } from "@prisma/client";
+import type { PropsWithChildren } from "react";
 import { create } from "zustand";
 
 type CurrentOrgStore = {
@@ -32,7 +32,7 @@ type CurrentOrgStore = {
  */
 export const useCurrentOrg = create<CurrentOrgStore | null>(() => null);
 
-export const InjectCurrentOrgStore = (
+export const InjectCurrentOrgStore = async (
   props: PropsWithChildren<{
     org?: CurrentOrgStore;
   }>,

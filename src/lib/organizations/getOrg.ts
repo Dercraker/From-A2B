@@ -58,7 +58,7 @@ export const getCurrentOrg = async (roles?: OrganizationMembershipRole[]) => {
     return null;
   }
 
-  const organizationSlug = getOrgSlugFromUrl();
+  const organizationSlug = await getOrgSlugFromUrl();
 
   if (!organizationSlug) {
     return null;

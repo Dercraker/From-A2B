@@ -8,7 +8,7 @@ import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import { SiteConfig } from "@/site-config";
 import { Building } from "lucide-react";
 import Link from "next/link";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { OrganizationCommand } from "./OrgCommand";
 import { OrganizationNavigationLinks } from "./OrgLinks";
 import { OrgsSelect } from "./OrgsSelect";

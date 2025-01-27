@@ -11,7 +11,7 @@ import {
   StepForwardIcon,
   User2,
 } from "lucide-react";
-import { GenericLinkSchema } from "./navigation.type";
+import type { GenericLinkSchema } from "./navigation.type";
 
 const ORGANIZATION_PATH = `/orgs/:organizationSlug`;
 const TRIP_PATH = `/trips/:tripSlug`;

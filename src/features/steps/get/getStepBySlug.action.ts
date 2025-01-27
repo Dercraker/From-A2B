@@ -10,10 +10,10 @@ const GetStepBySlugSchema = z.object({
 
 export const GetStepBySlugAction = orgAction
   .schema(GetStepBySlugSchema)
-  .action(async ({ parsedInput: { stepSlug }, ctx }) => {
+  .action(async ({ parsedInput: { stepSlug } }) => {
     const step = await GetStepBySlugQuery({ stepSlug });
 
-    if (!step || !step.success)
+    if (!step.success)
       throw new ActionError("Failed to fetch step. Please try again later.");
 
     return step.data;

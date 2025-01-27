@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,11 +21,12 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { EditStepAction } from "@/features/steps/update/editStep.action";
 import { EditStepSchema } from "@/features/steps/update/editStep.schema";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { logger } from "@/lib/logger";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -53,17 +54,17 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
   const form = useZodForm({
     schema: EditStepSchema,
     defaultValues: {
-      tripSlug: params.tripSlug.toString(),
+      tripSlug: params.tripSlug?.toString(),
       stepId: step.id,
 
       name: step.name,
-      description: step.description || undefined,
+      description: step.description ?? undefined,
 
-      startDate: step.startDate || undefined,
-      endDate: step.endDate || undefined,
+      startDate: step.startDate ?? undefined,
+      endDate: step.endDate ?? undefined,
 
-      latitude: step.latitude || undefined,
-      longitude: step.longitude || undefined,
+      latitude: step.latitude ?? undefined,
+      longitude: step.longitude ?? undefined,
 
       placeId: step.placeId,
       transportMode: step.transportMode as TransportMode,
@@ -86,9 +87,13 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
 
       return result.data;
     },
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(params.tripSlug.toString()),
+    onSuccess: async () => {
+      if (!params.tripSlug) logger.warn("Invalid TripSlug :", { params });
+
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(
+          (params.tripSlug ?? "undefined").toString(),
+        ),
       });
       router.refresh();
     },
@@ -106,6 +111,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
         </DialogHeader>
         <Form
           form={form}
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           onSubmit={() => {}}
           className="flex flex-col gap-4"
           onReset={() => {
@@ -134,7 +140,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
                 <FormControl>
                   <Textarea
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder="Any description"
                   />
                 </FormControl>
@@ -152,7 +158,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
                   value={field.value ?? new Date()}
                   className="w-full"
                   onChange={(date) => {
-                    form.setValue("startDate", date || new Date(), {
+                    form.setValue("startDate", date ?? new Date(), {
                       shouldDirty: true,
                     });
                   }}
@@ -198,7 +204,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
                     form.setValue("longitude", address.lng);
                     form.setValue("placeId", address.placeId);
                   }}
-                  placeId={form.getValues().placeId || undefined}
+                  placeId={form.getValues().placeId ?? undefined}
                   lat={form.getValues().latitude}
                   lon={form.getValues().longitude}
                 />
@@ -267,7 +273,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
             </Button>
             <LoadingButton
               className="flex-1"
-              onClick={async () => await addStepAsync(form.getValues())}
+              onClick={async () => addStepAsync(form.getValues())}
               loading={isPending}
             >
               Save edit's

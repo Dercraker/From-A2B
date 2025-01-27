@@ -3,13 +3,10 @@
 import { SectionLayout } from "@/components/layout/SectionLayout";
 import { PoiMarkers } from "@/components/map/poiMarkers";
 import { Typography } from "@/components/ui/typography";
-import { Pois } from "@/features/map/poi.type";
+import type { Pois } from "@/features/map/poi.type";
 import { logger } from "@/lib/logger";
-import {
-  Map,
-  MapCameraChangedEvent,
-  RenderingType,
-} from "@vis.gl/react-google-maps";
+import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
+import { Map, RenderingType } from "@vis.gl/react-google-maps";
 
 export const MapSection = () => {
   const cardsContent = [

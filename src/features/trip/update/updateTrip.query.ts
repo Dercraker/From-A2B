@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
-import { EditTrip } from "./editTrip.schema";
+import type { EditTrip } from "./editTrip.schema";
 
 type UpdateTripQueryType = {
   data: EditTrip;
 };
 
 export const UpdateTripQuery = async ({ data }: UpdateTripQueryType) => {
-  return await prisma.trip.update({
+  return prisma.trip.update({
     where: {
       id: data.tripId,
     },

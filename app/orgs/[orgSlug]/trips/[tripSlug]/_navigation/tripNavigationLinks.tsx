@@ -1,6 +1,6 @@
 "use client";
 
-import { NavigationLinksGroups } from "@/features/navigation/navigation.type";
+import type { NavigationLinksGroups } from "@/features/navigation/navigation.type";
 import { NavigationLinks } from "@/features/navigation/navigationLinks";
 import { getTripNavigationLinks } from "./tripNavigation.link";
 

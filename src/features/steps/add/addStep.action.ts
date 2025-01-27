@@ -66,7 +66,6 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
-        console.log("🚀 ~ newStep:", newStep);
         return newStep.name;
       } catch {
         await ReorderAllStepQuery({ tripSlug });

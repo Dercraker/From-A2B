@@ -7,5 +7,5 @@ import { UpdateTripQuery } from "./updateTrip.query";
 export const UpdateTripAction = orgAction
   .schema(EditTripSchema)
   .action(async ({ parsedInput }) => {
-    return await UpdateTripQuery({ data: parsedInput });
+    return UpdateTripQuery({ data: parsedInput });
   });

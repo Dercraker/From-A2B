@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { AddStepAction } from "@/features/steps/add/addStep.action";
 import { AddStepSchema } from "@/features/steps/add/addStep.schema";
-import { StepDto } from "@/features/steps/dto/stepDto.schema";
+import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { TransportMode } from "@prisma/client";
@@ -82,9 +82,9 @@ export const AddStepDialog = ({
 
       return result.data;
     },
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(params.tripSlug.toString()),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
       });
     },
   });
@@ -103,6 +103,7 @@ export const AddStepDialog = ({
         </DialogHeader>
         <Form
           form={form}
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           onSubmit={() => {}}
           className="flex flex-col gap-4"
           onReset={() => {
@@ -146,7 +147,7 @@ export const AddStepDialog = ({
                   value={field.value ?? new Date()}
                   className="w-full"
                   onChange={(date) => {
-                    form.setValue("startDate", date || new Date(), {
+                    form.setValue("startDate", date ?? new Date(), {
                       shouldDirty: true,
                     });
                   }}
@@ -167,7 +168,7 @@ export const AddStepDialog = ({
                   value={field.value ?? new Date()}
                   className="w-full"
                   onChange={(date) => {
-                    form.setValue("endDate", date || new Date(), {
+                    form.setValue("endDate", date ?? new Date(), {
                       shouldDirty: true,
                     });
                   }}
@@ -188,7 +189,7 @@ export const AddStepDialog = ({
                   onChange={(address) => {
                     form.setValue("latitude", address.lat);
                     form.setValue("longitude", address.lng);
-                    form.setValue("placeId", address.placeId || undefined);
+                    form.setValue("placeId", address.placeId ?? undefined);
                   }}
                 />
                 <FormMessage />
@@ -256,7 +257,7 @@ export const AddStepDialog = ({
             </Button>
             <LoadingButton
               className="flex-1"
-              onClick={async () => await addStepAsync(form.getValues())}
+              onClick={async () => addStepAsync(form.getValues())}
               loading={isPending}
               disabled={!form.formState.isValid}
             >

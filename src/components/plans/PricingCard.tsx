@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/typography";
-import { Plan } from "@/features/plans/plans";
+import type { Plan } from "@/features/plans/plans";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useParams } from "next/navigation";

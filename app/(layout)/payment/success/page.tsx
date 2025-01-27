@@ -1,4 +1,10 @@
-import { Layout, LayoutContent, LayoutDescription, LayoutHeader, LayoutTitle } from "@/components/page/layout";
+import {
+  Layout,
+  LayoutContent,
+  LayoutDescription,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/components/page/layout";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 

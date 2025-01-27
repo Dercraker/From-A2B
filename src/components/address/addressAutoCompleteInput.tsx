@@ -57,7 +57,7 @@ export const AddressAutoCompleteInput = ({
     queryFn: async () => {
       const res = await SearchPlacesAction({ textQuery: debouncedSearchInput });
       if (!isActionSuccessful(res)) {
-        toast.error(res?.serverError || "Failed to fetch places");
+        toast.error(res?.serverError ?? "Failed to fetch places");
         return [];
       }
 
@@ -68,10 +68,10 @@ export const AddressAutoCompleteInput = ({
 
   useEffect(() => {
     if (!debouncedSearchInput || debouncedSearchInput === "") return;
-    refetch();
+    void refetch();
   }, [debouncedSearchInput]);
 
-  const predictions = data || [];
+  const predictions = data ?? [];
 
   return (
     <Command
@@ -90,7 +90,7 @@ export const AddressAutoCompleteInput = ({
             onValueChange={setSearchInput}
             onBlur={close}
             onFocus={open}
-            placeholder={placeholder || "Enter place"}
+            placeholder={placeholder ?? "Enter place"}
             className="w-full rounded-lg p-3 outline-none"
           />
         </div>

@@ -30,7 +30,7 @@ export default async function RoutePage(props: PageParams) {
   });
 
   const invitedEmail = invitations
-    .map((i) => (i?.data as { email?: string })?.email)
+    .map((i) => (i.data as { email?: string }).email)
     .filter(Boolean) as string[];
 
   return (

@@ -12,13 +12,13 @@ import {
 import { FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AddressType } from "@/features/address/address.schema";
+import type { AddressType } from "@/features/address/address.schema";
 import { Loader2 } from "lucide-react";
 import type React from "react";
 import { type FormEvent, useEffect, useState } from "react";
 import { type ZodError, z } from "zod";
 
-interface AddressDialogProps {
+type AddressDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   address: AddressType;
@@ -26,15 +26,15 @@ interface AddressDialogProps {
   adrAddress: string;
   dialogTitle: string;
   isLoading: boolean;
-}
+};
 
-interface AddressFields {
+type AddressFields = {
   address1?: string;
   address2?: string;
   city?: string;
   region?: string;
   postalCode?: string;
-}
+};
 
 export const createAddressSchema = (address: AddressFields) => {
   let schema = {};
@@ -246,7 +246,7 @@ const AddressDialog = ({
                 <Input
                   value={address1}
                   onChange={(e) => setAddress1(e.currentTarget.value)}
-                  disabled={address?.address1 === ""}
+                  disabled={address.address1 === ""}
                   id="address1"
                   name="address1"
                   placeholder="Address line 1"
@@ -266,7 +266,7 @@ const AddressDialog = ({
                 <Input
                   value={address2}
                   onChange={(e) => setAddress2(e.currentTarget.value)}
-                  disabled={address?.address1 === ""}
+                  disabled={address.address1 === ""}
                   id="address2"
                   name="address2"
                   placeholder="Address line 2"
@@ -279,7 +279,7 @@ const AddressDialog = ({
                   <Input
                     value={city}
                     onChange={(e) => setCity(e.currentTarget.value)}
-                    disabled={address?.city === ""}
+                    disabled={address.city === ""}
                     id="city"
                     name="city"
                     placeholder="City"
@@ -291,7 +291,7 @@ const AddressDialog = ({
                   <Input
                     value={region}
                     onChange={(e) => setRegion(e.currentTarget.value)}
-                    disabled={address?.region === ""}
+                    disabled={address.region === ""}
                     id="region"
                     name="region"
                     placeholder="Region"
@@ -306,7 +306,7 @@ const AddressDialog = ({
                   <Input
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.currentTarget.value)}
-                    disabled={address?.postalCode === ""}
+                    disabled={address.postalCode === ""}
                     id="postalCode"
                     name="postalCode"
                     placeholder="Postal Code"
@@ -318,7 +318,7 @@ const AddressDialog = ({
                 <div className="flex-1 space-y-0.5">
                   <Label htmlFor="country">Country</Label>
                   <Input
-                    value={address?.country}
+                    value={address.country}
                     id="country"
                     disabled
                     name="country"
