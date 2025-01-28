@@ -1,3 +1,4 @@
+import { version } from "@/../package.json";
 import { Typography } from "@/components/ui/typography";
 import { SiteConfig } from "@/site-config";
 import Link from "next/link";
@@ -15,6 +16,7 @@ export const Footer = () => {
                 <LogoSvg />
                 <Typography variant="h3">{SiteConfig.title}</Typography>
               </Link>
+              <Typography variant="muted">V{version}</Typography>
               <Typography variant="muted">{SiteConfig.company.name}</Typography>
               <Typography variant="muted">
                 {SiteConfig.company.address}

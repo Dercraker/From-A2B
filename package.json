@@ -1,9 +1,16 @@
 {
   "name": "from-a2b",
-  "version": "0.2.0",
+  "version": "0.48.35-0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "prepatch": "pnpm version prepatch --no-git-tag-version",
+    "patch": "pnpm version patch",
+    "preminor": "pnpm version preminor --no-git-tag-version",
+    "minor": "pnpm version minor",
+    "premajor": "pnpm version premajor --no-git-tag-version",
+    "prerelease": "pnpm version prerelease",
+    "major": "pnpm version major",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
