@@ -12,6 +12,12 @@ const replaceSlugs = (href: string, orgSlug: string, tripSlug: string) => {
     .replace(":tripSlug", tripSlug);
 };
 
+export const generateTripLink = (
+  href: string,
+  orgSlug: string,
+  tripSlug: string,
+) => replaceSlugs(href, orgSlug, tripSlug);
+
 export const getTripNavigationLinks = (
   orgSlug: string,
   tripSlug: string,

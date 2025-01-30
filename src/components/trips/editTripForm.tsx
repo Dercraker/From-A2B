@@ -12,20 +12,23 @@ import { EditTripSchema } from "@/features/trip/update/editTrip.schema";
 import { UpdateTripAction } from "@/features/trip/update/updateTrip.action";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { logger } from "@/lib/logger";
+import { cn } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { FormUnsavedBar } from "../form/FormUnsavedBar";
+import { SubmitButton } from "../form/SubmitButton";
 import { ImageFormItem } from "../images/ImageFormItem";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
 import { DateTimePicker } from "../ui/DateTimePicker";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -36,9 +39,10 @@ import {
 
 export type EditTripFormProps = {
   tripSlug: string;
+  className?: string;
 };
 
-export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
+export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
   const editTripForm = useZodForm({
     schema: EditTripSchema,
     defaultValues: {
@@ -67,7 +71,7 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
     },
   });
 
-  const { mutate: UpdateTrip, isPending: isUpdateTripPending } = useMutation({
+  const { mutate: UpdateTrip } = useMutation({
     mutationFn: async (values: EditTrip) => {
       const result = await UpdateTripAction(values);
       if (!isActionSuccessful(result)) {
@@ -91,14 +95,15 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
 
   if (isTripPending) return <Typography>Loading...</Typography>;
   return (
-    <FormUnsavedBar
+    <Form
       onSubmit={(formValues) => UpdateTrip(formValues)}
       onReset={() => {
         handleResetForm(TripDtoSchema.parse(data));
       }}
       form={editTripForm}
     >
-      <Card>
+      {/* <Card> */}
+      <Card className={cn(className)}>
         <CardHeader>
           <CardTitle>
             <FormField
@@ -178,7 +183,15 @@ export const EditTripForm = ({ tripSlug }: EditTripFormProps) => {
             )}
           />
         </CardContent>
+        <CardFooter>
+          <SubmitButton
+            className="w-fit self-end"
+            disabled={!editTripForm.formState.isDirty}
+          >
+            Save
+          </SubmitButton>
+        </CardFooter>
       </Card>
-    </FormUnsavedBar>
+    </Form>
   );
 };
