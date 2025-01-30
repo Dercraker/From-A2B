@@ -5,9 +5,10 @@ import { GenerateStepLink } from "@/features/steps/steps.link";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical } from "lucide-react";
+import { EllipsisVertical, GripVertical } from "lucide-react";
 import Link from "next/link";
 import { StepCounter } from "./stepCounter";
+import { StepItemMenu } from "./stepItemMenu";
 
 export type StepItemSortableProps = {
   tripSlug: string;
@@ -59,6 +60,9 @@ export const StepItemSortable = ({
           {step.name}
         </Typography>
       </InlineTooltip>
+      <StepItemMenu step={step}>
+        <EllipsisVertical className="text-muted-foreground" />
+      </StepItemMenu>
     </div>
   );
 };
