@@ -44,9 +44,14 @@ import { Typography } from "../ui/typography";
 
 export type EditStepDialogProps = PropsWithChildren<{
   step: StepDto;
+  onClose: () => void;
 }>;
 
-export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
+export const EditStepDialog = ({
+  children,
+  step,
+  onClose,
+}: EditStepDialogProps) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -84,6 +89,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
       toast.success(`The step ${result.data} as been updated.`);
       form.reset();
       setOpen(false);
+      onClose();
 
       return result.data;
     },
@@ -100,7 +106,13 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
   });
 
   return (
-    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        setOpen(v);
+        if (!v) onClose();
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -116,6 +128,7 @@ export const EditStepDialog = ({ children, step }: EditStepDialogProps) => {
           className="flex flex-col gap-4"
           onReset={() => {
             setOpen(false);
+            onClose();
           }}
         >
           <FormField

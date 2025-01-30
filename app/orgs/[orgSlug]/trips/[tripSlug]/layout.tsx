@@ -52,7 +52,6 @@ const RouteLayout = async ({
             }))}
           />
         }
-        //TODO Create TripNavigationLinks component
         navigationChildren={
           <TripNavigationLinks orgSlug={org.slug} tripSlug={tripSlug} />
         }
