@@ -1,3 +1,5 @@
+"use client";
+
 import { AddStepDialog } from "@/components/steps/addStepDialog";
 import { DeleteStepAlertDialog } from "@/components/steps/deleteStepAlertDialog";
 import { EditStepDialog } from "@/components/steps/editStepDialog";
@@ -9,6 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { StepDto } from "@/features/steps/dto/stepDto.schema";
+import { useDisclosure } from "@/hooks/useDisclosure";
 import {
   ArrowDownFromLine,
   ArrowUpFromLine,
@@ -23,26 +26,28 @@ export type StepItemMenuProps = PropsWithChildren<{
 }>;
 
 export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
+  const [open, handler] = useDisclosure(false);
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={() => handler.toggle()}>
       <PopoverTrigger>{children}</PopoverTrigger>
       <PopoverContent className="flex select-none flex-col gap-2">
-        <EditStepDialog step={step}>
+        <EditStepDialog step={step} onClose={() => handler.close()}>
           <Button variant="filled" className="flex items-center gap-2">
             <Edit3 />
             Edit step
           </Button>
         </EditStepDialog>
         <Divider />
-        <CenterMapMenuButton step={step} />
+        <CenterMapMenuButton step={step} onClick={() => handler.close()} />
         <Divider />
-        <AddStepDialog afterStep={step}>
+        <AddStepDialog afterStep={step} onClose={() => handler.close()}>
           <Button variant="filled" className="flex items-center gap-2">
             <ArrowUpFromLine />
             Add step before
           </Button>
         </AddStepDialog>
-        <AddStepDialog beforeStep={step}>
+        <AddStepDialog beforeStep={step} onClose={() => handler.close()}>
           <Button variant="filled" className="flex items-center gap-2">
             <ArrowDownFromLine />
             Add step after
@@ -50,7 +55,11 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
         </AddStepDialog>
         <Divider />
         <DeleteStepAlertDialog stepId={step.id} name={step.name}>
-          <Button variant="filled" className="flex w-full items-center gap-2">
+          <Button
+            variant="filled"
+            className="flex w-full items-center gap-2"
+            onClick={() => handler.close()}
+          >
             <Delete />
             Delete step
           </Button>

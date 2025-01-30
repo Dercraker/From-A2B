@@ -43,12 +43,14 @@ import { Typography } from "../ui/typography";
 export type AddStepDialogProps = PropsWithChildren<{
   beforeStep?: StepDto;
   afterStep?: StepDto;
+  onClose: () => void;
 }>;
 
 export const AddStepDialog = ({
   children,
   beforeStep,
   afterStep,
+  onClose,
 }: AddStepDialogProps) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -79,6 +81,7 @@ export const AddStepDialog = ({
       toast.success(`The step ${result.data} as been added.`);
       form.reset();
       setOpen(false);
+      onClose();
 
       return result.data;
     },
@@ -90,7 +93,13 @@ export const AddStepDialog = ({
   });
 
   return (
-    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        setOpen(v);
+        if (!v) onClose();
+      }}
+    >
       <DialogTrigger asChild>
         {children ? children : <Button variant="filled">Add Trip</Button>}
       </DialogTrigger>
@@ -108,6 +117,7 @@ export const AddStepDialog = ({
           className="flex flex-col gap-4"
           onReset={() => {
             setOpen(false);
+            onClose();
           }}
         >
           <FormField

@@ -8,18 +8,23 @@ import { LocateFixed } from "lucide-react";
 
 export type CenterMapMenuButtonProps = {
   step: StepDto;
+  onClick: () => void;
 };
 
 export const CenterMapMenuButton = ({
   step: { latitude, longitude },
+  onClick,
 }: CenterMapMenuButtonProps) => {
   const map = useMap();
 
-  const handleCenter = () =>
+  const handleCenter = () => {
     void map?.setCenter({
       lat: latitude,
       lng: longitude,
     });
+
+    onClick();
+  };
 
   if (!map)
     return (
@@ -31,7 +36,7 @@ export const CenterMapMenuButton = ({
           onClick={handleCenter}
         >
           <LocateFixed />
-          Center map
+          Center map on step
         </Button>
       </InlineTooltip>
     );
@@ -44,7 +49,7 @@ export const CenterMapMenuButton = ({
       onClick={handleCenter}
     >
       <LocateFixed />
-      Center map
+      Center map on step
     </Button>
   );
 };
