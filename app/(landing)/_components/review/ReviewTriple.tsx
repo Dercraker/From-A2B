@@ -3,9 +3,6 @@ import type { ReviewItemProps } from "./ReviewItem";
 import { ReviewItem } from "./ReviewItem";
 
 type ReviewTripleProps = {
-  /**
-   * An array of reviews.
-   */
   reviews: [ReviewItemProps, ReviewItemProps, ReviewItemProps];
 };
 

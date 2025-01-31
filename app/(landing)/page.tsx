@@ -8,10 +8,11 @@ import { FAQSection } from "./_components/FAQSection";
 import { Hero } from "./_components/Hero";
 import { LandingHeader } from "./_components/LandingHeader";
 import { MapSection } from "./_components/mapSection";
+import { MarqueeReview } from "./_components/review/MarqueeReview";
+import { ReviewTriple } from "./_components/review/ReviewTriple";
 import { SectionDivider } from "./_components/SectionDivider";
 import { StatsSection } from "./_components/StatsSection";
 import { StepSection } from "./_components/StepSection";
-import { ReviewTriple } from "./_components/review/ReviewTriple";
 
 export default function HomePage() {
   return (
@@ -37,21 +38,21 @@ export default function HomePage() {
       <ReviewTriple
         reviews={[
           {
-            image: "https://i.pravatar.cc/300?u=a1",
-            name: "Sophie",
-            review: `Threader **has completely transformed the way I manage my social media** content. The ability to schedule posts and use AI for content suggestions has saved me hours each week.`,
+            image: "https://i.pravatar.cc/300?u=a8",
+            name: "Alexandra Johnson",
+            review: `From-A2B **has truly simplified my travel planning** with its user-friendly interface and efficient trip management tools. I highly recommend their service to anyone looking for a convenient way to organize their trips effortlessly.`,
             role: "Digital Marketer",
           },
           {
-            image: "https://i.pravatar.cc/300?u=a2",
-            name: "Alex",
-            review: `Using Threader has significantly boosted my online engagement. **The analytics tool helps me understand what works**, allowing me to refine my strategy and grow my follower base.`,
+            image: "https://i.pravatar.cc/300?u=a1",
+            name: "Alex Miller",
+            review: `I am beyond impressed with From-a2b's seamless platform. Their service makes travel a breeze. **From A2B is the perfect solution for anyone looking to simplify their trip planning.** Highly recommend!`,
             role: "Social Media Influencer",
           },
           {
-            image: "https://i.pravatar.cc/300?u=a3",
-            name: "Jordan",
-            review: `The ease of scheduling and the AI-generated content features are game-changers. **Threader's user-friendly interface** makes it perfect for anyone looking to enhance their online presence.`,
+            image: "https://i.pravatar.cc/300?u=a11",
+            name: "Emily Parker",
+            review: `From-a2b's service made traveling stress-free and efficient. I highly recommend their simple and easy solution for managing trips. **With From A2B, planning and organizing travels becomes a breeze.**`,
             role: "Entrepreneur",
           },
         ]}
@@ -77,8 +78,7 @@ export default function HomePage() {
         ]}
       />
 
-      {/* //TODO: CHECK this  */}
-      {/* <ReviewInfiniteCard /> */}
+      <MarqueeReview />
 
       <EmailFormSection />
 

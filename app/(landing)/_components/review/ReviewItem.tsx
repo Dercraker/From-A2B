@@ -24,22 +24,29 @@ export type ReviewItemProps = {
   image: string;
 } & ComponentPropsWithoutRef<"div">;
 
-export const ReviewItem = ({ className, ...props }: ReviewItemProps) => {
+export const ReviewItem = ({
+  image,
+  name,
+  review,
+  role,
+  className,
+  ...props
+}: ReviewItemProps) => {
   return (
     <Card className={cn("h-fit", className)} {...props}>
       <CardHeader>
-        <ClientMarkdown className="citation">{props.review}</ClientMarkdown>
+        <ClientMarkdown className="citation">{review}</ClientMarkdown>
       </CardHeader>
       <CardContent className="flex items-center gap-2 rounded-lg bg-background pt-6">
         <div>
           <Avatar>
-            <AvatarFallback>{props.name[0]}</AvatarFallback>
-            <AvatarImage src={props.image} alt="user image" />
+            <AvatarFallback>{name[0]}</AvatarFallback>
+            <AvatarImage src={image} alt="user image" />
           </Avatar>
         </div>
         <div>
-          <Typography variant="small">{props.name}</Typography>
-          <Typography variant="muted">{props.role}</Typography>
+          <Typography variant="small">{name}</Typography>
+          <Typography variant="muted">{role}</Typography>
         </div>
       </CardContent>
     </Card>
