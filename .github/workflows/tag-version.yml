@@ -1,0 +1,55 @@
+name: Auto Tag Version on Merge or Push
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+      - develop
+
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  tag:
+    if: github.event_name == 'push' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Nécessaire pour comparer les versions et récupérer les tags
+
+      - name: Get package.json version
+        id: package_version
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Get last Git tag
+        id: last_tag
+        run: echo "PREV_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo '')" >> $GITHUB_ENV
+
+      - name: Check if version changed
+        run: |
+          PREV_VERSION_CLEAN=${PREV_VERSION#v} # Supprime le "v" du tag précédent
+          if [ "$PREV_VERSION_CLEAN" = "$VERSION" ]; then
+            echo "No version change detected. Skipping tag creation."
+            exit 1
+          fi
+
+      - name: Check if tag exists
+        run: |
+          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} already exists."
+            exit 1
+          fi
+
+      - name: Create and push tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${VERSION}
+          git push origin v${VERSION}
