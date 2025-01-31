@@ -37,14 +37,14 @@ jobs:
           PREV_VERSION_CLEAN=${PREV_VERSION#v} # Supprime le "v" du tag précédent
           if [ "$PREV_VERSION_CLEAN" = "$VERSION" ]; then
             echo "No version change detected. Skipping tag creation."
-            exit 1
+            exit 0
           fi
 
       - name: Check if tag exists
         run: |
           if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
-            echo "Tag v${VERSION} already exists."
-            exit 1
+            echo "Tag v${VERSION} already exists. Skipping."
+            exit 0
           fi
 
       - name: Create and push tag
