@@ -49,7 +49,7 @@ export const LINKS = {
     },
     History: {
       href: `${ORGANIZATION_PATH}/history`,
-      label: "History",
+      label: "Travel history",
       Icon: History,
     },
   },

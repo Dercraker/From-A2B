@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { InlineTooltip } from "@/components/ui/tooltip";
 import { Typography } from "@/components/ui/typography";
 import type { TripListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
 import { GenerateTripLink } from "@/features/trips/trips.link";
@@ -35,15 +36,22 @@ export const TripCard = ({
           <CardDeleteButton tripId={tripId} tripName={name} />
         </div>
         <div className="flex select-none gap-4">
-          <Typography variant="muted" className="flex items-baseline gap-1">
-            <PlaneTakeoff size={16} />
-            {format(startDate, "yyyy/MM/dd")}
-          </Typography>
-          {startDate.getTime() === endDate.getTime() && (
-            <Typography variant="muted" className="flex items-baseline gap-1 ">
-              <PlaneLanding size={16} />
-              {format(endDate, "yyyy/MM/dd")}
+          <InlineTooltip title="Start time">
+            <Typography variant="muted" className="flex items-baseline gap-1">
+              <PlaneTakeoff size={16} />
+              {format(startDate, "yyyy/MM/dd")}
             </Typography>
+          </InlineTooltip>
+          {startDate.getTime() !== endDate.getTime() && (
+            <InlineTooltip title="End time">
+              <Typography
+                variant="muted"
+                className="flex items-baseline gap-1 "
+              >
+                <PlaneLanding size={16} />
+                {format(endDate, "yyyy/MM/dd")}
+              </Typography>
+            </InlineTooltip>
           )}
         </div>
       </CardHeader>

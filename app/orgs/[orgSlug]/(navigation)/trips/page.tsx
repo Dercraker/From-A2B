@@ -6,16 +6,24 @@ import { TripsContainer } from "./_components/tripsContainer";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Trips",
-  description: "List of your trips.",
+  description: "List of your trips",
 });
-export default async function RoutePage() {
+
+const RoutePage = async () => {
   const trips: TripsListDtoSchema = await GetTripsByCurrentOrgQuery({
     order: {
       startDate: "asc",
+    },
+    where: {
+      startDate: {
+        gte: new Date(),
+      },
     },
   });
 
   if (!trips.length) return <EmptyTrips />;
 
   return <TripsContainer trips={trips} />;
-}
+};
+
+export default RoutePage;

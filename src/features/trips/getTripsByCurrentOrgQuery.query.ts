@@ -7,16 +7,19 @@ type GetTripsByCurrentOrgQueryProps = {
   order?:
     | Prisma.TripOrderByWithRelationInput
     | Prisma.TripOrderByWithRelationInput[];
+  where?: Prisma.TripWhereInput;
 };
 
 export const GetTripsByCurrentOrgQuery = async ({
   order,
+  where,
 }: GetTripsByCurrentOrgQueryProps) => {
   const { org } = await getRequiredCurrentOrgCache();
   const trips = await prisma.trip.findMany({
     where: {
       organizationId: org.id,
       deletedAt: null,
+      ...where,
     },
     orderBy: order,
   });
