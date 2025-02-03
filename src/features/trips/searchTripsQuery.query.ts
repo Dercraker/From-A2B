@@ -32,5 +32,7 @@ export const SearchTripsQuery = async ({
     });
   }
 
-  return TripsListDtoSchema.parse(trips);
+  return TripsListDtoSchema.parse(
+    trips.map((trip) => ({ ...trip, orgSlug: org.slug })),
+  );
 };
