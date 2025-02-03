@@ -4,7 +4,7 @@ export const TripListDtoSchema = z.object({
   id: z.string(),
   slug: z.string(),
   organizationId: z.string(),
-  orgSlug: z.string(),
+  orgSlug: z.string().optional(),
   name: z.string(),
   startDate: z.date(),
   endDate: z.date(),

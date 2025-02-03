@@ -1,18 +1,22 @@
 import { prisma } from "@/lib/prisma";
-import { TripListDtoSchema } from "./dto/tripsListDto.schema";
+import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
+import { TripsListDtoSchema } from "./dto/tripsListDto.schema";
 
 type SearchTripsQueryProps = { searchQuery: string };
 
 export const SearchTripsQuery = async ({
   searchQuery,
 }: SearchTripsQueryProps) => {
+  const { org } = await getRequiredCurrentOrgCache();
+
   let trips = await prisma.trip.findMany({
     where: {
+      organizationId: org.id,
       OR: [
         { name: { contains: searchQuery, mode: "insensitive" } },
         { description: { contains: searchQuery, mode: "insensitive" } },
-        { startDate: { gte: new Date(searchQuery) } },
-        { endDate: { lte: new Date(searchQuery) } },
+        // { startDate: { gte: new Date(searchQuery) } },
+        // { endDate: { lte: new Date(searchQuery) } },
       ],
       deletedAt: null,
     },
@@ -28,5 +32,5 @@ export const SearchTripsQuery = async ({
     });
   }
 
-  return TripListDtoSchema.parse(trips);
+  return TripsListDtoSchema.parse(trips);
 };

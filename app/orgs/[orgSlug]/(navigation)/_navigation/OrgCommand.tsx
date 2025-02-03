@@ -14,9 +14,18 @@ import {
   CmdOrOption,
   KeyboardShortcut,
 } from "@/components/ui/keyboard-shortcut";
+import { Typography } from "@/components/ui/typography";
+import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
+import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
+import { SearchTripsAction } from "@/features/trips/searchTrips.action";
+import { GenerateTripLink } from "@/features/trips/trips.link";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useDisclosure } from "@/hooks/useDisclosure";
-import { Search } from "lucide-react";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { IconPlaneArrival, IconPlaneDeparture } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
+import { format, isBefore } from "date-fns";
+import { HistoryIcon, PlaneIcon, Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useKey } from "react-use";
@@ -43,7 +52,20 @@ export const OrganizationCommand = () => {
 
   const [searchQuery, SetSearchQuery] = useState("");
 
-  const deboucendSearchQuery = useDebounce(searchQuery, 500);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  const { data: searchedTrips } = useQuery({
+    queryKey: TRIP_KEY_Factory.search(debouncedSearchQuery),
+    queryFn: async () => {
+      const result = await SearchTripsAction({
+        searchQuery: debouncedSearchQuery,
+      });
+
+      if (!isActionSuccessful(result)) throw new Error(result?.serverError);
+      return result.data as TripsListDtoSchema;
+    },
+    staleTime: 0,
+  });
 
   return (
     <>
@@ -90,7 +112,37 @@ export const OrganizationCommand = () => {
             </CommandGroup>
           ))}
           <CommandSeparator />
-          <CommandGroup heading="Trips"></CommandGroup>
+          <CommandGroup heading="Trips">
+            {searchedTrips?.map((trip) => (
+              <CommandItem
+                key={trip.id}
+                onSelect={() => {
+                  close();
+                  router.push(
+                    GenerateTripLink({ orgSlug, tripSlug: trip.slug }),
+                  );
+                }}
+              >
+                <div className="flex flex-row gap-2">
+                  <div className="flex flex-row">
+                    {isBefore(trip.startDate, new Date()) && <HistoryIcon />}
+                    <PlaneIcon />
+                  </div>
+                  <Typography className="capitalize">{trip.name}</Typography>
+                  <Typography className="flex flex-row gap-2 underline underline-offset-2">
+                    <IconPlaneDeparture />
+                    {format(trip.startDate, "yyyy/MM/dd")}
+                  </Typography>
+                  {trip.endDate !== trip.startDate && (
+                    <Typography className="flex flex-row gap-2 underline underline-offset-2">
+                      <IconPlaneArrival />
+                      {format(trip.endDate, "yyyy/MM/dd")}
+                    </Typography>
+                  )}
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>

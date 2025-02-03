@@ -29,6 +29,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMap } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
@@ -42,6 +43,13 @@ export type StepListProps = {
 
 export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
   const { steps, SetSteps } = useTripStore(useShallow((s) => s));
+  const map = useMap();
+  if (steps?.[steps.length - 1]) {
+    map?.setCenter({
+      lat: steps[steps.length - 1].latitude,
+      lng: steps[steps.length - 1].longitude,
+    });
+  }
 
   const queryClient = useQueryClient();
 
