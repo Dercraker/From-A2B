@@ -25,6 +25,7 @@ export const AutocompleteComponent = ({
   const [address, setAddress] = useState<AddressType>({
     address1: "",
     address2: "",
+    displayName: null,
     formattedAddress: "",
     city: "",
     region: "",

@@ -70,7 +70,14 @@ export default function AddressAutoComplete({
     <>
       {selectedPlaceId !== "" || address.formattedAddress ? (
         <div className="flex items-center gap-2">
-          <Input value={address.formattedAddress} readOnly />
+          <Input
+            value={
+              address.displayName
+                ? `${address.displayName}, ${address.formattedAddress}`
+                : address.formattedAddress
+            }
+            readOnly
+          />
 
           <AddressDialog
             isLoading={isPending ?? isLoading}
@@ -97,6 +104,7 @@ export default function AddressAutoComplete({
               setAddress({
                 address1: "",
                 address2: "",
+                displayName: null,
                 formattedAddress: "",
                 city: "",
                 region: "",

@@ -89,7 +89,6 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
   });
 
   const handleResetForm = (data: TripDto) => {
-    logger.debug("🚀 ~ handleResetForm ~ editTripForm:", editTripForm);
     editTripForm.reset(data);
   };
 

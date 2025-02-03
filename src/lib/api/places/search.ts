@@ -14,7 +14,7 @@ export const SearchPlaces = async (textQuery: string) => {
       otherArgs: {
         headers: {
           "X-Goog-FieldMask":
-            "places.id,places.formattedAddress,places.location",
+            "places.id,places.displayName,places.formattedAddress,places.location",
         },
       },
     },

@@ -28,11 +28,16 @@ export const AddressByPosGPSAction = orgAction
     const postalCode = dataFinderRegx("postal-code");
     const country = dataFinderRegx("country-name");
 
+    const displayName = data.displayName;
     const formattedAddress = data.formattedAddress;
-
     const formattedData: AddressType = {
       address1,
       address2,
+      displayName:
+        displayName?.text &&
+        !String(formattedAddress).includes(displayName.text)
+          ? displayName.text
+          : null,
       formattedAddress: String(formattedAddress),
       city,
       region,
