@@ -69,7 +69,6 @@ export const AlertDialogRenderedDialog = (
   const isConfirmDisabled = props.confirmText
     ? text !== props.confirmText
     : false;
-
   return (
     <AlertDialog open={true}>
       <AlertDialogContent>
@@ -107,7 +106,8 @@ export const AlertDialogRenderedDialog = (
             <AlertDialogAction asChild>
               <LoadingButton
                 loading={props.loading}
-                disabled={props.loading ?? isConfirmDisabled}
+                // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+                disabled={props.loading || isConfirmDisabled}
                 onClick={props.action.onClick}
               >
                 {props.action.label}
