@@ -18,7 +18,7 @@ export const CenterMapMenuButton = ({
   const map = useMap();
 
   const handleCenter = () => {
-    void map?.setCenter({
+    map?.setCenter({
       lat: latitude,
       lng: longitude,
     });
