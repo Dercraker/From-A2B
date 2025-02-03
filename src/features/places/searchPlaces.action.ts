@@ -14,7 +14,15 @@ export const SearchPlacesAction = orgAction
   .action(async ({ parsedInput: { textQuery } }) => {
     const res = await SearchPlaces(textQuery);
     const data = SearchPlacesResponsesDtoSchema.safeParse(
-      res[0].places?.map((p) => ({ ...p, name: p.id })),
+      res[0].places?.map((p) => ({
+        ...p,
+        name: p.id,
+        displayName:
+          p.displayName?.text &&
+          !p.formattedAddress?.includes(p.displayName.text)
+            ? p.displayName.text
+            : null,
+      })),
     );
 
     if (!data.success)
@@ -23,6 +31,14 @@ export const SearchPlacesAction = orgAction
       );
     else
       return SearchPlacesResponsesDtoSchema.parse(
-        res[0].places?.map((p) => ({ ...p, name: p.id })),
+        res[0].places?.map((p) => ({
+          ...p,
+          name: p.id,
+          displayName:
+            p.displayName?.text &&
+            !p.formattedAddress?.includes(p.displayName.text)
+              ? p.displayName.text
+              : null,
+        })),
       );
   });

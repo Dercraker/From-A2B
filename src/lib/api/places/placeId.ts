@@ -14,7 +14,7 @@ export const getPlace = async (placeId: string) => {
       otherArgs: {
         headers: {
           "X-Goog-FieldMask":
-            "id,adrFormatAddress,shortFormattedAddress,formattedAddress,location,addressComponents",
+            "id,adrFormatAddress,displayName,shortFormattedAddress,formattedAddress,location,addressComponents",
         },
       },
     },

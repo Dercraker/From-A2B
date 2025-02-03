@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const SearchPlacesResponseDtoSchema = z.object({
   name: z.string(),
+  displayName: z.string().nullable(),
   formattedAddress: z.string(),
   location: z.object({
     latitude: z.number(),

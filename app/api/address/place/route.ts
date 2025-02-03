@@ -17,7 +17,7 @@ export const GET = authRoute
           "X-Goog-Api-Key": env.GOOGLE_PLACES_API_KEY,
           "X-Goog-FieldMask":
             // Include expected fields in the response
-            "adrFormatAddress,shortFormattedAddress,formattedAddress,location,addressComponents",
+            "adrFormatAddress,displayName,shortFormattedAddress,formattedAddress,location,addressComponents",
           "Content-Type": "application/json",
         },
       });
@@ -44,11 +44,13 @@ export const GET = authRoute
       const lng = data.location.longitude;
       const placeId = query.placeId;
 
+      const displayName = data.displayName;
       const formattedAddress = data.formattedAddress;
 
       const formattedData: AddressType = {
         address1,
         address2,
+        displayName,
         formattedAddress,
         city,
         region,

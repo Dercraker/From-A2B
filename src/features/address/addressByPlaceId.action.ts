@@ -29,11 +29,17 @@ export const AddressByPlaceIdAction = orgAction
     const lat = data.location?.latitude;
     const lng = data.location?.longitude;
 
+    const displayName = data.displayName;
     const formattedAddress = data.formattedAddress;
 
     const formattedData: AddressType = {
       address1,
       address2,
+      displayName:
+        displayName?.text &&
+        !String(formattedAddress).includes(displayName.text)
+          ? displayName.text
+          : null,
       formattedAddress: String(formattedAddress),
       city,
       region,
