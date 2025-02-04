@@ -104,8 +104,8 @@ export const AddressAutoCompleteInput = ({
       {isOpen && (
         <div className="relative h-auto animate-in fade-in-0 zoom-in-95">
           <CommandList>
-            <div className="absolute top-1.5 z-50 w-full">
-              <CommandGroup className="relative z-50 h-auto min-w-32 overflow-hidden rounded-md border bg-background shadow-md">
+            <div className="absolute top-1.5 z-50 w-full ">
+              <CommandGroup className="relative z-50 h-72 min-w-32 overflow-scroll rounded-md border bg-background shadow-md">
                 {isPending ? (
                   <div className="flex h-28 items-center justify-center">
                     <Loader2 className="size-6 animate-spin" />
