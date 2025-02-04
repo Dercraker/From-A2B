@@ -6,6 +6,9 @@ const nextConfig = {
         hostname: "picsum.photos",
       },
       {
+        hostname: "i.pravatar.cc",
+      },
+      {
         protocol: "https",
         hostname: "**",
       },
