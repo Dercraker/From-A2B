@@ -9,10 +9,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
+import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { AuthError } from "next-auth";
+import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { accountAskDeletionAction } from "./delete-account.action";
 
-export default function DeleteProfilePage() {
+const DeleteProfilePage = () => {
+  const { data } = useSession();
+
+  if (!data?.user)
+    throw new AuthError("You must be authenticated to access this resource.");
+
   return (
     <Card>
       <CardHeader>
@@ -36,14 +44,21 @@ export default function DeleteProfilePage() {
             alertDialog.add({
               title: "Delete your account ?",
               description: "Are you sure you want to delete your profile?",
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              confirmText: data.user!.name ?? data.user!.email!,
               action: {
                 label: "Delete",
                 onClick: async () => {
-                  await accountAskDeletionAction();
-                  toast.success("Your deletion has been asked.", {
-                    description:
-                      "Please check your email for further instructions.",
-                  });
+                  const res = await accountAskDeletionAction();
+                  if (!isActionSuccessful(res))
+                    toast.error("Failed account deletion request", {
+                      description: "Please try again later or contact support",
+                    });
+                  else
+                    toast.success("Your deletion has been asked.", {
+                      description:
+                        "Please check your email for further instructions.",
+                    });
                 },
               },
             });
@@ -54,4 +69,6 @@ export default function DeleteProfilePage() {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default DeleteProfilePage;

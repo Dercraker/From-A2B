@@ -35,6 +35,7 @@ export const sendEmail = async (
 
   if (result.error) {
     logger.error("[sendEmail] Error", { result, subject: params[0].subject });
+    throw new Error("[sendEmail] Error");
   }
 
   return result;
