@@ -2,7 +2,7 @@ import { Layout, LayoutContent } from "@/components/page/layout";
 import { Typography } from "@/components/ui/typography";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 
-const markdown = `Privacy demo`;
+const markdown = `Privacy demo dsfsdfsdfs`;
 
 export default function page() {
   return (
