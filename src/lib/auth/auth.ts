@@ -1,52 +1,39 @@
-import { env } from '@/lib/env/server';
-import { prisma } from '@/lib/prisma';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import type { User } from '@prisma/client';
-import type { Session } from 'next-auth';
-import NextAuth from 'next-auth';
-import { setupStripeCustomer } from './auth-config-setup';
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import NextAuth from "next-auth";
+import { env } from "../env/server";
+import { prisma } from "../prisma";
+import {
+  setupDefaultOrganizationsOrInviteUser,
+  setupResendCustomer,
+} from "./auth-config-setup";
+import { getNextAuthConfigProviders } from "./getNextAuthConfigProviders";
 import {
   credentialsOverrideJwt,
   credentialsSignInCallback,
-} from './credentialsProvider';
-import { getNextAuthConfigProviders } from './getNextAuthConfigProvider';
+} from "./credentials-provider";
 
 export const { handlers, auth: baseAuth } = NextAuth((req) => ({
   pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout',
-    error: '/auth/error',
-    verifyRequest: '/auth/verify-request',
-    // ℹ️ Add this line if you want to add an onboarding page
-    newUser: '/auth/new-user',
-  },
-  theme: {
-    logo: '/images/logo-text.png',
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error",
+    verifyRequest: "/auth/verify-request",
+    newUser: "/orgs",
   },
   adapter: PrismaAdapter(prisma),
   providers: getNextAuthConfigProviders(),
   session: {
-    strategy: 'database',
+    strategy: "database",
   },
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    session(params) {
-      if (params.newSession) return params.session;
-
-      const typedParams = params as unknown as {
-        session: Session;
-        user?: User;
-      };
-
-      if (!typedParams.user) return typedParams.session;
-
-      typedParams.user.passwordHash = null;
-
-      return typedParams.session;
+    session: (params) => {
+      // @ts-expect-error - NextAuth doesn't know about this property
+      params.session.user.passwordHash = null;
+      return params.session;
     },
   },
   events: {
-    // 🔑 Add this line and the import to add credentials provider
     signIn: credentialsSignInCallback(req),
     createUser: async (message) => {
       const user = message.user;
@@ -55,18 +42,19 @@ export const { handlers, auth: baseAuth } = NextAuth((req) => ({
         return;
       }
 
-      const stripeCustomerId = await setupStripeCustomer(user);
+      const resendContactId = await setupResendCustomer(user);
+
+      await setupDefaultOrganizationsOrInviteUser(user);
 
       await prisma.user.update({
         where: {
           id: user.id,
         },
         data: {
-          stripeCustomerId,
+          resendContactId,
         },
       });
     },
   },
-  // 🔑 Add this line and the import to add credentials provider
   jwt: credentialsOverrideJwt,
 }));

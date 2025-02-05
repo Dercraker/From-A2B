@@ -1,137 +1,133 @@
-'use client';
+"use client";
 
-import useNotify from '@/hook/useNotify';
-import { SiteConfig } from '@/utils/site-config';
-import type { ButtonProps } from '@mantine/core';
+import { Button } from "@/components/ui/button";
 import {
-  Box,
-  Button,
-  Modal,
-  Stack,
-  Text,
-  TextInput,
-  Textarea,
-  Title,
-} from '@mantine/core';
-import { useForm, zodResolver } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
-import { IconHelp, IconX } from '@tabler/icons-react';
-import { useMutation } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { contactSupportAction } from '../../../features/contact/support/contact-support.action';
-import type { ContactSupportSchemaType } from '../../../features/contact/support/contact-support.schema';
-import { ContactSupportSchema } from '../../../features/contact/support/contact-support.schema';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useZodForm,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { env } from "@/lib/env/client";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import type { PropsWithChildren } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { contactSupportAction } from "../../../features/contact/support/contact-support.action";
+import type { ContactSupportSchemaType } from "../../../features/contact/support/contact-support.schema";
+import { ContactSupportSchema } from "../../../features/contact/support/contact-support.schema";
 
-export const ContactSupportDialog = (buttonProps: ButtonProps) => {
-  const { SuccessNotify, ErrorNotify } = useNotify();
-  const [isModalOpen, { open: openModal, close: closeModal }] =
-    useDisclosure(false);
+type ContactSupportDialogProps = PropsWithChildren;
+
+export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
+  const [open, setOpen] = useState(false);
   const session = useSession();
-  const email = session.data?.user.email ?? null;
-  const form = useForm<ContactSupportSchemaType>({
-    validateInputOnChange: true,
-    initialValues: {
-      email: email ?? '',
-      subject: '',
-      message: '',
-    },
-    validate: zodResolver(ContactSupportSchema),
-  });
-
-  const mutation = useMutation({
-    mutationFn: (input: ContactSupportSchemaType) =>
-      contactSupportAction(input),
-    onError: () =>
-      ErrorNotify({
-        title: 'Error',
-        message: 'Failed to send message',
-      }),
-    onSuccess: () => {
-      SuccessNotify({
-        title: 'Success',
-        message: 'Message sent successfully',
-      });
-      form.reset();
-      closeModal();
+  const email = session.data?.user?.email ?? "";
+  const form = useZodForm({
+    schema: ContactSupportSchema,
+    defaultValues: {
+      email: email,
     },
   });
 
-  const handleOpenModal = () => {
-    if (email) form.setFieldValue('email', email);
+  const onSubmit = async (values: ContactSupportSchemaType) => {
+    const result = await contactSupportAction(values);
 
-    openModal();
+    if (!result?.data) {
+      toast.error(result?.serverError);
+      return;
+    }
+
+    toast.success("Your message has been sent.");
+    form.reset();
+    setOpen(false);
   };
 
   return (
-    <>
-      <Stack my="xl">
-        <Button
-          leftSection={<IconHelp />}
-          onClick={handleOpenModal}
-          {...buttonProps}
+    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+      <DialogTrigger asChild>
+        {props.children ? (
+          props.children
+        ) : (
+          <Button variant="filled">Contact support</Button>
+        )}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Contact Support</DialogTitle>
+          <DialogDescription>
+            Fill the form bellow or send an email to{" "}
+            <Link
+              className="text-primary"
+              href={`mailto:${env.NEXT_PUBLIC_EMAIL_CONTACT}`}
+            >
+              {env.NEXT_PUBLIC_EMAIL_CONTACT}
+            </Link>
+            .
+          </DialogDescription>
+        </DialogHeader>
+        <Form
+          form={form}
+          onSubmit={async (v) => onSubmit(v)}
+          className="flex flex-col gap-4"
         >
-          Contact Support
-        </Button>
-      </Stack>
-      <Modal.Root
-        opened={isModalOpen}
-        onClose={closeModal}
-        centered
-        size="auto"
-      >
-        <Modal.Overlay backgroundOpacity={0.55} blur={3} />
-        <Modal.Content>
-          <Modal.Header>
-            <Modal.Title>
-              <Title order={3}>Contact support</Title>
-              <Text c="dimmed" fs="italic">
-                Fill the form bellow or send an email to{' '}
-                <Link
-                  className="text-primary"
-                  href={`mailto:${SiteConfig.email.contact}`}
-                >
-                  {SiteConfig.email.contact}
-                </Link>
-              </Text>
-            </Modal.Title>
-            <Modal.CloseButton icon={<IconX />} />
-          </Modal.Header>
-          <Modal.Body>
-            <form onReset={() => form.reset()}>
-              <Stack>
-                <Box>
-                  {!email && (
-                    <TextInput
-                      withAsterisk
-                      label="Email"
-                      {...form.getInputProps('email')}
-                    />
-                  )}
-                  <TextInput
-                    withAsterisk
-                    label="Subject"
-                    {...form.getInputProps('subject')}
-                  />
-                  <Textarea
-                    withAsterisk
-                    resize="vertical"
-                    label="Message"
-                    autosize
-                    {...form.getInputProps('message')}
-                  />
-                </Box>
-                <Button
-                  onClick={() => mutation.mutateAsync(form.values)}
-                  disabled={!form.isValid() || mutation.isPending}
-                >
-                  Send
-                </Button>
-              </Stack>
-            </form>
-          </Modal.Body>
-        </Modal.Content>
-      </Modal.Root>
-    </>
+          {email ? null : (
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          <FormField
+            control={form.control}
+            name="subject"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Subject</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Message</FormLabel>
+                <FormControl>
+                  <Textarea {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Send</Button>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 };

@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import { Page400 } from '@/features/page/Page400';
+import { HeaderBase } from "@/components/layout/HeaderBase";
+import { Page400 } from "@/components/page/Page400";
 
-const RoutePage = () => {
-  return <Page400 />;
-};
-
-export default RoutePage;
+export default function ErrorPage() {
+  return (
+    <div className="relative flex min-h-screen flex-col">
+      <HeaderBase />
+      <div className="flex flex-1 items-center justify-center">
+        <Page400 />
+      </div>
+    </div>
+  );
+}

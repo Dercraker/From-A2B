@@ -1,21 +1,18 @@
-'use server';
+"use server";
 
-import { sendEmail } from '@/lib/mail/sendEmail';
-import { action } from '@/lib/server-actions/safe-actions';
-import { SiteConfig } from '@/utils/site-config';
-import { ContactSupportSchema } from './contact-support.schema';
+import { action } from "@/lib/actions/safe-actions";
+import { sendEmail } from "@/lib/mail/sendEmail";
+import { ContactSupportSchema } from "./contact-support.schema";
+import { env } from "@/lib/env/client";
 
-export const contactSupportAction = action(
-  ContactSupportSchema,
-  async (data) => {
+export const contactSupportAction = action
+  .schema(ContactSupportSchema)
+  .action(async ({ parsedInput: { email, subject, message } }) => {
     await sendEmail({
-      from: SiteConfig.email.from,
-      to: SiteConfig.email.contact,
-      cc: data.email,
-
-      subject: `[Staracter] Support needed from ${data.email} - ${data.subject}`,
-      text: data.message,
+      to: env.NEXT_PUBLIC_EMAIL_CONTACT,
+      subject: `Support needed from ${email} - ${subject}`,
+      text: message,
+      replyTo: email,
     });
-    return { message: 'Your message has been sent to support.' };
-  }
-);
+    return { message: "Your message has been sent to support." };
+  });

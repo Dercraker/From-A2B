@@ -1,42 +1,50 @@
-'use client';
+"use client";
 
-import { adventurer } from '@dicebear/collection';
-import { createAvatar } from '@dicebear/core';
-import { Avatar } from '@mantine/core';
-import type { User } from 'next-auth';
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import * as React from "react";
 
-type AvatarImageProps = {
-  user: User;
-};
+import { cn } from "@/lib/utils";
 
-const AvatarImage = ({ user }: AvatarImageProps) => {
-  const generateAvatar = (seed: string) => {
-    const isFlip = Math.random() > 0.5;
-    const avatar = createAvatar(adventurer, {
-      randomizeIds: true,
-      seed: seed,
-      flip: isFlip,
-      hairProbability: 95,
-      glassesProbability: 30,
-      featuresProbability: 20,
-      earringsProbability: 70,
-    }).toDataUriSync();
+const Avatar = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className,
+    )}
+    {...props}
+  />
+));
+Avatar.displayName = AvatarPrimitive.Root.displayName;
 
-    return avatar;
-  };
+const AvatarImage = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+));
+AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
-  if (user.image)
-    return (
-      <Avatar src={user.image} alt={user.name ?? 'User Avatar'} size={38} />
-    );
+const AvatarFallback = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className,
+    )}
+    {...props}
+  />
+));
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-  let avatar = '';
-
-  if (user.name) avatar = generateAvatar(user.name);
-
-  if (user.email) avatar = generateAvatar(user.email);
-
-  return <Avatar src={avatar} radioGroup="xl" size={38} />;
-};
-
-export default AvatarImage;
+export { Avatar, AvatarFallback, AvatarImage };

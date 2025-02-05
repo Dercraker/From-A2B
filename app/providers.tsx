@@ -1,30 +1,70 @@
-import { queryClient } from '@/lib/ReactQuery';
-import { env } from '@/lib/env/server';
-import { themes } from '@/styles/themes';
-import { MantineBreakpointIndicator } from '@/utils/MantineBreakpointIndicator';
-import { MantineProvider } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { SessionProvider } from 'next-auth/react';
-import type { PropsWithChildren } from 'react';
-import './globals.scss';
-// import '@mantine/core/styles.css';
-import '@mantine/core/styles.layer.css';
-import '@mantine/notifications/styles.css';
+"use client";
 
-export const Providers = ({ children }: PropsWithChildren) => {
+import { GlobalDialogLazy } from "@/components/globalDialog/GlobalDialogLazy";
+import { SearchParamsMessageToastSuspended } from "@/components/searchparams-message/SearchParamsMessageToast";
+import { Toaster } from "@/components/ui/sonner";
+import { AlertDialogRenderer } from "@/features/alert-dialog/AlertDialogRenderer";
+import { logger } from "@/lib/logger";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
+import { type PropsWithChildren } from "react";
+
+const queryClient = new QueryClient({});
+
+type ProvidersProps = PropsWithChildren<{
+  GOOGLE_MAPS_JS_API_KEY: string;
+}>;
+
+// if (typeof window !== "undefined") {
+//   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
+//     api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
+//     person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well
+//   });
+// }
+
+export const Providers = ({
+  children,
+  GOOGLE_MAPS_JS_API_KEY,
+}: ProvidersProps) => {
   return (
-    <MantineProvider theme={themes} defaultColorScheme="dark" withGlobalClasses>
-      <QueryClientProvider client={queryClient}>
+    // <PostHogProvider client={posthog}>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <APIProvider
+        apiKey={GOOGLE_MAPS_JS_API_KEY}
+        onLoad={() => logger.debug("Maps api logged")}
+      >
         <SessionProvider>
-          <Notifications limit={5} position="top-right" />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <QueryClientProvider client={queryClient}>
+            <Toaster />
+            <AlertDialogRenderer />
+            <GlobalDialogLazy />
+            <SearchParamsMessageToastSuspended />
+            <ReactQueryDevtools />
+            {/* <IdentifyUserPosthog /> */}
 
-          {children}
-          {env.NODE_ENV === 'development' && <MantineBreakpointIndicator />}
+            {children}
+          </QueryClientProvider>
         </SessionProvider>
-      </QueryClientProvider>
-    </MantineProvider>
+      </APIProvider>
+    </ThemeProvider>
+    // </PostHogProvider>
   );
 };
+
+// const IdentifyUserPosthog = () => {
+//   const session = useSession();
+
+//   useEffect(() => {
+//     if (!session.data?.user) return;
+
+//     posthog.identify(session.data.user.id, {
+//       email: session.data.user.email,
+//       name: session.data.user.name,
+//     });
+//   }, [session.data?.user]);
+
+//   return null;
+// };

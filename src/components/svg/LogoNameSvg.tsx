@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from "react";
 
-export type LogoNameSvgProps = ComponentPropsWithoutRef<'svg'> & {
+export type LogoNameSvgProps = ComponentPropsWithoutRef<"svg"> & {
   width?: number;
   height?: number;
 };
