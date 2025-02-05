@@ -69,6 +69,11 @@ export const LINKS = {
       label: "Danger",
       Icon: AlertCircle,
     },
+    DangerConfirmation: {
+      href: "/account/danger/confirm",
+      label: "DangerConfirmation",
+      hidden: true,
+    },
     Billing: {
       href: "/account/billing",
       label: "Billing",

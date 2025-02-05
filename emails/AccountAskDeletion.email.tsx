@@ -27,7 +27,7 @@ export default function AccountAskDeletionEmail({
           </EmailLink>
         </EmailText>
         <EmailText>
-          You have 1 hour to confirm your request. After, the request will be
+          You have 4 hours to confirm your request. After, the request will be
           invalid.
         </EmailText>
         {organizationsToDelete.length > 0 && (
