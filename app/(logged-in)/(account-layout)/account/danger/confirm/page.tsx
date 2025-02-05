@@ -1,20 +1,8 @@
-import { SubmitButton } from "@/components/form/SubmitButton";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { requiredAuth } from "@/lib/auth/helper";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
-import Link from "next/link";
-import {
-  orgConfirmDeletionAction,
-  verifyDeleteAccountToken,
-} from "../delete-account.action";
+import { verifyDeleteAccountToken } from "../delete-account.action";
+import { DeleteAccountCard } from "./_components/DeleteAccountCard";
 import { InvalidTokenCard } from "./_components/InvalidTokenCard";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -37,35 +25,7 @@ const RoutePage = async (params: PageParams) => {
     return <InvalidTokenCard />;
   }
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Are you sure you want to delete your account ?</CardTitle>
-        <CardDescription>
-          By clicking on the button below, you confirm that you want to delete
-          your account.
-        </CardDescription>
-      </CardHeader>
-      <CardFooter className="flex justify-end gap-2">
-        <Link href="/orgs" className={buttonVariants({ variant: "filled" })}>
-          Cancel
-        </Link>
-        <form>
-          <SubmitButton
-            formAction={async () => {
-              "use server";
-
-              await orgConfirmDeletionAction({
-                token: String(token),
-              });
-            }}
-          >
-            Delete account
-          </SubmitButton>
-        </form>
-      </CardFooter>
-    </Card>
-  );
+  return <DeleteAccountCard token={String(token)} />;
 };
 
 export default RoutePage;

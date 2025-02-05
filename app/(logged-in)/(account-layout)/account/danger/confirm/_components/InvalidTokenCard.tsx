@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -8,19 +10,21 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-export const InvalidTokenCard = () => (
-  <Card>
-    <CardHeader>
-      <CardTitle>Invalid token</CardTitle>
-      <CardDescription>Please try again later</CardDescription>
-    </CardHeader>
-    <CardFooter>
-      <Link
-        href="/account/danger"
-        className={buttonVariants({ variant: "filled" })}
-      >
-        Retry
-      </Link>
-    </CardFooter>
-  </Card>
-);
+export const InvalidTokenCard = () => {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Invalid token</CardTitle>
+        <CardDescription>Please try again later</CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Link
+          href="/account/danger"
+          className={buttonVariants({ variant: "filled" })}
+        >
+          Retry
+        </Link>
+      </CardFooter>
+    </Card>
+  );
+};
