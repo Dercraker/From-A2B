@@ -1,0 +1,18 @@
+{
+  "zschema": {
+    "prefix": "zschema",
+    "description": "Create zodSchema",
+    "scope": "javascript,typescript",
+    "body": [
+      "import { z } from \"zod\";",
+      "",
+      "export const ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1}${2:/capitalize}/g}}Schema = z.object({",
+      "  $2",
+      "});",
+      "",
+      "export type ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1}${2:/capitalize}/g}} = z.infer<",
+      "  typeof ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1}${2:/capitalize}/g}}Schema",
+      ">;",
+    ],
+  },
+}

@@ -18,7 +18,6 @@ export const EmailFormSection = () => {
         <Typography variant="h2" className="text-center text-4xl lg:text-5xl">
           Join the waiting list of{" "}
           <span className="text-gradient bg-gradient-to-r from-green-700 via-sky-400 to-green-700 font-mono font-extrabold uppercase">
-            {/* <span className="text-gradient bg-gradient-to-r from-orange-600 via-red-400 to-yellow-400 font-mono font-extrabold uppercase"> */}
             From-A2B
           </span>
         </Typography>

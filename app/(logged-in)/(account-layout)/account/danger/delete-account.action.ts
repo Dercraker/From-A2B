@@ -1,5 +1,7 @@
 "use server";
 
+import { RemoveVerificationTokenQuery } from "@/features/account/delete/RemoveVerificationToken.query";
+import { LINKS } from "@/features/navigation/Links";
 import { deleteOrganizationQuery } from "@/features/org/org-delete.query";
 import { ActionError, authAction } from "@/lib/actions/safe-actions";
 import { sendEmail } from "@/lib/mail/sendEmail";
@@ -43,7 +45,7 @@ export const accountAskDeletionAction = authAction.action(async ({ ctx }) => {
   const token = await prisma.verificationToken.create({
     data: {
       identifier: `${user.email}-delete-account`,
-      expires: addHours(new Date(), 1),
+      expires: addHours(new Date(), 4),
       data: {
         deleteAccount: true,
       },
@@ -56,7 +58,7 @@ export const accountAskDeletionAction = authAction.action(async ({ ctx }) => {
     to: user.email,
     react: AccountAskDeletionEmail({
       organizationsToDelete: user.organizations.map((o) => o.organization.name),
-      confirmUrl: `${getServerUrl()}/account/delete/confirm?token=${token.token}`,
+      confirmUrl: `${getServerUrl()}${LINKS.Account.DangerConfirmation.href}?token=${token.token}`,
     }),
   });
 });
@@ -79,7 +81,7 @@ export async function verifyDeleteAccountToken(
     throw new ActionError("Invalid token");
   }
 
-  const tokenData = TokenSchema.parse(String(verificationToken.data));
+  const tokenData = TokenSchema.parse(verificationToken.data);
 
   if (!tokenData.deleteAccount) {
     throw new ActionError("Invalid token");
@@ -129,7 +131,7 @@ export const orgConfirmDeletionAction = authAction
       },
     });
 
-    await prisma.verificationToken.delete({
+    await RemoveVerificationTokenQuery({
       where: {
         token,
       },

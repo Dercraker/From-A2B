@@ -15,6 +15,7 @@ import {
   orgConfirmDeletionAction,
   verifyDeleteAccountToken,
 } from "../delete-account.action";
+import { InvalidTokenCard } from "./_components/InvalidTokenCard";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Confirm deletion",
@@ -26,30 +27,14 @@ const RoutePage = async (params: PageParams) => {
   const token = searchParams.token;
   const user = await requiredAuth();
 
-  const invalidTokenCard = (
-    <Card>
-      <CardHeader>
-        <CardTitle>Invalid token</CardTitle>
-      </CardHeader>
-      <CardFooter>
-        <Link
-          href="/account/danger"
-          className={buttonVariants({ variant: "filled" })}
-        >
-          Retry
-        </Link>
-      </CardFooter>
-    </Card>
-  );
-
   try {
     if (typeof token !== "string") {
-      return invalidTokenCard;
+      return <InvalidTokenCard />;
     }
 
     await verifyDeleteAccountToken(String(token), user.email);
   } catch {
-    return invalidTokenCard;
+    return <InvalidTokenCard />;
   }
 
   return (
@@ -62,10 +47,7 @@ const RoutePage = async (params: PageParams) => {
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-end gap-2">
-        <Link
-          href="/organizations"
-          className={buttonVariants({ variant: "filled" })}
-        >
+        <Link href="/orgs" className={buttonVariants({ variant: "filled" })}>
           Cancel
         </Link>
         <form>

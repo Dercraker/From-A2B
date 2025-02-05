@@ -1,0 +1,21 @@
+{
+  "pquery": {
+    "prefix": "pquery",
+    "description": "Create Prisma Query",
+    "scope": "javascript,typescript",
+    "body": [
+      "import { prisma } from \"@/lib/prisma\";",
+      "import type { Prisma } from \"@prisma/client\";",
+      "",
+      "type ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1}${2:/capitalize}/g}}Props = {$2};",
+      "",
+      "export const ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1}${2:/capitalize}/g}} =",
+      "  async ({$3}: RemoveVerificationTokenQueryProps) => {",
+      "    const $4 = await prisma$5;",
+      "",
+      "    return $4;",
+      "  };",
+      "",
+    ],
+  },
+}
