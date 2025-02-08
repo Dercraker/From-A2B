@@ -23,9 +23,9 @@ export const Hero = () => {
             </Typography>
           </React.Fragment>
           <Button variant="outline">
-            <Typography className="text-base" as={Link} href="#pricing">
+            <Link href="#pricing" className="text-base">
               Start Now
-            </Typography>
+            </Link>
           </Button>
         </div>
       </Video>

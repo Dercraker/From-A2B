@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, CheckCircle } from "lucide-react";
+import posthog from "posthog-js";
 import { addEmailAction } from "../../features/email/email.action";
 import type { EmailActionSchemaType } from "../../features/email/email.schema";
 import { EmailActionSchema } from "../../features/email/email.schema";
@@ -101,6 +102,11 @@ export const EmailForm = ({
                 className="px-4 py-6 text-lg font-normal"
                 variant="invert"
                 loading={submit.isPending}
+                onClick={() =>
+                  posthog.capture("JoinWaitingList", {
+                    email: form.getValues().email,
+                  })
+                }
               >
                 {submitButtonLabel}
               </LoadingButton>
