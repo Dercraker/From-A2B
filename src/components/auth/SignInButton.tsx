@@ -2,10 +2,11 @@
 
 import { UserDropdown } from "@/components/auth/UserDropDown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useIsClient } from "@/hooks/useIsClient";
 import type { VariantProps } from "class-variance-authority";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const useHref = () => {
   const isClient = useIsClient();
@@ -21,18 +22,28 @@ const useHref = () => {
 
 export const SignInButton = (props: VariantProps<typeof buttonVariants>) => {
   const href = useHref();
+  const router = useRouter();
 
   return (
-    <Link
-      className={buttonVariants({
-        size: "sm",
-        variant: "outline",
-        ...props,
-      })}
-      href={`/auth/signin?callbackUrl=${href}`}
-    >
-      Sign in
-    </Link>
+    <>
+      <Link
+        className={buttonVariants({
+          size: "sm",
+          variant: "outline",
+          ...props,
+        })}
+        href={`/auth/signin?callbackUrl=${href}`}
+      >
+        Sign in
+      </Link>
+      <Button
+        variant={"outline"}
+        size={"sm"}
+        onClick={() => router.push(`/auth/signin?callbackUrl=${href}`)}
+      >
+        Sign In
+      </Button>
+    </>
   );
 };
 
