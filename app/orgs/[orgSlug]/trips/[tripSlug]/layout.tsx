@@ -3,10 +3,12 @@ import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
 import { Layout } from "@/components/page/layout";
 import { Alert } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { SidebarLink } from "@/components/ui/sidebar";
 import { Typography } from "@/components/ui/typography";
 import { IsTripExistQuery } from "@/features/trip/get/isTripExist.query";
 import { GetTripsByCurrentOrgQuery } from "@/features/trips/getTripsByCurrentOrgQuery.query";
+import { displayName } from "@/lib/format/displayName";
 import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import type { LayoutParams } from "@/types/next";
 import { Rabbit } from "lucide-react";
@@ -40,42 +42,41 @@ const RouteLayout = async ({
 
   if (isTripExist)
     return (
-      <TripNavigation
-        logoChildren={
-          <TripSelect
-            currentTripSlug={tripSlug}
-            orgSlug={org.slug}
-            trips={orgTrips.map((t) => ({
-              slug: t.slug,
-              name: t.name,
-              image: t.image,
-            }))}
-          />
-        }
-        navigationChildren={
-          <TripNavigationLinks orgSlug={org.slug} tripSlug={tripSlug} />
-        }
-        topBarCornerLeftChildren={
-          <>
+      <div className="flex h-screen w-screen ">
+        <TripNavigation
+          logoChildren={
+            <TripSelect
+              currentTripSlug={tripSlug}
+              orgSlug={org.slug}
+              trips={orgTrips.map((t) => ({
+                slug: t.slug,
+                name: t.name,
+                image: t.image,
+              }))}
+            />
+          }
+          bottomNavigationChildren={
             <UserDropdown>
-              <Button
-                variant="ghost"
-                className="size-10 rounded-full"
-                size="sm"
-              >
-                <Avatar className="size-8">
-                  <AvatarFallback>
-                    {user.email ? user.email.slice(0, 2) : "??"}
-                  </AvatarFallback>
-                  {user.image && <AvatarImage src={user.image} />}
-                </Avatar>
-              </Button>
+              <SidebarLink
+                link={{
+                  href: "#",
+                  label: displayName(user),
+                  icon: (
+                    <Avatar className="size-8">
+                      <AvatarFallback>{displayName(user)}</AvatarFallback>
+                      {user.image && <AvatarImage src={user.image} />}
+                    </Avatar>
+                  ),
+                }}
+              />
             </UserDropdown>
-          </>
-        }
-      >
-        {children}
-      </TripNavigation>
+          }
+          navigationChildren={
+            <TripNavigationLinks orgSlug={orgSlug} tripSlug={tripSlug} />
+          }
+        />
+        <main className="flex size-full">{children}</main>
+      </div>
     );
 
   return (
