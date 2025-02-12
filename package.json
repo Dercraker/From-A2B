@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.58.3",
+  "version": "0.58.5",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

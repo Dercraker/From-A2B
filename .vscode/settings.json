@@ -48,7 +48,6 @@
   "workbench.layoutControl.enabled": false,
   "git.ignoreRebaseWarning": true,
   "explorer.confirmDelete": false,
-  "prettier.endOfLine": "crlf",
   "git.confirmSync": false,
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
