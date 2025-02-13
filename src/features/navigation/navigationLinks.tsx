@@ -1,40 +1,16 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { cn } from "@/lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import type {
   NavigationLink,
   NavigationLinksGroup,
   NavigationLinksGroups,
   NavigationLinks as NavigationLinksSchema,
 } from "./navigation.type";
-
-const useCurrentPath = (links: NavigationLinksSchema) => {
-  const currentPath = usePathname().split("/").filter(Boolean);
-
-  const linkMatchCounts = links.map((link) => {
-    return {
-      url: link.href,
-      matchCount: link.href
-        .split("/")
-        .filter(Boolean)
-        .filter((segment, index) => segment === currentPath[index]).length,
-    };
-  });
-
-  const mostMatchingLink = linkMatchCounts.reduce(
-    (maxMatchLink, currentLink) =>
-      currentLink.matchCount > maxMatchLink.matchCount
-        ? currentLink
-        : maxMatchLink,
-    { url: "", matchCount: 0 },
-  );
-
-  return mostMatchingLink.url || links[0].href;
-};
 
 const MotionLink = motion(Link);
 
