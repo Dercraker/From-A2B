@@ -2,6 +2,7 @@ import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schem
 import { GetTripsByCurrentOrgQuery } from "@/features/trips/getTripsByCurrentOrgQuery.query";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
+import { startOfDay } from "date-fns";
 import { TripsContainer } from "../trips/_components/tripsContainer";
 import { TravelHistoryEmpty } from "./_components/TravelHistoryEmpty";
 
@@ -19,7 +20,7 @@ const RoutePage = async ({ params }: PageParams<{ orgSlug: string }>) => {
     },
     where: {
       startDate: {
-        lt: new Date(),
+        lt: startOfDay(new Date()),
       },
     },
   });
