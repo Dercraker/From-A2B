@@ -5,10 +5,10 @@ export const EditStepSchema = z.object({
   tripSlug: z.string(),
   stepId: z.string(),
 
-  name: z.string(),
+  name: z.string().min(3),
   startDate: z.date(),
   endDate: z.date(),
-  description: z.string().nullable(),
+  description: z.string().optional(),
 
   latitude: z.number(),
   longitude: z.number(),

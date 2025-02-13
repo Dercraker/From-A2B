@@ -36,7 +36,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { AutocompleteComponent } from "../address/autocompleteComponent";
 import { LoadingButton } from "../form/LoadingButton";
-import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { DateTimePicker } from "../ui/DateTimePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
@@ -167,6 +166,7 @@ export const EditStepDialog = ({
             name="startDate"
             render={({ field }) => (
               <FormItem className="flex flex-1 flex-col">
+                <FormLabel>Start Date</FormLabel>
                 <DateTimePicker
                   value={field.value ?? new Date()}
                   className="w-full"
@@ -181,25 +181,22 @@ export const EditStepDialog = ({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name="startDate"
-            render={() => (
-              <FormItem>
-                <FormLabel>Dates of step</FormLabel>
-                <FormControl>
-                  <CalendarDatePicker
-                    date={{
-                      from: form.getValues().startDate ?? undefined,
-                      to: form.getValues().endDate ?? undefined,
-                    }}
-                    onDateSelect={(v) => {
-                      form.setValue("startDate", v.from);
-                      form.setValue("endDate", v.to);
-                    }}
-                  />
-                </FormControl>
+            name="endDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-1 flex-col">
+                <FormLabel>End Date</FormLabel>
+                <DateTimePicker
+                  value={field.value}
+                  className="w-full"
+                  onChange={(date) => {
+                    form.setValue("endDate", date ?? new Date(), {
+                      shouldDirty: true,
+                    });
+                  }}
+                />
+
                 <FormMessage />
               </FormItem>
             )}
