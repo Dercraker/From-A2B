@@ -1,5 +1,6 @@
 "use server";
 
+import { AddRoadToStepQuery } from "@/features/road/addRoadToStepQuery";
 import { ActionError, orgAction } from "@/lib/actions/safe-actions";
 import { ComputeRoutes } from "@/lib/api/routes/computeRoutes";
 import { generateSlug } from "@/lib/format/id";
@@ -30,11 +31,6 @@ export const AddStepAction = orgAction
         stepBefore,
       },
     }) => {
-      console.log("🚀 ~ latitude:", latitude);
-      console.log("🚀 ~ longitude:", longitude);
-      console.log("🚀 ~ placeId:", placeId);
-      console.log("🚀 ~ stepAfter:", stepAfter);
-      console.log("🚀 ~ stepBefore:", stepBefore);
       if (stepAfter && stepBefore)
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
@@ -49,7 +45,6 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
-      console.log("🚀 ~ lastTripStep:", lastTripStep);
       const road = await ComputeRoutes({
         origin: {
           placeId: lastTripStep?.placeId,
@@ -59,7 +54,6 @@ export const AddStepAction = orgAction
         },
         travelMode: google.maps.routing.v2.RouteTravelMode.DRIVE,
       });
-      console.log("🚀 ~ road:", road);
 
       try {
         const newRank = getMiddleRank({
@@ -83,6 +77,17 @@ export const AddStepAction = orgAction
               },
             },
             rank: newRank,
+          },
+        });
+
+        await AddRoadToStepQuery({
+          data: {
+            ...road,
+            step: {
+              connect: {
+                id: newStep.id,
+              },
+            },
           },
         });
 
