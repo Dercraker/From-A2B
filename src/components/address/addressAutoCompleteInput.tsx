@@ -121,7 +121,7 @@ export const AddressAutoCompleteInput = ({
                             setIsOpenDialog(true);
                           }}
                           className="flex h-max cursor-pointer select-text flex-col items-start gap-0.5 rounded-md p-2 px-3 hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground"
-                          key={name}
+                          key={`${name}`}
                           onMouseDown={(e) => e.preventDefault()}
                         >
                           <div className="flex flex-col">

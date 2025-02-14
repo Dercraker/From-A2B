@@ -60,7 +60,6 @@ export const DeleteStepAlertDialog = ({
               </Typography>
             </>
           ),
-          confirmText: name,
           loading: isPending,
           action: {
             label: "Delete",

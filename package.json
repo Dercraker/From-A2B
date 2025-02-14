@@ -31,6 +31,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@googlemaps/markerclusterer": "^2.5.3",
     "@googlemaps/places": "^1.7.0",
+    "@googlemaps/routing": "^1.4.0",
     "@hookform/resolvers": "^3.9.1",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-accordion": "^1.2.1",

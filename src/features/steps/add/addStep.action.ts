@@ -1,8 +1,10 @@
 "use server";
 
 import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { ComputeRoutes } from "@/lib/api/routes/computeRoutes";
 import { generateSlug } from "@/lib/format/id";
 import { getMiddleRank } from "@/utils/getMiddleRank";
+import { google } from "@googlemaps/routing/build/protos/protos";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -28,6 +30,11 @@ export const AddStepAction = orgAction
         stepBefore,
       },
     }) => {
+      console.log("🚀 ~ latitude:", latitude);
+      console.log("🚀 ~ longitude:", longitude);
+      console.log("🚀 ~ placeId:", placeId);
+      console.log("🚀 ~ stepAfter:", stepAfter);
+      console.log("🚀 ~ stepBefore:", stepBefore);
       if (stepAfter && stepBefore)
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
@@ -42,6 +49,18 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
+      console.log("🚀 ~ lastTripStep:", lastTripStep);
+      const road = await ComputeRoutes({
+        origin: {
+          placeId: lastTripStep?.placeId,
+        },
+        destination: {
+          placeId: placeId,
+        },
+        travelMode: google.maps.routing.v2.RouteTravelMode.DRIVE,
+      });
+      console.log("🚀 ~ road:", road);
+
       try {
         const newRank = getMiddleRank({
           downRank: stepBefore?.rank ?? otherStep?.rank,
@@ -66,6 +85,7 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
+
         return newStep.name;
       } catch {
         await ReorderAllStepQuery({ tripSlug });
