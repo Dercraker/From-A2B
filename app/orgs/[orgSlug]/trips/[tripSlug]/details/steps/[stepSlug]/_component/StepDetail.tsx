@@ -85,7 +85,7 @@ export const StepDetail = ({
       form.reset({
         tripSlug: res.data.slug,
         name: res.data.name,
-        description: res.data.description,
+        description: res.data.description ?? undefined,
         startDate: res.data.startDate ?? new Date(),
         endDate: res.data.endDate ?? new Date(),
         latitude: res.data.latitude,
@@ -102,7 +102,7 @@ export const StepDetail = ({
     form.reset({
       tripSlug: data.slug,
       name: data.name,
-      description: data.description,
+      description: data.description ?? undefined,
       startDate: data.startDate ?? new Date(),
       endDate: data.endDate ?? new Date(),
       latitude: data.latitude,
