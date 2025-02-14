@@ -25,6 +25,7 @@ import { AddStepAction } from "@/features/steps/add/addStep.action";
 import { AddStepSchema } from "@/features/steps/add/addStep.schema";
 import type { StepDto } from "@/features/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
+import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
@@ -88,7 +89,10 @@ export const AddStepDialog = ({
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
+        queryKey: [
+          STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
+          TRIP_KEY_Factory.roads(params.tripSlug?.toString() as string),
+        ],
       });
     },
   });

@@ -45,15 +45,17 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
-      const road = await ComputeRoutes({
-        origin: {
-          placeId: lastTripStep?.placeId,
-        },
-        destination: {
-          placeId: placeId,
-        },
-        travelMode: google.maps.routing.v2.RouteTravelMode.DRIVE,
-      });
+      let road;
+      if (lastTripStep)
+        road = await ComputeRoutes({
+          origin: {
+            placeId: lastTripStep?.placeId,
+          },
+          destination: {
+            placeId: placeId,
+          },
+          travelMode: google.maps.routing.v2.RouteTravelMode.DRIVE,
+        });
 
       try {
         const newRank = getMiddleRank({
@@ -80,16 +82,24 @@ export const AddStepAction = orgAction
           },
         });
 
-        await AddRoadToStepQuery({
-          data: {
-            ...road,
-            step: {
-              connect: {
-                id: newStep.id,
+        if (lastTripStep && road)
+          await AddRoadToStepQuery({
+            data: {
+              distance: road?.distance ?? 0,
+              duration: road?.duration ?? 0,
+              polyline: road?.polyline ?? "",
+              step: {
+                connect: {
+                  id: newStep.id,
+                },
+              },
+              trip: {
+                connect: {
+                  slug: tripSlug,
+                },
               },
             },
-          },
-        });
+          });
 
         return newStep.name;
       } catch {

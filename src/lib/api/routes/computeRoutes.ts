@@ -46,6 +46,7 @@ export const ComputeRoutes = async ({
       },
     },
   );
+  console.log("🚀 ~ roads:", roads);
 
   return RoadTypeSchema.parse({
     distance: roads?.[0].routes?.[0].distanceMeters,

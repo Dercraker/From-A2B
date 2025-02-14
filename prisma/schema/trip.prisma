@@ -14,6 +14,7 @@ model Trip {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  Road      Road[]
 }
 
 model Step {
@@ -44,6 +45,9 @@ model Road {
 
   step   Step   @relation(fields: [stepId], references: [id])
   stepId String @unique
+
+  trip   Trip?  @relation(fields: [tripId], references: [id])
+  tripId String
 }
 
 enum TransportMode {
