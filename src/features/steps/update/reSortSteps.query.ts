@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getMiddleRank } from "@/utils/getMiddleRank";
+import { getMiddleRank } from "@/utils/GetStepRank";
 import type { StepDto } from "../dto/stepDto.schema";
 
 type ReSortStepsQueryType = {
@@ -11,8 +11,8 @@ const updateStepRank = async (
   previousRank: number | undefined,
 ) => {
   const newRank = getMiddleRank({
-    downRank: undefined,
-    upRank: previousRank,
+    previousRank: undefined,
+    nextRank: previousRank,
   });
 
   await prisma.step.update({

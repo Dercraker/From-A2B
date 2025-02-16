@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getMiddleRank } from "@/utils/getMiddleRank";
+import { RankStep } from "@/utils/GetStepRank";
 
 type ReorderAllStepQueryProps = {
   tripSlug: string;
@@ -15,22 +15,20 @@ export const ReorderAllStepQuery = async ({
     orderBy: { rank: "asc" },
   });
 
-  if (steps.length === 0) return;
+  if (steps.length < 2) return;
 
-  let previousRank = undefined;
+  const updates = steps.map((step, idx) => ({
+    id: step.id,
+    rank: (idx + 1) * RankStep,
+  }));
 
-  for (const currentStep of steps) {
-    const newRank = getMiddleRank({
-      downRank: undefined,
-      upRank: previousRank,
-    });
-
-    // eslint-disable-next-line no-await-in-loop
-    await prisma.step.update({
-      where: { id: currentStep.id },
-      data: { rank: newRank },
-    });
-
-    previousRank = newRank;
-  }
+  await prisma.$transaction(
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
+    updates.map((step) =>
+      prisma.step.update({
+        where: { id: step.id },
+        data: { rank: step.rank },
+      }),
+    ),
+  );
 };
