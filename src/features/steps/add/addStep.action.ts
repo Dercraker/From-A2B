@@ -4,7 +4,7 @@ import { AddRoadToStepQuery } from "@/features/road/addRoadToStepQuery";
 import { ActionError, orgAction } from "@/lib/actions/safe-actions";
 import { ComputeRoutes } from "@/lib/api/routes/computeRoutes";
 import { generateSlug } from "@/lib/format/id";
-import { getMiddleRank } from "@/utils/GetStepRank";
+import { GetStepRank } from "@/utils/GetStepRank";
 import { google } from "@googlemaps/routing/build/protos/protos";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
@@ -58,9 +58,11 @@ export const AddStepAction = orgAction
         });
 
       try {
-        const newRank = getMiddleRank({
-          previousRank: stepBefore?.rank ?? otherStep?.rank,
-          nextRank: stepAfter?.rank ?? otherStep?.rank ?? lastTripStep?.rank,
+        const newRank = GetStepRank({
+          previousRank:
+            stepBefore?.rank ??
+            (stepAfter ? otherStep?.rank : lastTripStep?.rank),
+          nextRank: stepAfter?.rank ?? otherStep?.rank,
         });
         const newStep = await AddStepQuery({
           step: {

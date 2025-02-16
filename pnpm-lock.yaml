@@ -39,6 +39,9 @@ importers:
       '@googlemaps/places':
         specifier: ^1.7.0
         version: 1.7.0
+      '@googlemaps/polyline-codec':
+        specifier: ^1.0.28
+        version: 1.0.28
       '@googlemaps/routing':
         specifier: ^1.4.0
         version: 1.4.0
@@ -1814,6 +1817,9 @@ packages:
   '@googlemaps/places@1.7.0':
     resolution: {integrity: sha512-YPVqYa9fO4/cgezzqmvn910uV2ujB4XaFAYespFKZRBPRZmUwMvtYbHoCsd2DoGKW1Zm6qcCvl257jzEnctMGA==}
     engines: {node: '>=14.0.0'}
+
+  '@googlemaps/polyline-codec@1.0.28':
+    resolution: {integrity: sha512-m7rh8sbxlrHvebXEweBHX8r1uPtToPRYxWDD6p6k2YG8hyhBe0Wi6xRUVFpxpEseMNgF+OBotFQC5senj8K7TQ==}
 
   '@googlemaps/routing@1.4.0':
     resolution: {integrity: sha512-7UxauGY+6jFJTkPq7CTfwcwIBa0T9p1C6kafCdvZnwJDu23Cb98gtPKVSxaeN14q6NCywPhfiwoJNGuwOLWCyA==}
@@ -10195,6 +10201,8 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@googlemaps/polyline-codec@1.0.28': {}
 
   '@googlemaps/routing@1.4.0':
     dependencies:

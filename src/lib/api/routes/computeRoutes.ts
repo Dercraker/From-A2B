@@ -35,6 +35,7 @@ export const ComputeRoutes = async ({
       computeAlternativeRoutes: false,
       languageCode: "en-US",
       polylineQuality: "HIGH_QUALITY",
+      polylineEncoding: "ENCODED_POLYLINE",
       units: "METRIC",
     },
     {

@@ -43,7 +43,7 @@ model Road {
   duration Int
   polyline String
 
-  step   Step   @relation(fields: [stepId], references: [id])
+  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
   stepId String @unique
 
   trip   Trip?  @relation(fields: [tripId], references: [id])

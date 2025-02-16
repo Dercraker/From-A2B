@@ -1,2 +1,4 @@
+import { decode } from "@googlemaps/polyline-codec";
+
 export const decodePolyline = (polyline: string) =>
-  google.maps.geometry.encoding.decodePath(polyline);
+  decode(polyline).map(([lat, lng]) => ({ lat, lng }));

@@ -7,7 +7,7 @@ import { Typography } from "@/components/ui/typography";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export async function NavigationWrapper({
+export const NavigationWrapper = ({
   children,
   logoChildren,
   navigationChildren,
@@ -21,7 +21,7 @@ export async function NavigationWrapper({
   bottomNavigationChildren?: ReactNode;
   topBarChildren?: ReactNode;
   topBarCornerLeftChildren?: ReactNode;
-}) {
+}) => {
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -64,7 +64,6 @@ export async function NavigationWrapper({
           <div className="w-full flex-1">{topBarChildren}</div>
           <div className="flex items-center gap-2">
             {topBarCornerLeftChildren}
-            {/* <ThemeToggle /> */}
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 overflow-auto lg:gap-6 lg:p-6">
@@ -73,4 +72,4 @@ export async function NavigationWrapper({
       </div>
     </div>
   );
-}
+};

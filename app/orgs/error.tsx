@@ -1,5 +1,4 @@
 "use client";
-
 import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
 import {
   Layout,
@@ -12,7 +11,7 @@ import { logger } from "@/lib/logger";
 import type { ErrorParams } from "@/types/next";
 import { useEffect } from "react";
 
-export default function RouteError({ error }: ErrorParams) {
+const RouteError = ({ error }: ErrorParams) => {
   useEffect(() => {
     logger.error(error);
   }, [error]);
@@ -29,4 +28,6 @@ export default function RouteError({ error }: ErrorParams) {
       </Layout>
     </NavigationWrapper>
   );
-}
+};
+
+export default RouteError;

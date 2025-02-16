@@ -3,6 +3,7 @@
 import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
 import { DeleteStepAction } from "@/features/steps/delete/deleteStep.action";
 import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
+import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -37,6 +38,9 @@ export const DeleteStepAlertDialog = ({
     },
     onSuccess: async () => {
       toast.success(`Step "${name}" deleted successfully`);
+      await queryClient.invalidateQueries({
+        queryKey: TRIP_KEY_Factory.roads(tripSlug),
+      });
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });

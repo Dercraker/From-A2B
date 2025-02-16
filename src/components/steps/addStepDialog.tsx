@@ -89,10 +89,10 @@ export const AddStepDialog = ({
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [
-          STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
-          TRIP_KEY_Factory.roads(params.tripSlug?.toString() as string),
-        ],
+        queryKey: TRIP_KEY_Factory.roads(params.tripSlug?.toString() as string),
+      });
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
       });
     },
   });
