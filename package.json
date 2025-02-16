@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.58.7",
+  "version": "0.59.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -19,7 +19,8 @@
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "postinstall": "prisma generate",
     "clean": "next lint --fix && tsc --noEmit && prettier --write .",
-    "knip": "knip"
+    "knip": "knip",
+    "test": "vitest --ui"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.4",
@@ -134,6 +135,7 @@
     "@types/three": "^0.169.0",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
+    "@vitest/ui": "^3.0.5",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
@@ -150,7 +152,8 @@
     "tailwindcss": "^3.4.15",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.15.0",
-    "unified": "^11.0.5"
+    "unified": "^11.0.5",
+    "vitest": "^3.0.5"
   },
   "overrides": {
     "react-is": "^19.0.0-rc-69d4b800-20241021"
