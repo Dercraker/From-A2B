@@ -71,10 +71,9 @@ export const TripMap = ({
             <CenterMapButton />
           </MapControl>
           <PoiMarkers pois={poi} />
-          {/* //TODO: Implement me https://github.com/visgl/react-google-maps/blob/main/examples/geometry/src/components/polyline.tsx */}
+          <RoadsPath tripSlug={tripSlug} />
         </Map>
       </div>
-      <RoadsPath tripSlug={tripSlug} />
     </>
   );
 };

@@ -3,19 +3,15 @@
 import { GetTripRoadAction } from "@/features/trip/get/getTripRoads.action";
 import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { decodePolyline } from "@/lib/api/routes/polylinesEncoding";
 import { useQuery } from "@tanstack/react-query";
-import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { toast } from "sonner";
+import { Polyline } from "./Polyline";
 
 export type RoadsPathProps = {
   tripSlug: string;
 };
 
 export const RoadsPath = ({ tripSlug }: RoadsPathProps) => {
-  const map = useMap();
-  const maps = useMapsLibrary("maps");
-
   const { data: roads } = useQuery({
     queryKey: TRIP_KEY_Factory.roads(tripSlug),
     queryFn: async () => {
@@ -30,20 +26,14 @@ export const RoadsPath = ({ tripSlug }: RoadsPathProps) => {
 
       return data;
     },
-    enabled: !!maps,
   });
 
-  if (maps && roads) {
-    const path = new maps.Polyline({
-      path: roads.data?.flatMap((road) => decodePolyline(road.polyline)) ?? [],
-      geodesic: true,
-      strokeColor: "#0aa374",
-      strokeOpacity: 1,
-      strokeWeight: 3,
-    });
-
-    path.setMap(map);
-  }
-
-  return null;
+  return roads?.data?.map((road) => (
+    <Polyline
+      key={road.id}
+      strokeWeight={4}
+      strokeColor="#0aa374"
+      encodedPath={road.polyline}
+    />
+  ));
 };
