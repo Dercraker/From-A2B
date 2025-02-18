@@ -26,9 +26,11 @@ import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { FormOptionalSection } from "../form/FormOptionalSection";
 import { LoadingButton } from "../form/LoadingButton";
 import { ImageFormItem } from "../images/ImageFormItem";
 import { DateTimePicker } from "../ui/DateTimePicker";
+import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 
 type AddTripDialogProps = PropsWithChildren;
@@ -97,19 +99,33 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Any description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(form.getValues("description"))}
+            label="Description"
+            onToggle={(open) => {
+              if (!open)
+                form.setValue("description", undefined, { shouldDirty: true });
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea placeholder="Any description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
+
           <FormField
             control={form.control}
             name="startDate"
