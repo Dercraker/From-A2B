@@ -5,7 +5,6 @@ import { ActionError, orgAction } from "@/lib/actions/safe-actions";
 import { ComputeRoutes } from "@/lib/api/routes/computeRoutes";
 import { generateSlug } from "@/lib/format/id";
 import { GetStepRank } from "@/utils/GetStepRank";
-import { google } from "@googlemaps/routing/build/protos/protos";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -18,7 +17,7 @@ export const AddStepAction = orgAction
   .action(
     async ({
       parsedInput: {
-        TransportMode,
+        transportMode,
         endDate,
         latitude,
         longitude,
@@ -50,11 +49,23 @@ export const AddStepAction = orgAction
         road = await ComputeRoutes({
           origin: {
             placeId: lastTripStep?.placeId,
+            location: {
+              latLng: {
+                latitude: lastTripStep.latitude,
+                longitude: lastTripStep.longitude,
+              },
+            },
           },
           destination: {
             placeId: placeId,
+            location: {
+              latLng: {
+                latitude,
+                longitude,
+              },
+            },
           },
-          travelMode: google.maps.routing.v2.RouteTravelMode.DRIVE,
+          transportMode,
         });
 
       try {
@@ -74,7 +85,7 @@ export const AddStepAction = orgAction
             endDate,
             description,
             placeId,
-            transportMode: TransportMode,
+            transportMode,
             trip: {
               connect: {
                 slug: tripSlug,

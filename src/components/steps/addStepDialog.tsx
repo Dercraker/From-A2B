@@ -61,7 +61,7 @@ export const AddStepDialog = ({
     defaultValues: {
       startDate: new Date(),
       endDate: new Date(),
-      TransportMode: TransportMode.Car,
+      transportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
       stepAfter: afterStep,
@@ -214,7 +214,7 @@ export const AddStepDialog = ({
 
           <FormField
             control={form.control}
-            name="TransportMode"
+            name="transportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>

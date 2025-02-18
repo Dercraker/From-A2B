@@ -1,7 +1,12 @@
 import { env } from "@/lib/env/server";
+import type { RoadType } from "@/types/routesApi/road.type";
 import { RoadTypeSchema } from "@/types/routesApi/road.type";
+import { getTravelMode } from "@/utils/getTravelMode";
+import type { LatLng } from "@googlemaps/polyline-codec";
 import { v2 } from "@googlemaps/routing";
-import { google } from "@googlemaps/routing/build/protos/protos";
+import type { google } from "@googlemaps/routing/build/protos/protos";
+import type { TransportMode } from "@prisma/client";
+import { encodePolyline } from "./polylinesEncoding";
 
 const routesClient = new v2.RoutesClient({
   apiKey: env.GOOGLE_ROUTES_API_KEY,
@@ -10,14 +15,30 @@ const routesClient = new v2.RoutesClient({
 type ComputeRoutesProps = {
   origin: google.maps.routing.v2.IWaypoint;
   destination: google.maps.routing.v2.IWaypoint;
-  travelMode: google.maps.routing.v2.RouteTravelMode;
+  transportMode: TransportMode;
 };
 
 export const ComputeRoutes = async ({
   origin,
   destination,
-  travelMode,
+  transportMode,
 }: ComputeRoutesProps) => {
+  if (transportMode === "Plane" || transportMode === "Boat")
+    return {
+      distance: 0,
+      duration: 0,
+      polyline: encodePolyline([
+        {
+          lat: origin.location?.latLng?.latitude ?? 0,
+          lng: origin.location?.latLng?.longitude ?? 0,
+        } satisfies LatLng,
+        {
+          lat: destination.location?.latLng?.latitude ?? 0,
+          lng: destination.location?.latLng?.longitude ?? 0,
+        } satisfies LatLng,
+      ]),
+    } satisfies RoadType;
+
   const roads = await routesClient.computeRoutes(
     {
       origin: {
@@ -26,10 +47,9 @@ export const ComputeRoutes = async ({
       destination: {
         ...destination,
       },
-      travelMode,
+      travelMode: getTravelMode(transportMode),
       routingPreference:
-        travelMode !== google.maps.routing.v2.RouteTravelMode.WALK &&
-        travelMode !== google.maps.routing.v2.RouteTravelMode.BICYCLE
+        transportMode !== "Walk" && transportMode !== "Bike"
           ? "TRAFFIC_UNAWARE"
           : undefined,
       computeAlternativeRoutes: false,
@@ -47,7 +67,6 @@ export const ComputeRoutes = async ({
       },
     },
   );
-  console.log("🚀 ~ roads:", roads);
 
   return RoadTypeSchema.parse({
     distance: roads?.[0].routes?.[0].distanceMeters,
