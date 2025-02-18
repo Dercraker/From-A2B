@@ -9,7 +9,9 @@ export const AddTripSchema = z.object({
     .string()
     .max(1000, "The description must be less than 1000 characters long")
     .optional(),
-  startDate: z.date(),
+  startDate: z.date({
+    required_error: "Start date is required to create trip",
+  }),
   image: z.string().url().optional(),
 });
 

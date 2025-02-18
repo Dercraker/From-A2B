@@ -38,7 +38,6 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
   const form = useZodForm({
     schema: AddTripSchema,
     defaultValues: {
-      startDate: new Date(),
       image: "https://picsum.photos/600/400",
     },
   });
@@ -119,7 +118,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                 <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <DateTimePicker
-                    value={field.value ?? new Date()}
+                    value={field.value}
                     onChange={(date) => {
                       form.setValue("startDate", date ?? new Date(), {
                         shouldDirty: true,

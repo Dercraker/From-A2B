@@ -59,8 +59,6 @@ export const AddStepDialog = ({
   const form = useZodForm({
     schema: AddStepSchema,
     defaultValues: {
-      startDate: new Date(),
-      endDate: new Date(),
       transportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
@@ -159,10 +157,10 @@ export const AddStepDialog = ({
               <FormItem className="flex flex-1 flex-col">
                 <FormLabel>Start Date</FormLabel>
                 <DateTimePicker
-                  value={field.value ?? new Date()}
+                  value={field.value}
                   className="w-full"
                   onChange={(date) => {
-                    form.setValue("startDate", date ?? new Date(), {
+                    form.setValue("startDate", date, {
                       shouldDirty: true,
                     });
                   }}
@@ -180,10 +178,10 @@ export const AddStepDialog = ({
               <FormItem className="flex flex-1 flex-col">
                 <FormLabel>End Date</FormLabel>
                 <DateTimePicker
-                  value={field.value ?? new Date()}
+                  value={field.value}
                   className="w-full"
                   onChange={(date) => {
-                    form.setValue("endDate", date ?? new Date(), {
+                    form.setValue("endDate", date, {
                       shouldDirty: true,
                     });
                   }}

@@ -5,8 +5,8 @@ import { StepDtoSchema } from "../dto/stepDto.schema";
 export const AddStepSchema = z.object({
   tripSlug: z.string(),
   name: z.string().min(3).max(255),
-  startDate: z.date(),
-  endDate: z.date(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   description: z.string().optional(),
 
   latitude: z.number(),
