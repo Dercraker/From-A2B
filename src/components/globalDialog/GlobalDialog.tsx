@@ -1,7 +1,7 @@
 "use client";
 
-import type { DialogType } from "@/features/globalDialog/GlobalDialogStore";
-import { useGlobalDialogStore } from "@/features/globalDialog/GlobalDialogStore";
+import type { DialogType } from "@feat/globalDialog/GlobalDialogStore";
+import { useGlobalDialogStore } from "@feat/globalDialog/GlobalDialogStore";
 import dynamic from "next/dynamic";
 
 const OrgDialogPlan = dynamic(

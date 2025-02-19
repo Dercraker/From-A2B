@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es2015",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,11 +18,17 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src/",
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/lib/utils/*"],
-      "@email/*": ["./emails/*"]
+      "@/*": ["/*"],
+      "@lib/*": ["lib/*"],
+      "@ui/*": ["components/ui/*"],
+      "@components/*": ["components/*"],
+      "@feat/*": ["features/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["utils/*"],
+      "@type/*": ["types/*"],
+      "@email/*": ["../emails/*"]
     }
   },
 

@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@lib/prisma";
 import type { DeleteTripSchema } from "./deleteTrip.schema";
 
 export const DeleteTripQuery = async ({ orgId, tripId }: DeleteTripSchema) => {

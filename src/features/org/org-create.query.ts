@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { prisma } from "@lib/prisma";
+import { stripe } from "@lib/stripe";
 import type { Prisma } from "@prisma/client";
 
 export const createOrganizationQuery = async (

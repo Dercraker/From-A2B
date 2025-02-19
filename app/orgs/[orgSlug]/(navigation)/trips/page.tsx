@@ -1,6 +1,6 @@
-import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { GetTripsByCurrentOrgQuery } from "@/features/trips/getTripsByCurrentOrgQuery.query";
-import { combineWithParentMetadata } from "@/lib/metadata";
+import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
+import { GetTripsByCurrentOrgQuery } from "@feat/trips/getTripsByCurrentOrgQuery.query";
+import { combineWithParentMetadata } from "@lib/metadata";
 import { startOfDay } from "date-fns";
 import { EmptyTrips } from "./_components/emptyTrips";
 import { TripsContainer } from "./_components/tripsContainer";

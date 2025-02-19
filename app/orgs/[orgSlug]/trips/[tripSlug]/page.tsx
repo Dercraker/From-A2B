@@ -1,5 +1,5 @@
-import { GetTripQuery } from "@/features/trip/get/getTrip.query";
-import type { PageParams } from "@/types/next";
+import { GetTripQuery } from "@feat/trip/get/getTrip.query";
+import type { PageParams } from "@type/next";
 import { StepList } from "./_component/stepList";
 import { TripMap } from "./_component/tripMap";
 

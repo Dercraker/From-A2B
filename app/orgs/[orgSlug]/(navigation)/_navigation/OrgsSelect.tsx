@@ -1,16 +1,16 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/select";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+import { SiteConfig } from "site-config";
 
 type OrganizationsSelectProps = {
   currentOrgSlug?: string;

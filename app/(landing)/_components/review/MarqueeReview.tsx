@@ -1,5 +1,5 @@
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { Marquee } from "@/components/ui/marquee";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { Marquee } from "@components/ui/marquee";
 import { ReviewItem, type ReviewItemProps } from "./ReviewItem";
 
 const reviews: ReviewItemProps[] = [

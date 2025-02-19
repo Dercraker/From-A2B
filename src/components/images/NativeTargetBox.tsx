@@ -1,5 +1,5 @@
-import { Typography } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
+import { Typography } from "@components/ui/typography";
+import { cn } from "@lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 import React, { forwardRef, useRef, useState } from "react";
 import { toast } from "sonner";

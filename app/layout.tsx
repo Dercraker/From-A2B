@@ -1,15 +1,15 @@
-import { FloatingLegalFooter } from "@/components/legal/FloatingLegalFooter";
-import { NextTopLoader } from "@/components/page/NextTopLoader";
-import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
-import { env } from "@/lib/env/server";
-import { getServerUrl } from "@/lib/server-url";
-import { cn } from "@/lib/utils";
-import { SiteConfig } from "@/site-config";
-import type { LayoutParams } from "@/types/next";
+import { FloatingLegalFooter } from "@components/legal/FloatingLegalFooter";
+import { NextTopLoader } from "@components/page/NextTopLoader";
+import { TailwindIndicator } from "@components/utils/TailwindIndicator";
+import { env } from "@lib/env/server";
+import { getServerUrl } from "@lib/server-url";
+import { cn } from "@lib/utils";
+import type { LayoutParams } from "@type/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { SiteConfig } from "site-config";
 import "./globals.css";
 import { Providers } from "./providers";
 

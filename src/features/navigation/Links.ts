@@ -1,4 +1,3 @@
-import { SiteConfig } from "@/site-config";
 import {
   AlertCircle,
   ChartArea,
@@ -11,6 +10,7 @@ import {
   StepForwardIcon,
   User2,
 } from "lucide-react";
+import { SiteConfig } from "site-config";
 import type { GenericLinkSchema } from "./navigation.type";
 
 const ORGANIZATION_PATH = `/orgs/:organizationSlug`;

@@ -1,21 +1,21 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/LoadingButton";
-import { ImageFormItem } from "@/components/images/ImageFormItem";
+import { LoadingButton } from "@components/form/LoadingButton";
+import { ImageFormItem } from "@components/images/ImageFormItem";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -24,12 +24,12 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { displayName } from "@/lib/format/displayName";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { displayName } from "@lib/format/displayName";
 import type { User } from "@prisma/client";
 import { IconCircleDashedCheck } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";

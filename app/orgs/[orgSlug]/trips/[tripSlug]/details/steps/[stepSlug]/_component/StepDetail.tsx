@@ -1,16 +1,16 @@
 "use client";
 
-import { AutocompleteComponent } from "@/components/address/autocompleteComponent";
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
-import { DeleteStepAlertDialog } from "@/components/steps/deleteStepAlertDialog";
+import { AutocompleteComponent } from "@components/address/autocompleteComponent";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
+import { DeleteStepAlertDialog } from "@components/steps/deleteStepAlertDialog";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { DateTimePicker } from "@/components/ui/DateTimePicker";
+} from "@components/ui/card";
+import { DateTimePicker } from "@components/ui/DateTimePicker";
 import {
   FormControl,
   FormField,
@@ -18,26 +18,26 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import { LINKS } from "@/features/navigation/Links";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { GetStepBySlugAction } from "@/features/steps/get/getStepBySlug.action";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { EditStepSchema } from "@/features/steps/update/editStep.schema";
-import { ConstructTripLink } from "@/features/trips/trips.link";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { logger } from "@/lib/logger";
+} from "@components/ui/select";
+import { Textarea } from "@components/ui/textarea";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { LINKS } from "@feat/navigation/Links";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { GetStepBySlugAction } from "@feat/steps/get/getStepBySlug.action";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import { ConstructTripLink } from "@feat/trips/trips.link";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { logger } from "@lib/logger";
 import { TransportMode } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { Bike, Car, Footprints, Plane, Sailboat, Trash2 } from "lucide-react";

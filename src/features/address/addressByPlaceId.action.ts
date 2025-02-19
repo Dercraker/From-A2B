@@ -1,7 +1,7 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
-import { getPlace } from "@/lib/api/places/placeId";
+import { orgAction } from "@lib/actions/safe-actions";
+import { getPlace } from "@lib/api/places/placeId";
 import { z } from "zod";
 import type { AddressType } from "./address.schema";
 

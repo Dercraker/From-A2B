@@ -1,7 +1,7 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/LoadingButton";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { LoadingButton } from "@components/form/LoadingButton";
+import { Card, CardContent, CardFooter } from "@components/ui/card";
 import {
   Form,
   FormControl,
@@ -11,10 +11,10 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { formatId } from "@/lib/format/id";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { formatId } from "@lib/format/id";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

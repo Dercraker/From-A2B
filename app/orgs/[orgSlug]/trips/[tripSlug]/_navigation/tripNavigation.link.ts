@@ -1,10 +1,10 @@
-import { LINKS } from "@/features/navigation/Links";
+import { LINKS } from "@feat/navigation/Links";
 import type {
   NavigationLink,
   NavigationLinks,
   NavigationLinksGroup,
   NavigationLinksGroups,
-} from "@/features/navigation/navigation.type";
+} from "@feat/navigation/navigation.type";
 
 const replaceSlugs = (href: string, orgSlug: string, tripSlug: string) => {
   return href

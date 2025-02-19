@@ -1,6 +1,6 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
+import { orgAction } from "@lib/actions/safe-actions";
 import { EditStepQuery } from "./editStep.query";
 import { EditStepSchema } from "./editStep.schema";
 

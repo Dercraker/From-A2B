@@ -1,10 +1,10 @@
 "use client";
 
-import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
-import { SearchPlacesAction } from "@/features/places/searchPlaces.action";
-import { useDebounce } from "@/hooks/use-debounce";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
+import { ADDRESS_KEY_FACTORY } from "@feat/address/addressKey.factory";
+import { SearchPlacesAction } from "@feat/places/searchPlaces.action";
+import { useDebounce } from "@hooks/use-debounce";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { cn } from "@lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Command as CommandPrimitive } from "cmdk";
 import { Loader2 } from "lucide-react";
@@ -121,7 +121,7 @@ export const AddressAutoCompleteInput = ({
                             setIsOpenDialog(true);
                           }}
                           className="flex h-max cursor-pointer select-text flex-col items-start gap-0.5 rounded-md p-2 px-3 hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground"
-                          key={name}
+                          key={`${name}`}
                           onMouseDown={(e) => e.preventDefault()}
                         >
                           <div className="flex flex-col">

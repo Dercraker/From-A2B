@@ -1,6 +1,6 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
+import { orgAction } from "@lib/actions/safe-actions";
 import { EditTripSchema } from "./editTrip.schema";
 import { UpdateTripQuery } from "./updateTrip.query";
 

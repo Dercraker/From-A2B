@@ -1,13 +1,13 @@
-import { SiteConfig } from "@/site-config";
 import MagicLinkMail from "@email/MagicLinkEmail.email";
 import type { NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
+import { SiteConfig } from "site-config";
+import { env } from "../env/server";
 import { logger } from "../logger";
 import { sendEmail } from "../mail/sendEmail";
 import { getCredentialsProvider } from "./credentials-provider";
-import { env } from "../env/server";
 
 type Providers = NonNullable<NextAuthConfig["providers"]>;
 

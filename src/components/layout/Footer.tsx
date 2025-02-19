@@ -1,9 +1,9 @@
-import { version } from "@/../package.json";
-import { Typography } from "@/components/ui/typography";
-import { SiteConfig } from "@/site-config";
+import { LogoSvg } from "@components/svg/LogoSvg";
+import { Typography } from "@components/ui/typography";
 import Link from "next/link";
+import { SiteConfig } from "site-config";
+import { version } from "../../../package.json";
 import { Layout, LayoutContent } from "../page/layout";
-import { LogoSvg } from "../svg/LogoSvg";
 
 export const Footer = () => {
   return (

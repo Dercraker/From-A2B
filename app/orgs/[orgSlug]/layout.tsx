@@ -1,6 +1,6 @@
-import { orgMetadata } from "@/lib/metadata";
-import { getCurrentOrgCache } from "@/lib/react/cache";
-import type { LayoutParams, PageParams } from "@/types/next";
+import { orgMetadata } from "@lib/metadata";
+import { getCurrentOrgCache } from "@lib/react/cache";
+import type { LayoutParams, PageParams } from "@type/next";
 import type { Metadata } from "next";
 import { InjectCurrentOrgStore } from "./useCurrentOrg";
 

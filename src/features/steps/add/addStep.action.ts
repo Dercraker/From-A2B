@@ -1,8 +1,10 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
-import { generateSlug } from "@/lib/format/id";
-import { getMiddleRank } from "@/utils/getMiddleRank";
+import { AddRoadToStepQuery } from "@feat/road/addRoadToStepQuery";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
+import { ComputeRoutes } from "@lib/api/routes/computeRoutes";
+import { generateSlug } from "@lib/format/id";
+import { GetStepRank } from "@utils/GetStepRank";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -15,7 +17,7 @@ export const AddStepAction = orgAction
   .action(
     async ({
       parsedInput: {
-        TransportMode,
+        transportMode,
         endDate,
         latitude,
         longitude,
@@ -42,10 +44,36 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
+      let road;
+      if (lastTripStep)
+        road = await ComputeRoutes({
+          origin: {
+            placeId: lastTripStep?.placeId,
+            location: {
+              latLng: {
+                latitude: lastTripStep.latitude,
+                longitude: lastTripStep.longitude,
+              },
+            },
+          },
+          destination: {
+            placeId: placeId,
+            location: {
+              latLng: {
+                latitude,
+                longitude,
+              },
+            },
+          },
+          transportMode,
+        });
+
       try {
-        const newRank = getMiddleRank({
-          downRank: stepBefore?.rank ?? otherStep?.rank,
-          upRank: stepAfter?.rank ?? otherStep?.rank ?? lastTripStep?.rank,
+        const newRank = GetStepRank({
+          previousRank:
+            stepBefore?.rank ??
+            (stepAfter ? otherStep?.rank : lastTripStep?.rank),
+          nextRank: stepAfter?.rank ?? otherStep?.rank,
         });
         const newStep = await AddStepQuery({
           step: {
@@ -57,7 +85,7 @@ export const AddStepAction = orgAction
             endDate,
             description,
             placeId,
-            transportMode: TransportMode,
+            transportMode,
             trip: {
               connect: {
                 slug: tripSlug,
@@ -66,6 +94,26 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
+
+        if (lastTripStep && road)
+          await AddRoadToStepQuery({
+            data: {
+              distance: road?.distance ?? 0,
+              duration: road?.duration ?? 0,
+              polyline: road?.polyline ?? "",
+              step: {
+                connect: {
+                  id: newStep.id,
+                },
+              },
+              trip: {
+                connect: {
+                  slug: tripSlug,
+                },
+              },
+            },
+          });
+
         return newStep.name;
       } catch {
         await ReorderAllStepQuery({ tripSlug });

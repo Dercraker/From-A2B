@@ -1,9 +1,9 @@
-import { LINKS } from "@/features/navigation/Links";
+import { LINKS } from "@feat/navigation/Links";
 import type {
   NavigationLinks,
   NavigationLinksGroup,
   NavigationLinksGroups,
-} from "@/features/navigation/navigation.type";
+} from "@feat/navigation/navigation.type";
 
 export const getAccountNavigation = (): NavigationLinksGroups => {
   return ACCOUNT_LINKS;

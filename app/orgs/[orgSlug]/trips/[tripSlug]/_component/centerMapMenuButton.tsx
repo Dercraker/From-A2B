@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
+import { Button } from "@components/ui/button";
+import { InlineTooltip } from "@components/ui/tooltip";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { useMap } from "@vis.gl/react-google-maps";
 import { LocateFixed } from "lucide-react";
 

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Typography } from "@/components/ui/typography";
-import type { PageParams } from "@/types/next";
+import { Card, CardContent } from "@components/ui/card";
+import { Typography } from "@components/ui/typography";
+import type { PageParams } from "@type/next";
 
 export default async function RoutePage(props: PageParams) {
   return (

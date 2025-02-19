@@ -1,5 +1,5 @@
-import { env } from "@/lib/env/server";
-import { authRoute, RouteError } from "@/lib/safe-route";
+import { env } from "@lib/env/server";
+import { authRoute, RouteError } from "@lib/safe-route";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

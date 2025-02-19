@@ -1,14 +1,14 @@
 "use client";
 
-import { SectionLayout } from "@/components/layout/SectionLayout";
+import { SectionLayout } from "@components/layout/SectionLayout";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Typography } from "@/components/ui/typography";
-import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
+} from "@components/ui/accordion";
+import { Typography } from "@components/ui/typography";
+import { ClientMarkdown } from "@feat/markdown/ClientMarkdown";
 
 type Faq = {
   question: string;

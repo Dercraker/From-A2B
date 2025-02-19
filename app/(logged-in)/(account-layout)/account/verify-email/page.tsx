@@ -1,9 +1,9 @@
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { createSearchParamsMessageUrl } from "@/features/searchparams-message/createSearchParamsMessageUrl";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
-import type { PageParams } from "@/types/next";
+import { buttonVariants } from "@components/ui/button";
+import { Card, CardFooter, CardHeader, CardTitle } from "@components/ui/card";
+import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
+import type { PageParams } from "@type/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 

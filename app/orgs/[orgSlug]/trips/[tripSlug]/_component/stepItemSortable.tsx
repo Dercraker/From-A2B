@@ -1,10 +1,10 @@
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { GenerateStepLink } from "@/features/steps/steps.link";
-import { cn } from "@/lib/utils";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { GenerateStepLink } from "@feat/steps/steps.link";
+import { cn } from "@lib/utils";
 import { EllipsisVertical, GripVertical } from "lucide-react";
 import Link from "next/link";
 import { StepCounter } from "./stepCounter";

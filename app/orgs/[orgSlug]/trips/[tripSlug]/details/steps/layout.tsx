@@ -4,8 +4,8 @@ import {
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import type { LayoutParams } from "@type/next";
 import { DetailStepList } from "./_component/detailStepList";
 
 const RouteLayout = async ({

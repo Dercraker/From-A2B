@@ -1,5 +1,5 @@
-import { requiredAuth } from "@/lib/auth/helper";
-import { prisma } from "@/lib/prisma";
+import { requiredAuth } from "@lib/auth/helper";
+import { prisma } from "@lib/prisma";
 
 export async function getUsersOrgs() {
   const user = await requiredAuth();

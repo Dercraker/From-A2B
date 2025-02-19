@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@lib/utils";
 import { motion } from "framer-motion";
 import type { ButtonProps } from "../ui/button";
 import { Button } from "../ui/button";

@@ -1,14 +1,14 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/LoadingButton";
-import { Button } from "@/components/ui/button";
+import { LoadingButton } from "@components/form/LoadingButton";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -17,8 +17,8 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { Mail, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";

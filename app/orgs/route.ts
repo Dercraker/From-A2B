@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth/helper";
-import { prisma } from "@/lib/prisma";
-import { getServerUrl } from "@/lib/server-url";
+import { auth } from "@lib/auth/helper";
+import { prisma } from "@lib/prisma";
+import { getServerUrl } from "@lib/server-url";
 import { NextResponse } from "next/server";
 
 /**

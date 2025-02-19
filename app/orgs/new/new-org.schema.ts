@@ -1,4 +1,4 @@
-import { RESERVED_SLUGS } from "@/lib/organizations/reservedSlugs";
+import { RESERVED_SLUGS } from "@lib/organizations/reservedSlugs";
 import { z } from "zod";
 
 export const NewOrgsSchema = z.object({

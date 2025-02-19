@@ -1,17 +1,17 @@
 "use server";
 
-import { ActionError, action } from "@/lib/actions/safe-actions";
+import { ActionError, action } from "@lib/actions/safe-actions";
 import {
   setupDefaultOrganizationsOrInviteUser,
   setupResendCustomer,
-} from "@/lib/auth/auth-config-setup";
+} from "@lib/auth/auth-config-setup";
 import {
   hashStringWithSalt,
   validatePassword,
-} from "@/lib/auth/credentials-provider";
-import { prisma } from "@/lib/prisma";
+} from "@lib/auth/credentials-provider";
+import { env } from "@lib/env/server";
+import { prisma } from "@lib/prisma";
 import { LoginCredentialsFormScheme } from "./signup.schema";
-import { env } from "@/lib/env/server";
 
 export const signUpAction = action
   .schema(LoginCredentialsFormScheme)

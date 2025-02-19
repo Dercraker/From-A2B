@@ -1,7 +1,7 @@
 "use client";
-import { LogoSvg } from "@/components/svg/LogoSvg";
-import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
-import { Typography } from "@/components/ui/typography";
+import { LogoSvg } from "@components/svg/LogoSvg";
+import { Sidebar, SidebarBody } from "@components/ui/sidebar";
+import { Typography } from "@components/ui/typography";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, type PropsWithChildren, type ReactNode } from "react";

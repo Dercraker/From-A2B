@@ -1,14 +1,14 @@
 "use client";
 
-import { useSidebar } from "@/components/ui/sidebar";
-import { Typography } from "@/components/ui/typography";
+import { useSidebar } from "@components/ui/sidebar";
+import { Typography } from "@components/ui/typography";
 import type {
   NavigationLinksGroup,
   NavigationLinksGroups,
   NavigationLinks as NavigationLinksSchema,
-} from "@/features/navigation/navigation.type";
-import { useCurrentPath } from "@/hooks/useCurrentPath";
-import { cn } from "@/lib/utils";
+} from "@feat/navigation/navigation.type";
+import { useCurrentPath } from "@hooks/useCurrentPath";
+import { cn } from "@lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";

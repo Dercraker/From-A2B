@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth/helper";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { requiredAuth } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
 import { EditPasswordForm } from "./EditPasswordForm";
 import { EditProfileCardForm } from "./EditProfileForm";
 

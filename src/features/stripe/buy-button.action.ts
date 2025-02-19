@@ -1,10 +1,10 @@
 "use server";
 
-import { ActionError, action } from "@/lib/actions/safe-actions";
-import { auth } from "@/lib/auth/helper";
-import { prisma } from "@/lib/prisma";
-import { getServerUrl } from "@/lib/server-url";
-import { stripe } from "@/lib/stripe";
+import { ActionError, action } from "@lib/actions/safe-actions";
+import { auth } from "@lib/auth/helper";
+import { prisma } from "@lib/prisma";
+import { getServerUrl } from "@lib/server-url";
+import { stripe } from "@lib/stripe";
 import { z } from "zod";
 import { createSearchParamsMessageUrl } from "../searchparams-message/createSearchParamsMessageUrl";
 

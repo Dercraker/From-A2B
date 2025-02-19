@@ -1,9 +1,9 @@
 "use client";
 
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { buttonVariants } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Typography } from "@/components/ui/typography";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { buttonVariants } from "@components/ui/button";
+import { Card } from "@components/ui/card";
+import { Typography } from "@components/ui/typography";
 import Link from "next/link";
 
 export const CTASectionCard = () => {

@@ -1,14 +1,14 @@
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/card";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import Link from "next/link";
+import { SiteConfig } from "site-config";
 
 export const UpgradeCard = async () => {
   const { org: organization } = await getRequiredCurrentOrgCache();

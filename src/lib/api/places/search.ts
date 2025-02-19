@@ -1,5 +1,5 @@
-import { env } from "@/lib/env/server";
 import { PlacesClient } from "@googlemaps/places";
+import { env } from "@lib/env/server";
 
 const placeClient = new PlacesClient({
   apiKey: env.GOOGLE_PLACES_API_KEY,

@@ -1,11 +1,11 @@
 "use server";
 
-import { getOrgsMembers } from "@/features/org/get-orgs-members";
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
-import { sendEmail } from "@/lib/mail/sendEmail";
-import { prisma } from "@/lib/prisma";
 import MarkdownEmail from "@email/Markdown.email";
 import OrganizationInvitationEmail from "@email/OrganizationInvitationEmail.email";
+import { getOrgsMembers } from "@feat/org/get-orgs-members";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
+import { sendEmail } from "@lib/mail/sendEmail";
+import { prisma } from "@lib/prisma";
 import { addHours } from "date-fns";
 import { nanoid } from "nanoid";
 import {} from "next/server";

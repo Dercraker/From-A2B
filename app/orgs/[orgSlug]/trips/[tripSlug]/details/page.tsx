@@ -1,6 +1,6 @@
-import { Layout, LayoutContent } from "@/components/page/layout";
-import { EditTripForm } from "@/components/trips/editTripForm";
-import type { PageParams } from "@/types/next";
+import { Layout, LayoutContent } from "@components/page/layout";
+import { EditTripForm } from "@components/trips/editTripForm";
+import type { PageParams } from "@type/next";
 
 const RoutePage = async ({
   params,

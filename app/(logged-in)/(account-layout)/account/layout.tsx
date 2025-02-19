@@ -3,9 +3,9 @@ import {
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { requiredAuth } from "@/lib/auth/helper";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import { requiredAuth } from "@lib/auth/helper";
+import type { LayoutParams } from "@type/next";
 
 export default async function RouteLayout(props: LayoutParams) {
   const user = await requiredAuth();

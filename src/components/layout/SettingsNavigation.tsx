@@ -1,7 +1,7 @@
 "use client";
 
-import { useMatchingPathname } from "@/hooks/useMatchingPathname";
-import { isInRoles } from "@/lib/organizations/isInRoles";
+import { useMatchingPathname } from "@hooks/useMatchingPathname";
+import { isInRoles } from "@lib/organizations/isInRoles";
 import type { OrganizationMembershipRole } from "@prisma/client";
 import { motion } from "framer-motion";
 import Link from "next/link";

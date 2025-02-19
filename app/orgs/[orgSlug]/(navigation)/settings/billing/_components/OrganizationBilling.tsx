@@ -1,11 +1,11 @@
-import { Pricing } from "@/components/plans/PricingSection";
+import { Pricing } from "@components/plans/PricingSection";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import type { CurrentOrgPayload } from "@/lib/organizations/getOrg";
+} from "@components/ui/card";
+import type { CurrentOrgPayload } from "@lib/organizations/getOrg";
 import { PremiumCard } from "./PremiumCard";
 
 export const OrganizationBilling = ({ org }: { org: CurrentOrgPayload }) => {

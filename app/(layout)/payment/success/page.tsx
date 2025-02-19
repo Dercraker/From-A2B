@@ -4,8 +4,8 @@ import {
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
+} from "@components/page/layout";
+import { buttonVariants } from "@components/ui/button";
 import Link from "next/link";
 
 export default function SuccessPaymentPage() {

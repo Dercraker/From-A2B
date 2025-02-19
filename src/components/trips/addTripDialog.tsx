@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -17,18 +17,20 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AddTripAction } from "@/features/trip/add/addTrip.action";
-import { AddTripSchema } from "@/features/trip/add/addTrip.schema";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { AddTripAction } from "@feat/trip/add/addTrip.action";
+import { AddTripSchema } from "@feat/trip/add/addTrip.schema";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { FormOptionalSection } from "../form/FormOptionalSection";
 import { LoadingButton } from "../form/LoadingButton";
 import { ImageFormItem } from "../images/ImageFormItem";
 import { DateTimePicker } from "../ui/DateTimePicker";
+import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 
 type AddTripDialogProps = PropsWithChildren;
@@ -38,7 +40,6 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
   const form = useZodForm({
     schema: AddTripSchema,
     defaultValues: {
-      startDate: new Date(),
       image: "https://picsum.photos/600/400",
     },
   });
@@ -98,19 +99,33 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Any description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(form.getValues("description"))}
+            label="Description"
+            onToggle={(open) => {
+              if (!open)
+                form.setValue("description", undefined, { shouldDirty: true });
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea placeholder="Any description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
+
           <FormField
             control={form.control}
             name="startDate"
@@ -119,7 +134,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                 <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <DateTimePicker
-                    value={field.value ?? new Date()}
+                    value={field.value}
                     onChange={(date) => {
                       form.setValue("startDate", date ?? new Date(), {
                         shouldDirty: true,

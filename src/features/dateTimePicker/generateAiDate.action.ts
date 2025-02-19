@@ -1,8 +1,8 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
-import { openaiModel } from "@/lib/ai/ai";
-import { logger } from "@/lib/logger";
+import { orgAction } from "@lib/actions/safe-actions";
+import { openaiModel } from "@lib/ai/ai";
+import { logger } from "@lib/logger";
 import { generateText } from "ai";
 import { z } from "zod";
 

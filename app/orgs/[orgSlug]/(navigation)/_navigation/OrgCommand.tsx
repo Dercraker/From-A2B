@@ -8,20 +8,20 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/command";
+import { Input } from "@components/ui/input";
 import {
   CmdOrOption,
   KeyboardShortcut,
-} from "@/components/ui/keyboard-shortcut";
-import { Typography } from "@/components/ui/typography";
-import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
-import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { SearchTripsAction } from "@/features/trips/searchTrips.action";
-import { GenerateTripLink } from "@/features/trips/trips.link";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useDisclosure } from "@/hooks/useDisclosure";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+} from "@components/ui/keyboard-shortcut";
+import { Typography } from "@components/ui/typography";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
+import { SearchTripsAction } from "@feat/trips/searchTrips.action";
+import { GenerateTripLink } from "@feat/trips/trips.link";
+import { useDebounce } from "@hooks/use-debounce";
+import { useDisclosure } from "@hooks/useDisclosure";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { IconPlaneArrival, IconPlaneDeparture } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { format, isBefore } from "date-fns";

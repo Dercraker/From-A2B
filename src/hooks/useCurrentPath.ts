@@ -1,4 +1,4 @@
-import type { NavigationLinks } from "@/features/navigation/navigation.type";
+import type { NavigationLinks } from "@feat/navigation/navigation.type";
 import { usePathname } from "next/navigation";
 
 export const useCurrentPath = (links: NavigationLinks) => {

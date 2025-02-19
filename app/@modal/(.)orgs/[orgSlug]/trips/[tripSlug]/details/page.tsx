@@ -1,4 +1,4 @@
-import type { PageParams } from "@/types/next";
+import type { PageParams } from "@type/next";
 import { DetailsDialog } from "./_components/DetailsDialog";
 
 const RoutePage = async ({

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { InlineTooltip } from "@/components/ui/tooltip";
+import { Button } from "@components/ui/button";
+import { InlineTooltip } from "@components/ui/tooltip";
 import { useMap } from "@vis.gl/react-google-maps";
 import { LocateFixed } from "lucide-react";
 import { toast } from "sonner";

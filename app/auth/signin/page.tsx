@@ -1,9 +1,9 @@
-import { HeaderBase } from "@/components/layout/HeaderBase";
-import { LogoSvg } from "@/components/svg/LogoSvg";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { auth } from "@/lib/auth/helper";
-import type { PageParams } from "@/types/next";
+import { HeaderBase } from "@components/layout/HeaderBase";
+import { LogoSvg } from "@components/svg/LogoSvg";
+import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { auth } from "@lib/auth/helper";
+import type { PageParams } from "@type/next";
 import { AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getError } from "../error/auth-error-mapping";

@@ -2,15 +2,9 @@
 
 import type { PropsWithChildren } from "react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { AutocompleteComponent } from "@components/address/autocompleteComponent";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
+import { LoadingButton } from "@components/form/LoadingButton";
 import {
   Form,
   FormControl,
@@ -19,26 +13,40 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AddStepAction } from "@/features/steps/add/addStep.action";
-import { AddStepSchema } from "@/features/steps/add/addStep.schema";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+} from "@components/ui/form";
+import { AddStepAction } from "@feat/steps/add/addStep.action";
+import { AddStepSchema } from "@feat/steps/add/addStep.schema";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import { TransportMode } from "@prisma/client";
-import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@ui/button";
+import { DateTimePicker } from "@ui/DateTimePicker";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@ui/dialog";
+import { Input } from "@ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@ui/select";
+import { Separator } from "@ui/separator";
+import { Textarea } from "@ui/textarea";
+import { Typography } from "@ui/typography";
+import { isActionSuccessful } from "lib/actions/actions-utils";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { AutocompleteComponent } from "../address/autocompleteComponent";
-import { LoadingButton } from "../form/LoadingButton";
-import { DateTimePicker } from "../ui/DateTimePicker";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
-import { Textarea } from "../ui/textarea";
-import { Typography } from "../ui/typography";
 
 export type AddStepDialogProps = PropsWithChildren<{
   beforeStep?: StepDto;
@@ -58,9 +66,7 @@ export const AddStepDialog = ({
   const form = useZodForm({
     schema: AddStepSchema,
     defaultValues: {
-      startDate: new Date(),
-      endDate: new Date(),
-      TransportMode: TransportMode.Car,
+      transportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
       stepAfter: afterStep,
@@ -87,6 +93,9 @@ export const AddStepDialog = ({
       return result.data;
     },
     onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: TRIP_KEY_Factory.roads(params.tripSlug?.toString() as string),
+      });
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
       });
@@ -134,61 +143,84 @@ export const AddStepDialog = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Any description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(form.getValues("description"))}
+            label="Description"
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea placeholder="Any description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
+
+          <FormOptionalSection
+            label="Dates"
+            defaultOpen={Boolean(
+              form.getValues("endDate") && form.getValues("startDate"),
             )}
-          />
+            onToggle={(open) => {
+              if (!open) {
+                form.setValue("endDate", undefined);
+                form.setValue("startDate", undefined);
+              }
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>Start Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("startDate", date, {
+                        shouldDirty: true,
+                      });
+                    }}
+                  />
 
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>Start Date</FormLabel>
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("startDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>End Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("endDate", date, {
+                        shouldDirty: true,
+                      });
+                    }}
+                  />
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
 
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>End Date</FormLabel>
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("endDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Separator />
 
           <FormField
             control={form.control}
@@ -210,7 +242,7 @@ export const AddStepDialog = ({
 
           <FormField
             control={form.control}
-            name="TransportMode"
+            name="transportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>
