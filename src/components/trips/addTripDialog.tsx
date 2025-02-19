@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -17,10 +17,10 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AddTripAction } from "@/features/trip/add/addTrip.action";
-import { AddTripSchema } from "@/features/trip/add/addTrip.schema";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { AddTripAction } from "@feat/trip/add/addTrip.action";
+import { AddTripSchema } from "@feat/trip/add/addTrip.schema";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";

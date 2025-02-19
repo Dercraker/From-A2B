@@ -1,4 +1,4 @@
-import { Typography } from "@/components/ui/typography";
+import { Typography } from "@components/ui/typography";
 import { SectionLayout } from "../layout/SectionLayout";
 import { EmailForm } from "./EmailForm";
 

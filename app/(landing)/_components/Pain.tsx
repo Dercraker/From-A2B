@@ -1,7 +1,7 @@
 "use client";
 
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { Typography } from "@/components/ui/typography";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { Typography } from "@components/ui/typography";
 
 export const PainSection = () => {
   return (

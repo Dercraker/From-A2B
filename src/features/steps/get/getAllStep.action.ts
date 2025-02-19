@@ -1,6 +1,6 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 import { GetAllStepQuery } from "./getAllSteps.query";
 

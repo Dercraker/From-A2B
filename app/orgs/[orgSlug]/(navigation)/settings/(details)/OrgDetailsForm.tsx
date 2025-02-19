@@ -1,21 +1,22 @@
 "use client";
 
-import { ImageFormItem } from "@/components/images/ImageFormItem";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
+import { ImageFormItem } from "@components/images/ImageFormItem";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -24,7 +25,6 @@ import {
   OrgDetailsFormSchema,
   type OrgDetailsFormSchemaType,
 } from "../org.schema";
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
 
 type ProductFormProps = {
   defaultValues: OrgDetailsFormSchemaType;

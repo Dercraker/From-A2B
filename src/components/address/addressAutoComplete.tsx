@@ -1,9 +1,9 @@
 "use client";
 
-import type { AddressType } from "@/features/address/address.schema";
-import { AddressByPlaceIdAction } from "@/features/address/addressByPlaceId.action";
-import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import type { AddressType } from "@feat/address/address.schema";
+import { AddressByPlaceIdAction } from "@feat/address/addressByPlaceId.action";
+import { ADDRESS_KEY_FACTORY } from "@feat/address/addressKey.factory";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Delete, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";

@@ -1,9 +1,9 @@
 import { Menu } from "lucide-react";
 
-import { LogoSvg } from "@/components/svg/LogoSvg";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Typography } from "@/components/ui/typography";
+import { LogoSvg } from "@components/svg/LogoSvg";
+import { Button } from "@components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@components/ui/sheet";
+import { Typography } from "@components/ui/typography";
 import Link from "next/link";
 import type { ReactNode } from "react";
 

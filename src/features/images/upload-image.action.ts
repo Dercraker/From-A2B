@@ -1,6 +1,6 @@
 "use server";
 
-import { authAction } from "@/lib/actions/safe-actions";
+import { authAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 
 export const uploadImageAction = authAction

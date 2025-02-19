@@ -4,16 +4,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Loader } from "@/components/ui/loader";
-import { Typography } from "@/components/ui/typography";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
+import { Loader } from "@components/ui/loader";
+import { Typography } from "@components/ui/typography";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
+import { SiteConfig } from "site-config";
 import { toast } from "sonner";
 import { uploadImageAction } from "../../features/images/upload-image.action";
 import { LoadingButton } from "../form/LoadingButton";

@@ -4,14 +4,14 @@
 /* eslint-disable no-case-declarations */
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import type { CalendarProps } from "@/components/ui/calendar";
-import { Input, InputUnit } from "@/components/ui/input";
+import { buttonVariants } from "@components/ui/button";
+import type { CalendarProps } from "@components/ui/calendar";
+import { Input, InputUnit } from "@components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@components/ui/popover";
 import { add, format } from "date-fns";
 import type { Locale } from "date-fns/locale";
 import { enUS } from "date-fns/locale";
@@ -30,10 +30,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { generateAIDateAction } from "@/features/dateTimePicker/generateAiDate.action";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
+} from "@components/ui/select";
+import { generateAIDateAction } from "@feat/dateTimePicker/generateAiDate.action";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { DayPicker } from "react-day-picker";
 import { useEffectOnce } from "react-use";

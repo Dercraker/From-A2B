@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+} from "@components/ui/card";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { toast } from "sonner";
 import { accountAskDeletionAction } from "../delete-account.action";
 

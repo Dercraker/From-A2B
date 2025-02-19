@@ -8,9 +8,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Loader } from "@/components/ui/loader";
-import { Typography } from "@/components/ui/typography";
+} from "@components/ui/dropdown-menu";
+import { Loader } from "@components/ui/loader";
+import { Typography } from "@components/ui/typography";
 import { useMutation } from "@tanstack/react-query";
 import { LayoutDashboard, LogOut, Settings } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";

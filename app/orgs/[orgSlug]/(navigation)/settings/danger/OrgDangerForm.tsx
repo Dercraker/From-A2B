@@ -1,24 +1,24 @@
 "use client";
 
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { formatId } from "@/lib/format/id";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { formatId } from "@lib/format/id";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

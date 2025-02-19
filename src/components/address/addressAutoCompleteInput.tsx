@@ -1,10 +1,10 @@
 "use client";
 
-import { ADDRESS_KEY_FACTORY } from "@/features/address/addressKey.factory";
-import { SearchPlacesAction } from "@/features/places/searchPlaces.action";
-import { useDebounce } from "@/hooks/use-debounce";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
+import { ADDRESS_KEY_FACTORY } from "@feat/address/addressKey.factory";
+import { SearchPlacesAction } from "@feat/places/searchPlaces.action";
+import { useDebounce } from "@hooks/use-debounce";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { cn } from "@lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Command as CommandPrimitive } from "cmdk";
 import { Loader2 } from "lucide-react";

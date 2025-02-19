@@ -1,11 +1,11 @@
-import { LINKS } from "@/features/navigation/Links";
+import { LINKS } from "@feat/navigation/Links";
 import type {
   NavigationLink,
   NavigationLinks,
   NavigationLinksGroup,
   NavigationLinksGroups,
-} from "@/features/navigation/navigation.type";
-import { isInRoles } from "@/lib/organizations/isInRoles";
+} from "@feat/navigation/navigation.type";
+import { isInRoles } from "@lib/organizations/isInRoles";
 import type { OrganizationMembershipRole } from "@prisma/client";
 
 const replaceSlug = (href: string, slug: string) => {

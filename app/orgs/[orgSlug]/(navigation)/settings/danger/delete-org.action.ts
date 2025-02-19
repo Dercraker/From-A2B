@@ -1,9 +1,9 @@
 "use server";
 
-import { deleteOrganizationQuery } from "@/features/org/org-delete.query";
-import { orgAction } from "@/lib/actions/safe-actions";
-import { sendEmail } from "@/lib/mail/sendEmail";
 import OrgConfirmDeletionEmail from "@email/OrgConfirmDeletion.email";
+import { deleteOrganizationQuery } from "@feat/org/org-delete.query";
+import { orgAction } from "@lib/actions/safe-actions";
+import { sendEmail } from "@lib/mail/sendEmail";
 
 export const organizationDeleteAction = orgAction
   .metadata({ roles: ["OWNER"] })

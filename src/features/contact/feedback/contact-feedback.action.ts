@@ -1,11 +1,11 @@
 "use server";
 
-import { action } from "@/lib/actions/safe-actions";
-import { auth } from "@/lib/auth/helper";
-import { sendEmail } from "@/lib/mail/sendEmail";
-import { prisma } from "@/lib/prisma";
+import { action } from "@lib/actions/safe-actions";
+import { auth } from "@lib/auth/helper";
+import { env } from "@lib/env/client";
+import { sendEmail } from "@lib/mail/sendEmail";
+import { prisma } from "@lib/prisma";
 import { ContactFeedbackSchema } from "./contact-feedback.schema";
-import { env } from "@/lib/env/client";
 
 export const contactSupportAction = action
   .schema(ContactFeedbackSchema)

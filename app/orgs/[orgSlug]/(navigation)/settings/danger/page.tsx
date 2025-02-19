@@ -1,15 +1,15 @@
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import type { PageParams } from "@/types/next";
+} from "@components/ui/card";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
+import type { PageParams } from "@type/next";
 import Link from "next/link";
 import { OrganizationDangerForm } from "./OrgDangerForm";
 import { OrganizationDeleteDialog } from "./OrganizationDeleteDialog";

@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import type { TripListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { GenerateTripLink } from "@/features/trips/trips.link";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import type { TripListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
+import { GenerateTripLink } from "@feat/trips/trips.link";
 import { format } from "date-fns";
 import { PlaneLanding, PlaneTakeoff } from "lucide-react";
 import Image from "next/image";

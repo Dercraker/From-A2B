@@ -21,10 +21,13 @@
     "baseUrl": "src/",
     "paths": {
       "@/*": ["/*"],
+      "@lib/*": ["lib/*"],
       "@ui/*": ["components/ui/*"],
       "@components/*": ["components/*"],
       "@feat/*": ["features/*"],
-      "@utils/*": ["lib/utils/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["utils/*"],
+      "@type/*": ["types/*"],
       "@email/*": ["../emails/*"]
     }
   },

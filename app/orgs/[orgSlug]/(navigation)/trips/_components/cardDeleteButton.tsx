@@ -1,9 +1,9 @@
 "use client";
 
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { DeleteTripAction } from "@/features/trip/delete/deleteTrip.action";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { DeleteTripAction } from "@feat/trip/delete/deleteTrip.action";
 import { useMutation } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";

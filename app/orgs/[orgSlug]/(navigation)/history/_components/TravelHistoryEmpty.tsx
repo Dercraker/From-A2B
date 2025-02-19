@@ -1,6 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
-import { LINKS } from "@/features/navigation/Links";
+import { buttonVariants } from "@components/ui/button";
+import { Typography } from "@components/ui/typography";
+import { LINKS } from "@feat/navigation/Links";
 import Link from "next/link";
 import { GenerateOrganizationLink } from "../../_navigation/org-navigation.links";
 

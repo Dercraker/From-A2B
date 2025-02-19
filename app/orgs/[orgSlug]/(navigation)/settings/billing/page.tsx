@@ -1,5 +1,5 @@
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { OrganizationBilling } from "./_components/OrganizationBilling";
 
 export const generateMetadata = combineWithParentMetadata({

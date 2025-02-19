@@ -4,9 +4,9 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { closeGlobalDialog } from "@/features/globalDialog/GlobalDialogStore";
-import { PLANS } from "@/features/plans/plans";
+} from "@components/ui/dialog";
+import { closeGlobalDialog } from "@feat/globalDialog/GlobalDialogStore";
+import { PLANS } from "@feat/plans/plans";
 import { PricingCard } from "../plans/PricingCard";
 
 export const OrgPlanDialog = () => {

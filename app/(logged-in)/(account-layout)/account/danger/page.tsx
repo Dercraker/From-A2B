@@ -1,4 +1,4 @@
-import { requiredAuth } from "@/lib/auth/helper";
+import { requiredAuth } from "@lib/auth/helper";
 import { DeleteDangerCard } from "./_components/DeleteDangerCard";
 
 const DeleteProfilePage = async () => {

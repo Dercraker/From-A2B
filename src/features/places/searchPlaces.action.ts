@@ -1,7 +1,7 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
-import { SearchPlaces } from "@/lib/api/places/search";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
+import { SearchPlaces } from "@lib/api/places/search";
 import { z } from "zod";
 import { SearchPlacesResponsesDtoSchema } from "./searchPlacesResponse.dto";
 

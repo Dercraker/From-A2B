@@ -4,15 +4,15 @@ import {
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { isInRoles } from "@/lib/organizations/isInRoles";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import { SiteConfig } from "@/site-config";
-import type { PageParams } from "@/types/next";
+} from "@components/page/layout";
+import { buttonVariants } from "@components/ui/button";
+import { Typography } from "@components/ui/typography";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { isInRoles } from "@lib/organizations/isInRoles";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
+import type { PageParams } from "@type/next";
 import Link from "next/link";
+import { SiteConfig } from "site-config";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Dashboard",

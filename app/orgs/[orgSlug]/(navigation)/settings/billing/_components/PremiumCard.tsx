@@ -1,4 +1,4 @@
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,12 +6,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Typography } from "@/components/ui/typography";
-import { formatDate } from "@/lib/format/date";
-import type { CurrentOrgPayload } from "@/lib/organizations/getOrg";
-import { getServerUrl } from "@/lib/server-url";
-import { stripe } from "@/lib/stripe";
+} from "@components/ui/card";
+import { Typography } from "@components/ui/typography";
+import { formatDate } from "@lib/format/date";
+import type { CurrentOrgPayload } from "@lib/organizations/getOrg";
+import { getServerUrl } from "@lib/server-url";
+import { stripe } from "@lib/stripe";
 import { Separator } from "@radix-ui/react-separator";
 import { Link } from "lucide-react";
 

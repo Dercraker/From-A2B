@@ -1,11 +1,10 @@
-import { env } from "@/lib/env/server";
-import type { RoadType } from "@/types/routesApi/road.type";
-import { RoadTypeSchema } from "@/types/routesApi/road.type";
-import { getTravelMode } from "@/utils/getTravelMode";
 import type { LatLng } from "@googlemaps/polyline-codec";
 import { v2 } from "@googlemaps/routing";
 import type { google } from "@googlemaps/routing/build/protos/protos";
+import { env } from "@lib/env/server";
 import type { TransportMode } from "@prisma/client";
+import { RoadTypeSchema, type RoadType } from "@type/routesApi/road.type";
+import { getTravelMode } from "@utils/getTravelMode";
 import { encodePolyline } from "./polylinesEncoding";
 
 const routesClient = new v2.RoutesClient({

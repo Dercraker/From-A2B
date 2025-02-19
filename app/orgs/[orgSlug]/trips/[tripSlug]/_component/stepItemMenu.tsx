@@ -1,17 +1,17 @@
 "use client";
 
-import { AddStepDialog } from "@/components/steps/addStepDialog";
-import { DeleteStepAlertDialog } from "@/components/steps/deleteStepAlertDialog";
-import { EditStepDialog } from "@/components/steps/editStepDialog";
-import { Button } from "@/components/ui/button";
-import { Divider } from "@/components/ui/divider";
+import { AddStepDialog } from "@components/steps/addStepDialog";
+import { DeleteStepAlertDialog } from "@components/steps/deleteStepAlertDialog";
+import { EditStepDialog } from "@components/steps/editStepDialog";
+import { Button } from "@components/ui/button";
+import { Divider } from "@components/ui/divider";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { useDisclosure } from "@/hooks/useDisclosure";
+} from "@components/ui/popover";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { useDisclosure } from "@hooks/useDisclosure";
 import {
   ArrowDownFromLine,
   ArrowUpFromLine,

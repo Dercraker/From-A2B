@@ -1,8 +1,8 @@
 "use client";
 
-import { EditTripForm } from "@/components/trips/editTripForm";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { GenerateTripLink } from "@/features/trips/trips.link";
+import { EditTripForm } from "@components/trips/editTripForm";
+import { Dialog, DialogContent } from "@components/ui/dialog";
+import { GenerateTripLink } from "@feat/trips/trips.link";
 import { usePathname, useRouter } from "next/navigation";
 
 export type DetailsDialogProps = {

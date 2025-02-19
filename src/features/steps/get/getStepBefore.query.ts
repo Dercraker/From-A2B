@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 import { StepDtoSchema } from "../dto/stepDto.schema";
 

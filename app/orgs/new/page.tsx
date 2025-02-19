@@ -1,16 +1,16 @@
-import AuthNavigationWrapper from "@/components/navigation/LogInNavigationWrapper";
-import { createSearchParamsMessageUrl } from "@/features/searchparams-message/createSearchParamsMessageUrl";
-import { requiredAuth } from "@/lib/auth/helper";
-import { SiteConfig } from "@/site-config";
-import { redirect } from "next/navigation";
-import { NewOrganizationForm } from "./NewOrgForm";
+import AuthNavigationWrapper from "@components/navigation/LogInNavigationWrapper";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
+} from "@components/page/layout";
+import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
+import { requiredAuth } from "@lib/auth/helper";
+import { redirect } from "next/navigation";
+import { SiteConfig } from "site-config";
+import { NewOrganizationForm } from "./NewOrgForm";
 
 export default async function RoutePage() {
   await requiredAuth();

@@ -1,8 +1,8 @@
 "use client";
 
-import { Typography } from "@/components/ui/typography";
-import { useCurrentPath } from "@/hooks/useCurrentPath";
-import { cn } from "@/lib/utils";
+import { Typography } from "@components/ui/typography";
+import { useCurrentPath } from "@hooks/useCurrentPath";
+import { cn } from "@lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import type {

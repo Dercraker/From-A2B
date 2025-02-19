@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { RankStep } from "@/utils/GetStepRank";
+import { prisma } from "@lib/prisma";
+import { RankStep } from "@utils/GetStepRank";
 
 type ReorderAllStepQueryProps = {
   tripSlug: string;

@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
-import { getServerUrl } from "@/lib/server-url";
+import { Button } from "@components/ui/button";
+import { Loader } from "@components/ui/loader";
+import { getServerUrl } from "@lib/server-url";
 import { useMutation } from "@tanstack/react-query";
+import { clsx } from "clsx";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
-import { clsx } from "clsx";
 
 // ℹ️ Update this object with the providers you want to support
 const ProviderData: Record<string, { icon: ReactNode; name: string }> = {

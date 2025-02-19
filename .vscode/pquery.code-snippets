@@ -4,7 +4,7 @@
     "description": "Create Prisma Query",
     "scope": "javascript,typescript",
     "body": [
-      "import { prisma } from \"@/lib/prisma\";",
+      "import { prisma } from \"@lib/prisma\";",
       "import type { Prisma } from \"@prisma/client\";",
       "",
       "type ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1:/capitalize}${2:/capitalize}/g}}Props = {$2};",

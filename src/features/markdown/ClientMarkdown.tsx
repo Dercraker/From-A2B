@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 import Markdown from "react-markdown";
 import { rehypePlugins, remarkPlugins } from "./markdown.config";

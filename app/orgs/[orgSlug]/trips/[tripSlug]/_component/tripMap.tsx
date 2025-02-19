@@ -1,10 +1,10 @@
 "use client";
 
-import { PoiMarkers } from "@/components/map/poiMarkers";
-import type { Poi, Pois } from "@/features/map/poi.type";
-import { useTripStore } from "@/features/trip/trip.store";
-import { logger } from "@/lib/logger";
-import { cn } from "@/lib/utils";
+import { PoiMarkers } from "@components/map/poiMarkers";
+import type { Poi, Pois } from "@feat/map/poi.type";
+import { useTripStore } from "@feat/trip/trip.store";
+import { logger } from "@lib/logger";
+import { cn } from "@lib/utils";
 import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import {
   ControlPosition,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,16 +9,16 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
+} from "@components/ui/popover";
+import { Textarea } from "@components/ui/textarea";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { cn } from "@lib/utils";
 import { Angry, Frown, Meh, SmilePlus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import type { PropsWithChildren } from "react";

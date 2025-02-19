@@ -1,18 +1,18 @@
-import { SettingsNavigation } from "@/components/layout/SettingsNavigation";
+import { SettingsNavigation } from "@components/layout/SettingsNavigation";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { createSearchParamsMessageUrl } from "@/features/searchparams-message/createSearchParamsMessageUrl";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import { getServerUrl } from "@/lib/server-url";
-import { SiteConfig } from "@/site-config";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
+import { getServerUrl } from "@lib/server-url";
+import type { LayoutParams } from "@type/next";
 import { redirect } from "next/navigation";
+import { SiteConfig } from "site-config";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Settings",

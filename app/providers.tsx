@@ -1,11 +1,11 @@
 "use client";
 
-import { GlobalDialogLazy } from "@/components/globalDialog/GlobalDialogLazy";
-import { SearchParamsMessageToastSuspended } from "@/components/searchparams-message/SearchParamsMessageToast";
-import { Toaster } from "@/components/ui/sonner";
-import { AlertDialogRenderer } from "@/features/alert-dialog/AlertDialogRenderer";
-import { env } from "@/lib/env/client";
-import { logger } from "@/lib/logger";
+import { GlobalDialogLazy } from "@components/globalDialog/GlobalDialogLazy";
+import { SearchParamsMessageToastSuspended } from "@components/searchparams-message/SearchParamsMessageToast";
+import { Toaster } from "@components/ui/sonner";
+import { AlertDialogRenderer } from "@feat/alert-dialog/AlertDialogRenderer";
+import { env } from "@lib/env/client";
+import { logger } from "@lib/logger";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";

@@ -1,7 +1,7 @@
-import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
+import { SiteConfig } from "site-config";
 import { Layout } from "../page/layout";
 import { ThemeToggle } from "../theme/ThemeToggle";
 

@@ -1,8 +1,8 @@
-import { getOrgsMembers } from "@/features/org/get-orgs-members";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import type { PageParams } from "@/types/next";
+import { getOrgsMembers } from "@feat/org/get-orgs-members";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
+import type { PageParams } from "@type/next";
 import { OrgMembersForm } from "./OrgMembersForm";
 
 export const generateMetadata = combineWithParentMetadata({

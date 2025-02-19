@@ -1,16 +1,16 @@
 "use server";
 
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { ActionError, authAction } from "@/lib/actions/safe-actions";
+import MarkdownEmail from "@email/Markdown.email";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { ActionError, authAction } from "@lib/actions/safe-actions";
 import {
   hashStringWithSalt,
   validatePassword,
-} from "@/lib/auth/credentials-provider";
-import { requiredAuth } from "@/lib/auth/helper";
-import { env } from "@/lib/env/server";
-import { sendEmail } from "@/lib/mail/sendEmail";
-import { prisma } from "@/lib/prisma";
-import MarkdownEmail from "@email/Markdown.email";
+} from "@lib/auth/credentials-provider";
+import { requiredAuth } from "@lib/auth/helper";
+import { env } from "@lib/env/server";
+import { sendEmail } from "@lib/mail/sendEmail";
+import { prisma } from "@lib/prisma";
 import { addHours } from "date-fns";
 import { nanoid } from "nanoid";
 import { z } from "zod";

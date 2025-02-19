@@ -2,7 +2,8 @@
 
 import type { PropsWithChildren } from "react";
 
-import { Button } from "@/components/ui/button";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -19,15 +20,14 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { EditStepAction } from "@/features/steps/update/editStep.action";
-import { EditStepSchema } from "@/features/steps/update/editStep.schema";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { logger } from "@/lib/logger";
-import { FormOptionalSection } from "@components/form/FormOptionalSection";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { EditStepAction } from "@feat/steps/update/editStep.action";
+import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { logger } from "@lib/logger";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

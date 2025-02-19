@@ -1,4 +1,4 @@
-import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
+import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
 import { TripCard } from "./tripCard";
 
 export type TripsContainerProps = {

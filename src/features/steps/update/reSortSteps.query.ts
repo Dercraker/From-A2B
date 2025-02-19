@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { GetStepRank } from "@/utils/GetStepRank";
+import { prisma } from "@lib/prisma";
+import { GetStepRank } from "@utils/GetStepRank";
 import type { StepDto } from "../dto/stepDto.schema";
 
 type ReSortStepsQueryType = {

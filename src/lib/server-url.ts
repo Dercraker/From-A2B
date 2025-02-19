@@ -1,4 +1,4 @@
-import { SiteConfig } from "@/site-config";
+import { SiteConfig } from "site-config";
 
 /**
  * This method return the server URL based on the environment.

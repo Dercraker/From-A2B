@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import { Star } from "lucide-react";
 import type { PropsWithChildren } from "react";
 

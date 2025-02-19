@@ -1,7 +1,7 @@
 "use client";
 
-import { buyButtonAction } from "@/features/stripe/buy-button.action";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { buyButtonAction } from "@feat/stripe/buy-button.action";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

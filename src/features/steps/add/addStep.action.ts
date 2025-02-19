@@ -1,10 +1,10 @@
 "use server";
 
-import { AddRoadToStepQuery } from "@/features/road/addRoadToStepQuery";
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
-import { ComputeRoutes } from "@/lib/api/routes/computeRoutes";
-import { generateSlug } from "@/lib/format/id";
-import { GetStepRank } from "@/utils/GetStepRank";
+import { AddRoadToStepQuery } from "@feat/road/addRoadToStepQuery";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
+import { ComputeRoutes } from "@lib/api/routes/computeRoutes";
+import { generateSlug } from "@lib/format/id";
+import { GetStepRank } from "@utils/GetStepRank";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";

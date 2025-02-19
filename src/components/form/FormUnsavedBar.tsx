@@ -1,14 +1,14 @@
 "use client";
 
-import type { FormProps } from "@/components/ui/form";
-import { Form } from "@/components/ui/form";
+import type { FormProps } from "@components/ui/form";
+import { Form } from "@components/ui/form";
 import {
   CmdOrOption,
   KeyboardShortcut,
-} from "@/components/ui/keyboard-shortcut";
-import { Typography } from "@/components/ui/typography";
-import { useWarnIfUnsavedChanges } from "@/hooks/useWarnIfUnsavedChanges";
-import { cn } from "@/lib/utils";
+} from "@components/ui/keyboard-shortcut";
+import { Typography } from "@components/ui/typography";
+import { useWarnIfUnsavedChanges } from "@hooks/useWarnIfUnsavedChanges";
+import { cn } from "@lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { useRef } from "react";

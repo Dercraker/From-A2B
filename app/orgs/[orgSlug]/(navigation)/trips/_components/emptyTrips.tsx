@@ -1,7 +1,7 @@
-import { AddTripDialog } from "@/components/trips/addTripDialog";
-import { Button } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
+import { AddTripDialog } from "@components/trips/addTripDialog";
+import { Button } from "@components/ui/button";
+import { Typography } from "@components/ui/typography";
+import { cn } from "@lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 
 export type EmptyTripsProps = ComponentPropsWithoutRef<"div"> & {};

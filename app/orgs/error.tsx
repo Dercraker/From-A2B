@@ -1,14 +1,14 @@
 "use client";
-import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
+import { NavigationWrapper } from "@components/navigation/NavigationWrapper";
 import {
   Layout,
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { Page400 } from "@/components/page/Page400";
-import { logger } from "@/lib/logger";
-import type { ErrorParams } from "@/types/next";
+} from "@components/page/layout";
+import { Page400 } from "@components/page/Page400";
+import { logger } from "@lib/logger";
+import type { ErrorParams } from "@type/next";
 import { useEffect } from "react";
 
 const RouteError = ({ error }: ErrorParams) => {

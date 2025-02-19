@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@lib/utils";
 import { Typography } from "./typography";
 
 export const BentoGrid = ({

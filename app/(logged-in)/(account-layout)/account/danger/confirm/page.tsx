@@ -1,6 +1,6 @@
-import { requiredAuth } from "@/lib/auth/helper";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import type { PageParams } from "@/types/next";
+import { requiredAuth } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
+import type { PageParams } from "@type/next";
 import { verifyDeleteAccountToken } from "../delete-account.action";
 import { DeleteAccountCard } from "./_components/DeleteAccountCard";
 import { InvalidTokenCard } from "./_components/InvalidTokenCard";

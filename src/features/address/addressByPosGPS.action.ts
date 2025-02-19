@@ -1,7 +1,7 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
-import { reverseGeoCoding } from "@/lib/api/geocoding/reverseGeocoding";
+import { orgAction } from "@lib/actions/safe-actions";
+import { reverseGeoCoding } from "@lib/api/geocoding/reverseGeocoding";
 import { z } from "zod";
 import type { AddressType } from "./address.schema";
 

@@ -1,10 +1,10 @@
 "use client";
 
-import { AuthButtonClient } from "@/components/auth/AuthButtonClient";
-import { LogoSvg } from "@/components/svg/LogoSvg";
-import { SiteConfig } from "@/site-config";
+import { AuthButtonClient } from "@components/auth/AuthButtonClient";
+import { LogoSvg } from "@components/svg/LogoSvg";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { useEffect } from "react";
+import { SiteConfig } from "site-config";
 
 function useBoundedScroll(threshold: number) {
   const { scrollY } = useScroll();

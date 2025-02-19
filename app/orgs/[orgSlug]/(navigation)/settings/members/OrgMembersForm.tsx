@@ -1,17 +1,17 @@
 "use client";
 
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
-import { Alert } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { Button } from "@/components/ui/button";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
+import { Alert } from "@components/ui/alert";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { FormField, useZodForm } from "@/components/ui/form";
+} from "@components/ui/card";
+import { FormField, useZodForm } from "@components/ui/form";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -19,12 +19,12 @@ import {
   MultiSelectorItem,
   MultiSelectorList,
   MultiSelectorTrigger,
-} from "@/components/ui/multi-select";
-import { Progress } from "@/components/ui/progress";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { openGlobalDialog } from "@/features/globalDialog/GlobalDialogStore";
+} from "@components/ui/multi-select";
+import { Progress } from "@components/ui/progress";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { openGlobalDialog } from "@feat/globalDialog/GlobalDialogStore";
 import { OrganizationMembershipRole } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { X, Zap } from "lucide-react";

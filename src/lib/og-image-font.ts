@@ -1,4 +1,4 @@
-import { getServerUrl } from "@/lib/server-url";
+import { getServerUrl } from "@lib/server-url";
 import type { SatoriOptions } from "next/dist/compiled/@vercel/og/satori";
 
 export const getOgImageFont = async () => {

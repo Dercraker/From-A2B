@@ -1,4 +1,4 @@
-import type { PageParams } from "@/types/next";
+import type { PageParams } from "@type/next";
 import { StepDetail } from "./_component/StepDetail";
 
 const RoutePage = async ({

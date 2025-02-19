@@ -1,19 +1,11 @@
 "use client";
 
-import { AddStepDialog } from "@/components/steps/addStepDialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
-import { LoadingOverlay } from "@/components/ui/loadingOverlay";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Typography } from "@/components/ui/typography";
-import { LINKS } from "@/features/navigation/Links";
-import { GetAllStepAction } from "@/features/steps/get/getAllStep.action";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import type { ReSortStepsSchema } from "@/features/steps/update/reSortStep.schema";
-import { ReSortStepsAction } from "@/features/steps/update/reSortSteps.action";
-import { useTripStore } from "@/features/trip/trip.store";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
+import { AddStepDialog } from "@components/steps/addStepDialog";
+import { Button, buttonVariants } from "@components/ui/button";
+import { Loader } from "@components/ui/loader";
+import { LoadingOverlay } from "@components/ui/loadingOverlay";
+import { ScrollArea } from "@components/ui/scroll-area";
+import { Typography } from "@components/ui/typography";
 import type { DragEndEvent } from "@dnd-kit/core";
 import {
   closestCenter,
@@ -29,6 +21,14 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { LINKS } from "@feat/navigation/Links";
+import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import type { ReSortStepsSchema } from "@feat/steps/update/reSortStep.schema";
+import { ReSortStepsAction } from "@feat/steps/update/reSortSteps.action";
+import { useTripStore } from "@feat/trip/trip.store";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { cn } from "@lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";

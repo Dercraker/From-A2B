@@ -1,8 +1,8 @@
-import { AUTH_COOKIE_NAME } from "@/lib/auth/auth.const";
-import { SiteConfig } from "@/site-config";
+import { AUTH_COOKIE_NAME } from "@lib/auth/auth.const";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { SiteConfig } from "site-config";
 
 export const config = {
   matcher: [

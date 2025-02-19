@@ -1,8 +1,8 @@
 "use client";
 
-import { GetTripRoadAction } from "@/features/trip/get/getTripRoads.action";
-import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { GetTripRoadAction } from "@feat/trip/get/getTripRoads.action";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Polyline } from "./Polyline";

@@ -4,7 +4,7 @@
     "description": "Create the base of a loading page",
     "scope": "typescriptreact",
     "body": [
-      "import { Loader } from \"@/components/ui/loader\";",
+      "import { Loader } from \"@components/ui/loader\";",
       "",
       "export default async function RouteLoading() {",
       "  return (",
