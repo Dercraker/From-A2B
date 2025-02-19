@@ -27,9 +27,11 @@ import { EditStepAction } from "@/features/steps/update/editStep.action";
 import { EditStepSchema } from "@/features/steps/update/editStep.schema";
 import { isActionSuccessful } from "@/lib/actions/actions-utils";
 import { logger } from "@/lib/logger";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Separator } from "@ui/separator";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -143,64 +145,83 @@ export const EditStepDialog = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    value={field.value ?? ""}
-                    placeholder="Any description"
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(form.getValues("description"))}
+            label="Description"
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea placeholder="Any description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(
+              form.getValues("endDate") && form.getValues("startDate"),
+            )}
+            label="Dates"
+            onToggle={(open) => {
+              if (!open) {
+                form.setValue("endDate", undefined);
+                form.setValue("startDate", undefined);
+              }
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>Start Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("startDate", date, {
+                        shouldDirty: true,
+                      });
+                    }}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>Start Date</FormLabel>
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("startDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>End Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("endDate", date ?? new Date(), {
+                        shouldDirty: true,
+                      });
+                    }}
+                  />
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>End Date</FormLabel>
-                <DateTimePicker
-                  value={field.value}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("endDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <Separator />
 
           <FormField
             control={form.control}

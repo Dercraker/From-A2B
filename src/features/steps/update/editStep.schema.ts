@@ -6,8 +6,8 @@ export const EditStepSchema = z.object({
   stepId: z.string(),
 
   name: z.string().min(3),
-  startDate: z.date(),
-  endDate: z.date(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
   description: z.string().optional(),
 
   latitude: z.number(),
