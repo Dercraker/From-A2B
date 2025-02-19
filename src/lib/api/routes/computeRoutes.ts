@@ -4,7 +4,7 @@ import type { google } from "@googlemaps/routing/build/protos/protos";
 import { env } from "@lib/env/server";
 import type { TransportMode } from "@prisma/client";
 import { RoadTypeSchema, type RoadType } from "@type/routesApi/road.type";
-import { getTravelMode } from "@utils/getTravelMode";
+import { GetTravelMode } from "@utils/getTravelMode";
 import { encodePolyline } from "./polylinesEncoding";
 
 const routesClient = new v2.RoutesClient({
@@ -46,7 +46,7 @@ export const ComputeRoutes = async ({
       destination: {
         ...destination,
       },
-      travelMode: getTravelMode(transportMode),
+      travelMode: GetTravelMode(transportMode),
       routingPreference:
         transportMode !== "Walk" && transportMode !== "Bike"
           ? "TRAFFIC_UNAWARE"
