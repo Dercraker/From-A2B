@@ -22,8 +22,8 @@ export const GetStepAfterQuery = async ({
   return nextStep
     ? StepDtoSchema.parse({
         ...nextStep,
-        latitude: Number(step.latitude),
-        longitude: Number(step.longitude),
+        latitude: Number(nextStep.latitude),
+        longitude: Number(nextStep.longitude),
       })
     : null;
 };

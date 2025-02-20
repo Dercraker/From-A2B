@@ -22,6 +22,9 @@ export const ComputeRoutes = async ({
   destination,
   transportMode,
 }: ComputeRoutesProps) => {
+  console.log("🚀 ~ transportMode:", transportMode);
+  console.log("🚀 ~ destination:", destination);
+  console.log("🚀 ~ origin:", origin);
   if (transportMode === "Plane" || transportMode === "Boat")
     return {
       distance: 0,
@@ -66,6 +69,7 @@ export const ComputeRoutes = async ({
       },
     },
   );
+  console.log("🚀 ~ roads:", roads[0].routes);
 
   return RoadTypeSchema.parse({
     distance: roads?.[0].routes?.[0].distanceMeters,

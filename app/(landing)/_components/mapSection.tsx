@@ -4,8 +4,6 @@ import { SectionLayout } from "@components/layout/SectionLayout";
 import { PoiMarkers } from "@components/map/poiMarkers";
 import { Typography } from "@components/ui/typography";
 import type { Pois } from "@feat/map/poi.type";
-import { logger } from "@lib/logger";
-import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { Map, RenderingType } from "@vis.gl/react-google-maps";
 
 export const MapSection = () => {
@@ -66,14 +64,6 @@ export const MapSection = () => {
         mapTypeControl={false}
         streetViewControl={false}
         fullscreenControl={false}
-        onCameraChanged={(ev: MapCameraChangedEvent) =>
-          logger.debug(
-            "camera changed:",
-            ev.detail.center,
-            "zoom:",
-            ev.detail.zoom,
-          )
-        }
       >
         <PoiMarkers pois={poi} />
       </Map>
