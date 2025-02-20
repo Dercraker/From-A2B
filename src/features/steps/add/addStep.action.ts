@@ -38,7 +38,6 @@ export const AddStepAction = orgAction
         );
       console.log("🚀 ~ stepBefore:", stepBefore);
       console.log("🚀 ~ stepAfter:", stepAfter);
-
       const otherStep = stepBefore
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
@@ -49,7 +48,6 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
-      console.log("🚀 ~ lastTripStep:", lastTripStep);
 
       //#region Compute Road
       let road;
@@ -77,12 +75,10 @@ export const AddStepAction = orgAction
           },
           transportMode,
         });
-        console.log("🚀 ~ in stepBefore -> road:", road);
 
         const nextStep = await GetStepAfterQuery({
           id: stepBefore.id,
         });
-        console.log("🚀 ~ nextStep:", nextStep);
         if (nextStep)
           nextRoad = await ComputeRoutes({
             origin: {
@@ -105,7 +101,6 @@ export const AddStepAction = orgAction
             },
             transportMode: GetTransportModeFromString(nextStep.transportMode),
           });
-        console.log("🚀 ~ in stepBefore -> nextRoad:", nextRoad);
       } else if (stepAfter) {
         nextRoad = await ComputeRoutes({
           origin: {
@@ -128,12 +123,10 @@ export const AddStepAction = orgAction
           },
           transportMode: GetTransportModeFromString(stepAfter.transportMode),
         });
-        console.log("🚀 ~ in step after nextRoad:", nextRoad);
 
         const prevStep = await GetStepBeforeQuery({
           id: stepAfter.id,
         });
-        console.log("🚀 ~ prevStep:", prevStep);
         if (prevStep)
           road = await ComputeRoutes({
             origin: {
@@ -156,7 +149,6 @@ export const AddStepAction = orgAction
             },
             transportMode,
           });
-        console.log("🚀 ~ in step after road:", road);
       } else if (lastTripStep) {
         road = await ComputeRoutes({
           origin: {
@@ -179,8 +171,6 @@ export const AddStepAction = orgAction
           },
           transportMode,
         });
-        console.log("🚀 ~ lastTripStep:", lastTripStep);
-        console.log("🚀 ~ road:", road);
       }
 
       //#endregion Compute Road
@@ -215,7 +205,16 @@ export const AddStepAction = orgAction
 
         //#region RoadUpdate
 
-        if ((lastTripStep || stepBefore) && road)
+        console.log(
+          "🚀 ~ stepBefore && road && otherStep && nextRoad && !stepAfter:",
+          stepBefore && road && otherStep && nextRoad && !stepAfter,
+        );
+        console.log(
+          "🚀 ~ stepAfter && road && otherStep && nextRoad && !stepBefore:",
+          stepAfter && road && otherStep && nextRoad && !stepBefore,
+        );
+        console.log("🚀 ~ lastTripStep && road:", lastTripStep && road);
+        if (stepBefore && road && otherStep && nextRoad && !stepAfter) {
           await AddRoadToStepQuery({
             data: {
               distance: road.distance ?? 0,
@@ -233,14 +232,56 @@ export const AddStepAction = orgAction
               },
             },
           });
-
-        if (stepAfter && nextRoad)
           await UpdateRoadToStepByIdQuery({
-            stepId: stepAfter.id,
+            stepId: otherStep.id,
             data: {
               distance: nextRoad.distance ?? 0,
               duration: nextRoad.duration ?? 0,
               polyline: nextRoad.polyline ?? "",
+            },
+          });
+        } else if (stepAfter && road && otherStep && nextRoad && !stepBefore) {
+          await AddRoadToStepQuery({
+            data: {
+              distance: road.distance ?? 0,
+              duration: road.duration ?? 0,
+              polyline: road.polyline ?? "",
+              step: {
+                connect: {
+                  id: newStep.id,
+                },
+              },
+              trip: {
+                connect: {
+                  slug: tripSlug,
+                },
+              },
+            },
+          });
+          await UpdateRoadToStepByIdQuery({
+            stepId: otherStep.id,
+            data: {
+              distance: nextRoad.distance ?? 0,
+              duration: nextRoad.duration ?? 0,
+              polyline: nextRoad.polyline ?? "",
+            },
+          });
+        } else if (lastTripStep && road)
+          await AddRoadToStepQuery({
+            data: {
+              distance: road.distance ?? 0,
+              duration: road.duration ?? 0,
+              polyline: road.polyline ?? "",
+              step: {
+                connect: {
+                  id: newStep.id,
+                },
+              },
+              trip: {
+                connect: {
+                  slug: tripSlug,
+                },
+              },
             },
           });
 

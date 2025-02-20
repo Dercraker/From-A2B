@@ -14,6 +14,7 @@ export const GetStepAfterQuery = async ({
   const nextStep = await prisma.step.findFirst({
     where: {
       rank: { gt: step.rank },
+      tripId: step.tripId,
     },
     orderBy: { rank: "asc" },
   });
