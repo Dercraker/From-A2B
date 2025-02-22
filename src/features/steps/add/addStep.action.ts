@@ -1,10 +1,10 @@
 "use server";
 
-import { AddRoadToStepQuery } from "@feat/road/addRoadToStepQuery";
+import { AddRoadsToStep } from "@feat/road/addRoadBetweenSteps";
 import { ActionError, orgAction } from "@lib/actions/safe-actions";
-import { ComputeRoutes } from "@lib/api/routes/computeRoutes";
 import { generateSlug } from "@lib/format/id";
 import { GetStepRank } from "@utils/GetStepRank";
+import type { StepDto } from "../dto/stepDto.schema";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -34,7 +34,6 @@ export const AddStepAction = orgAction
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
         );
-
       const otherStep = stepBefore
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
@@ -44,29 +43,8 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
-      let road;
-      if (lastTripStep)
-        road = await ComputeRoutes({
-          origin: {
-            placeId: lastTripStep?.placeId,
-            location: {
-              latLng: {
-                latitude: lastTripStep.latitude,
-                longitude: lastTripStep.longitude,
-              },
-            },
-          },
-          destination: {
-            placeId: placeId,
-            location: {
-              latLng: {
-                latitude,
-                longitude,
-              },
-            },
-          },
-          transportMode,
-        });
+
+      let newStep: StepDto;
 
       try {
         const newRank = GetStepRank({
@@ -75,7 +53,8 @@ export const AddStepAction = orgAction
             (stepAfter ? otherStep?.rank : lastTripStep?.rank),
           nextRank: stepAfter?.rank ?? otherStep?.rank,
         });
-        const newStep = await AddStepQuery({
+
+        newStep = await AddStepQuery({
           step: {
             name,
             slug: generateSlug(name),
@@ -94,32 +73,19 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
-
-        if (lastTripStep && road)
-          await AddRoadToStepQuery({
-            data: {
-              distance: road?.distance ?? 0,
-              duration: road?.duration ?? 0,
-              polyline: road?.polyline ?? "",
-              step: {
-                connect: {
-                  id: newStep.id,
-                },
-              },
-              trip: {
-                connect: {
-                  slug: tripSlug,
-                },
-              },
-            },
-          });
-
-        return newStep.name;
-      } catch {
+      } catch (e) {
         await ReorderAllStepQuery({ tripSlug });
         return new ActionError(
           "An error occurred while adding the step, please try again",
         );
       }
+
+      try {
+        await AddRoadsToStep({ stepId: newStep.id });
+      } catch (error) {
+        return new ActionError("An error occurred while adding road to step");
+      }
+
+      return newStep.name;
     },
   );

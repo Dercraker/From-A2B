@@ -15,6 +15,36 @@ const transportModeMapping: Record<
 };
 
 // Utilisation de la mapping
-export const getTravelMode = (
+export const GetTravelMode = (
   mode: TransportMode,
 ): google.maps.routing.v2.RouteTravelMode => transportModeMapping[mode];
+
+// Mapping entre TransportMode et une chaîne
+const transportModeToString: Record<TransportMode, string> = {
+  [TransportMode.Walk]: "Walk",
+  [TransportMode.Bike]: "Bike",
+  [TransportMode.Car]: "Car",
+  [TransportMode.Boat]: "Boat",
+  [TransportMode.Plane]: "Plane",
+};
+
+// Fonction pour obtenir la chaîne correspondante
+export const GetTransportModeString = (mode: TransportMode): string => {
+  return transportModeToString[mode] || "Unknown mode"; // Valeur par défaut si le mode n'est pas trouvé
+};
+
+// Mapping entre une chaîne et TransportMode
+const stringToTransportMode: Record<string, TransportMode> = {
+  Walk: TransportMode.Walk,
+  Bike: TransportMode.Bike,
+  Car: TransportMode.Car,
+  Boat: TransportMode.Boat,
+  Plane: TransportMode.Plane,
+};
+
+// Fonction pour obtenir le TransportMode correspondant
+export const GetTransportModeFromString = (
+  modeString: string,
+): TransportMode => {
+  return stringToTransportMode[modeString] || TransportMode.Walk; // Valeur par défaut si la chaîne n'est pas trouvée
+};

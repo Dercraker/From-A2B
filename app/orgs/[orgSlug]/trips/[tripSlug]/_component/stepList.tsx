@@ -71,6 +71,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
   const { isPending: reSortStepIsPending, mutateAsync: reSortStepAsync } =
     useMutation({
       mutationFn: async ({ steps }: ReSortStepsSchema) => {
+        //TODO: Update, il faut resort unniquement les step concerner, sauf si ce n'est plus possible alor, resort all
         const result = await ReSortStepsAction({ steps });
         if (!isActionSuccessful(result)) {
           return toast.error(

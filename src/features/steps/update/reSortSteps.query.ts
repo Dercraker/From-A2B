@@ -1,5 +1,5 @@
 import { prisma } from "@lib/prisma";
-import { GetStepRank } from "@utils/GetStepRank";
+import { GetStepRank, RankStep } from "@utils/GetStepRank";
 import type { StepDto } from "../dto/stepDto.schema";
 
 type ReSortStepsQueryType = {
@@ -22,14 +22,12 @@ const updateStepRank = async (
 
   return newRank;
 };
-
+//TODO Ne pas refaire #reorderAllStep.query.ts
 export const ReSortStepsQuery = async ({ steps }: ReSortStepsQueryType) => {
   if (!steps.length) return;
 
-  let previousRank: number | undefined = undefined;
-
-  const updatePromises = steps.map(async (step) => {
-    previousRank = await updateStepRank(step, previousRank);
+  const updatePromises = steps.map(async (step, idx) => {
+    await updateStepRank(step, RankStep * (idx + 1));
   });
 
   await Promise.all(updatePromises);

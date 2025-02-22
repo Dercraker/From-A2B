@@ -8,21 +8,20 @@ export const GetStepBeforeQuery = async ({
   const step = await prisma.step.findUnique({
     where,
   });
-
   if (!step) return null;
 
   const previousStep = await prisma.step.findFirst({
     where: {
       rank: { lt: step.rank },
+      tripId: step.tripId,
     },
     orderBy: { rank: "desc" },
   });
-
   return previousStep
     ? StepDtoSchema.parse({
         ...previousStep,
-        latitude: Number(step.latitude),
-        longitude: Number(step.longitude),
+        latitude: Number(previousStep.latitude),
+        longitude: Number(previousStep.longitude),
       })
     : null;
 };

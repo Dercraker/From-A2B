@@ -1,6 +1,7 @@
 import { EmailFormSection } from "@components/email/EmailFormSection";
 import { Footer } from "@components/layout/Footer";
 import { Pricing } from "@components/plans/PricingSection";
+import Link from "next/link";
 import { BentoGridSection } from "./_components/BentoSection";
 import { CTAImageSection } from "./_components/cta/CTAImageSection";
 import { CtaSection } from "./_components/cta/CTASection";
@@ -18,7 +19,7 @@ export default function HomePage() {
   return (
     <div className="relative flex h-fit flex-col bg-background text-foreground">
       <div className="mt-16"></div>
-
+      <Link href={"toto"} />
       <LandingHeader />
 
       <Hero />
