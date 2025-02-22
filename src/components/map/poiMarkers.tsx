@@ -3,7 +3,7 @@
 import type { Pois } from "@feat/map/poi.type";
 import type { Marker } from "@googlemaps/markerclusterer";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import { IconMapPinFilled } from "@tabler/icons-react";
+import { Typography } from "@ui/typography";
 import { AdvancedMarker, useMap } from "@vis.gl/react-google-maps";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { InlineTooltip } from "../ui/tooltip";
@@ -53,7 +53,7 @@ export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
 
   return (
     <>
-      {pois.map((poi) => (
+      {pois.map((poi, idx) => (
         <AdvancedMarker
           key={poi.key}
           position={poi.location}
@@ -62,7 +62,9 @@ export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
           onClick={handleClick}
         >
           <InlineTooltip title={poi.key}>
-            <IconMapPinFilled className="size-10 cursor-pointer text-primary" />
+            <div className="flex size-6 items-center justify-center rounded-full bg-primary ring-2 ring-accent/70">
+              <Typography variant="large">{idx + 1}</Typography>
+            </div>
           </InlineTooltip>
         </AdvancedMarker>
       ))}

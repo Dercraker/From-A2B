@@ -32,8 +32,7 @@ export const RoadsPath = ({ tripSlug }: RoadsPathProps) => {
     <Polyline
       key={road.id}
       strokeWeight={4}
-      strokeColor="#ba5271"
-      // strokeColor="#0aa374"
+      strokeColor="#0aa374"
       encodedPath={road.polyline}
       geodesic
     />
