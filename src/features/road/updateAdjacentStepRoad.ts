@@ -61,7 +61,7 @@ export const updateAdjacentStepRoad = async ({
     });
   }
 
-  if (!stepBefore || !stepAfter) throw new Error("Les deux étape n'existe pas");
+  if (!stepBefore || !stepAfter) return;
 
   const road = await ComputeRoutes({
     origin: {

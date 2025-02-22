@@ -25,7 +25,7 @@ type addRoadBetweenStepsRoadProps = {
  *
  * La fonction mets a jour les routes R1 et R2 selon ce schema `A -> R1 -> B -> R2 -> C`
  */
-export const AddRoadToStep = async ({
+export const AddRoadsToStep = async ({
   stepId,
 }: addRoadBetweenStepsRoadProps) => {
   const stepBefore = await GetStepBeforeQuery({ id: stepId });
@@ -66,7 +66,12 @@ export const AddRoadToStep = async ({
         ...road,
         step: {
           connect: {
-            id: stepId,
+            id: currentStep.id,
+          },
+        },
+        trip: {
+          connect: {
+            id: currentStep.tripId,
           },
         },
       },
@@ -104,8 +109,7 @@ export const AddRoadToStep = async ({
     });
   }
 
-  if (!stepBefore || !stepAfter)
-    throw new Error("Step n'as aucune étapes adjacentes");
+  if (!stepBefore || !stepAfter) return;
 
   const prevRoad = await ComputeRoutes({
     origin: {
@@ -159,10 +163,15 @@ export const AddRoadToStep = async ({
           id: currentStep.id,
         },
       },
+      trip: {
+        connect: {
+          id: currentStep.tripId,
+        },
+      },
     },
   });
   await UpdateRoadToStepByIdQuery({
-    stepId: stepAfter.id,
+    stepId: stepAfter.id as string,
     data: {
       ...nextRoad,
     },
