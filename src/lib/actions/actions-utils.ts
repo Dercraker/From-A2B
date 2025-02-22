@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { logger } from "@lib/logger";
 import type { SafeActionResult } from "next-safe-action";
 import type { z } from "zod";
 
@@ -17,14 +18,23 @@ export const isActionSuccessful = <T extends z.ZodType, Data>(
   validationError: undefined;
 } => {
   if (!action) {
+    logger.error({ message: "🐞~ IsActionSuccessful ~ No action returned" });
     return false;
   }
 
   if (action.serverError) {
+    logger.error({
+      message: "🐞~ IsActionSuccessful ~ Server error throw",
+      serverError: action.serverError,
+    });
     return false;
   }
 
   if (action.validationErrors) {
+    logger.error({
+      message: "🐞~ IsActionSuccessful ~ Action schema validation failed",
+      validationErrors: action.validationErrors,
+    });
     return false;
   }
 
