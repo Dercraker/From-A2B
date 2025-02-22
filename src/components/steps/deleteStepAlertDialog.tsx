@@ -32,19 +32,19 @@ export const DeleteStepAlertDialog = ({
       const result = await DeleteStepAction({
         stepId,
       });
-      if (!isActionSuccessful(result)) {
-        toast.error(result?.serverError);
-      }
-    },
-    onSuccess: async () => {
+      if (!isActionSuccessful(result))
+        return toast.error("An error occurred when deleting the step", {
+          description: "Please try again later or contact support",
+        });
+
       toast.success(`Step "${name}" deleted successfully`);
+      if (onDeleted) onDeleted();
       await queryClient.invalidateQueries({
         queryKey: TRIP_KEY_Factory.roads(tripSlug),
       });
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
-      if (onDeleted) onDeleted();
     },
   });
 

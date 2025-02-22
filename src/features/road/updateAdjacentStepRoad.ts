@@ -3,6 +3,7 @@ import { GetStepAfterQuery } from "@feat/steps/get/getStepAfter.query";
 import { GetStepBeforeQuery } from "@feat/steps/get/getStepBefore.query";
 import { ComputeRoutes } from "@lib/api/routes/computeRoutes";
 import { GetTransportModeFromString } from "@utils/getTravelMode";
+import { DeleteRoadToStepQuery } from "./deleteRoadToStep.query";
 import { UpdateRoadToStepByIdQuery } from "./updateRoadToStepById.query";
 
 type updateAdjacentStepRoadProps = { centerStepId: string };
@@ -31,32 +32,9 @@ export const updateAdjacentStepRoad = async ({
 
   if (stepBefore && !stepAfter) return;
   else if (!stepBefore && stepAfter) {
-    const road = await ComputeRoutes({
-      origin: {
-        placeId: currentStep.placeId,
-        location: {
-          latLng: {
-            latitude: currentStep.latitude,
-            longitude: currentStep.longitude,
-          },
-        },
-      },
-      destination: {
-        placeId: stepAfter.placeId,
-        location: {
-          latLng: {
-            latitude: stepAfter.latitude,
-            longitude: stepAfter.longitude,
-          },
-        },
-      },
-      transportMode: GetTransportModeFromString(stepAfter.transportMode),
-    });
-
-    await UpdateRoadToStepByIdQuery({
-      stepId: currentStep.id,
-      data: {
-        ...road,
+    await DeleteRoadToStepQuery({
+      where: {
+        stepId: stepAfter.id,
       },
     });
   }

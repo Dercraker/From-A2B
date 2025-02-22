@@ -1,14 +1,15 @@
 {
   "name": "from-a2b",
-  "version": "0.62.10",
+  "version": "0.62.11",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
     "patch": "pnpm version patch --force --no-git-tag-version",
     "minor": "pnpm version minor --force --no-git-tag-version",
     "prerelease": "pnpm version prerelease --force --no-git-tag-version",
     "major": "pnpm version major --force --no-git-tag-version",
     "build": "next build",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
@@ -19,7 +20,6 @@
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prisma-studio": "prisma studio",
     "postinstall": "prisma generate",
-    "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
     "knip": "knip",
     "test": "vitest --ui"
   },
