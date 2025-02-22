@@ -12,7 +12,7 @@ const DeleteStepSchema = z.object({
 export const DeleteStepAction = orgAction
   .schema(DeleteStepSchema)
   .action(async ({ parsedInput: { stepId } }) => {
-    await updateAdjacentStepRoad({ centerStepId: stepId });
+    await updateAdjacentStepRoad({ stepId: stepId });
 
     await DeleteStepQuery({
       where: {

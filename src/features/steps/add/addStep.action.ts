@@ -36,14 +36,11 @@ export const AddStepAction = orgAction
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
         );
-      console.log("🚀 ~ stepBefore:", stepBefore);
-      console.log("🚀 ~ stepAfter:", stepAfter);
       const otherStep = stepBefore
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
           ? await GetStepBeforeQuery({ id: stepAfter.id })
           : null;
-      console.log("🚀 ~ otherStep:", otherStep);
 
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
