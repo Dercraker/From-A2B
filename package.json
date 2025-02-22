@@ -1,9 +1,9 @@
 {
   "name": "from-a2b",
-  "version": "0.62.8",
+  "version": "0.62.9",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "patch": "pnpm version patch --force --no-git-tag-version",
     "minor": "pnpm version minor --force --no-git-tag-version",
     "prerelease": "pnpm version prerelease --force --no-git-tag-version",
@@ -138,6 +138,7 @@
     "@typescript-eslint/parser": "^8.15.0",
     "@vitest/ui": "^3.0.5",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-react": "^7.37.2",
