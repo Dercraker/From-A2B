@@ -62,7 +62,7 @@ export const PoiMarkers = ({ pois }: PoiMarkersProps) => {
           onClick={handleClick}
         >
           <InlineTooltip title={poi.key}>
-            <div className="flex size-6 items-center justify-center rounded-full bg-primary ring-2 ring-secondary">
+            <div className="flex size-6 items-center justify-center rounded-full bg-primary ring-2 ring-accent/70">
               <Typography variant="large">{idx + 1}</Typography>
             </div>
           </InlineTooltip>
