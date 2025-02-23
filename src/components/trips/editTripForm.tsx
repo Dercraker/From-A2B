@@ -1,5 +1,6 @@
 "use client";
 
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { Input } from "@components/ui/input";
 import { Textarea } from "@components/ui/textarea";
 import { Typography } from "@components/ui/typography";
@@ -12,6 +13,7 @@ import { EditTripSchema } from "@feat/trip/update/editTrip.schema";
 import { UpdateTripAction } from "@feat/trip/update/updateTrip.action";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { cn } from "@lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -85,6 +87,8 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
       toast.success("Trip updated successfully");
       editTripForm.reset(result?.data);
       router.refresh();
+
+      phCapture("TripUpdate");
     },
   });
 
@@ -123,24 +127,34 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
               )}
             />
           </CardTitle>
-          <CardDescription>
-            <FormField
-              control={editTripForm.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      value={field.value ?? ""}
-                      placeholder="Any description"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <CardDescription className="pt-4">
+            <FormOptionalSection
+              defaultOpen={Boolean(editTripForm.getValues("description"))}
+              label="Description"
+              onToggle={(open) => {
+                if (!open)
+                  editTripForm.setValue("description", null, {
+                    shouldDirty: true,
+                  });
+              }}
+            >
+              <FormField
+                control={editTripForm.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        value={field.value ?? ""}
+                        placeholder="Any description"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
           </CardDescription>
         </CardHeader>
         <CardContent>

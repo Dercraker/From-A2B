@@ -21,6 +21,7 @@ import {
 import { Input } from "@components/ui/input";
 import { AddTripAction } from "@feat/trip/add/addTrip.action";
 import { AddTripSchema } from "@feat/trip/add/addTrip.schema";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -54,6 +55,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       }
 
       toast.success("Your trip as been created.");
+      phCapture("TripCreate");
       form.reset();
       setOpen(false);
 

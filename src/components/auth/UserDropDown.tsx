@@ -15,15 +15,18 @@ import { useMutation } from "@tanstack/react-query";
 import { LayoutDashboard, LogOut, Settings } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import posthog from "posthog-js";
 import type { PropsWithChildren } from "react";
 
 export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
-    mutationFn: async () =>
-      signOut({
+    mutationFn: async () => {
+      await signOut({
         redirect: true,
         callbackUrl: "/",
-      }),
+      });
+      posthog.reset();
+    },
   });
   const session = useSession();
 

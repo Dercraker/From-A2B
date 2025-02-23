@@ -1,6 +1,7 @@
 "use client";
 
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { STEP_KEY_FACTORY } from "./stepKey.factory";
@@ -27,6 +28,8 @@ export const useResortSteps = ({ tripSlug }: useResortStepsProps) => {
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
+
+      phCapture("ReOrderStep");
       return toast.success("Steps reordered successfully");
     },
   });

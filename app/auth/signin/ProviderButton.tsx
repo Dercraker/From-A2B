@@ -63,6 +63,7 @@ const ProviderData: Record<string, { icon: ReactNode; name: string }> = {
 
 type ProviderButtonProps = {
   providerId: string;
+  onClick: () => void;
 };
 
 export const ProviderButton = (props: ProviderButtonProps) => {
@@ -88,6 +89,7 @@ export const ProviderButton = (props: ProviderButtonProps) => {
       size="lg"
       onClick={() => {
         githubSignInMutation.mutate();
+        props.onClick();
       }}
     >
       {githubSignInMutation.isPending ? <Loader size={16} /> : data.icon}

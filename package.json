@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.62.17",
+  "version": "0.62.19",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -94,7 +94,7 @@
     "next-zod-route": "^0.1.2",
     "nprogress": "^0.2.0",
     "nuqs": "^2.2.2",
-    "posthog-js": "^1.177.0",
+    "posthog-js": "^1.223.3",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-69d4b800-20241021",

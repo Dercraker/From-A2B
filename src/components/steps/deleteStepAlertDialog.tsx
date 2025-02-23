@@ -5,6 +5,7 @@ import { DeleteStepAction } from "@feat/steps/delete/deleteStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -45,6 +46,8 @@ export const DeleteStepAlertDialog = ({
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
+
+      phCapture("RemoveStep");
     },
   });
 

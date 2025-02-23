@@ -33,6 +33,7 @@ import {
 } from "@components/ui/select";
 import { generateAIDateAction } from "@feat/dateTimePicker/generateAiDate.action";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { DayPicker } from "react-day-picker";
@@ -736,6 +737,8 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       onChange?.(newDateFull);
       setMonth(newDateFull);
       setInputValue(formatValue(newDateFull));
+
+      phCapture("DateUseCalendar");
     };
 
     const timeZoneStr = `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC
@@ -784,6 +787,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
         onChange?.(date);
 
         setInputValue(formatValue(date));
+        phCapture("DateUseAiPrompt");
       },
     });
 
