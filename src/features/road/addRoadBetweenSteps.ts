@@ -103,8 +103,21 @@ export const AddRoadsToStep = async ({
 
     await UpdateRoadToStepByIdQuery({
       stepId: stepAfter.id,
-      data: {
+      update: {
         ...road,
+      },
+      create: {
+        ...road,
+        step: {
+          connect: {
+            id: stepAfter.id,
+          },
+        },
+        trip: {
+          connect: {
+            id: stepAfter.tripId,
+          },
+        },
       },
     });
   }
@@ -172,8 +185,21 @@ export const AddRoadsToStep = async ({
   });
   await UpdateRoadToStepByIdQuery({
     stepId: stepAfter.id as string,
-    data: {
+    update: {
       ...nextRoad,
+    },
+    create: {
+      ...nextRoad,
+      step: {
+        connect: {
+          id: stepAfter.id,
+        },
+      },
+      trip: {
+        connect: {
+          id: stepAfter.tripId,
+        },
+      },
     },
   });
 };

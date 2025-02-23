@@ -3,18 +3,21 @@ import type { Prisma } from "@prisma/client";
 
 type UpdateRoadToStepByIdQueryProps = {
   stepId: string;
-  data: Prisma.RoadUpdateInput;
+  create: Prisma.RoadCreateInput;
+  update: Prisma.RoadUpdateInput;
 };
 
 export const UpdateRoadToStepByIdQuery = async ({
-  data,
   stepId,
+  create,
+  update,
 }: UpdateRoadToStepByIdQueryProps) => {
-  const road = await prisma.road.update({
+  const road = await prisma.road.upsert({
     where: {
       stepId,
     },
-    data,
+    update,
+    create,
   });
 
   return road;

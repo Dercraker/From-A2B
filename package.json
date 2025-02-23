@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.62.13",
+  "version": "0.62.14",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -16,6 +16,7 @@
     "ts": "tsc --noEmit",
     "email": "email dev",
     "stripe-login": "./stripe login",
+    "studio": "prisma studio",
     "stripe-webhooks": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prisma-studio": "prisma studio",
