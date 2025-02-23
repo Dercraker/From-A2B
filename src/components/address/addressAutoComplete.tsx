@@ -73,7 +73,7 @@ export default function AddressAutoComplete({
       {selectedPlaceId !== "" || address.formattedAddress ? (
         <div className="flex items-center gap-2">
           {address.displayName || address.formattedAddress ? (
-            <div className="flex flex-col">
+            <div className="flex w-full flex-col">
               <Input
                 value={
                   address.displayName
