@@ -45,7 +45,7 @@ import { Typography } from "@ui/typography";
 import { isActionSuccessful } from "lib/actions/actions-utils";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export type AddStepDialogProps = PropsWithChildren<{
@@ -62,6 +62,7 @@ export const AddStepDialog = ({
 }: AddStepDialogProps) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const form = useZodForm({
     schema: AddStepSchema,
@@ -69,10 +70,22 @@ export const AddStepDialog = ({
       transportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
+      latitude: undefined,
+      longitude: undefined,
+      placeId: undefined,
+
       stepAfter: afterStep,
       stepBefore: beforeStep,
     },
   });
+
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      setIsFormValid(form.formState.isValid);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   const queryClient = useQueryClient();
 
@@ -108,6 +121,7 @@ export const AddStepDialog = ({
       onOpenChange={(v) => {
         setOpen(v);
         if (!v && onClose) onClose();
+        if (!v) form.reset();
       }}
     >
       <DialogTrigger asChild>
@@ -128,8 +142,29 @@ export const AddStepDialog = ({
           onReset={() => {
             setOpen(false);
             if (onClose) onClose();
+            form.reset();
           }}
         >
+          <FormField
+            control={form.control}
+            name="placeId"
+            render={() => (
+              <FormItem>
+                <FormLabel>Place</FormLabel>
+                <AutocompleteComponent
+                  onChange={(address) => {
+                    if (address.lat !== 0)
+                      form.setValue("latitude", address.lat);
+                    if (address.lng !== 0)
+                      form.setValue("longitude", address.lng);
+                    form.setValue("placeId", address.placeId ?? undefined);
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="name"
@@ -149,6 +184,9 @@ export const AddStepDialog = ({
           <FormOptionalSection
             defaultOpen={Boolean(form.getValues("description"))}
             label="Description"
+            onToggle={(open) => {
+              if (!open) form.setValue("description", undefined);
+            }}
           >
             <FormField
               control={form.control}
@@ -224,24 +262,6 @@ export const AddStepDialog = ({
 
           <FormField
             control={form.control}
-            name="latitude"
-            render={() => (
-              <FormItem>
-                <FormLabel>Place</FormLabel>
-                <AutocompleteComponent
-                  onChange={(address) => {
-                    form.setValue("latitude", address.lat);
-                    form.setValue("longitude", address.lng);
-                    form.setValue("placeId", address.placeId ?? undefined);
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="transportMode"
             render={({ field }) => (
               <FormItem>
@@ -302,7 +322,7 @@ export const AddStepDialog = ({
               className="flex-1"
               onClick={async () => addStepAsync(form.getValues())}
               loading={isPending}
-              disabled={!form.formState.isValid}
+              disabled={!isFormValid}
             >
               Add new step
             </LoadingButton>

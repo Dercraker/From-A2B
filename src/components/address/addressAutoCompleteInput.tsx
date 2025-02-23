@@ -23,7 +23,6 @@ import { Typography } from "../ui/typography";
 type AddressAutoCompleteInputProps = {
   selectedPlaceId: string;
   setSelectedPlaceId: (placeId: string) => void;
-  setIsOpenDialog: (isOpen: boolean) => void;
   showInlineError?: boolean;
   searchInput: string;
   setSearchInput: (searchInput: string) => void;
@@ -34,7 +33,6 @@ type AddressAutoCompleteInputProps = {
 export const AddressAutoCompleteInput = ({
   searchInput,
   selectedPlaceId,
-  setIsOpenDialog,
   setSearchInput,
   setSelectedPlaceId,
   placeholder,
@@ -118,7 +116,6 @@ export const AddressAutoCompleteInput = ({
                           value={formattedAddress}
                           onSelect={() => {
                             setSelectedPlaceId(name);
-                            setIsOpenDialog(true);
                           }}
                           className="flex h-max cursor-pointer select-text flex-col items-start gap-0.5 rounded-md p-2 px-3 hover:bg-accent hover:text-accent-foreground aria-selected:bg-accent aria-selected:text-accent-foreground"
                           key={`${name}`}
