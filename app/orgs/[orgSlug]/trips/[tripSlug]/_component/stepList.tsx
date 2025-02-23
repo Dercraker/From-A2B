@@ -22,6 +22,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { LINKS } from "@feat/navigation/Links";
+import { useUpdateAdjacentStepRoad } from "@feat/road/updateAdjacentStepRoad.hook";
 import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import type { ReSortStepsSchema } from "@feat/steps/update/reSortStep.schema";
@@ -94,6 +95,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
     }),
   );
 
+  const { mutateAsync: updateRoads } = useUpdateAdjacentStepRoad({ tripSlug });
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -105,6 +107,8 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
 
       SetSteps(newSteps);
       await reSortStepAsync({ steps: newSteps });
+      await updateRoads({ stepId: steps[oldIndex].id });
+      await updateRoads({ stepId: steps[newIndex].id });
     }
   };
 
