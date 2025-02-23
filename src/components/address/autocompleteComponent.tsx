@@ -82,7 +82,7 @@ export const AutocompleteComponent = ({
       setAddress={setAddress}
       searchInput={searchInput}
       setSearchInput={setSearchInput}
-      dialogTitle="Enter place"
+      dialogTitle="Place details"
       isLoading={placeIdLoading || gpsLoading}
     />
   );

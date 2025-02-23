@@ -69,6 +69,10 @@ export const AddStepDialog = ({
       transportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
+      latitude: undefined,
+      longitude: undefined,
+      placeId: undefined,
+
       stepAfter: afterStep,
       stepBefore: beforeStep,
     },
@@ -108,6 +112,7 @@ export const AddStepDialog = ({
       onOpenChange={(v) => {
         setOpen(v);
         if (!v && onClose) onClose();
+        if (!v) form.reset();
       }}
     >
       <DialogTrigger asChild>
@@ -128,6 +133,7 @@ export const AddStepDialog = ({
           onReset={() => {
             setOpen(false);
             if (onClose) onClose();
+            form.reset();
           }}
         >
           <FormField
@@ -230,8 +236,10 @@ export const AddStepDialog = ({
                 <FormLabel>Place</FormLabel>
                 <AutocompleteComponent
                   onChange={(address) => {
-                    form.setValue("latitude", address.lat);
-                    form.setValue("longitude", address.lng);
+                    if (address.lat !== 0)
+                      form.setValue("latitude", address.lat);
+                    if (address.lng !== 0)
+                      form.setValue("longitude", address.lng);
                     form.setValue("placeId", address.placeId ?? undefined);
                   }}
                 />

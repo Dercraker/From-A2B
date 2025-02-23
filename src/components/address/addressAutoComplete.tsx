@@ -5,7 +5,9 @@ import { AddressByPlaceIdAction } from "@feat/address/addressByPlaceId.action";
 import { ADDRESS_KEY_FACTORY } from "@feat/address/addressKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
-import { Delete, Pencil } from "lucide-react";
+import { Skeleton } from "@ui/skeleton";
+import { InlineTooltip } from "@ui/tooltip";
+import { Delete, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -70,14 +72,20 @@ export default function AddressAutoComplete({
     <>
       {selectedPlaceId !== "" || address.formattedAddress ? (
         <div className="flex items-center gap-2">
-          <Input
-            value={
-              address.displayName
-                ? `${address.displayName}, ${address.formattedAddress}`
-                : address.formattedAddress
-            }
-            readOnly
-          />
+          {address.displayName || address.formattedAddress ? (
+            <div className="flex flex-col">
+              <Input
+                value={
+                  address.displayName
+                    ? `${address.displayName}, ${address.formattedAddress}`
+                    : address.formattedAddress
+                }
+                readOnly
+              />
+            </div>
+          ) : (
+            <Skeleton className="h-8 w-56" />
+          )}
 
           <AddressDialog
             isLoading={isPending ?? isLoading}
@@ -94,7 +102,9 @@ export default function AddressAutoComplete({
               variant="outline"
               className="shrink-0"
             >
-              <Pencil className="size-4" />
+              <InlineTooltip title="Address details">
+                <Search className="size-4" />
+              </InlineTooltip>
             </Button>
           </AddressDialog>
           <Button
@@ -128,7 +138,6 @@ export default function AddressAutoComplete({
           setSearchInput={setSearchInput}
           selectedPlaceId={selectedPlaceId}
           setSelectedPlaceId={setSelectedPlaceId}
-          setIsOpenDialog={setIsOpen}
           showInlineError={showInlineError}
           placeholder={placeholder}
           isLoading={isLoading}
