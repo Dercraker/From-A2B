@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { logger } from "@lib/logger";
+import { phErrorCapture } from "@lib/postHog/eventCapture";
 import type { SafeActionResult } from "next-safe-action";
 import type { z } from "zod";
 
@@ -19,6 +20,9 @@ export const isActionSuccessful = <T extends z.ZodType, Data>(
 } => {
   if (!action) {
     logger.error({ message: "🐞~ IsActionSuccessful ~ No action returned" });
+    phErrorCapture("ServerActionFailed", {
+      message: "🐞~ IsActionSuccessful ~ No action returned",
+    });
     return false;
   }
 
@@ -27,11 +31,19 @@ export const isActionSuccessful = <T extends z.ZodType, Data>(
       message: "🐞~ IsActionSuccessful ~ Server error throw",
       serverError: action.serverError,
     });
+    phErrorCapture("ServerActionError", {
+      message: "🐞~ IsActionSuccessful ~ Server error throw",
+      serverError: action.serverError,
+    });
     return false;
   }
 
   if (action.validationErrors) {
     logger.error({
+      message: "🐞~ IsActionSuccessful ~ Action schema validation failed",
+      validationErrors: action.validationErrors,
+    });
+    phErrorCapture("ServerActionSchemaValidationFailed", {
       message: "🐞~ IsActionSuccessful ~ Action schema validation failed",
       validationErrors: action.validationErrors,
     });

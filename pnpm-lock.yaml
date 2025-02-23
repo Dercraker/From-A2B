@@ -219,8 +219,8 @@ importers:
         specifier: ^2.2.2
         version: 2.3.1(next@15.1.3(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021)(sass@1.83.4))(react@19.0.0-rc-69d4b800-20241021)
       posthog-js:
-        specifier: ^1.177.0
-        version: 1.177.0
+        specifier: ^1.223.3
+        version: 1.223.3(@rrweb/types@2.0.0-alpha.17)
       react:
         specifier: 19.0.0-rc-69d4b800-20241021
         version: 19.0.0-rc-69d4b800-20241021
@@ -4854,6 +4854,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  "@rrweb/types@2.0.0-alpha.17":
+    resolution:
+      {
+        integrity: sha512-AfDTVUuCyCaIG0lTSqYtrZqJX39ZEYzs4fYKnexhQ+id+kbZIpIJtaut5cto6dWZbB3SEe4fW0o90Po3LvTmfg==,
+      }
+
   "@rtsao/scc@1.1.0":
     resolution:
       {
@@ -6778,10 +6784,10 @@ packages:
         integrity: sha512-0XEDpr5y5mijvw8Lbc6E5AkjrHfp7eEoPlu36SWeAbcL8fn1G1ANe8DBlo2XoNN89oVpxWwOjYIPVzR4ZvsKCQ==,
       }
 
-  core-js@3.38.1:
+  core-js@3.40.0:
     resolution:
       {
-        integrity: sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==,
+        integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==,
       }
 
   core-util-is@1.0.3:
@@ -11355,11 +11361,20 @@ packages:
       }
     engines: { node: ^10 || ^12 || >=14 }
 
-  posthog-js@1.177.0:
+  postcss@8.5.3:
     resolution:
       {
-        integrity: sha512-0Qt3qTkyfsFW89bveqEzYhhX8YRNFAES9OqhzuxbvbHId/PSyxx/Pzgmgp+N5k45lon3ibwYRAbTlQ4yQacODQ==,
+        integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==,
       }
+    engines: { node: ^10 || ^12 || >=14 }
+
+  posthog-js@1.223.3:
+    resolution:
+      {
+        integrity: sha512-ZQTc17M21IzkQmECJa2Xjont4tZrvIn252uGT3sTfmahTqZoW4j+kBj4eOJt9SNR6hOheFNkg7MSiI/rA6FaDA==,
+      }
+    peerDependencies:
+      "@rrweb/types": 2.0.0-alpha.17
 
   potpack@1.0.2:
     resolution:
@@ -11393,6 +11408,12 @@ packages:
     resolution:
       {
         integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==,
+      }
+
+  preact@10.26.2:
+    resolution:
+      {
+        integrity: sha512-0gNmv4qpS9HaN3+40CLBAnKe0ZfyE4ZWo5xKlC1rVrr0ckkEvJvAQqKaHANdFKsGstoxrY4AItZ7kZSGVoVjgg==,
       }
 
   prelude-ls@1.2.1:
@@ -12147,6 +12168,12 @@ packages:
       }
     engines: { node: ">=18.0.0", npm: ">=8.0.0" }
     hasBin: true
+
+  rrweb-snapshot@2.0.0-alpha.18:
+    resolution:
+      {
+        integrity: sha512-hBHZL/NfgQX6wO1D9mpwqFu1NJPpim+moIcKhFEjVTZVRUfCln+LOugRc4teVTCISYHN8Cw5e2iNTWCSm+SkoA==,
+      }
 
   rtl-css-js@1.16.1:
     resolution:
@@ -17278,6 +17305,10 @@ snapshots:
   "@rollup/rollup-win32-x64-msvc@4.34.7":
     optional: true
 
+  "@rrweb/types@2.0.0-alpha.17":
+    dependencies:
+      rrweb-snapshot: 2.0.0-alpha.18
+
   "@rtsao/scc@1.1.0": {}
 
   "@rushstack/eslint-patch@1.10.4": {}
@@ -18481,7 +18512,7 @@ snapshots:
     dependencies:
       browserslist: 4.24.4
 
-  core-js@3.38.1: {}
+  core-js@3.40.0: {}
 
   core-util-is@1.0.3: {}
 
@@ -21823,11 +21854,18 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  posthog-js@1.177.0:
+  postcss@8.5.3:
     dependencies:
-      core-js: 3.38.1
+      nanoid: 3.3.8
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  posthog-js@1.223.3(@rrweb/types@2.0.0-alpha.17):
+    dependencies:
+      "@rrweb/types": 2.0.0-alpha.17
+      core-js: 3.40.0
       fflate: 0.4.8
-      preact: 10.24.3
+      preact: 10.26.2
       web-vitals: 4.2.4
 
   potpack@1.0.2: {}
@@ -21844,6 +21882,8 @@ snapshots:
   preact@10.11.3: {}
 
   preact@10.24.3: {}
+
+  preact@10.26.2: {}
 
   prelude-ls@1.2.1: {}
 
@@ -22512,6 +22552,10 @@ snapshots:
       "@rollup/rollup-win32-ia32-msvc": 4.34.7
       "@rollup/rollup-win32-x64-msvc": 4.34.7
       fsevents: 2.3.3
+
+  rrweb-snapshot@2.0.0-alpha.18:
+    dependencies:
+      postcss: 8.5.3
 
   rtl-css-js@1.16.1:
     dependencies:

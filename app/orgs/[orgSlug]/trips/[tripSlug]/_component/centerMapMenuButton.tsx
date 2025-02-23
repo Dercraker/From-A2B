@@ -3,6 +3,7 @@
 import { Button } from "@components/ui/button";
 import { InlineTooltip } from "@components/ui/tooltip";
 import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMap } from "@vis.gl/react-google-maps";
 import { LocateFixed } from "lucide-react";
 
@@ -24,6 +25,7 @@ export const CenterMapMenuButton = ({
     });
 
     onClick();
+    phCapture("UseCenterMap");
   };
 
   if (!map)

@@ -8,6 +8,7 @@ import {
   useZodForm,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { getServerUrl } from "@lib/server-url";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
@@ -30,6 +31,8 @@ export const MagicLinkForm = () => {
         redirect: true,
         email,
       });
+
+      phCapture("SigninWithMagicLink", { email });
     },
   });
 

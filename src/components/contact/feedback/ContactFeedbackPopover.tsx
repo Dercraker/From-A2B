@@ -18,6 +18,7 @@ import {
 } from "@components/ui/popover";
 import { Textarea } from "@components/ui/textarea";
 import { InlineTooltip } from "@components/ui/tooltip";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { cn } from "@lib/utils";
 import { Angry, Frown, Meh, SmilePlus } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -56,7 +57,7 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
 
   return (
     <Popover open={open} onOpenChange={(v) => setOpen(v)}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild onClick={() => phCapture("ClickFeedBack")}>
         {props.children ? (
           props.children
         ) : (
@@ -115,7 +116,11 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" variant="filled">
+            <Button
+              type="submit"
+              variant="filled"
+              onClick={() => phCapture("SendFeedBack")}
+            >
               Send
             </Button>
           </div>

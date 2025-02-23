@@ -19,6 +19,7 @@ import { AddStepSchema } from "@feat/steps/add/addStep.schema";
 import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/button";
@@ -103,6 +104,7 @@ export const AddStepDialog = ({
 
       if (onClose) onClose();
 
+      phCapture("AddStep");
       return result.data;
     },
     onSuccess: async () => {
@@ -158,6 +160,8 @@ export const AddStepDialog = ({
                     if (address.lng !== 0)
                       form.setValue("longitude", address.lng);
                     form.setValue("placeId", address.placeId ?? undefined);
+
+                    phCapture("UsePlaceInput");
                   }}
                 />
                 <FormMessage />

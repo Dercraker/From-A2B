@@ -21,6 +21,7 @@ import {
 import { Input } from "@components/ui/input";
 import { Textarea } from "@components/ui/textarea";
 import { env } from "@lib/env/client";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
@@ -58,7 +59,7 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild onClick={() => phCapture("ClickContactSupport")}>
         {props.children ? (
           props.children
         ) : (
@@ -125,7 +126,9 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Send</Button>
+          <Button type="submit" onClick={() => phCapture("SendContactSupport")}>
+            Send
+          </Button>
         </Form>
       </DialogContent>
     </Dialog>

@@ -28,6 +28,7 @@ import { EditStepAction } from "@feat/steps/update/editStep.action";
 import { EditStepSchema } from "@feat/steps/update/editStep.schema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -92,6 +93,8 @@ export const EditStepDialog = ({
       setOpen(false);
       onClose();
 
+      phCapture("EditStep");
+
       return result.data;
     },
     onSuccess: async () => {
@@ -150,6 +153,9 @@ export const EditStepDialog = ({
           <FormOptionalSection
             defaultOpen={Boolean(form.getValues("description"))}
             label="Description"
+            onToggle={(open) => {
+              if (!open) form.setValue("description", undefined);
+            }}
           >
             <FormField
               control={form.control}

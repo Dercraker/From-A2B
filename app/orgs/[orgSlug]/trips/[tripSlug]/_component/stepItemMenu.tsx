@@ -12,6 +12,7 @@ import {
 } from "@components/ui/popover";
 import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { useDisclosure } from "@hooks/useDisclosure";
+import { phCapture } from "@lib/postHog/eventCapture";
 import {
   ArrowDownFromLine,
   ArrowUpFromLine,
@@ -42,13 +43,21 @@ export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {
         <CenterMapMenuButton step={step} onClick={() => handler.close()} />
         <Divider />
         <AddStepDialog afterStep={step} onClose={() => handler.close()}>
-          <Button variant="filled" className="flex items-center gap-2">
+          <Button
+            variant="filled"
+            className="flex items-center gap-2"
+            onClick={() => phCapture("AddStepBefore")}
+          >
             <ArrowUpFromLine />
             Add step before
           </Button>
         </AddStepDialog>
         <AddStepDialog beforeStep={step} onClose={() => handler.close()}>
-          <Button variant="filled" className="flex items-center gap-2">
+          <Button
+            variant="filled"
+            className="flex items-center gap-2"
+            onClick={() => phCapture("AddStepAfter")}
+          >
             <ArrowDownFromLine />
             Add step after
           </Button>
