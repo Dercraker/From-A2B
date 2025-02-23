@@ -188,6 +188,12 @@ export const updateAdjacentMovedStepRoad = async ({
         },
       },
     });
+
+    await DeleteRoadToStepQuery({
+      where: {
+        stepId: currentStep.id,
+      },
+    });
   }
 
   if (!stepBefore || !stepAfter) return;

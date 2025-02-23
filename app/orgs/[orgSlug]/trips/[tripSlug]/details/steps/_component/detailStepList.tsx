@@ -24,12 +24,11 @@ import {
 import { LINKS } from "@feat/navigation/Links";
 import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
-import type { ReSortStepsSchema } from "@feat/steps/update/reSortStep.schema";
-import { ReSortStepsAction } from "@feat/steps/update/reSortSteps.action";
+import { useResortSteps } from "@feat/steps/useResortSteps.hook";
 import { useTripStore } from "@feat/trip/trip.store";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { cn } from "@lib/utils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
@@ -65,22 +64,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
   });
 
   const { isPending: reSortStepIsPending, mutateAsync: reSortStepAsync } =
-    useMutation({
-      mutationFn: async ({ steps }: ReSortStepsSchema) => {
-        const result = await ReSortStepsAction({ steps });
-        if (!isActionSuccessful(result)) {
-          return toast.error(
-            "Failed to reorder steps. Please try again later.",
-          );
-        }
-      },
-      onSuccess: async () => {
-        toast.success("Steps reordered successfully");
-        await queryClient.invalidateQueries({
-          queryKey: STEP_KEY_FACTORY.All(tripSlug),
-        });
-      },
-    });
+    useResortSteps({ tripSlug });
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -100,6 +84,8 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
 
       SetSteps(newSteps);
       await reSortStepAsync({ steps: newSteps });
+      await updateRoads({ stepId: steps[oldIndex].id });
+      await updateRoads({ stepId: steps[newIndex].id });
     }
   };
 
@@ -188,3 +174,6 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
     </div>
   );
 };
+function updateRoads(arg0: { stepId: string }) {
+  throw new Error("Function not implemented.");
+}

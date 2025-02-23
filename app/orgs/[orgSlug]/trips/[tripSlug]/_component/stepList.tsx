@@ -27,6 +27,7 @@ import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import type { ReSortStepsSchema } from "@feat/steps/update/reSortStep.schema";
 import { ReSortStepsAction } from "@feat/steps/update/reSortSteps.action";
+import { useResortSteps } from "@feat/steps/useResortSteps.hook";
 import { useTripStore } from "@feat/trip/trip.store";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -70,23 +71,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
   });
 
   const { isPending: reSortStepIsPending, mutateAsync: reSortStepAsync } =
-    useMutation({
-      mutationFn: async ({ steps }: ReSortStepsSchema) => {
-        //TODO: Update, il faut resort unniquement les step concerner, sauf si ce n'est plus possible alor, resort all
-        const result = await ReSortStepsAction({ steps });
-        if (!isActionSuccessful(result)) {
-          return toast.error(
-            "Failed to reorder steps. Please try again later.",
-          );
-        }
-      },
-      onSuccess: async () => {
-        toast.success("Steps reordered successfully");
-        await queryClient.invalidateQueries({
-          queryKey: STEP_KEY_FACTORY.All(tripSlug),
-        });
-      },
-    });
+    useResortSteps({ tripSlug });
 
   const sensors = useSensors(
     useSensor(PointerSensor),
