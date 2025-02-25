@@ -46,7 +46,7 @@ const edgeStoreRouter = es.router({
 });
 
 export const handler = createEdgeStoreNextHandler({
-  logLevel: env.NODE_ENV === "development" ? "debug" : "error",
+  // logLevel: env.NODE_ENV === "development" ? "debug" : "error",
   router: edgeStoreRouter,
   createContext,
 });
