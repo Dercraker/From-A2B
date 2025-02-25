@@ -24,7 +24,7 @@ export const SiteConfig = {
      * Or you can use Cloudflare R2 : https://mlv.sh/cloudflare-r2-tutorial
      * Or you can use AWS S3 : https://mlv.sh/aws-s3-tutorial
      */
-    enableImageUpload: false as boolean,
+    enableImageUpload: true as boolean,
     /**
      * If enable, you need to go to src/lib/auth/auth.ts and uncomment the line with the emoji 🔑
      * This feature will authorize users to login with a password.

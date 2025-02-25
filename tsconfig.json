@@ -28,7 +28,8 @@
       "@hooks/*": ["hooks/*"],
       "@utils/*": ["utils/*"],
       "@type/*": ["types/*"],
-      "@email/*": ["../emails/*"]
+      "@email/*": ["../emails/*"],
+      "@api/*": ["../app/api/*"]
     }
   },
 

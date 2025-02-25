@@ -77,12 +77,8 @@ const Overlay = (props: PropsWithChildren<{ isLoading?: boolean }>) => {
 const UseImageUpload = ({ onChange }: { onChange: (url: string) => void }) => {
   const uploadImageMutation = useMutation({
     mutationFn: async (file: File) => {
-      const formData = new FormData();
-      formData.set("name", file.name);
-      formData.set("file", file);
-
       const result = await uploadImageAction({
-        formData,
+        file,
       });
 
       if (!isActionSuccessful(result)) {

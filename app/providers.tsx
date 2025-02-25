@@ -4,6 +4,7 @@ import { GlobalDialogLazy } from "@components/globalDialog/GlobalDialogLazy";
 import { SearchParamsMessageToastSuspended } from "@components/searchparams-message/SearchParamsMessageToast";
 import { Toaster } from "@components/ui/sonner";
 import { AlertDialogRenderer } from "@feat/alert-dialog/AlertDialogRenderer";
+import { EdgeStoreProvider } from "@lib/blobStorage/edgestore";
 import { env } from "@lib/env/client";
 import { logger } from "@lib/logger";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -41,19 +42,21 @@ export const Providers = ({
           apiKey={GOOGLE_MAPS_JS_API_KEY}
           onLoad={() => logger.debug("Maps api logged")}
         >
-          <SessionProvider>
-            <QueryClientProvider client={queryClient}>
-              <Analytics />
-              <Toaster />
-              <AlertDialogRenderer />
-              <GlobalDialogLazy />
-              <SearchParamsMessageToastSuspended />
-              <ReactQueryDevtools />
-              <IdentifyUserPosthog />
+          <EdgeStoreProvider>
+            <SessionProvider>
+              <QueryClientProvider client={queryClient}>
+                <Analytics />
+                <Toaster />
+                <AlertDialogRenderer />
+                <GlobalDialogLazy />
+                <SearchParamsMessageToastSuspended />
+                <ReactQueryDevtools />
+                <IdentifyUserPosthog />
 
-              {children}
-            </QueryClientProvider>
-          </SessionProvider>
+                {children}
+              </QueryClientProvider>
+            </SessionProvider>
+          </EdgeStoreProvider>
         </APIProvider>
       </ThemeProvider>
     </PostHogProvider>

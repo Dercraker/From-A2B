@@ -20,6 +20,8 @@ export const env = createEnv({
     GOOGLE_MAPS_JS_API_KEY: z.string().min(1),
     GOOGLE_ROUTES_API_KEY: z.string().min(1),
     OPENAI_API_KEY: z.string().min(1),
+    EDGE_STORE_ACCESS_KEY: z.string().min(1),
+    EDGE_STORE_SECRET_KEY: z.string().min(1),
   },
   experimental__runtimeEnv: process,
 });
