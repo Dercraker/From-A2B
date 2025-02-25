@@ -13,6 +13,7 @@ export const env = createEnv({
     RESEND_EMAIL_FROM: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
     NODE_ENV: z.enum(["development", "production", "test"]),
+    VERCEL_ENV: z.enum(["production", "preview"]).optional(),
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     NEXTAUTH_SECRET: z.string().min(1),
     GOOGLE_PLACES_API_KEY: z.string().min(1),

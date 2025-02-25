@@ -24,6 +24,17 @@ const edgeStoreRouter = es.router({
     .fileBucket({
       maxSize: 1024 * 1024 * 1, //1Mb
     })
+    .path(() => [
+      {
+        env: () => {
+          if (env.NODE_ENV === "development") return "development";
+          else if (env.VERCEL_ENV === "preview") return "preview";
+          else if (env.VERCEL_ENV === "production") return "production";
+
+          return "noenv";
+        },
+      },
+    ])
     .beforeUpload(() => {
       phCapture("UploadProfilePicture");
       return true;
