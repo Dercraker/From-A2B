@@ -4,6 +4,10 @@ import { SiteConfig } from "site-config";
  * This method return the server URL based on the environment.
  */
 export const getServerUrl = () => {
+  console.log(
+    "🚀 ~ getServerUrl ~ process.env.VERCEL_URL:",
+    process.env.VERCEL_URL,
+  );
   if (typeof window !== "undefined") {
     return window.location.origin;
   }

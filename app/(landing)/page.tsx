@@ -19,7 +19,6 @@ export default function HomePage() {
   return (
     <div className="relative flex h-fit flex-col bg-background text-foreground">
       <div className="mt-16"></div>
-      <Link href={"toto"} />
       <LandingHeader />
 
       <Hero />
