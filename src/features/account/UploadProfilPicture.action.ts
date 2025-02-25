@@ -5,7 +5,7 @@ import { authAction } from "@lib/actions/safe-actions";
 import { uploadProfilePicture } from "@lib/blobStorage/uploadFile";
 import { z } from "zod";
 
-export const uploadImageAction = authAction
+export const UploadProfilPictureAction = authAction
   .schema(
     z.object({
       file: z.instanceof(File),
@@ -23,7 +23,6 @@ export const uploadImageAction = authAction
       userId: ctx.user.id,
       oldPicturePath: pictureUrl ?? undefined,
     });
-    console.log("🚀 ~ .action ~ res:", res);
 
-    return { url: "https://example.com/image.png" };
+    return { url: res.url };
   });

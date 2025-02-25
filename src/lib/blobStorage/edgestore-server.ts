@@ -22,7 +22,7 @@ const es = initEdgeStore.context<Context>().create();
 const edgeStoreRouter = es.router({
   profilePictures: es
     .fileBucket({
-      maxSize: 1024 * 1024 * 5, //5Mb
+      maxSize: 1024 * 1024 * 1, //1Mb
     })
     .beforeUpload(() => {
       phCapture("UploadProfilePicture");
