@@ -57,6 +57,7 @@ export const EditProfileCardForm = ({
     schema: ProfileFormSchema,
     defaultValues: defaultValues,
   });
+
   const router = useRouter();
   const [verification, setVerification] = useState({
     isDialogOpen: false,

@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.62.19",
+  "version": "0.62.28",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -32,6 +32,8 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@edgestore/react": "^0.3.3",
+    "@edgestore/server": "^0.3.3",
     "@googlemaps/markerclusterer": "^2.5.3",
     "@googlemaps/places": "^1.7.0",
     "@googlemaps/polyline-codec": "^1.0.28",

@@ -31,6 +31,15 @@ export const mapEvents = z.enum(["UseCenterMap"]);
 
 export const dateEvents = z.enum(["DateUseCalendar", "DateUseAiPrompt"]);
 
+export const blobEvents = z.enum([
+  "UploadProfilePicture",
+  "DeleteProfilePicture",
+  "UploadPicture",
+  "DeletePicture",
+  "UploadFile",
+  "DeleteFile",
+]);
+
 export const errorEvents = z.enum([
   "ServerActionFailed",
   "ServerActionError",
@@ -44,6 +53,7 @@ export const combinedPhEvents = z.union([
   tripEvents,
   dateEvents,
   mapEvents,
+  blobEvents,
   errorEvents,
 ]);
 
