@@ -1,6 +1,6 @@
 import { auth } from "@lib/auth/helper";
 import { prisma } from "@lib/prisma";
-import { getServerUrl } from "@lib/server-url";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 /**
@@ -9,11 +9,13 @@ import { NextResponse } from "next/server";
  * 💡 If you want to redirect user to organization page, redirect them to `/orgs`
  * 💡 If you want them to redirect to a specific organization, redirect them to `/orgs/orgSlug`
  */
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
+  const url = new URL(req.url);
   const user = await auth();
 
   if (!user) {
-    return NextResponse.redirect(`${getServerUrl()}/auth/signin`);
+    url.pathname = "/auth/signin";
+    return NextResponse.redirect(url.toString());
   }
 
   const organization = await prisma.organization.findFirst({
@@ -31,8 +33,10 @@ export const GET = async () => {
   });
 
   if (!organization) {
-    return NextResponse.redirect(`${getServerUrl()}/orgs/new`);
+    url.pathname = "/orgs/new";
+    return NextResponse.redirect(url.toString());
   }
 
-  return NextResponse.redirect(`${getServerUrl()}/orgs/${organization.slug}`);
+  url.pathname = `/orgs/${organization.slug}`;
+  return NextResponse.redirect(url.toString());
 };

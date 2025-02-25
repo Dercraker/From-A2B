@@ -35,7 +35,6 @@ export const middleware = async (req: NextRequest) => {
 
     if (authCookie) {
       const url = new URL(req.url);
-      console.log("🚀 ~ middleware ~ url:", url.toString());
       url.pathname = "/orgs";
       return NextResponse.redirect(url.toString());
     }

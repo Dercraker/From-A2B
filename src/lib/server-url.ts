@@ -18,6 +18,14 @@ export const getServerUrl = () => {
   }
 
   // If we are in "stage" environment, we return the staging URL.
+  if (process.env.VERCEL_PREV_URL) {
+    return `https://${process.env.VERCEL_PREV_URL}`;
+  }
+  // If we are in "stage" environment, we return the staging URL.
+  if (process.env.VERCEL_DEV_URL) {
+    return `https://${process.env.VERCEL_DEV_URL}`;
+  }
+  // If we are in "stage" environment, we return the staging URL.
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
