@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.62.29",
+  "version": "0.62.30",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -9,7 +9,8 @@
     "prerelease": "pnpm version prerelease --force --no-git-tag-version",
     "major": "pnpm version major --force --no-git-tag-version",
     "build": "next build",
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev --turbo",
+    "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
