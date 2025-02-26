@@ -2,6 +2,7 @@ import { fileToBlob } from "@utils/file";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 import { backendClient } from "./edgestore-server";
+import { getEnvPath } from "./getEnvPath";
 
 const UploadProfileSchema = z.object({
   file: z.instanceof(File),
@@ -23,6 +24,7 @@ export const uploadProfilePicture = async ({
     },
     ctx: {
       userId: userId,
+      envPath: getEnvPath(),
     },
     options: {
       manualFileName: `${userId}-${nanoid()}`,

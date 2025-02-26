@@ -4,9 +4,11 @@ import { initEdgeStoreClient } from "@edgestore/server/core";
 import { requiredAuth } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { phCapture } from "@lib/postHog/eventCapture";
+import { getEnvPath } from "./getEnvPath";
 
 type Context = {
   userId: string;
+  envPath: string;
 };
 
 const createContext = async (): Promise<Context> => {
@@ -14,6 +16,7 @@ const createContext = async (): Promise<Context> => {
 
   return {
     userId: id,
+    envPath: getEnvPath(),
   };
 };
 
@@ -24,17 +27,7 @@ const edgeStoreRouter = es.router({
     .fileBucket({
       maxSize: 1024 * 1024 * 1, //1Mb
     })
-    .path(() => [
-      {
-        env: () => {
-          if (env.NODE_ENV === "development") return "development";
-          else if (env.VERCEL_ENV === "preview") return "preview";
-          else if (env.VERCEL_ENV === "production") return "production";
-
-          return "noenv";
-        },
-      },
-    ])
+    .path(({ ctx }) => [{ env: ctx.envPath }])
     .beforeUpload(() => {
       phCapture("UploadProfilePicture");
       return true;
@@ -46,7 +39,7 @@ const edgeStoreRouter = es.router({
 });
 
 export const handler = createEdgeStoreNextHandler({
-  // logLevel: env.NODE_ENV === "development" ? "debug" : "error",
+  logLevel: env.NODE_ENV === "development" ? "debug" : "error",
   router: edgeStoreRouter,
   createContext,
 });
