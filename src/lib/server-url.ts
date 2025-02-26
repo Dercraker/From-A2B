@@ -5,7 +5,6 @@ import { env } from "./env/server";
  * This method return the server URL based on the environment.
  */
 export const getServerUrl = () => {
-  console.log("🚀 ~ getServerUrl ~ env.VERCEL_URL:", env.VERCEL_URL);
   if (typeof window !== "undefined") {
     return window.location.origin;
   }
