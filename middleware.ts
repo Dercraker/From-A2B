@@ -1,4 +1,6 @@
+import { LINKS } from "@feat/navigation/Links";
 import { AUTH_COOKIE_NAME } from "@lib/auth/auth.const";
+import { getServerFeatureFlags } from "@lib/postHog/phFeatureFlags";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -23,18 +25,33 @@ export const middleware = async (req: NextRequest) => {
   // Useful to get the parameters of the current request
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-url", req.url);
+  const url = new URL(req.url);
 
-  // This settings is used to redirect the user to the organization page if he is logged in
-  // The landing page is still accessible with the /home route
+  const isMaintenanceEnabled = await getServerFeatureFlags({
+    flag: "isMaintenanceEnabled",
+  });
+
+  if (isMaintenanceEnabled && req.nextUrl.pathname !== LINKS.Maintenance.href) {
+    url.pathname = LINKS.Maintenance.href;
+    return NextResponse.redirect(url.toString());
+  } else if (
+    !isMaintenanceEnabled &&
+    req.nextUrl.pathname === LINKS.Maintenance.href
+  ) {
+    url.pathname = LINKS.Landing.Home.href;
+    return NextResponse.redirect(url.toString());
+  }
+
   if (
     req.nextUrl.pathname === "/" &&
     SiteConfig.features.enableLandingRedirection
   ) {
+    // This settings is used to redirect the user to the organization page if he is logged in
+    // The landing page is still accessible with the /home route
     const cookieList = await cookies();
     const authCookie = cookieList.get(AUTH_COOKIE_NAME);
 
     if (authCookie) {
-      const url = new URL(req.url);
       url.pathname = "/orgs";
       return NextResponse.redirect(url.toString());
     }

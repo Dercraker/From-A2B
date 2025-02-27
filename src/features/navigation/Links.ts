@@ -106,4 +106,10 @@ export const LINKS = {
       label: "Step",
     },
   },
+  Maintenance: {
+    href: "/maintenance",
+    label: "Maintenance",
+    hidden: true,
+    disabled: true,
+  },
 } satisfies GenericLinkSchema;

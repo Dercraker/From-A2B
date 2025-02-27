@@ -24,6 +24,9 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1),
     EDGE_STORE_ACCESS_KEY: z.string().min(1),
     EDGE_STORE_SECRET_KEY: z.string().min(1),
+    POSTHOG_KEY: z.string().min(1),
+    POSTHOG_HOST: z.string().min(1),
+    POSTHOG_API_URL: z.string().min(1),
   },
   experimental__runtimeEnv: process,
 });
