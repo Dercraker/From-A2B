@@ -1,7 +1,7 @@
 import { initEdgeStore } from "@edgestore/server";
 import { createEdgeStoreNextHandler } from "@edgestore/server/adapters/next/app";
 import { initEdgeStoreClient } from "@edgestore/server/core";
-import { requiredAuth } from "@lib/auth/helper";
+import { auth } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { getEnvPath } from "./getEnvPath";
@@ -12,10 +12,10 @@ type Context = {
 };
 
 const createContext = async (): Promise<Context> => {
-  const { id } = await requiredAuth();
+  const session = await auth();
 
   return {
-    userId: id,
+    userId: session?.id ?? "",
     envPath: getEnvPath(),
   };
 };
