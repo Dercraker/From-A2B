@@ -4,6 +4,7 @@ export const ProfileFormSchema = z.object({
   name: z.string().nullable(),
   email: z.string().email(),
   image: z.string().nullable(),
+  token: z.string().optional(),
 });
 
 export const EditPasswordFormSchema = z.object({

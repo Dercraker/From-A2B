@@ -11,10 +11,10 @@ import {
   useZodForm,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
+import { editPasswordAction } from "@feat/account/editPassword.action";
+import type { EditPasswordFormType } from "@feat/account/email/editProfile.schema";
+import { EditPasswordFormSchema } from "@feat/account/email/editProfile.schema";
 import { toast } from "sonner";
-import { editPasswordAction } from "./edit-profile.action";
-import type { EditPasswordFormType } from "./edit-profile.schema";
-import { EditPasswordFormSchema } from "./edit-profile.schema";
 
 export const EditPasswordForm = () => {
   const form = useZodForm({
