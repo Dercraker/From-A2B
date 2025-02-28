@@ -23,8 +23,8 @@ export const createSearchParamsMessageUrl = (
   let absoluteBaseUrl: string;
   if (baseUrl.startsWith("/")) {
     absoluteBaseUrl = isServer
-      ? `${getServerUrl()}/${baseUrl}`
-      : `${window.location.origin}/${baseUrl}`;
+      ? `${getServerUrl()}${baseUrl}`
+      : `${window.location.origin}${baseUrl}`;
   } else {
     absoluteBaseUrl = baseUrl;
   }
