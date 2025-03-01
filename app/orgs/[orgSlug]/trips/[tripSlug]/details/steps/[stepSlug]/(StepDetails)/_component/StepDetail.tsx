@@ -76,7 +76,7 @@ export const StepDetail = ({
           ConstructTripLink({
             orgSlug,
             tripSlug,
-            href: LINKS.Trips.StepDetail.href,
+            href: LINKS.Trips.Steps.StepsList.href,
           }),
         );
         throw new Error("Failed to fetch step. Please try again later");
@@ -121,7 +121,7 @@ export const StepDetail = ({
       onReset={() => handleReset(step)}
       form={form}
     >
-      <Card className="group w-full">
+      <Card className="group min-h-96 w-full">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <FormField
@@ -144,7 +144,7 @@ export const StepDetail = ({
                   ConstructTripLink({
                     orgSlug,
                     tripSlug,
-                    href: LINKS.Trips.StepDetail.href,
+                    href: LINKS.Trips.Steps.StepsList.href,
                   }),
                 )
               }

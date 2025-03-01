@@ -24,7 +24,7 @@ const es = initEdgeStore.context<Context>().create();
 
 const edgeStoreRouter = es.router({
   profilePictures: es
-    .fileBucket({
+    .imageBucket({
       maxSize: 1024 * 1024 * 1, //1Mb
     })
     .path(({ ctx }) => [{ env: ctx.envPath }])

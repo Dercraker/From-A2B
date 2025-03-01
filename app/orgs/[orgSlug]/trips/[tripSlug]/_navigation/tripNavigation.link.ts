@@ -35,7 +35,7 @@ export const TRIP_LINKS: NavigationLinksGroups = [
     links: [
       LINKS.Trips.Itinerary,
       LINKS.Trips.Details,
-      LINKS.Trips.StepDetail,
+      LINKS.Trips.Steps.StepsList,
     ] satisfies NavigationLinks,
   },
   {

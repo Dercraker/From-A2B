@@ -19,8 +19,8 @@ const NavigationLinkSchema = z.object({
 
 const NavigationLinksSchema = z.array(NavigationLinkSchema);
 
-const GenericLinkSchema = z.record(
-  z.union([NavigationLinkSchema, z.record(NavigationLinkSchema)]),
+const GenericLinkSchema: z.ZodType = z.lazy(() =>
+  z.record(z.union([NavigationLinkSchema, GenericLinkSchema])),
 );
 
 const NavigationLinksGroup = z.object({

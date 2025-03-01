@@ -159,6 +159,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                     className="h-[200px] w-[300px] rounded-md"
                     onChange={(url) => field.onChange(url)}
                     imageUrl={field.value}
+                    maxSizePicture={5}
                   />
                 </FormControl>
                 <FormMessage />

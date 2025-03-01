@@ -7,12 +7,14 @@ type ImageFormItemProps = {
   onChange: (url: string) => void;
   imageUrl?: string | null;
   className?: string;
+  maxSizePicture: number;
 };
 
 export const ImageFormItem = ({
   onChange,
   imageUrl,
   className,
+  maxSizePicture,
 }: ImageFormItemProps) => {
   const currentImage = imageUrl;
 
@@ -29,7 +31,7 @@ export const ImageFormItem = ({
         alt=""
       />
       {SiteConfig.features.enableImageUpload ? (
-        <UseImageUpload onChange={onChange} />
+        <UseImageUpload onChange={onChange} maxSizePicture={maxSizePicture} />
       ) : (
         <UseImageButton
           onChange={(params) => {
