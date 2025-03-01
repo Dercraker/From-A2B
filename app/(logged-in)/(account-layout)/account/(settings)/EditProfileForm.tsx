@@ -62,6 +62,7 @@ export const EditProfileCardForm = ({
                 className="size-16 rounded-full"
                 onChange={(url) => form.setValue("image", url)}
                 imageUrl={image}
+                maxSizePicture={1}
               />
               <CardTitle>
                 {displayName({

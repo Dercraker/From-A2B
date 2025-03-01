@@ -75,6 +75,7 @@ export const OrgDetailsForm = ({ defaultValues }: ProductFormProps) => {
                     className="size-32 rounded-full"
                     onChange={(url) => field.onChange(url)}
                     imageUrl={field.value}
+                    maxSizePicture={1}
                   />
                 </FormControl>
                 <FormMessage />

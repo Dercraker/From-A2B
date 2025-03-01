@@ -96,14 +96,47 @@ export const LINKS = {
       label: "Details",
       Icon: ChartArea,
     },
-    StepDetail: {
-      href: `${ORGANIZATION_PATH}${TRIP_PATH}/details/steps`,
-      label: "Steps",
-      Icon: StepForwardIcon,
-    },
-    Step: {
-      href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}`,
-      label: "Step",
+
+    Steps: {
+      StepsList: {
+        href: `${ORGANIZATION_PATH}${TRIP_PATH}/details/steps`,
+        label: "Steps",
+        Icon: StepForwardIcon,
+      },
+      Detail: {
+        href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}`,
+        label: "Detail",
+        generateLink: ({
+          orgSlug,
+          tripSlug,
+          stepSlug,
+        }: {
+          orgSlug: string;
+          tripSlug: string;
+          stepSlug: string;
+        }) =>
+          LINKS.Trips.Steps.Detail.href
+            .replace(":organizationSlug", orgSlug)
+            .replace(":tripSlug", tripSlug)
+            .replace(":stepSlug", stepSlug),
+      },
+      Scheduling: {
+        href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}/scheduling`,
+        label: "Scheduling",
+        generateLink: ({
+          orgSlug,
+          tripSlug,
+          stepSlug,
+        }: {
+          orgSlug: string;
+          tripSlug: string;
+          stepSlug: string;
+        }) =>
+          LINKS.Trips.Steps.Scheduling.href
+            .replace(":organizationSlug", orgSlug)
+            .replace(":tripSlug", tripSlug)
+            .replace(":stepSlug", stepSlug),
+      },
     },
   },
   Maintenance: {

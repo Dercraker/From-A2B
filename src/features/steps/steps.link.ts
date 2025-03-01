@@ -9,7 +9,7 @@ export const GenerateStepLink = ({
   tripSlug: string;
   stepSlug: string;
 }) =>
-  LINKS.Trips.Step.href
+  LINKS.Trips.Steps.Detail.href
     .replace(":organizationSlug", orgSlug)
     .replace(":tripSlug", tripSlug)
     .replace(":stepSlug", stepSlug);

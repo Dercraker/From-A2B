@@ -9,9 +9,13 @@ import { NativeTargetBox } from "./NativeTargetBox";
 
 type UseImageUploadProps = {
   onChange: (url: string) => void;
+  maxSizePicture: number;
 };
 
-export const UseImageUpload = ({ onChange }: UseImageUploadProps) => {
+export const UseImageUpload = ({
+  onChange,
+  maxSizePicture = 1,
+}: UseImageUploadProps) => {
   const uploadImageMutation = useMutation({
     mutationFn: async (file: File) => {
       const result = await UploadProfilPictureAction({
@@ -39,10 +43,13 @@ export const UseImageUpload = ({ onChange }: UseImageUploadProps) => {
       return;
     }
 
-    if (file.size > 1024 * 1024) {
-      toast.error("File too large (max 1mb)", {
-        description: "https://tinypng.com/ to compress the image",
-      });
+    if (file.size > 1024 * 1024 * maxSizePicture) {
+      toast.error(
+        `File too large, max ${maxSizePicture}mb (current ${(file.size / (1024 * 1024)).toFixed(2)}mb)`,
+        {
+          description: "https://tinypng.com/ to compress the image",
+        },
+      );
       return;
     }
 

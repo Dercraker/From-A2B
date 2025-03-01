@@ -123,7 +123,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
     <div className="flex size-full flex-col overflow-hidden border-r lg:w-2/5">
       {!!steps.length && (
         <>
-          <ScrollArea className="flex h-full grow">
+          <ScrollArea className="flex max-h-[600] max-w-2xl grow overflow-y-scroll">
             {reSortStepIsPending && <LoadingOverlay />}
             <DndContext
               sensors={sensors}
@@ -174,6 +174,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
     </div>
   );
 };
+
 function updateRoads(arg0: { stepId: string }) {
   throw new Error("Function not implemented.");
 }

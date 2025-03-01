@@ -16,7 +16,7 @@ const RouteLayout = async ({
   const { tripSlug, orgSlug } = await params;
 
   return (
-    <Layout>
+    <Layout size="lg">
       <LayoutHeader>
         <LayoutTitle>Steps</LayoutTitle>
         <LayoutDescription>Manage all your steps</LayoutDescription>

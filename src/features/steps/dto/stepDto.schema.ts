@@ -20,6 +20,8 @@ export const StepDtoSchema = z.object({
     return Number(val);
   }, z.number()),
 
+  schedulingNotes: z.string().nullable(),
+
   placeId: z.string(),
   transportMode: z.string(),
 });
