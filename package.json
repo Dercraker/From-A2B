@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.62.34",
+  "version": "0.63.35",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -124,6 +124,7 @@
     "three": "^0.169.0",
     "three-globe": "^2.32.0",
     "tslog": "^4.9.3",
+    "usehooks-ts": "^3.1.1",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },

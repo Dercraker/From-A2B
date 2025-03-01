@@ -174,3 +174,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
     </div>
   );
 };
+
+function updateRoads(arg0: { stepId: string }) {
+  throw new Error("Function not implemented.");
+}

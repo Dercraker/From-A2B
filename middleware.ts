@@ -1,4 +1,6 @@
+import { LINKS } from "@feat/navigation/Links";
 import { AUTH_COOKIE_NAME } from "@lib/auth/auth.const";
+import { getServerFeatureFlags } from "@lib/postHog/phFeatureFlags";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -25,20 +27,20 @@ export const middleware = async (req: NextRequest) => {
   requestHeaders.set("x-url", req.url);
   const url = new URL(req.url);
 
-  // const isMaintenanceEnabled = await getServerFeatureFlags({
-  //   flag: "isMaintenanceEnabled",
-  // });
+  const isMaintenanceEnabled = await getServerFeatureFlags({
+    flag: "isMaintenanceEnabled",
+  });
 
-  // if (isMaintenanceEnabled && req.nextUrl.pathname !== LINKS.Maintenance.href) {
-  //   url.pathname = LINKS.Maintenance.href;
-  //   return NextResponse.redirect(url.toString());
-  // } else if (
-  //   !isMaintenanceEnabled &&
-  //   req.nextUrl.pathname === LINKS.Maintenance.href
-  // ) {
-  //   url.pathname = LINKS.Landing.Home.href;
-  //   return NextResponse.redirect(url.toString());
-  // }
+  if (isMaintenanceEnabled && req.nextUrl.pathname !== LINKS.Maintenance.href) {
+    url.pathname = LINKS.Maintenance.href;
+    return NextResponse.redirect(url.toString());
+  } else if (
+    !isMaintenanceEnabled &&
+    req.nextUrl.pathname === LINKS.Maintenance.href
+  ) {
+    url.pathname = LINKS.Landing.Home.href;
+    return NextResponse.redirect(url.toString());
+  }
 
   if (
     req.nextUrl.pathname === "/" &&
