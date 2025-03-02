@@ -1,9 +1,8 @@
-import Image from "next/image";
+import { LogoSvg } from "@components/svg/LogoSvg";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
 import { SiteConfig } from "site-config";
 import { Layout } from "../page/layout";
-import { ThemeToggle } from "../theme/ThemeToggle";
 
 export const HeaderBase = ({ children }: PropsWithChildren) => {
   return (
@@ -14,21 +13,13 @@ export const HeaderBase = ({ children }: PropsWithChildren) => {
             href="/"
             className="flex items-center gap-2 text-base font-bold"
           >
-            <Image
-              src={SiteConfig.appIcon}
-              alt="app logo"
-              width={32}
-              height={32}
-            />
+            <LogoSvg size={32} />
             {SiteConfig.title}
           </Link>
         </div>
 
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
-            {children}
-            <ThemeToggle />
-          </nav>
+          <nav className="flex items-center space-x-1">{children}</nav>
         </div>
       </Layout>
     </header>

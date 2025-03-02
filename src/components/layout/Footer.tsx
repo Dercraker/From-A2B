@@ -1,9 +1,9 @@
+import { Layout, LayoutContent } from "@components/page/layout";
 import { LogoSvg } from "@components/svg/LogoSvg";
 import { Typography } from "@components/ui/typography";
 import Link from "next/link";
 import { SiteConfig } from "site-config";
 import { version } from "../../../package.json";
-import { Layout, LayoutContent } from "../page/layout";
 
 export const Footer = () => {
   return (
@@ -13,7 +13,7 @@ export const Footer = () => {
           <div className="flex flex-col gap-4">
             <div className="space-y-1">
               <Link href="/" className="flex items-center gap-2">
-                <LogoSvg />
+                <LogoSvg size={32} />
                 <Typography variant="h3">{SiteConfig.title}</Typography>
               </Link>
               <Typography variant="muted">V{version}</Typography>
