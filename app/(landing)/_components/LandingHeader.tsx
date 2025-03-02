@@ -1,10 +1,9 @@
 "use client";
 
 import { AuthButtonClient } from "@components/auth/AuthButtonClient";
-import { LogoSvg } from "@components/svg/LogoSvg";
+import { LogoNameSvg } from "@components/svg/LogoNameSvg";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { useEffect } from "react";
-import { SiteConfig } from "site-config";
 
 function useBoundedScroll(threshold: number) {
   const { scrollY } = useScroll();
@@ -60,7 +59,6 @@ export const LandingHeader = () => {
     >
       <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 lg:px-8">
         <div className="flex items-center gap-1">
-          <LogoSvg size={24} />
           <motion.p
             style={{
               scale: useTransform(
@@ -70,9 +68,9 @@ export const LandingHeader = () => {
               ),
             }}
             // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
-            className="flex origin-left items-center text-xl font-semibold uppercase max-sm:hidden"
+            className="flex origin-left items-center gap-2 text-xl font-semibold uppercase max-sm:hidden"
           >
-            {SiteConfig.title}
+            <LogoNameSvg height={28} width={140} />
           </motion.p>
         </div>
         <motion.nav

@@ -1,6 +1,5 @@
-import Image from "next/image";
+import { LogoSvg } from "@components/svg/LogoSvg";
 import Link from "next/link";
-import { SiteConfig } from "site-config";
 
 export const FloatingLegalFooter = () => {
   return (
@@ -17,7 +16,7 @@ export const FloatingLegalFooter = () => {
       >
         Terms
       </Link>
-      <Image src={SiteConfig.appIcon} width={12} height={12} alt="app icon" />
+      <LogoSvg size={12} />
     </div>
   );
 };
