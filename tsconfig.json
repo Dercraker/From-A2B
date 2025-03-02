@@ -29,7 +29,8 @@
       "@utils/*": ["utils/*"],
       "@type/*": ["types/*"],
       "@email/*": ["../emails/*"],
-      "@api/*": ["../app/api/*"]
+      "@api/*": ["../app/api/*"],
+      "@middleware/*": ["middlewares/*"]
     }
   },
 

@@ -1,10 +1,10 @@
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
-import { toast } from "sonner";
 import {
   deleteSearchParamsMessageUrl,
   SearchParamsMessageKeys,
-} from "../../features/searchparams-message/createSearchParamsMessageUrl";
+} from "@feat/searchparams-message/createSearchParamsMessageUrl";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { toast } from "sonner";
 
 const SearchParamsMessageToast = () => {
   const searchParams = useSearchParams();
