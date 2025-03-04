@@ -1,0 +1,125 @@
+---
+description: EXPLAIN how to create and USE server action with next-safe-action library
+globs: *.ts, *.tsx
+---
+---
+alwaysApply: false
+---
+## Context
+
+* Server Action is a way to execute server-side code like to mutate database etc... but without API endpoint. It's a React abstraction to handle the server-code.
+* We use `next-safe-action` to handle authentification, security and to verify the data we received
+
+## Usage
+
+1. Create a server action files
+
+We use `serverActionName.action.ts` converntion to easily reconize server-action. [naming-conventions.mdc](mdc:.cursor/rules/naming-conventions.mdc)
+We use [zod-schema.mdc](mdc:.cursor/rules/zod-schema.mdc) to provide zod schema to action
+
+```ts
+'use server';
+
+import { z } from 'zod';
+import { orgAction } from "@lib/actions/safe-actions';
+
+export const EditStepAction = orgAction
+  .metadata({roles: ["ADMIN"]})
+  .schema(EditStepSchema)
+  .action(
+    async ({
+      parsedInput: {
+        transportMode,
+        endDate,
+        latitude,
+        stepId,
+        longitude,
+        name,
+        startDate,
+        tripSlug,
+        description,
+        placeId,
+      },
+    }) => {
+      const editStep = await EditStepQuery({
+        where: {
+          id: stepId,
+        },
+        step: {
+          name,
+          latitude,
+          longitude,
+          startDate,
+          endDate,
+          description,
+          placeId: placeId ? placeId : undefined,
+          transportMode,
+          trip: {
+            connect: {
+              slug: tripSlug,
+            },
+          },
+        },
+      });
+
+      return editStep;
+    },
+  );
+```
+
+2. Use the server action in a client component
+
+In any client component we can use Server Action like the following example :
+
+```tsx
+import { EditStepAction } from "@feat/steps/update/editStep.action";
+import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import { useMutation } from "@tanstack/react-query";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+
+export const Form = () => {
+  // ...
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (values: EditStepSchema) => {
+      const result = await EditStepAction(EditStepSchema.parse(values));
+      if (!isActionSuccessful(result)) {
+        toast.error(result?.serverError);
+        return;
+      }
+
+      toast.success(`The step ${result.data} as been updated.`);
+
+      phCapture("EditStep");
+
+      return result.data;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(
+          (params.tripSlug ?? "undefined").toString(),
+        ),
+      });
+      router.refresh();
+    },
+  });
+
+  // ...
+```
+
+## Rules
+
+- Always suffix server action with "Action" like "UpdateUserAction" or "CreateSubscriberAction"
+
+## Available actions
+
+* action : for general action without any authentification
+* authAction : for action that need to be authentificated
+* orgAction : for admin with permissions
+
+## Files
+
+* [safe-actions.ts](mdc:src/lib/actions/safe-actions.ts)
+
+
+

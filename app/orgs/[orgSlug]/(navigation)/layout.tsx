@@ -3,7 +3,7 @@ import { Layout } from "@components/page/layout";
 import { Alert } from "@components/ui/alert";
 import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
-import { auth } from "@lib/auth/helper";
+import { currentUser } from "@lib/auth/helper";
 import { getCurrentOrgCache } from "@lib/react/cache";
 import type { LayoutParams } from "@type/next";
 import { Rabbit } from "lucide-react";
@@ -18,7 +18,7 @@ export default async function RouteLayout({
   const org = await getCurrentOrgCache();
 
   if (!org) {
-    const user = await auth();
+    const user = await currentUser();
     return (
       <NavigationWrapper>
         <Layout>

@@ -18,6 +18,7 @@ model Step {
 
   road   Road?
   roadId String? @unique
+  Task   Task[]
 }
 
 model Road {
@@ -39,4 +40,27 @@ enum TransportMode {
   Car
   Boat
   Plane
+}
+
+model Task {
+  id      String    @id @unique @default(cuid())
+  title   String
+  notes   String?
+  dueDate DateTime?
+  rank    Int
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  stepId String
+  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
+}
+
+enum TaskState {
+  Todo
+  InProgress
+  Blocked
+  Done
+  Canceled
 }

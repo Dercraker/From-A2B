@@ -1,4 +1,4 @@
-import { auth } from "@lib/auth/helper";
+import { currentUser } from "@lib/auth/helper";
 import { prisma } from "@lib/prisma";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -11,7 +11,7 @@ import { NextResponse } from "next/server";
  */
 export const GET = async (req: NextRequest) => {
   const url = new URL(req.url);
-  const user = await auth();
+  const user = await currentUser();
 
   if (!user) {
     url.pathname = "/auth/signin";

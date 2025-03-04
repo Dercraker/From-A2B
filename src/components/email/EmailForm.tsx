@@ -1,6 +1,8 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
+import { Input } from "@components/ui/input";
+import { useMutation } from "@tanstack/react-query";
 import {
   Form,
   FormControl,
@@ -8,9 +10,7 @@ import {
   FormItem,
   FormMessage,
   useZodForm,
-} from "@components/ui/form";
-import { Input } from "@components/ui/input";
-import { useMutation } from "@tanstack/react-query";
+} from "@ui/form";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { useSession } from "next-auth/react";

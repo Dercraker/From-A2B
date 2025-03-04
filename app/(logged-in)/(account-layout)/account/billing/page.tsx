@@ -1,11 +1,11 @@
-import { requiredAuth } from "@lib/auth/helper";
+import { requiredUser } from "@lib/auth/helper";
 import { OrgSelectQuery } from "@lib/organizations/getOrg";
 import { prisma } from "@lib/prisma";
 import { notFound } from "next/navigation";
 import { OrganizationBilling } from "../../../../orgs/[orgSlug]/(navigation)/settings/billing/_components/OrganizationBilling";
 
 const RoutePage = async () => {
-  const user = await requiredAuth();
+  const user = await requiredUser();
   const org = await prisma.organization.findFirst({
     where: {
       members: {

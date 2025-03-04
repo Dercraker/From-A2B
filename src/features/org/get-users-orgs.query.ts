@@ -1,8 +1,8 @@
-import { requiredAuth } from "@lib/auth/helper";
+import { requiredUser } from "@lib/auth/helper";
 import { prisma } from "@lib/prisma";
 
 export async function getUsersOrgs() {
-  const user = await requiredAuth();
+  const user = await requiredUser();
   const userOrganizations = await prisma.organization.findMany({
     where: {
       members: {

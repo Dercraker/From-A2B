@@ -1,0 +1,16 @@
+---
+description: ENFORE usage of Tailwind CSS
+globs: **/*
+---
+---
+alwaysApply: true
+---
+
+## Context
+
+* We use TailwindCSS with Shadcn/UI to add style in our application.
+
+## Rules
+
+* AVOID `space-y-{number}` or `space-x-{number}` and try to always use `flex` with gap
+* AVOID using `bg-opacity-{number}` and use instead `bg-color-value/{number}`

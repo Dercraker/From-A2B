@@ -5,6 +5,7 @@ import { EditStepQuery } from "./editStep.query";
 import { EditStepSchema } from "./editStep.schema";
 
 export const EditStepAction = orgAction
+  .metadata({ roles: ["ADMIN"] })
   .schema(EditStepSchema)
   .action(
     async ({

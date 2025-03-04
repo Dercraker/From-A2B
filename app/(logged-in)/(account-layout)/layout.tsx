@@ -3,7 +3,7 @@ import { Layout } from "@components/page/layout";
 import { Alert } from "@components/ui/alert";
 import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
-import { auth } from "@lib/auth/helper";
+import { currentUser } from "@lib/auth/helper";
 import type { LayoutParams } from "@type/next";
 import { CircleAlert, Rabbit } from "lucide-react";
 import type { Metadata } from "next";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RouteLayout(props: LayoutParams) {
-  const user = await auth();
+  const user = await currentUser();
 
   if (!user) {
     return (
