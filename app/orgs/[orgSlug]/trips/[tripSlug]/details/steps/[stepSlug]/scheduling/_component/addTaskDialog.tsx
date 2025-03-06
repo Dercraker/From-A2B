@@ -2,8 +2,8 @@
 
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { LoadingButton } from "@components/form/LoadingButton";
-import { AddTaskSchema } from "@feat/scheduling/addTask.schema";
-import { AddTaskToStepByStepSlugActionAction } from "@feat/scheduling/addTaskToStepByStepSlug.action";
+import { AddTaskSchema } from "@feat/scheduling/task/addTask.schema";
+import { AddTaskToStepByStepSlugActionAction } from "@feat/scheduling/task/addTaskToStepByStepSlug.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
@@ -135,6 +135,7 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
                   <DateTimePicker
                     value={field.value}
                     className="w-full"
+                    granularity="day"
                     onChange={(date) => {
                       form.setValue("dueDate", date, {
                         shouldDirty: true,
@@ -174,4 +175,3 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
     </Dialog>
   );
 };
-

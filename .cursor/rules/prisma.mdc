@@ -1,7 +1,7 @@
 ---
 description: EXPLAIN how to use PRISMA in a CLEAN and EFFICIENT way
 globs: *.ts, *.tsx
-alwaysApply: false
+alwaysApply: true
 ---
 ## Context
 

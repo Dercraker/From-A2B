@@ -1,6 +1,6 @@
 import { prisma } from "@lib/prisma";
 import type { Prisma, Task } from "@prisma/client";
-import { TaskSchema, type TaskDto } from "./dto/taskDto.schema";
+import { TaskSchema, type TaskDto } from "../dto/taskDto.schema";
 
 type GetTasksByStepSlugQueryProps = {
   stepSlug: string;

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TaskSchema } from "./dto/taskDto.schema";
+import { TaskSchema } from "../dto/taskDto.schema";
 
 export const ReSortTasksSchema = z.object({
   tasks: z.array(TaskSchema),

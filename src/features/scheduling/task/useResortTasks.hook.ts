@@ -4,7 +4,7 @@ import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { TaskDto } from "./dto/taskDto.schema";
+import type { TaskDto } from "../dto/taskDto.schema";
 import { ReSortTasksAction } from "./reSortTasks.action";
 
 type UseResortTasksProps = {

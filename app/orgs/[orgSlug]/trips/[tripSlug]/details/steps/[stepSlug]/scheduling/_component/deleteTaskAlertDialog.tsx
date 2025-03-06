@@ -1,7 +1,7 @@
 "use client";
 
 import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
-import { DeleteTaskAction } from "@feat/scheduling/deleteTask.action";
+import { DeleteTaskAction } from "@feat/scheduling/task/deleteTask.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { phCapture } from "@lib/postHog/eventCapture";

@@ -16,8 +16,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import type { TaskDto } from "@feat/scheduling/dto/taskDto.schema";
-import { GetTasksByStepSlugAction } from "@feat/scheduling/getTasksByStepSlug.action";
-import { useResortTasks } from "@feat/scheduling/useResortTasks.hook";
+import { GetTasksByStepSlugAction } from "@feat/scheduling/task/getTasksByStepSlug.action";
+import { useResortTasks } from "@feat/scheduling/task/useResortTasks.hook";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
@@ -35,7 +35,11 @@ export type TaskListProps = {
 };
 
 export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
-  const { isPending, data: tasks } = useQuery({
+  const {
+    isPending,
+    data: tasks,
+    isError,
+  } = useQuery({
     queryKey: STEP_KEY_FACTORY.Tasks(tripSlug as string, stepSlug as string),
     queryFn: async () => {
       const result = await GetTasksByStepSlugAction({
@@ -89,7 +93,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
       </div>
     );
 
-  if (!tasks)
+  if (!tasks || isError)
     return (
       <Alert variant="destructive">
         <AlertTitle>Error</AlertTitle>
@@ -102,29 +106,27 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
   return (
     <div className="flex size-full flex-col overflow-hidden">
       {!!tasks.length && (
-        <>
-          <ScrollArea className="flex h-full grow">
-            {reSortTasksIsPending && <LoadingOverlay />}
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={async (event) => handleDragEnd(event)}
+        <ScrollArea className="flex h-full grow">
+          {reSortTasksIsPending && <LoadingOverlay />}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={async (event) => handleDragEnd(event)}
+          >
+            <SortableContext
+              items={tasks}
+              strategy={verticalListSortingStrategy}
             >
-              <SortableContext
-                items={tasks}
-                strategy={verticalListSortingStrategy}
-              >
-                {tasks.map((task: TaskDto) => (
-                  <TaskItemSortable
-                    key={task.id}
-                    task={task}
-                    className="border-b border-input"
-                  />
-                ))}
-              </SortableContext>
-            </DndContext>
-          </ScrollArea>
-        </>
+              {tasks.map((task: TaskDto) => (
+                <TaskItemSortable
+                  key={task.id}
+                  task={task}
+                  className="border-b border-input first:mt-2 first:border-t"
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+        </ScrollArea>
       )}
 
       {!tasks.length && (

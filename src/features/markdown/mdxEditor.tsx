@@ -1,5 +1,5 @@
-import type { SchedulingSyncState } from "@feat/steps/scheduling/schedulingSyncState";
-import { SchedulingSyncStateSchema } from "@feat/steps/scheduling/schedulingSyncState";
+import type { MdxEditorSyncState } from "@feat/markdown/MdxEditorSyncState";
+import { MdxEditorSyncStateSchema } from "@feat/markdown/MdxEditorSyncState";
 import { cn } from "@lib/utils";
 import {
   AdmonitionDirectiveDescriptor,
@@ -28,32 +28,40 @@ import { RefreshCw } from "lucide-react";
 
 export type MdxEditorProps = {
   markdown: string;
-  syncState: SchedulingSyncState;
+  syncState: MdxEditorSyncState;
   onChange: (s: string) => void;
+  placeholder: string;
+  enableBlockTypeSelect?: boolean;
+  enableInsertTable?: boolean;
+  enableLinkDialog?: boolean;
 };
 
 export const MdxEditor = ({
   markdown,
   syncState,
   onChange,
+  placeholder,
+  enableBlockTypeSelect,
+  enableInsertTable,
+  enableLinkDialog,
 }: MdxEditorProps) => {
   return (
     <div className="relative">
       <Badge
         className={cn(
           "absolute bottom-3 right-3 z-50",
-          syncState === SchedulingSyncStateSchema.enum.Syncing
+          syncState === MdxEditorSyncStateSchema.enum.Syncing
             ? "border-orange-500"
-            : syncState === SchedulingSyncStateSchema.enum["Not-Sync"]
+            : syncState === MdxEditorSyncStateSchema.enum["Not-Sync"]
               ? "border-neutral-500"
-              : syncState === SchedulingSyncStateSchema.enum.Error
+              : syncState === MdxEditorSyncStateSchema.enum.Error
                 ? "border-red-500"
                 : null,
         )}
         variant="outline"
       >
         {syncState}{" "}
-        {syncState === SchedulingSyncStateSchema.enum.Syncing && (
+        {syncState === MdxEditorSyncStateSchema.enum.Syncing && (
           <RefreshCw className="ml-2 animate-spin text-orange-500" />
         )}
       </Badge>
@@ -61,7 +69,7 @@ export const MdxEditor = ({
         className="w-full "
         contentEditableClassName="!pt-7 [&>p]:-mt-6 [&>ul]:-mt-6 [&>ol]:-mt-6 bg-background border-dashed border-2 border-primary/70 rounded-lg rounded-tl-none border-t-0 rounded-tr-none !text-white max-w-none prose prose-invert prose-lg leading-relaxed"
         markdown={markdown ?? ""}
-        placeholder="What you need to prepare your step : "
+        placeholder={placeholder}
         onChange={onChange}
         plugins={[
           listsPlugin(),
@@ -84,10 +92,10 @@ export const MdxEditor = ({
                 <BoldItalicUnderlineToggles />
                 <Separator />
                 <ListsToggle />
-                <BlockTypeSelect />
+                {enableBlockTypeSelect && <BlockTypeSelect />}
                 <Separator />
-                <InsertTable />
-                <CreateLink />
+                {enableInsertTable && <InsertTable />}
+                {enableLinkDialog && <CreateLink />}
                 <InsertThematicBreak />
               </>
             ),

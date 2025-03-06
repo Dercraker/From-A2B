@@ -1,6 +1,6 @@
 import { prisma } from "@lib/prisma";
 import { GetStepRank, RankStep } from "@utils/GetStepRank";
-import type { TaskDto } from "./dto/taskDto.schema";
+import type { TaskDto } from "../dto/taskDto.schema";
 
 type ReSortTasksQueryType = {
   tasks: TaskDto[];

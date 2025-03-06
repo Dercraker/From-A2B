@@ -1,8 +1,8 @@
 "use client";
 
 import { MdxEditor } from "@feat/markdown/mdxEditor";
-import type { SchedulingSyncState } from "@feat/steps/scheduling/schedulingSyncState";
-import { SchedulingSyncStateSchema } from "@feat/steps/scheduling/schedulingSyncState";
+import type { MdxEditorSyncState } from "@feat/markdown/MdxEditorSyncState";
+import { MdxEditorSyncStateSchema } from "@feat/markdown/MdxEditorSyncState";
 import { UpdateSchedulingNoteActionAction } from "@feat/steps/scheduling/updateSchedulingNote.action";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import "@mdxeditor/editor/style.css";
@@ -36,14 +36,14 @@ export const ScheduleNotesMdxEditor = ({
       markdown: string;
       stepSlug: string;
     }) => {
-      setSyncState(SchedulingSyncStateSchema.enum.Syncing);
+      setSyncState(MdxEditorSyncStateSchema.enum.Syncing);
       const result = await UpdateSchedulingNoteActionAction({
         markdown,
         stepSlug,
       });
 
       if (!isActionSuccessful(result)) {
-        setSyncState(SchedulingSyncStateSchema.enum.Error);
+        setSyncState(MdxEditorSyncStateSchema.enum.Error);
         return toast.error("An error has occurred", {
           description: "Please try again later or contact support",
         });
@@ -51,7 +51,7 @@ export const ScheduleNotesMdxEditor = ({
 
       toast.success("Scheduling Note as been updated");
 
-      setSyncState(SchedulingSyncStateSchema.enum.Sync);
+      setSyncState(MdxEditorSyncStateSchema.enum.Sync);
 
       return result.data;
     },
@@ -62,8 +62,8 @@ export const ScheduleNotesMdxEditor = ({
     1000,
   );
 
-  const [syncState, setSyncState] = useState<SchedulingSyncState>(
-    SchedulingSyncStateSchema.enum.Sync,
+  const [syncState, setSyncState] = useState<MdxEditorSyncState>(
+    MdxEditorSyncStateSchema.enum.Sync,
   );
 
   useEffect(() => {
@@ -78,10 +78,14 @@ export const ScheduleNotesMdxEditor = ({
       <MdxEditor
         markdown={debouncedMarkdown ?? ""}
         syncState={syncState}
+        placeholder="What you need to prepare your step : "
         onChange={(s) => {
-          setSyncState(SchedulingSyncStateSchema.enum["Not-Sync"]);
+          setSyncState(MdxEditorSyncStateSchema.enum["Not-Sync"]);
           SetMarkdown(s);
         }}
+        enableBlockTypeSelect
+        enableInsertTable
+        enableLinkDialog
       />
     </div>
   );
