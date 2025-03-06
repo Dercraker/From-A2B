@@ -4,7 +4,7 @@ import { HeaderBase } from "./HeaderBase";
 
 export const Header = async () => {
   const isMaintenanceEnabled = await getServerFeatureFlags({
-    flag: "IsUnderMaintenance",
+    flag: "isUnderMaintenance",
   });
 
   return <HeaderBase>{!isMaintenanceEnabled && <AuthButton />}</HeaderBase>;
