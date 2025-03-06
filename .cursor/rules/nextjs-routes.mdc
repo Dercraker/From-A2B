@@ -1,4 +1,9 @@
 ---
+description: 
+globs: 
+alwaysApply: false
+---
+---
 description: EXPLAIN how to create and use routing file in NextJS
 globs: *.tsx
 ---

@@ -14,6 +14,7 @@ export const GetStepBySlugQuery = async ({
   const step = await prisma.step.findUniqueOrThrow({
     where: { ...where, slug: stepSlug },
     include: {
+      File: true,
       Task: {
         orderBy: {
           rank: "asc",

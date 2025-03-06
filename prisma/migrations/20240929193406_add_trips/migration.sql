@@ -26,7 +26,7 @@ CREATE TABLE "Step" (
     "latitude" DECIMAL(65,30) NOT NULL,
     "longitude" DECIMAL(65,30) NOT NULL,
     "placeId" TEXT NOT NULL DEFAULT '',
-    "transportMode" "TransportMode" NOT NULL DEFAULT 'Car',
+    "TransportMode" "TransportMode" NOT NULL DEFAULT 'Car',
 
     CONSTRAINT "Step_pkey" PRIMARY KEY ("id")
 );

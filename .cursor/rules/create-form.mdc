@@ -1,4 +1,9 @@
 ---
+description: 
+globs: 
+alwaysApply: false
+---
+---
 description: Create a form using NextJS / React Hook Form / Server Actions.
 globs: *.tsx
 ---
@@ -8,8 +13,8 @@ alwaysApply: false
 ## Context
 
 * Creating a form should always use Shadcn/UI [input.tsx](mdc:src/components/ui/input.tsx) and [label.tsx](mdc:src/components/ui/label.tsx) and [form.tsx](mdc:src/components/ui/form.tsx)
-* We must always use @server-action or [api-route.mdc](mdc:.cursor/rules/api-route.mdc) to handle the action and @use-mutation.mdc
-//TODO HERE SERVER ACTION AND USE MUTATION
+* We must always use [server-actions.mdc](mdc:.cursor/rules/server-actions.mdc) or [api-route.mdc](mdc:.cursor/rules/api-route.mdc) to handle the action and [use-mutation.mdc](mdc:.cursor/rules/use-mutation.mdc)
+
 ## Example
 
 ```tsx
@@ -81,8 +86,7 @@ export const FormExample = () => {
 ```
 
 ## Rules
-//TODO SERVER ACTION
-Then you can create an server-action follow @server-actions.mdc
+Then you can create an server-action follow [server-actions.mdc](mdc:.cursor/rules/server-actions.mdc)
 
 ## Files
 Please use the following files :

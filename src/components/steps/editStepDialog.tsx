@@ -74,7 +74,7 @@ export const EditStepDialog = ({
       longitude: step.longitude ?? undefined,
 
       placeId: step.placeId,
-      transportMode: step.transportMode as TransportMode,
+      TransportMode: step.TransportMode as TransportMode,
     },
   });
 
@@ -252,7 +252,7 @@ export const EditStepDialog = ({
 
           <FormField
             control={form.control}
-            name="transportMode"
+            name="TransportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>

@@ -6,9 +6,11 @@
     "body": [
       "import type { PageParams } from \"@type/next\";",
       "",
-      "export default async function RoutePage(props: PageParams<{ $1 }>) {",
+      "const RoutePage = (props: PageParams<{ $1 }>) => {",
       "  return $2",
-      "}",
+      "};",
+      "",
+      "export default RoutePage;",
     ],
   },
 }

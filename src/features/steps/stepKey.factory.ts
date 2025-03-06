@@ -6,14 +6,22 @@ export const STEP_KEY_FACTORY = {
   ],
   SchedulingNotes: (tripSlug: string, stepSlug: string) => [
     ...STEP_KEY_FACTORY.bySlug(tripSlug, stepSlug),
-    "SchedulingNotes",
+    "schedulingNotes",
   ],
   Tasks: (tripSlug: string, stepSlug: string) => [
     ...STEP_KEY_FACTORY.bySlug(tripSlug, stepSlug),
-    "Tasks",
+    "tasks",
   ],
   Task: (tripSlug: string, stepSlug: string, taskId: string) => [
     ...STEP_KEY_FACTORY.Tasks(tripSlug, stepSlug),
     taskId,
+  ],
+  Files: (tripSlug: string, stepSlug: string) => [
+    ...STEP_KEY_FACTORY.bySlug(tripSlug, stepSlug),
+    "files",
+  ],
+  File: (tripSlug: string, stepSlug: string, fileId: string) => [
+    ...STEP_KEY_FACTORY.Files(tripSlug, stepSlug),
+    fileId,
   ],
 };

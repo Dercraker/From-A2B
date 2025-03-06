@@ -10,7 +10,7 @@ export const EditStepAction = orgAction
   .action(
     async ({
       parsedInput: {
-        transportMode,
+        TransportMode,
         endDate,
         latitude,
         stepId,
@@ -34,7 +34,7 @@ export const EditStepAction = orgAction
           endDate,
           description,
           placeId: placeId ? placeId : undefined,
-          transportMode,
+          TransportMode,
           trip: {
             connect: {
               slug: tripSlug,

@@ -9,7 +9,7 @@ import { MaintenanceTimer } from "./_components/maintenanceTimer";
 
 const RoutePage = async () => {
   const data = await getServerFeatureFlagPayload({
-    flag: "isMaintenanceEnabled",
+    flag: "IsUnderMaintenance",
   });
 
   if (!data) return;

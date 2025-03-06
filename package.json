@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.64.38",
+  "version": "0.65.1",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -103,6 +103,7 @@
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react-dropzone": "^14.3.8",
     "react-email": "3.0.2",
     "react-hook-form": "^7.53.2",
     "react-markdown": "^9.0.1",

@@ -136,6 +136,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                 <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <DateTimePicker
+                    granularity="day"
                     value={field.value}
                     onChange={(date) => {
                       form.setValue("startDate", date ?? new Date(), {

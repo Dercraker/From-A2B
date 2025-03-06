@@ -1,7 +1,7 @@
 import { google } from "@googlemaps/routing/build/protos/protos";
 import { TransportMode } from "@prisma/client";
 
-const transportModeMapping: Record<
+const TransportModeMapping: Record<
   TransportMode,
   google.maps.routing.v2.RouteTravelMode
 > = {
@@ -17,10 +17,10 @@ const transportModeMapping: Record<
 // Utilisation de la mapping
 export const GetTravelMode = (
   mode: TransportMode,
-): google.maps.routing.v2.RouteTravelMode => transportModeMapping[mode];
+): google.maps.routing.v2.RouteTravelMode => TransportModeMapping[mode];
 
 // Mapping entre TransportMode et une chaîne
-const transportModeToString: Record<TransportMode, string> = {
+const TransportModeToString: Record<TransportMode, string> = {
   [TransportMode.Walk]: "Walk",
   [TransportMode.Bike]: "Bike",
   [TransportMode.Car]: "Car",
@@ -30,7 +30,7 @@ const transportModeToString: Record<TransportMode, string> = {
 
 // Fonction pour obtenir la chaîne correspondante
 export const GetTransportModeString = (mode: TransportMode): string => {
-  return transportModeToString[mode] || "Unknown mode"; // Valeur par défaut si le mode n'est pas trouvé
+  return TransportModeToString[mode] || "Unknown mode"; // Valeur par défaut si le mode n'est pas trouvé
 };
 
 // Mapping entre une chaîne et TransportMode

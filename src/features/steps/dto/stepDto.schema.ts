@@ -1,6 +1,7 @@
+import { FileSchema } from "@feat/files/file.schema";
+import { TaskSchema } from "@feat/scheduling/dto/taskDto.schema";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import { TaskSchema } from "@feat/scheduling/dto/taskDto.schema";
 
 export const StepDtoSchema = z.object({
   id: z.string(),
@@ -24,8 +25,9 @@ export const StepDtoSchema = z.object({
   schedulingNotes: z.string().nullable(),
 
   placeId: z.string(),
-  transportMode: z.string(),
-  Task: z.array(TaskSchema).optional(),
+  TransportMode: z.string(),
+  tasks: z.array(TaskSchema).optional(),
+  files: z.array(FileSchema).optional(),
 });
 export const StepsDtoSchema = z.array(StepDtoSchema);
 

@@ -91,7 +91,7 @@ export const StepDetail = ({
         latitude: res.data.latitude,
         longitude: res.data.longitude,
         placeId: res.data.placeId,
-        transportMode: res.data.transportMode as TransportMode,
+        TransportMode: res.data.TransportMode as TransportMode,
       });
 
       return res.data;
@@ -108,7 +108,7 @@ export const StepDetail = ({
       latitude: data.latitude,
       longitude: data.longitude,
       placeId: data.placeId,
-      transportMode: data.transportMode as TransportMode,
+      TransportMode: data.TransportMode as TransportMode,
     });
   };
 
@@ -239,7 +239,7 @@ export const StepDetail = ({
           />
           <FormField
             control={form.control}
-            name="transportMode"
+            name="TransportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>

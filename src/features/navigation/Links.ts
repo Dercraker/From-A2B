@@ -137,6 +137,23 @@ export const LINKS = {
             .replace(":tripSlug", tripSlug)
             .replace(":stepSlug", stepSlug),
       },
+      Files: {
+        href: `${ORGANIZATION_PATH}${TRIP_PATH}/details${STEP_PATH}/files`,
+        label: "Files",
+        generateLink: ({
+          orgSlug,
+          tripSlug,
+          stepSlug,
+        }: {
+          orgSlug: string;
+          tripSlug: string;
+          stepSlug: string;
+        }) =>
+          LINKS.Trips.Steps.Files.href
+            .replace(":organizationSlug", orgSlug)
+            .replace(":tripSlug", tripSlug)
+            .replace(":stepSlug", stepSlug),
+      },
     },
   },
   Maintenance: {
