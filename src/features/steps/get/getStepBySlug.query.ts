@@ -13,6 +13,13 @@ export const GetStepBySlugQuery = async ({
 }: GetStepBySlugQueryType) => {
   const step = await prisma.step.findUniqueOrThrow({
     where: { ...where, slug: stepSlug },
+    include: {
+      Task: {
+        orderBy: {
+          rank: "asc",
+        },
+      },
+    },
   });
 
   return StepDtoSchema.safeParse(step);

@@ -1,0 +1,201 @@
+---
+description: ENFORCE consistent naming conventions across all project files to ensure code readability, maintainability, and searchability
+globs: **/*
+---
+## Context
+- Apply these naming conventions to all code elements including files, folders, functions, classes, interfaces, types, enums, etc.
+- These conventions ensure code consistency, improve readability, and reduce cognitive load
+- Follow these guidelines for all new code and when refactoring existing code
+
+## Requirements
+
+### 1. General Principles
+- Names must be descriptive and reveal intent
+- Names should be searchable and not too short
+- Avoid abbreviations except for widely accepted ones (e.g., `id`, `http`, `url`)
+- Avoid redundant or meaningless words (e.g., `data`, `info`)
+- Maximum name length: 50 characters
+- Maintain consistent casing patterns as defined below
+
+### 2. File & Folder Naming
+
+#### Files
+- **Source Code**: `camelCase.extension` (e.g., `resumeBuilder.ts`)
+- **React/Vue Components**: `PascalCase.tsx` (e.g., `ResumeForm.tsx`)
+- **Tests**: `[filename].{spec|test}.extension` (e.g., `resumeService.spec.ts`)
+- **Type Declaration Files**: `camelCase.d.ts` (e.g., `resumeTypes.d.ts`)
+- **Configuration Files**: `camelCase.config.ts` (e.g., `tailwind.config.ts`)
+- **Constants/Data Files**: `SCREAMING_SNAKE_CASE.ts` (e.g., `DEFAULT_RESUME_TEMPLATE.ts`)
+- **Server Action Files** : `camelCase.action.ts` (e.g., `updateUser.action.ts`)
+- **Zustand Store Files** : `camelCase.store.ts` (e.g., `userPreference.store.ts`)
+- **Zod Shema Files** : `camelCase.schema.ts` (e.g., `addUser.schema.ts`)
+- **Prisma Query Files** : `camelCase.query.ts` (e.g., `addUser.query.ts`)
+- **React Hook Files** : `useCamelCase.ts` (e.g., `useCurrentPath.ts`)
+- **React Query Hook Files** : `useCamelCase.hook.ts` (e.g., `useResortSteps.hook.ts`)
+
+
+#### Folders
+- **General Purpose Folders**: `camelCase` (e.g., `errorHandling`)
+- **Domain/Feature Folders**: `camelCase` (e.g., `resumeBuilder`)
+- **Clean Architecture Layers**: `camelCase` (e.g., `domain`, `application`, `infrastructure`, `presentation`)
+- **Component Collections**: `camelCase` (e.g., `uiComponents`)
+
+### 3. JavaScript/TypeScript Elements
+
+#### Variables
+- **Regular Variables**: `camelCase` (e.g., `userProfile`)
+- **Private Class Variables**: `_camelCase` (e.g., `_userData`)
+- **Boolean Variables**: `isPrefixed` or `hasPrefixed` (e.g., `isValid`, `hasErrors`)
+
+#### Constants
+- **Module-level Constants**: `SCREAMING_SNAKE_CASE` (e.g., `MAX_FILE_SIZE`)
+- **Class Constants**: `SCREAMING_SNAKE_CASE` (e.g., `static readonly MAX_ENTRIES = 50`)
+- **Enum Constants**: `SCREAMING_SNAKE_CASE` (e.g., `ERROR_TYPES.VALIDATION`)
+
+#### Functions & Methods
+- **Regular Functions/Methods**: `PascalCase` (e.g., `CalculateTotal()`)
+- **Private Class Methods**: `_PascalCase` (e.g., `_ValidateInput()`)
+- **Boolean-returning Functions**: `IsPrefixedPascalCase` or `HasPrefixedPascalCase` (e.g., `IsValidEmail()`)
+- **Factory Functions**: `createPrefixedPascalCase` (e.g., `CreateUserProfile()`)
+- **Event Handlers**: `handlePrefixedPascalCase` (e.g., `HandleSubmit()`)
+
+#### Classes
+- **Class Names**: `PascalCase` (e.g., `ResumeBuilder`)
+- **Abstract Classes**: `AbstractPascalCase` (e.g., `AbstractRepository`)
+- **Service Classes**: `PascalCaseService` (e.g., `ValidationService`)
+- **Repository Classes**: `PascalCaseRepository` (e.g., `ResumeRepository`)
+- **Controller Classes**: `PascalCaseController` (e.g., `ResumeController`)
+
+#### Interfaces & Types
+- **Interfaces**: `PascalCaseInterface` (e.g., `ResumeDataInterface`)
+- **Type Aliases**: `PascalCaseType`  (e.g., `ResumeTemplateType` or `TResumeTemplateType`)
+- **Type Parameters/Generics**: Single uppercase letter or `PascalCaseType` (e.g., `T` or `EntityType`)
+- **Prop Types**: `PascalCaseProps` (e.g., `ResumeFormProps`)
+
+#### Enums
+- **Enum Names**: `PascalCaseEnum` (e.g., `ValidationResultEnum`)
+- **Enum Members**: `SCREAMING_SNAKE_CASE` (e.g., `ValidationResult.INVALID_EMAIL`)
+
+#### React/Vue Specific
+- **Component Names**: `PascalCase` (e.g., `ResumeForm`)
+- **Custom Hooks**: `useCamelCase` (e.g., `useFormValidation`)
+- **Context Providers**: `PascalCaseProvider` (e.g., `ResumeProvider`)
+- **Higher-Order Components**: `withPrefixedPascalCase` (e.g., `withAuthentication`)
+
+### Zod Schema
+- **Schema name** : `PascaleCaseSchema` (e.g., `NameSchema`)
+- **Type name** : `PascaleCaseSchema` (e.g., `Name`)
+
+### 4. CSS & Styling
+
+- **Tailwind Custom Classes**: `kebab-case` (e.g., `@apply bg-primary text-white;`)
+
+### 5. Backend Specific
+
+- **API Endpoints**: `kebab-case` (e.g., `/api/resume-templates`)
+- **Environment Variables**: `SCREAMING_SNAKE_CASE` (e.g., `DATABASE_URL`)
+
+### 6. Testing Specific
+
+- **Test Suites**: `describe('PascalCase', ...)` (e.g., `describe('ResumeService', ...)`)
+- **Test Cases**: `it('should do something', ...)` or `test('should do something', ...)`
+- **Test Fixtures**: `camelCaseMock` or `mockPascalCase` (e.g., `resumeDataMock`)
+- **Test Helpers**: `camelCaseHelper` (e.g., `createTestUser`)
+
+## Examples
+
+<example>
+// Good file naming
+resume-service.ts
+ResumeForm.vue
+useMutaion.hook.ts
+usePathName.ts
+myComponent.tsx
+getUser
+resume-repository.spec.ts 
+TEMPLATE_CONSTANTS.ts
+
+// Good variable naming
+const userData = FetchUserData();
+const isValid = ValidateEmail(email);
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+// Good function naming
+function CalculateTotalExperience(workHistory) {...}
+function IsEmailValid(email) {...}
+function HandleSubmit() {...}
+
+// Good class naming
+class ResumeBuilder {...}
+class LocalStorageResumeRepository implements IResumeRepository {...}
+class ValidationService {...}
+
+// Good interface & type naming
+interface IResumeData {...}
+type ResumeTemplate = {...}
+type TEntityId<T> = {...}
+
+// Good enum naming
+enum ValidationResult {
+  VALID,
+  INVALID_EMAIL,
+  MISSING_REQUIRED_FIELD
+}
+
+// Good component naming
+const ProfileSection = () => {...}
+const useFormValidation = () => {...}
+</example>
+
+<example type="invalid">
+// Mauvais file naming
+resume-builder.ts
+resumeform.TSX
+resumeService.Spec.ts
+Resume_types.d.ts
+configTailwind.ts
+
+// Mauvais variable naming
+User_Data
+is_valid
+MaxFileSize
+
+// Mauvais function naming
+calculate_total_experience()
+is_email_valid()
+
+// Mauvais class naming
+resumeBuilder
+validation_service
+
+// Mauvais interface & type naming
+iResumeData
+resumeTemplate
+
+// Mauvais enum naming
+validationResult
+ERROR_TYPES
+
+// Mauvais component naming
+profile_section
+useformvalidation
+
+// Mauvais hook React Query
+usequeryGetUser
+
+// Mauvais file naming Zustand Store
+user-preference.store.ts
+
+// Mauvais file naming Prisma
+addUserQuery.ts
+
+// Mauvais API endpoint
+/api/ResumeTemplates
+
+// Mauvais env variable naming
+databaseUrl
+
+// Mauvais test naming
+describe('resumeService', ...)
+
+</example> 

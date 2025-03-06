@@ -2,7 +2,7 @@ import { HeaderBase } from "@components/layout/HeaderBase";
 import { LogoSvg } from "@components/svg/LogoSvg";
 import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { auth } from "@lib/auth/helper";
+import { currentUser } from "@lib/auth/helper";
 import type { PageParams } from "@type/next";
 import { AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -13,7 +13,7 @@ export default async function AuthSignInPage(params: PageParams) {
   const searchParams = await params.searchParams;
   const { errorMessage, error } = getError(searchParams.error);
 
-  const user = await auth();
+  const user = await currentUser();
 
   if (user) {
     redirect("/account");

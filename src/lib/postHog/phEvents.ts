@@ -26,6 +26,12 @@ export const tripEvents = z.enum([
   "ReOrderStep",
   "UsePlaceInput",
 ]);
+export const taskEvents = z.enum([
+  "TaskCreate",
+  "TaskDelete",
+  "TaskUpdate",
+  "TaskReOrder",
+]);
 
 export const mapEvents = z.enum(["UseCenterMap"]);
 
@@ -51,6 +57,7 @@ export const combinedPhEvents = z.union([
   signInEvent,
   contactEvents,
   tripEvents,
+  taskEvents,
   dateEvents,
   mapEvents,
   blobEvents,

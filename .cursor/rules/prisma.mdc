@@ -1,0 +1,122 @@
+---
+description: EXPLAIN how to use PRISMA in a CLEAN and EFFICIENT way
+globs: *.ts, *.tsx
+alwaysApply: true
+---
+## Context
+
+* We use Prisma as an ORM
+* Prisma use PostgreSQL to work
+* We have two type of prisma query
+  * Generic query like getTripQuery
+  * Specific query like getTripBySlug
+
+
+## Global Usage with Generic queries and Specific queries
+When we talk about query, that involve some frontend logic AND when the return type of the query is used in many component like [server-components.mdc](mdc:.cursor/rules/server-components.mdc), you must always create this query under /src/feature/{AssociateFeature}/ folder.
+
+## Rules
+* When use a type in props params, always consider using query return type to be automaticly updated when we change the query. (here `GetTripQueryType`)
+
+
+## Useage with Generic Query
+### Query file
+**File Name :** getTrip.query.ts
+```tsx
+import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
+import type { TripDto } from "./dto/tripDto.schema";
+import { TripDtoSchema } from "./dto/tripDto.schema";
+
+type GetTripQueryProps = {
+  where: Prisma.TripWhereUniqueInput;
+};
+
+export const GetTripQuery = async ({
+  where,
+}: GetTripQueryProps): Promise<TripDto> => {
+  const trip = await prisma.trip.findFirst({
+    where : {
+      ...where
+    },
+  });
+
+  return TripDtoSchema.parse(trip);
+};
+
+export type GetTripQueryType = NonNullable<
+  Prisma.PromiseReturnType<typeof GetTripQuery>
+>;
+```
+
+### Usage Exemple
+```tsx
+import { GetTripQuery } from "@feat/trip/get/getTrip.query";
+import type { PageParams } from "@type/next";
+
+const RoutePage = async ({
+  params,
+}: PageParams<{ orgSlug: string; tripSlug: string }>) => {
+  const { orgSlug, tripSlug } = await params;
+
+  const trip = await GetTripQuery({
+    where: { slug: tripSlug, Organization: { slug: orgSlug } },
+  });
+
+  return (...);
+};
+
+export default RoutePage;
+```
+
+## Useage with Generic Query
+### Query file
+**File Name :** getTripBySlug.query.ts
+```tsx
+import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
+import type { TripDto } from "./dto/tripDto.schema";
+import { TripDtoSchema } from "./dto/tripDto.schema";
+
+type GetTripQueryBySlugProps = {
+  slug: string;
+};
+
+export const GetTripQueryBySlug = async ({
+  slug,
+}: GetTripQueryBySlugProps): Promise<TripDto> => {
+  const trip = await prisma.trip.findFirst({
+    where : {
+      slug
+    },
+  });
+
+  return TripDtoSchema.parse(trip);
+};
+
+// IMPORTANT : Export the return type of the query so we can use it later
+export type GetTripQueryBySlugType = NonNullable<
+  Prisma.PromiseReturnType<typeof GetTripQueryBySlug>
+>;
+```
+
+### Usage Exemple
+```tsx
+import { GetTripQuery } from "@feat/trip/get/getTrip.query";
+import type { PageParams } from "@type/next";
+
+const RoutePage = async ({
+  params,
+}: PageParams<{ tripSlug: string }>) => {
+  const { tripSlug } = await params;
+
+  const trip = await GetTripQuery({
+    slug: tripSlug
+  });
+
+  return (...);
+};
+
+
+export default RoutePage;
+```

@@ -8,4 +8,12 @@ export const STEP_KEY_FACTORY = {
     ...STEP_KEY_FACTORY.bySlug(tripSlug, stepSlug),
     "SchedulingNotes",
   ],
+  Tasks: (tripSlug: string, stepSlug: string) => [
+    ...STEP_KEY_FACTORY.bySlug(tripSlug, stepSlug),
+    "Tasks",
+  ],
+  Task: (tripSlug: string, stepSlug: string, taskId: string) => [
+    ...STEP_KEY_FACTORY.Tasks(tripSlug, stepSlug),
+    taskId,
+  ],
 };

@@ -5,7 +5,7 @@ import {
   hashStringWithSalt,
   validatePassword,
 } from "@lib/auth/credentials-provider";
-import { requiredAuth } from "@lib/auth/helper";
+import { requiredUser } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { prisma } from "@lib/prisma";
 import { EditPasswordFormSchema } from "./email/editProfile.schema";
@@ -13,7 +13,7 @@ import { EditPasswordFormSchema } from "./email/editProfile.schema";
 export const editPasswordAction = authAction
   .schema(EditPasswordFormSchema)
   .action(async ({ parsedInput: input, ctx }) => {
-    const user = await requiredAuth();
+    const user = await requiredUser();
     const { passwordHash } = await prisma.user.findUniqueOrThrow({
       where: {
         id: user.id,

@@ -706,7 +706,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       value,
       onChange,
       hourCycle = 24,
-      yearRange = 50,
+      yearRange = 25,
       hideTimezone = false,
       displayFormat,
       granularity = "second",
@@ -760,6 +760,10 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
     };
 
     const formatValue = (date: Date) => {
+      if (granularity === "day") {
+        return format(date, "PPP", { locale });
+      }
+
       return format(
         date,
         hourCycle === 24 ? initHourFormat.hour24 : initHourFormat.hour12,
@@ -818,7 +822,11 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
             }}
             value={inputValue}
             className={cn("w-full", className)}
-            placeholder='Write any time here, eg: "tomorrow at 9am" or "in 3 hours"'
+            placeholder={
+              granularity === "day"
+                ? "Write any date here, eg: 'tomorrow' or 'next week' or 'in 3 days'"
+                : "Write any time here, eg: 'tomorrow at 9am' or 'in 3 hours'"
+            }
             onChange={(e) => {
               const value = e.target.value;
               setInputValue(value);

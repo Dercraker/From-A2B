@@ -6,8 +6,8 @@ import Resend from "next-auth/providers/resend";
 import { SiteConfig } from "site-config";
 import { env } from "../env/server";
 import { logger } from "../logger";
-import { sendEmail } from "../mail/sendEmail";
 import { getCredentialsProvider } from "./credentials-provider";
+import { sendEmail } from "@lib/mail/sendEmail";
 
 type Providers = NonNullable<NextAuthConfig["providers"]>;
 
