@@ -5,9 +5,13 @@ import { ScheduleTasks } from "./scheduleTasks";
 
 export type SchedulingCardProps = {
   stepSlug: string;
+  tripSlug: string;
 };
 
-export const SchedulingCard = async ({ stepSlug }: SchedulingCardProps) => {
+export const SchedulingCard = async ({
+  stepSlug,
+  tripSlug,
+}: SchedulingCardProps) => {
   const markdown = (await GetStepBySlugQuery({ stepSlug })).data
     ?.schedulingNotes;
 
@@ -15,7 +19,7 @@ export const SchedulingCard = async ({ stepSlug }: SchedulingCardProps) => {
     <Card className="pt-6">
       <CardContent className="flex flex-col gap-4">
         <ScheduleNotesMdxEditor markdown={markdown ?? undefined} />
-        <ScheduleTasks />
+        <ScheduleTasks stepSlug={stepSlug} tripSlug={tripSlug} />
       </CardContent>
     </Card>
   );

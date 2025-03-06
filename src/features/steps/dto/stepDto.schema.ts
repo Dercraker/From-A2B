@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
+import { TaskSchema } from "@feat/scheduling/dto/taskDto.schema";
 
 export const StepDtoSchema = z.object({
   id: z.string(),
@@ -24,6 +25,7 @@ export const StepDtoSchema = z.object({
 
   placeId: z.string(),
   transportMode: z.string(),
+  Task: z.array(TaskSchema).optional(),
 });
 export const StepsDtoSchema = z.array(StepDtoSchema);
 

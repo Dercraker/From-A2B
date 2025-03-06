@@ -1,6 +1,7 @@
 ---
 description: EXPLAIN how to create and USE server action with next-safe-action library
 globs: *.ts, *.tsx
+alwaysApply: false
 ---
 ---
 alwaysApply: false
@@ -110,6 +111,7 @@ export const Form = () => {
 ## Rules
 
 - Always suffix server action with "Action" like "UpdateUserAction" or "CreateSubscriberAction"
+- Always use Serveraction in Query mutation @reactQuery
 
 ## Available actions
 

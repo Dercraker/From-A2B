@@ -14,7 +14,7 @@ const AddTaskToStepByStepSlugActionSchema = z.object({
 
 export const AddTaskToStepByStepSlugActionAction = orgAction
   .schema(AddTaskToStepByStepSlugActionSchema)
-  .action(async ({ parsedInput: { stepSlug, title, dueDate }, ctx }) => {
+  .action(async ({ parsedInput: { stepSlug, title, dueDate } }) => {
     const lastTask = await GetLastTaskByStepSlugQuery({
       where: { slug: stepSlug },
     });

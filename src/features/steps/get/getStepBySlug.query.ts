@@ -13,6 +13,9 @@ export const GetStepBySlugQuery = async ({
 }: GetStepBySlugQueryType) => {
   const step = await prisma.step.findUniqueOrThrow({
     where: { ...where, slug: stepSlug },
+    include: {
+      Task: true,
+    },
   });
 
   return StepDtoSchema.safeParse(step);

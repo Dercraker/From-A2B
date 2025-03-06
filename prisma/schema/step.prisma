@@ -48,10 +48,10 @@ model Task {
   notes   String?
   dueDate DateTime?
   rank    Int
+  state   TaskState @default(Todo)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   stepId String
   step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)

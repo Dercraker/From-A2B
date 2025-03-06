@@ -3,7 +3,12 @@
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { LoadingButton } from "@components/form/LoadingButton";
 import { AddTaskSchema } from "@feat/scheduling/addTask.schema";
+import { AddTaskToStepByStepSlugActionAction } from "@feat/scheduling/addTaskToStepByStepSlug.action";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { useDisclosure } from "@hooks/useDisclosure";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Checkbox } from "@ui/checkbox";
 import { DateTimePicker } from "@ui/DateTimePicker";
 import {
   Dialog,
@@ -24,25 +29,62 @@ import {
 } from "@ui/form";
 import { Input } from "@ui/input";
 import { Separator } from "@ui/separator";
-import { type PropsWithChildren } from "react";
+import { useParams } from "next/navigation";
+import { type PropsWithChildren, useState } from "react";
+import { toast } from "sonner";
 
 export type AddTaskDialogProps = PropsWithChildren<{}>;
 
 export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
-  const [isDialogOpen, { close, open, toggle }] = useDisclosure(true);
+  const { tripSlug, stepSlug } = useParams();
+  const [isDialogOpen, { close, open, toggle }] = useDisclosure(false);
+  const [addAnother, setAddAnother] = useState(false);
   const form = useZodForm({
     schema: AddTaskSchema,
   });
+  const queryClient = useQueryClient();
 
-  //TODO Crée la mutation pour add la step
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async () => {
+      const result = await AddTaskToStepByStepSlugActionAction({
+        stepSlug: stepSlug as string,
+        title: form.getValues("title"),
+        dueDate: form.getValues("dueDate"),
+      });
+
+      if (!isActionSuccessful(result)) {
+        toast.error(result?.serverError ?? "An error occurred", {
+          description: "Please try again later or contact support",
+        });
+        return;
+      }
+
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.Tasks(
+          tripSlug as string,
+          stepSlug as string,
+        ),
+      });
+
+      toast.success("Task added successfully");
+
+      if (addAnother) {
+        form.reset({
+          title: "",
+        });
+      } else {
+        close();
+      }
+    },
+  });
 
   return (
     <Dialog
       open={isDialogOpen}
-      onOpenChange={(v) => {
+      onOpenChange={() => {
         toggle();
 
-        if (!v) form.reset();
+        form.reset();
       }}
     >
       <DialogTrigger>{children}</DialogTrigger>
@@ -71,7 +113,8 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
               <FormItem>
                 <FormLabel>Task name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Buy plane tickets" {...field} />
+                  {/* TODO: redéfinir le focus quand on add plusieurs taches */}
+                  <Input placeholder="Buy plane tickets" {...field} autoFocus />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,7 +147,26 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
             />
           </FormOptionalSection>
           <Separator />
-          <LoadingButton disabled={!form.formState.isValid}>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="addAnother"
+              checked={addAnother}
+              onCheckedChange={(checked) => setAddAnother(checked as boolean)}
+            />
+            <label
+              htmlFor="addAnother"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Add another task
+            </label>
+          </div>
+          <LoadingButton
+            disabled={!form.formState.isValid}
+            loading={isPending}
+            onClick={async () => {
+              await mutateAsync();
+            }}
+          >
             Add new task
           </LoadingButton>
         </Form>
@@ -112,3 +174,4 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
     </Dialog>
   );
 };
+
