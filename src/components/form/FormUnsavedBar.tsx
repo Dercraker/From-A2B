@@ -19,18 +19,23 @@ import { Button } from "../ui/button";
 import { InlineTooltip } from "../ui/tooltip";
 import { LoadingButton } from "./LoadingButton";
 
-export const FormUnsavedBar = <T extends FieldValues>(props: FormProps<T>) => {
+type FormUnsavedBarProps<T extends FieldValues> = FormProps<T> & {
+  submit: (v: T) => void;
+  reset: () => void;
+};
+
+export const FormUnsavedBar = <T extends FieldValues>({
+  submit,
+  reset,
+  ...props
+}: FormUnsavedBarProps<T>) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
 
-  const submit = () => submitButtonRef.current?.click();
-  const reset = () => resetButtonRef.current?.click();
-
   const isDirty = props.form.formState.isDirty;
-
   useKey(
     (event) => (event.ctrlKey || event.metaKey) && event.key === "s" && isDirty,
-    submit,
+    () => submit(props.form.getValues()),
     { event: "keydown" },
     [isDirty],
   );
@@ -81,11 +86,11 @@ export const FormUnsavedBar = <T extends FieldValues>(props: FormProps<T>) => {
                   loading={props.disabled ?? props.form.formState.isSubmitting}
                   variant="success"
                   onClick={() => {
-                    submit();
+                    submit(props.form.getValues());
                   }}
                 >
                   Save{" "}
-                  <KeyboardShortcut eventKey="ctrl">
+                  <KeyboardShortcut eventKey="Control">
                     <CmdOrOption />
                   </KeyboardShortcut>
                   <KeyboardShortcut eventKey="s">S</KeyboardShortcut>
