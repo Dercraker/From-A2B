@@ -1,4 +1,9 @@
 ---
+description: 
+globs: 
+alwaysApply: false
+---
+---
 description: EXPLAIN how to use NUQS to create Query State that sync React useState with the URL Query
 globs: *.tsx, *.ts
 ---
@@ -129,7 +134,7 @@ export const loadSearchParams = createLoader(coordinatesSearchParams)
 
 Here, loadSearchParams is a function that parses search params and returns state variables to be consumed server-side (the same state type that useQueryStates returns).
 
-Then on [105-nextjs-routes.mdc](mdc:.cursor/rules/105-nextjs-routes.mdc) you can use :
+Then on [nextjs-routes.mdc](mdc:.cursor/rules/nextjs-routes.mdc) you can use :
 
 ```tsx
 // page.tsx

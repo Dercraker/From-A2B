@@ -68,7 +68,7 @@ export const AddStepDialog = ({
   const form = useZodForm({
     schema: AddStepSchema,
     defaultValues: {
-      transportMode: TransportMode.Car,
+      TransportMode: TransportMode.Car,
       tripSlug: String(params.tripSlug),
 
       latitude: undefined,
@@ -266,7 +266,7 @@ export const AddStepDialog = ({
 
           <FormField
             control={form.control}
-            name="transportMode"
+            name="TransportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>

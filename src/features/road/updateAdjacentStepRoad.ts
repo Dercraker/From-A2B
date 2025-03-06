@@ -60,7 +60,7 @@ export const updateAdjacentStepRoad = async ({
         },
       },
     },
-    transportMode: GetTransportModeFromString(stepAfter.transportMode),
+    TransportMode: GetTransportModeFromString(stepAfter.TransportMode),
   });
 
   await UpdateRoadToStepByIdQuery({
@@ -124,7 +124,7 @@ export const updateAdjacentMovedStepRoad = async ({
           },
         },
       },
-      transportMode: GetTransportModeFromString(currentStep.transportMode),
+      TransportMode: GetTransportModeFromString(currentStep.TransportMode),
     });
 
     await UpdateRoadToStepByIdQuery({
@@ -166,7 +166,7 @@ export const updateAdjacentMovedStepRoad = async ({
           },
         },
       },
-      transportMode: GetTransportModeFromString(stepAfter.transportMode),
+      TransportMode: GetTransportModeFromString(stepAfter.TransportMode),
     });
 
     await UpdateRoadToStepByIdQuery({
@@ -217,7 +217,7 @@ export const updateAdjacentMovedStepRoad = async ({
         },
       },
     },
-    transportMode: GetTransportModeFromString(currentStep.transportMode),
+    TransportMode: GetTransportModeFromString(currentStep.TransportMode),
   });
   const nextRoad = await ComputeRoutes({
     origin: {
@@ -238,7 +238,7 @@ export const updateAdjacentMovedStepRoad = async ({
         },
       },
     },
-    transportMode: GetTransportModeFromString(stepAfter.transportMode),
+    TransportMode: GetTransportModeFromString(stepAfter.TransportMode),
   });
 
   await UpdateRoadToStepByIdQuery({

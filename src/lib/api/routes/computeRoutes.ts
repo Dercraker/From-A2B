@@ -14,15 +14,15 @@ const routesClient = new v2.RoutesClient({
 type ComputeRoutesProps = {
   origin: google.maps.routing.v2.IWaypoint;
   destination: google.maps.routing.v2.IWaypoint;
-  transportMode: TransportMode;
+  TransportMode: TransportMode;
 };
 
 export const ComputeRoutes = async ({
   origin,
   destination,
-  transportMode,
+  TransportMode,
 }: ComputeRoutesProps) => {
-  if (transportMode === "Plane" || transportMode === "Boat")
+  if (TransportMode === "Plane" || TransportMode === "Boat")
     return {
       distance: 0,
       duration: 0,
@@ -46,9 +46,9 @@ export const ComputeRoutes = async ({
       destination: {
         ...destination,
       },
-      travelMode: GetTravelMode(transportMode),
+      travelMode: GetTravelMode(TransportMode),
       routingPreference:
-        transportMode !== "Walk" && transportMode !== "Bike"
+        TransportMode !== "Walk" && TransportMode !== "Bike"
           ? "TRAFFIC_UNAWARE"
           : undefined,
       computeAlternativeRoutes: false,

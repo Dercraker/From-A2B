@@ -51,11 +51,10 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
         return null;
       }
 
-      return result.data;
+      return result.data ?? null;
     },
   });
 
-  //TODO: Implement reSortTasksAsync
   const { isPending: reSortTasksIsPending, mutateAsync: reSortTasksAsync } =
     useResortTasks({
       stepSlug: stepSlug as string,
@@ -78,7 +77,6 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
 
       const newTasks = arrayMove(tasks, oldIndex, newIndex);
 
-      //TODO: Implement reSortTasksAsync
       await reSortTasksAsync({ tasks: newTasks });
     }
   };
@@ -93,7 +91,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
       </div>
     );
 
-  if (!tasks || isError)
+  if (isError)
     return (
       <Alert variant="destructive">
         <AlertTitle>Error</AlertTitle>
@@ -105,7 +103,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
 
   return (
     <div className="flex size-full flex-col overflow-hidden">
-      {!!tasks.length && (
+      {tasks && !!tasks.length && (
         <ScrollArea className="flex h-full grow">
           {reSortTasksIsPending && <LoadingOverlay />}
           <DndContext
@@ -129,7 +127,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
         </ScrollArea>
       )}
 
-      {!tasks.length && (
+      {!tasks?.length && (
         <div className="mt-4 flex select-none flex-col items-center justify-center">
           <Typography variant="lead">No tasks found</Typography>
         </div>

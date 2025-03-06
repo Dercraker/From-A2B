@@ -58,7 +58,7 @@ export const AddRoadsToStep = async ({
           },
         },
       },
-      transportMode: GetTransportModeFromString(currentStep.transportMode),
+      TransportMode: GetTransportModeFromString(currentStep.TransportMode),
     });
 
     await AddRoadToStepQuery({
@@ -98,7 +98,7 @@ export const AddRoadsToStep = async ({
           },
         },
       },
-      transportMode: GetTransportModeFromString(stepAfter.transportMode),
+      TransportMode: GetTransportModeFromString(stepAfter.TransportMode),
     });
 
     await UpdateRoadToStepByIdQuery({
@@ -143,7 +143,7 @@ export const AddRoadsToStep = async ({
         },
       },
     },
-    transportMode: GetTransportModeFromString(currentStep.transportMode),
+    TransportMode: GetTransportModeFromString(currentStep.TransportMode),
   });
 
   const nextRoad = await ComputeRoutes({
@@ -165,7 +165,7 @@ export const AddRoadsToStep = async ({
         },
       },
     },
-    transportMode: GetTransportModeFromString(stepAfter.transportMode),
+    TransportMode: GetTransportModeFromString(stepAfter.TransportMode),
   });
 
   await AddRoadToStepQuery({

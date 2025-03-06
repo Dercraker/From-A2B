@@ -13,7 +13,7 @@ export const AddStepSchema = z.object({
   longitude: z.number(),
 
   placeId: z.string().optional(),
-  transportMode: z.nativeEnum(TransportMode).default(TransportMode.Car),
+  TransportMode: z.nativeEnum(TransportMode).default(TransportMode.Car),
 
   stepBefore: StepDtoSchema.optional(),
   stepAfter: StepDtoSchema.optional(),

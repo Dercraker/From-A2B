@@ -4,6 +4,7 @@ import { initEdgeStoreClient } from "@edgestore/server/core";
 import { currentUser } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { phCapture } from "@lib/postHog/eventCapture";
+import { z } from "zod";
 import { getEnvPath } from "./getEnvPath";
 
 type Context = {
@@ -34,6 +35,23 @@ const edgeStoreRouter = es.router({
     })
     .beforeDelete(() => {
       phCapture("DeleteProfilePicture");
+      return true;
+    }),
+  stepFiles: es
+    .fileBucket({
+      maxSize: 1024 * 1024 * 50, //50Mb
+    })
+    .input(z.object({ stepSlug: z.string() }))
+    .path(({ ctx, input }) => [
+      { env: ctx.envPath },
+      { stepSlug: input.stepSlug },
+    ])
+    .beforeUpload(() => {
+      phCapture("UploadFile");
+      return true;
+    })
+    .beforeDelete(() => {
+      phCapture("DeleteFile");
       return true;
     }),
 });
