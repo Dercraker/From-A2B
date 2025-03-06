@@ -22,6 +22,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { LINKS } from "@feat/navigation/Links";
+import { useUpdateAdjacentStepRoad } from "@feat/road/updateAdjacentStepRoad.hook";
 import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { useResortSteps } from "@feat/steps/useResortSteps.hook";
@@ -72,6 +73,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+  const { mutateAsync: updateRoads } = useUpdateAdjacentStepRoad({ tripSlug });
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
@@ -174,7 +176,3 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
     </div>
   );
 };
-
-function updateRoads(arg0: { stepId: string }) {
-  throw new Error("Function not implemented.");
-}

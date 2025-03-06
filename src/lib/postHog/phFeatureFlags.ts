@@ -5,13 +5,11 @@ import { decide } from "./api/decide";
 export const getServerFeatureFlags = async ({
   flag,
   distinct_id,
-  group_id,
 }: {
   flag: phFeatureFlags;
   distinct_id?: string;
-  group_id?: string;
 }) => {
-  const data = await decide(distinct_id, group_id);
+  const data = await decide(distinct_id ?? undefined);
 
   return data.featureFlags[flag];
 };
@@ -19,13 +17,11 @@ export const getServerFeatureFlags = async ({
 export const getServerFeatureFlagPayload = async ({
   flag,
   distinct_id,
-  group_id,
 }: {
   flag: phFeatureFlags;
   distinct_id?: string;
-  group_id?: string;
 }) => {
-  const data = await decide(distinct_id, group_id);
+  const data = await decide(distinct_id ?? undefined);
 
   return data.featureFlagPayloads[flag];
 };
