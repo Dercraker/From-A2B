@@ -25,12 +25,10 @@ import { LINKS } from "@feat/navigation/Links";
 import { useUpdateAdjacentStepRoad } from "@feat/road/updateAdjacentStepRoad.hook";
 import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
-import type { ReSortStepsSchema } from "@feat/steps/update/reSortStep.schema";
-import { ReSortStepsAction } from "@feat/steps/update/reSortSteps.action";
 import { useResortSteps } from "@feat/steps/useResortSteps.hook";
 import { useTripStore } from "@feat/trip/trip.store";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useMap } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -52,8 +50,6 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
       lng: steps[steps.length - 1].longitude,
     });
   }
-
-  const queryClient = useQueryClient();
 
   const { isPending } = useQuery({
     queryKey: STEP_KEY_FACTORY.All(tripSlug),
