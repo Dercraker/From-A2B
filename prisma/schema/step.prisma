@@ -12,13 +12,14 @@ model Step {
   latitude      Decimal
   longitude     Decimal
   placeId       String        @default("")
-  transportMode TransportMode @default(Car)
+  TransportMode TransportMode @default(Car)
 
   schedulingNotes String?
 
   road   Road?
   roadId String? @unique
   Task   Task[]
+  File   File[]
 }
 
 model Road {
@@ -63,4 +64,16 @@ enum TaskState {
   Blocked
   Done
   Canceled
+}
+
+model File {
+  id         String   @id @unique @default(cuid())
+  name       String
+  url        String   @unique
+  type       String
+  size       Int
+  uploadedAt DateTime @default(now())
+
+  stepId String
+  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
 }
