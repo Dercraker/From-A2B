@@ -29,7 +29,7 @@ export const getServerFeatureFlagPayload = async ({
 
   return data.featureFlagPayloads[flag];
 };
-export const booleanFeatures = z.enum(["IsUnderMaintenance"]);
+export const booleanFeatures = z.enum(["isUnderMaintenance"]);
 
 export const combinedFeatureFlags = z.union([booleanFeatures, booleanFeatures]);
 

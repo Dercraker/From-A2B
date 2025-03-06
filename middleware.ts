@@ -28,7 +28,7 @@ export const middleware = async (req: NextRequest) => {
   const url = new URL(req.url);
 
   const isUnderMaintenance = await getServerFeatureFlags({
-    flag: "IsUnderMaintenance",
+    flag: "isUnderMaintenance",
   });
 
   if (isUnderMaintenance && req.nextUrl.pathname !== LINKS.Maintenance.href) {
