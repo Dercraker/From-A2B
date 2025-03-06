@@ -30,12 +30,13 @@ import {
 import { Input } from "@ui/input";
 import { Separator } from "@ui/separator";
 import { useParams } from "next/navigation";
-import { type PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export type AddTaskDialogProps = PropsWithChildren<{}>;
 
 export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const { tripSlug, stepSlug } = useParams();
   const [isDialogOpen, { close, open, toggle }] = useDisclosure(false);
   const [addAnother, setAddAnother] = useState(false);
@@ -71,7 +72,9 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
       if (addAnother) {
         form.reset({
           title: "",
+          dueDate: undefined,
         });
+        inputRef.current?.focus();
       } else {
         close();
       }
@@ -113,8 +116,12 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
               <FormItem>
                 <FormLabel>Task name</FormLabel>
                 <FormControl>
-                  {/* TODO: redéfinir le focus quand on add plusieurs taches */}
-                  <Input placeholder="Buy plane tickets" {...field} autoFocus />
+                  <Input
+                    placeholder="Buy plane tickets"
+                    {...field}
+                    autoFocus
+                    ref={inputRef}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
