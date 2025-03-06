@@ -1,15 +1,10 @@
 "use client";
 
 import { AutocompleteComponent } from "@components/address/autocompleteComponent";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
 import { DeleteStepAlertDialog } from "@components/steps/deleteStepAlertDialog";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { DateTimePicker } from "@components/ui/DateTimePicker";
 import {
   FormControl,
@@ -34,12 +29,14 @@ import { LINKS } from "@feat/navigation/Links";
 import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { GetStepBySlugAction } from "@feat/steps/get/getStepBySlug.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { EditStepAction } from "@feat/steps/update/editStep.action";
 import { EditStepSchema } from "@feat/steps/update/editStep.schema";
 import { ConstructTripLink } from "@feat/trips/trips.link";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
 import { TransportMode } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Separator } from "@ui/separator";
 import { Bike, Car, Footprints, Plane, Sailboat, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -83,7 +80,8 @@ export const StepDetail = ({
       }
 
       form.reset({
-        tripSlug: res.data.slug,
+        tripSlug: tripSlug,
+        stepId: res.data.id,
         name: res.data.name,
         description: res.data.description ?? undefined,
         startDate: res.data.startDate ?? new Date(),
@@ -98,13 +96,35 @@ export const StepDetail = ({
     },
   });
 
+  const queryClient = useQueryClient();
+  const { mutate: updateStep } = useMutation({
+    mutationFn: async (values: EditStepSchema) => {
+      const result = await EditStepAction({
+        ...values,
+        stepId: values.stepId,
+      });
+
+      if (!isActionSuccessful(result)) {
+        toast.error(result?.serverError);
+        return;
+      }
+
+      toast.success(`The step ${result.data} as been updated.`);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(tripSlug),
+      });
+    },
+  });
+
   const handleReset = (data: StepDto) => {
     form.reset({
       tripSlug: data.slug,
       name: data.name,
       description: data.description ?? undefined,
-      startDate: data.startDate ?? new Date(),
-      endDate: data.endDate ?? new Date(),
+      startDate: data.startDate ?? undefined,
+      endDate: data.endDate ?? undefined,
       latitude: data.latitude,
       longitude: data.longitude,
       placeId: data.placeId,
@@ -117,8 +137,11 @@ export const StepDetail = ({
 
   return (
     <FormUnsavedBar
-      onSubmit={(v) => alert(v)}
-      onReset={() => handleReset(step)}
+      onSubmit={() => void 0}
+      submit={async (v) => {
+        updateStep(v);
+      }}
+      reset={() => handleReset(step)}
       form={form}
     >
       <Card className="group min-h-96 w-full">
@@ -154,68 +177,91 @@ export const StepDetail = ({
               </InlineTooltip>
             </DeleteStepAlertDialog>
           </CardTitle>
-          <CardDescription>
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      value={field.value ?? ""}
-                      placeholder="Any description"
-                      className="bg-card"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-baseline justify-between">
-            <FormField
-              control={form.control}
-              name="startDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Start date</FormLabel>
-                  <DateTimePicker
-                    value={field.value ?? new Date()}
-                    className=" w-full"
-                    onChange={(date) => {
-                      form.setValue("startDate", date ?? new Date(), {
-                        shouldDirty: true,
-                      });
-                    }}
-                  />
+          <div className="flex flex-col gap-2">
+            <Separator />
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="endDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>End date</FormLabel>
-                  <DateTimePicker
-                    value={field.value ?? new Date()}
-                    className=" w-full"
-                    onChange={(date) => {
-                      form.setValue("endDate", date ?? new Date(), {
-                        shouldDirty: true,
-                      });
-                    }}
-                  />
+            <FormOptionalSection
+              defaultOpen={Boolean(form.getValues("description"))}
+              label="Description"
+              onToggle={(open) => {
+                if (!open) form.setValue("description", undefined);
+              }}
+            >
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea placeholder="Any description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
 
-                  <FormMessage />
-                </FormItem>
+            <Separator />
+
+            <FormOptionalSection
+              defaultOpen={Boolean(
+                !form.getValues("endDate") && !form.getValues("startDate"),
               )}
-            />
+              label="Dates"
+              onToggle={(open) => {
+                if (!open) {
+                  form.setValue("endDate", undefined, { shouldDirty: true });
+                  form.setValue("startDate", undefined, { shouldDirty: true });
+                }
+              }}
+            >
+              <div className="flex justify-between gap-2">
+                <FormField
+                  control={form.control}
+                  name="startDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-1 flex-col">
+                      <FormLabel>Start Date</FormLabel>
+                      <DateTimePicker
+                        value={field.value}
+                        className="w-full"
+                        onChange={(date) => {
+                          form.setValue("startDate", date, {
+                            shouldDirty: true,
+                          });
+                        }}
+                      />
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-1 flex-col">
+                      <FormLabel>End Date</FormLabel>
+                      <DateTimePicker
+                        value={field.value}
+                        className="w-full"
+                        onChange={(date) => {
+                          form.setValue("endDate", date ?? new Date(), {
+                            shouldDirty: true,
+                          });
+                        }}
+                      />
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </FormOptionalSection>
+
+            <Separator />
           </div>
           <FormField
             control={form.control}

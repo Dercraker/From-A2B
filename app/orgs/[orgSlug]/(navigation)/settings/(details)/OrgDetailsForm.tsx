@@ -54,7 +54,9 @@ export const OrgDetailsForm = ({ defaultValues }: ProductFormProps) => {
   return (
     <FormUnsavedBar
       form={form}
-      onSubmit={async (v) => mutation.mutateAsync(v)}
+      submit={async (v) => mutation.mutateAsync(v)}
+      reset={() => form.reset(defaultValues)}
+      onSubmit={() => void 0}
       className="flex w-full flex-col gap-6 lg:gap-8"
     >
       <Card>

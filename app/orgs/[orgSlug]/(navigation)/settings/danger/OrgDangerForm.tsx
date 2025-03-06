@@ -58,7 +58,7 @@ export const OrganizationDangerForm = ({ defaultValues }: ProductFormProps) => {
   return (
     <FormUnsavedBar
       form={form}
-      onSubmit={(v) => {
+      submit={(v) => {
         alertDialog.add({
           title: "Are you sure ?",
           description:
@@ -66,11 +66,13 @@ export const OrganizationDangerForm = ({ defaultValues }: ProductFormProps) => {
           action: {
             label: "Yes, change the slug",
             onClick: () => {
-              mutation.mutate(v);
+              mutation.mutate({ ...v, slug: v.slug });
             },
           },
         });
       }}
+      reset={() => form.reset(defaultValues)}
+      onSubmit={() => void 0}
       className="flex w-full flex-col gap-6 lg:gap-8"
     >
       <Card>
