@@ -2,8 +2,8 @@ import { InlineTooltip } from "@components/ui/tooltip";
 import { Typography } from "@components/ui/typography";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { LINKS } from "@feat/navigation/Links";
 import type { StepDto } from "@feat/steps/dto/stepDto.schema";
-import { GenerateStepLink } from "@feat/steps/steps.link";
 import { cn } from "@lib/utils";
 import { EllipsisVertical, GripVertical } from "lucide-react";
 import Link from "next/link";
@@ -53,7 +53,11 @@ export const StepItemSortable = ({
       <InlineTooltip title={step.name}>
         <Typography
           as={Link}
-          href={GenerateStepLink({ orgSlug, tripSlug, stepSlug: step.slug })}
+          href={LINKS.Trips.Steps.Detail.href({
+            orgSlug,
+            tripSlug,
+            stepSlug: step.slug,
+          })}
           variant="link"
           className="mr-2 overflow-hidden text-ellipsis text-nowrap text-xl"
         >

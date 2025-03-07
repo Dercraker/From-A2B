@@ -1,13 +1,11 @@
 import { LINKS } from "@feat/navigation/Links";
 import type {
+  GeneratedNavigationLinksGroups,
+  NavigationLink,
   NavigationLinks,
   NavigationLinksGroup,
   NavigationLinksGroups,
 } from "@feat/navigation/navigation.type";
-
-export const getAccountNavigation = (): NavigationLinksGroups => {
-  return ACCOUNT_LINKS;
-};
 
 const ACCOUNT_LINKS: NavigationLinksGroups = [
   {
@@ -20,3 +18,15 @@ const ACCOUNT_LINKS: NavigationLinksGroups = [
     ] satisfies NavigationLinks,
   } satisfies NavigationLinksGroup,
 ] satisfies NavigationLinksGroups;
+
+export const getAccountNavigation = (): GeneratedNavigationLinksGroups => {
+  return ACCOUNT_LINKS.map((group: NavigationLinksGroup) => {
+    return {
+      ...group,
+      links: group.links.map((link: NavigationLink) => ({
+        ...link,
+        href: link.href({}),
+      })),
+    };
+  });
+};

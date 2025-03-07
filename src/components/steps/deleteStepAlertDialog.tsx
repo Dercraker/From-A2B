@@ -7,6 +7,7 @@ import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import { useParams } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { toast } from "sonner";
@@ -25,8 +26,7 @@ export const DeleteStepAlertDialog = ({
   onDeleted,
 }: DeleteStepAlertDialogProps) => {
   const queryClient = useQueryClient();
-  const params = useParams();
-  const tripSlug = params.tripSlug as string;
+  const { tripSlug } = useParams<StepPathParams>();
 
   const { isPending, mutateAsync: deleteStepAsync } = useMutation({
     mutationFn: async () => {

@@ -1,7 +1,7 @@
-import type { NavigationLinks } from "@feat/navigation/navigation.type";
+import type { GeneratedNavigationLinks } from "@feat/navigation/navigation.type";
 import { usePathname } from "next/navigation";
 
-export const useCurrentPath = (links: NavigationLinks) => {
+export const useCurrentPath = (links: GeneratedNavigationLinks) => {
   const currentPath = usePathname().split("/").filter(Boolean);
 
   const linkMatchCounts = links.map((link) => {

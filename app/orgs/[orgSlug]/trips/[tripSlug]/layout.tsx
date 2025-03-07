@@ -10,7 +10,7 @@ import { IsTripExistQuery } from "@feat/trip/get/isTripExist.query";
 import { GetTripsByCurrentOrgQuery } from "@feat/trips/getTripsByCurrentOrgQuery.query";
 import { displayName } from "@lib/format/displayName";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
-import type { LayoutParams } from "@type/next";
+import type { LayoutParams, TripPathParams } from "@type/next";
 import { Rabbit } from "lucide-react";
 import Link from "next/link";
 import { TripNavigation } from "./_navigation/tripNavigation";
@@ -20,7 +20,7 @@ import { TripSelect } from "./_navigation/tripSelect";
 const RouteLayout = async ({
   children,
   params,
-}: LayoutParams<{ orgSlug: string; tripSlug: string }>) => {
+}: LayoutParams<TripPathParams>) => {
   const { orgSlug, tripSlug } = await params;
 
   const { org, user } = await getRequiredCurrentOrgCache();

@@ -6,12 +6,13 @@ import { Separator } from "@components/ui/separator";
 import { Typography } from "@components/ui/typography";
 import type { Plan } from "@feat/plans/plans";
 import { cn } from "@lib/utils";
+import type { OrgPathParams } from "@type/next";
 import { Check } from "lucide-react";
 import { useParams } from "next/navigation";
 import { BuyButton } from "../stripe/BuyButton";
 
 export const PricingCard = (props: Plan) => {
-  const params = useParams();
+  const params = useParams<OrgPathParams>();
 
   const organizationSlug = params.orgSlug ? params.orgSlug : "";
 

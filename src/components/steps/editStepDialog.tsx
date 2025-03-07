@@ -32,6 +32,7 @@ import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import { Separator } from "@ui/separator";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -54,14 +55,14 @@ export const EditStepDialog = ({
   step,
   onClose,
 }: EditStepDialogProps) => {
-  const params = useParams();
+  const { tripSlug } = useParams<StepPathParams>();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const form = useZodForm({
     schema: EditStepSchema,
     defaultValues: {
-      tripSlug: params.tripSlug?.toString(),
+      tripSlug: tripSlug.toString(),
       stepId: step.id,
 
       name: step.name,
@@ -98,12 +99,10 @@ export const EditStepDialog = ({
       return result.data;
     },
     onSuccess: async () => {
-      if (!params.tripSlug) logger.warn("Invalid TripSlug :", { params });
+      if (!tripSlug) logger.warn("Invalid TripSlug :", { tripSlug });
 
       await queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(
-          (params.tripSlug ?? "undefined").toString(),
-        ),
+        queryKey: STEP_KEY_FACTORY.All((tripSlug ?? "undefined").toString()),
       });
       router.refresh();
     },

@@ -3,9 +3,9 @@
 import { useSidebar } from "@components/ui/sidebar";
 import { Typography } from "@components/ui/typography";
 import type {
-  NavigationLinksGroup,
-  NavigationLinksGroups,
-  NavigationLinks as NavigationLinksSchema,
+  GeneratedNavigationLinks,
+  GeneratedNavigationLinksGroup,
+  GeneratedNavigationLinksGroups,
 } from "@feat/navigation/navigation.type";
 import { useCurrentPath } from "@hooks/useCurrentPath";
 import { cn } from "@lib/utils";
@@ -21,13 +21,13 @@ export const TripNavigationLinks = ({
   orgSlug: string;
   tripSlug: string;
 }) => {
-  const tripNavigation: NavigationLinksGroups = getTripNavigationLinks(
+  const tripNavigation: GeneratedNavigationLinksGroups = getTripNavigationLinks(
     orgSlug,
     tripSlug,
   );
 
-  const links: NavigationLinksSchema = tripNavigation
-    .flatMap((group: NavigationLinksGroup) => group.links)
+  const links: GeneratedNavigationLinks = tripNavigation
+    .flatMap((group: GeneratedNavigationLinksGroup) => group.links)
     .filter((l) => !l.hidden);
 
   const currentPath = useCurrentPath(links);

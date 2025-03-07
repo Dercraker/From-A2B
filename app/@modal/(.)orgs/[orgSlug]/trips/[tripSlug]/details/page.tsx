@@ -1,9 +1,7 @@
-import type { PageParams } from "@type/next";
+import type { PageParams, TripPathParams } from "@type/next";
 import { DetailsDialog } from "./_components/DetailsDialog";
 
-const RoutePage = async ({
-  params,
-}: PageParams<{ orgSlug: string; tripSlug: string }>) => {
+const RoutePage = async ({ params }: PageParams<TripPathParams>) => {
   const { tripSlug, orgSlug } = await params;
 
   return <DetailsDialog orgSlug={orgSlug} tripSlug={tripSlug} />;

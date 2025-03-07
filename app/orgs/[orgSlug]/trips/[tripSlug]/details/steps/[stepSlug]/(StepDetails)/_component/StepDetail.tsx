@@ -31,7 +31,6 @@ import { GetStepBySlugAction } from "@feat/steps/get/getStepBySlug.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { EditStepAction } from "@feat/steps/update/editStep.action";
 import { EditStepSchema } from "@feat/steps/update/editStep.schema";
-import { ConstructTripLink } from "@feat/trips/trips.link";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
 import { TransportMode } from "@prisma/client";
@@ -70,10 +69,9 @@ export const StepDetail = ({
         logger.error("Failed to fetch step.", { stepSlug, res });
         toast.error("Failed to fetch step. Please try again later.");
         rouer.push(
-          ConstructTripLink({
+          LINKS.Trips.Steps.StepsList.href({
             orgSlug,
             tripSlug,
-            href: LINKS.Trips.Steps.StepsList.href,
           }),
         );
         throw new Error("Failed to fetch step. Please try again later");
@@ -164,10 +162,9 @@ export const StepDetail = ({
               stepId={step.id}
               onDeleted={() =>
                 rouer.push(
-                  ConstructTripLink({
+                  LINKS.Trips.Steps.StepsList.href({
                     orgSlug,
                     tripSlug,
-                    href: LINKS.Trips.Steps.StepsList.href,
                   }),
                 )
               }

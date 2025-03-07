@@ -21,6 +21,57 @@ export type PageParams<T extends Record<string, string> = {}> = {
 };
 
 /**
+ * @name OrgPathParams
+ *
+ * @usage
+ * This type is used to define the parameters of the `org/[orgSlug]/page.tsx` page.
+ *
+ * @example
+ * ```tsx
+ * export default function Page(params: PageParams<OrgPathParams>) {
+ *   ...
+ * }
+ * ```
+ */
+export type OrgPathParams = {
+  orgSlug: string;
+};
+
+/**
+ * @name TripPathParams
+ *
+ * @usage
+ * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/page.tsx` page.
+ *
+ * @example
+ * ```tsx
+ * export default function Page(params: PageParams<TripPathParams>) {
+ *   ...
+ * }
+ * ```
+ */
+export type TripPathParams = OrgPathParams & {
+  tripSlug: string;
+};
+
+/**
+ * @name StepPathParams
+ *
+ * @usage
+ * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/steps/[stepSlug]/page.tsx` page.
+ *
+ * @example
+ * ```tsx
+ * export default function Page(params: PageParams<StepPathParams>) {
+ *   ...
+ * }
+ * ```
+ */
+export type StepPathParams = TripPathParams & {
+  stepSlug: string;
+};
+
+/**
  * @name LayoutParams
  *
  * @usage

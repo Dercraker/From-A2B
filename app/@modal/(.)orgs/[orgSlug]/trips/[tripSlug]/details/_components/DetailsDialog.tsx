@@ -2,7 +2,7 @@
 
 import { EditTripForm } from "@components/trips/editTripForm";
 import { Dialog, DialogContent } from "@components/ui/dialog";
-import { GenerateTripLink } from "@feat/trips/trips.link";
+import { LINKS } from "@feat/navigation/Links";
 import { usePathname, useRouter } from "next/navigation";
 
 export type DetailsDialogProps = {
@@ -14,7 +14,7 @@ export const DetailsDialog = ({ tripSlug, orgSlug }: DetailsDialogProps) => {
   const router = useRouter();
   const path = usePathname();
 
-  const uri = GenerateTripLink({ orgSlug, tripSlug });
+  const uri = LINKS.Trips.Trip.href({ orgSlug, tripSlug });
 
   return (
     <Dialog

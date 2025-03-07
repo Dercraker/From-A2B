@@ -8,6 +8,7 @@ import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import { Checkbox } from "@ui/checkbox";
 import { DateTimePicker } from "@ui/DateTimePicker";
 import {
@@ -37,7 +38,7 @@ export type AddTaskDialogProps = PropsWithChildren<{}>;
 
 export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { tripSlug, stepSlug } = useParams();
+  const { tripSlug, stepSlug } = useParams<StepPathParams>();
   const [isDialogOpen, { close, open, toggle }] = useDisclosure(false);
   const [addAnother, setAddAnother] = useState(false);
   const form = useZodForm({

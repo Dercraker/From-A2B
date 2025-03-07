@@ -1,8 +1,7 @@
 import { Card, CardContent } from "@components/ui/card";
 import { Typography } from "@components/ui/typography";
-import type { PageParams } from "@type/next";
 
-export default async function RoutePage(props: PageParams) {
+export default async function RoutePage() {
   return (
     <Card className="max-h-40">
       <CardContent className="flex size-full select-none items-center justify-center">

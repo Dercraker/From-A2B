@@ -20,7 +20,7 @@ import { currentUser } from "@lib/auth/helper";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { prisma } from "@lib/prisma";
 import { getServerUrl } from "@lib/server-url";
-import type { PageParams } from "@type/next";
+import type { OrgPathParams, PageParams } from "@type/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -37,7 +37,7 @@ export const generateMetadata = combineWithParentMetadata({
 
 export default async function RoutePage({
   params,
-}: PageParams<{ orgSlug: string; token: string }>) {
+}: PageParams<OrgPathParams & { token: string }>) {
   const { orgSlug, token } = await params;
 
   const organization = await prisma.organization.findFirst({

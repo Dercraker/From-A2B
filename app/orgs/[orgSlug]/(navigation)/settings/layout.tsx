@@ -10,7 +10,7 @@ import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createS
 import { combineWithParentMetadata } from "@lib/metadata";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { getServerUrl } from "@lib/server-url";
-import type { LayoutParams } from "@type/next";
+import type { LayoutParams, OrgPathParams } from "@type/next";
 import { redirect } from "next/navigation";
 import { SiteConfig } from "site-config";
 
@@ -22,7 +22,7 @@ export const generateMetadata = combineWithParentMetadata({
 export default async function RouteLayout({
   params,
   children,
-}: LayoutParams<{ productId: string; orgSlug: string }>) {
+}: LayoutParams<OrgPathParams>) {
   const { orgSlug } = await params;
 
   if (SiteConfig.features.enableSingleMemberOrg) {

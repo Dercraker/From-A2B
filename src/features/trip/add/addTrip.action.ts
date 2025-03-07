@@ -1,9 +1,9 @@
 "use server";
 
+import { LINKS } from "@feat/navigation/Links";
 import { orgAction } from "@lib/actions/safe-actions";
 import { uploadTripPicture } from "@lib/blobStorage/uploadFile";
 import { generateSlug } from "@lib/format/id";
-import { GenerateTripLink } from "../../trips/trips.link";
 import { UpdateTripQuery } from "../update/updateTrip.query";
 import { AddTripQuery } from "./addTrip.query";
 import { AddTripSchema } from "./addTrip.schema";
@@ -42,5 +42,5 @@ export const AddTripAction = orgAction
         },
       });
     }
-    return GenerateTripLink({ orgSlug: ctx.org.slug, tripSlug });
+    return LINKS.Trips.Trip.href({ orgSlug: ctx.org.slug, tripSlug });
   });

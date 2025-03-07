@@ -7,6 +7,7 @@ import { UpdateSchedulingNoteActionAction } from "@feat/steps/scheduling/updateS
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import "@mdxeditor/editor/style.css";
 import { useMutation } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import { Typography } from "@ui/typography";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,9 +25,7 @@ type ScheduleNotesMdxEditorProps = {
 export const ScheduleNotesMdxEditor = ({
   markdown,
 }: ScheduleNotesMdxEditorProps) => {
-  const { stepSlug } = useParams<{
-    stepSlug: string;
-  }>();
+  const { stepSlug } = useParams<StepPathParams>();
 
   const { mutate } = useMutation({
     mutationFn: async ({

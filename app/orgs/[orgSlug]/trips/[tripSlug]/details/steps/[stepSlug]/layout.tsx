@@ -1,11 +1,11 @@
 import { Layout, LayoutContent, LayoutHeader } from "@components/page/layout";
-import type { LayoutParams } from "@type/next";
+import type { LayoutParams, StepPathParams } from "@type/next";
 import { DetailNavigation } from "./_navigation/detailNavigation";
 
 const RouteLayout = async ({
   params,
   children,
-}: LayoutParams<{ orgSlug: string; tripSlug: string; stepSlug: string }>) => {
+}: LayoutParams<StepPathParams>) => {
   const routeSlugs = await params;
 
   return (
