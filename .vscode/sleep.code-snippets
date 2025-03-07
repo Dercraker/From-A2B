@@ -1,0 +1,8 @@
+{
+  "sleep": {
+    "prefix": "sleep",
+    "description": "Add a sleep with Promise timeout",
+    "scope": "javascript,typescript,typescriptreact,javascriptreact",
+    "body": ["await new Promise((resolve) => setTimeout(resolve, ${1:5000}));"],
+  },
+}

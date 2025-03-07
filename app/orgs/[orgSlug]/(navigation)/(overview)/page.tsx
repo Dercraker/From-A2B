@@ -12,7 +12,9 @@ import { isInRoles } from "@lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import type { OrgPathParams, PageParams } from "@type/next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { SiteConfig } from "site-config";
+import { DashboardContentLoader } from "./_loader/dashboardContentLoader";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Dashboard",
@@ -40,7 +42,9 @@ const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
         ) : null}
       </LayoutActions>
       <LayoutContent className="flex  gap-6">
-        <Typography>TODO : ADD CONTENT</Typography>
+        <Suspense fallback={<DashboardContentLoader />}>
+          <Typography>TODO : ADD CONTENT</Typography>
+        </Suspense>
       </LayoutContent>
     </Layout>
   );

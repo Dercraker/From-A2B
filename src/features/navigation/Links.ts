@@ -84,6 +84,7 @@ export const LINKS = {
       { Icon: History },
       true,
     ),
+    Settings: createLink(`${PATHS.ORG}/settings`, "Settings", {}, true),
   },
 
   Account: {

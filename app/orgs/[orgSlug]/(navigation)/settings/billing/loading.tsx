@@ -3,7 +3,7 @@ import { Skeleton } from "@ui/skeleton";
 const RouteLoading = () => {
   return (
     <div className="flex flex-col gap-4">
-      <Skeleton className="h-60 w-full" />
+      <Skeleton className="h-24 w-full" />
     </div>
   );
 };
