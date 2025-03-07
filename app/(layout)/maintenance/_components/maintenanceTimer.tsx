@@ -1,12 +1,10 @@
 "use client";
 
-import { IsMaintenanceEnabledSchema } from "@lib/postHog/schema/IsMaintenanceEnabled.schema";
 import {
   addDays,
   differenceInMilliseconds,
   intervalToDuration,
 } from "date-fns";
-import { useFeatureFlagPayload } from "posthog-js/react";
 import { useEffect, useState } from "react";
 import { TimeBox } from "./timeBox";
 
@@ -17,10 +15,11 @@ type TimeLeft = {
   seconds: number;
 };
 
-export const MaintenanceTimer = () => {
-  const data = useFeatureFlagPayload("isUnderMaintenance");
-  const time = IsMaintenanceEnabledSchema.parse(data).time;
+type MaintenanceTimerProps = {
+  time: string;
+};
 
+export const MaintenanceTimer = ({ time }: MaintenanceTimerProps) => {
   const targetDate = time
     ? new Date(Number(time) * 1000)
     : addDays(new Date(), 30);

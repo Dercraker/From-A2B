@@ -51,32 +51,32 @@ export const LogoNameSvgBlack = ({
         <path
           d="M75.38 15.62C75.38 17.31 75.08 18.92 74.54 20.42L74.52 20.48L61.26 51.75L48.12 20.8L47.98 20.42C47.44 18.92 47.14 17.3 47.14 15.62C47.14 7.82 53.46 1.5 61.26 1.5C69.06 1.5 75.38 7.82 75.38 15.62Z"
           stroke="#F5F5F5"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         />
         <path
           d="M61.26 23.37C65.5402 23.37 69.01 19.9002 69.01 15.62C69.01 11.3398 65.5402 7.87 61.26 7.87C56.9798 7.87 53.51 11.3398 53.51 15.62C53.51 19.9002 56.9798 23.37 61.26 23.37Z"
           stroke="#F5F5F5"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         />
         <path
           d="M29.74 53.93C29.74 55.62 29.44 57.23 28.9 58.73L28.88 58.79L15.62 90.06L2.48 59.11L2.34 58.73C1.8 57.23 1.5 55.61 1.5 53.93C1.5 46.13 7.82 39.81 15.62 39.81C23.42 39.81 29.74 46.13 29.74 53.93Z"
           stroke="#F5F5F5"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         />
         <path
           d="M15.62 61.68C19.9002 61.68 23.37 58.2102 23.37 53.93C23.37 49.6498 19.9002 46.18 15.62 46.18C11.3398 46.18 7.87 49.6498 7.87 53.93C7.87 58.2102 11.3398 61.68 15.62 61.68Z"
           stroke="#F5F5F5"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         />
         <path
           d="M29.74 92.55H66.01C80.74 92.55 80.38 83.29 80.38 83.29C80.38 71.65 66.6 70.94 66.6 70.94H52.14C45.04 70.94 44.25 63.55 44.25 63.55C44.25 53.56 52.14 55.19 52.14 55.19"
           stroke="#F5F5F5"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         />
       </g>
       <defs>
