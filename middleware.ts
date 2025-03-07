@@ -51,7 +51,7 @@ export const middleware = async (req: NextRequest) => {
     const authCookie = cookieList.get(AUTH_COOKIE_NAME);
 
     if (authCookie) {
-      url.pathname = "/orgs";
+      url.pathname = LINKS.Organization.Middleware.href({});
       return NextResponse.redirect(url.toString());
     }
   }
