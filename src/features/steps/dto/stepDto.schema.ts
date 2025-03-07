@@ -26,8 +26,8 @@ export const StepDtoSchema = z.object({
 
   placeId: z.string(),
   TransportMode: z.string(),
-  tasks: z.array(TaskSchema).optional(),
-  files: z.array(FileSchema).optional(),
+  Task: z.array(TaskSchema).optional(),
+  File: z.array(FileSchema).optional(),
 });
 export const StepsDtoSchema = z.array(StepDtoSchema);
 
