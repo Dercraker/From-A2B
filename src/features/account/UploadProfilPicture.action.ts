@@ -20,8 +20,9 @@ export const UploadProfilPictureAction = authAction
 
     const res = await uploadProfilePicture({
       file,
-      userId: ctx.user.id,
+      entityId: ctx.user.id,
       oldPicturePath: pictureUrl ?? undefined,
+      userId: ctx.user.id,
     });
 
     return { url: res.url };

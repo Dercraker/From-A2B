@@ -1,23 +1,21 @@
 import { cn } from "@lib/utils";
 import { SiteConfig } from "site-config";
+import { ImageInput } from "./ImageUploadInput";
 import { UseImageButton } from "./UseImageButton";
-import { UseImageUpload } from "./UseImageUpload";
 
-type ImageFormItemProps = {
-  onChange: (url: string) => void;
+export type TripImageFormItemProps = {
+  onChange: ({ url, file }: { url: string; file?: Blob }) => void;
   imageUrl?: string | null;
   className?: string;
   maxSizePicture: number;
 };
 
-export const ImageFormItem = ({
-  onChange,
-  imageUrl,
-  className,
+export const TripImageFormItem = ({
   maxSizePicture,
-}: ImageFormItemProps) => {
-  const currentImage = imageUrl;
-
+  onChange,
+  className,
+  imageUrl: currentImage,
+}: TripImageFormItemProps) => {
   return (
     <div
       className={cn(
@@ -30,11 +28,11 @@ export const ImageFormItem = ({
         className="absolute inset-0 object-contain object-center"
       />
       {SiteConfig.features.enableImageUpload ? (
-        <UseImageUpload onChange={onChange} maxSizePicture={maxSizePicture} />
+        <ImageInput onChange={onChange} maxSizePicture={maxSizePicture} />
       ) : (
         <UseImageButton
           onChange={(params) => {
-            onChange(params.url);
+            onChange({ url: params.url });
           }}
         />
       )}
