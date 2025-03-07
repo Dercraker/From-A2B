@@ -5,8 +5,6 @@ import { TripMap } from "./_component/tripMap";
 const RoutePage = async ({ params }: PageParams<TripPathParams>) => {
   const { orgSlug, tripSlug } = await params;
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   return (
     <>
       <StepList tripSlug={tripSlug} orgSlug={orgSlug} />

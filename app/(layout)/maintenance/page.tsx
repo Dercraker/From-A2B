@@ -2,7 +2,6 @@ import { EmailForm } from "@components/email/EmailForm";
 import { EmailFormLoader } from "@components/email/emailForm.loader";
 import { Layout } from "@components/page/layout";
 import { LogoNameSvg } from "@components/svg/LogoNameSvg";
-import { getServerFeatureFlagPayload } from "@lib/postHog/phFeatureFlags";
 import { Typography } from "@ui/typography";
 import { Suspense } from "react";
 import { SiteConfig } from "site-config";
@@ -10,14 +9,6 @@ import { MaintenanceTimer } from "./_components/maintenanceTimer";
 import { MaintenanceTimerLoader } from "./_loader/maintenanceTimer.loader";
 
 const RoutePage = async () => {
-  const data = await getServerFeatureFlagPayload({
-    flag: "isUnderMaintenance",
-  });
-
-  if (!data) return;
-
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
   return (
     <Layout size="lg">
       <div className="flex gap-10 max-lg:flex-col">

@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.65.11",
+  "version": "0.65.12",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
