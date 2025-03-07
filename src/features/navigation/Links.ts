@@ -76,6 +76,7 @@ export const LINKS = {
   },
 
   Organization: {
+    Middleware: createLink("/orgs", "Middleware", { hidden: true }, false),
     Dashboard: createLink(`${PATHS.ORG}`, "Dashboard", { Icon: Home }, true),
     Trips: createLink(`${PATHS.ORG}/trips`, "Trips", { Icon: Plane }, true),
     History: createLink(
