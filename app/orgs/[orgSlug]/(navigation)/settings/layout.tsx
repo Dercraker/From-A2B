@@ -6,13 +6,14 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@components/page/layout";
+import { LINKS } from "@feat/navigation/Links";
 import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
-import { getServerUrl } from "@lib/server-url";
 import type { LayoutParams, OrgPathParams } from "@type/next";
 import { redirect } from "next/navigation";
 import { SiteConfig } from "site-config";
+import { getOrganizationSettingsNavigation } from "../_navigation/orgNavigation.links";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Settings",
@@ -27,7 +28,7 @@ export default async function RouteLayout({
 
   if (SiteConfig.features.enableSingleMemberOrg) {
     redirect(
-      createSearchParamsMessageUrl(`${getServerUrl()}org/${orgSlug}`, {
+      createSearchParamsMessageUrl(LINKS.Organization.Dashboard.href({}), {
         type: "message",
         message: "You need to update your account settings.",
       }),
@@ -35,8 +36,6 @@ export default async function RouteLayout({
   }
 
   const { roles } = await getRequiredCurrentOrgCache();
-
-  const orgPath = `/orgs/${orgSlug}`;
 
   return (
     <Layout>
@@ -49,28 +48,7 @@ export default async function RouteLayout({
       <LayoutContent className="mt-8 flex items-start gap-4 max-lg:flex-col">
         <SettingsNavigation
           roles={roles}
-          links={[
-            {
-              href: `${orgPath}/settings`,
-              label: "General",
-              roles: ["ADMIN"],
-            },
-            {
-              href: `${orgPath}/settings/members`,
-              label: "Members",
-              roles: ["ADMIN"],
-            },
-            {
-              href: `${orgPath}/settings/billing`,
-              label: "Billing",
-              roles: ["ADMIN"],
-            },
-            {
-              href: `${orgPath}/settings/danger`,
-              label: "Danger Zone",
-              roles: ["OWNER"],
-            },
-          ]}
+          links={getOrganizationSettingsNavigation(orgSlug)}
         />
         <div className="mb-12 w-full flex-1">{children}</div>
       </LayoutContent>

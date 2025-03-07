@@ -31,14 +31,13 @@ export const middleware = async (req: NextRequest) => {
     flag: "isUnderMaintenance",
   });
 
-  if (isUnderMaintenance && req.nextUrl.pathname !== LINKS.Maintenance.href) {
-    url.pathname = LINKS.Maintenance.href;
+  const maintenanceLink = LINKS.Maintenance.href({});
+
+  if (isUnderMaintenance && req.nextUrl.pathname !== maintenanceLink) {
+    url.pathname = maintenanceLink;
     return NextResponse.redirect(url.toString());
-  } else if (
-    !isUnderMaintenance &&
-    req.nextUrl.pathname === LINKS.Maintenance.href
-  ) {
-    url.pathname = LINKS.Landing.Home.href;
+  } else if (!isUnderMaintenance && req.nextUrl.pathname === maintenanceLink) {
+    url.pathname = LINKS.Landing.Home.href({});
     return NextResponse.redirect(url.toString());
   }
 

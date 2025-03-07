@@ -1,19 +1,14 @@
 "use client";
 
+import type { GeneratedNavigationLinks } from "@feat/navigation/navigation.type";
 import { useMatchingPathname } from "@hooks/useMatchingPathname";
 import { isInRoles } from "@lib/organizations/isInRoles";
 import type { OrganizationMembershipRole } from "@prisma/client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-type SettingLink = {
-  href: string;
-  label: string;
-  roles?: OrganizationMembershipRole[];
-};
-
 type SettingsNavigationProps = {
-  links: SettingLink[];
+  links: GeneratedNavigationLinks;
   roles: OrganizationMembershipRole[];
 };
 

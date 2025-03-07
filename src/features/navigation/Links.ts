@@ -76,6 +76,7 @@ export const LINKS = {
   },
 
   Organization: {
+    Middleware: createLink("/orgs", "Middleware", { hidden: true }, false),
     Dashboard: createLink(`${PATHS.ORG}`, "Dashboard", { Icon: Home }, true),
     Trips: createLink(`${PATHS.ORG}/trips`, "Trips", { Icon: Plane }, true),
     History: createLink(
@@ -84,7 +85,30 @@ export const LINKS = {
       { Icon: History },
       true,
     ),
-    Settings: createLink(`${PATHS.ORG}/settings`, "Settings", {}, true),
+    Settings: createLink(
+      `${PATHS.ORG}/settings`,
+      "General",
+      { roles: ["ADMIN"] },
+      true,
+    ),
+    Members: createLink(
+      `${PATHS.ORG}/settings/members`,
+      "Members",
+      { roles: ["ADMIN"] },
+      true,
+    ),
+    Billing: createLink(
+      `${PATHS.ORG}/settings/billing`,
+      "Billing",
+      { roles: ["ADMIN"] },
+      true,
+    ),
+    Danger: createLink(
+      `${PATHS.ORG}/settings/danger`,
+      "Danger",
+      { roles: ["OWNER"] },
+      true,
+    ),
   },
 
   Account: {

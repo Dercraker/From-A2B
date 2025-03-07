@@ -1,5 +1,6 @@
 import { buttonVariants } from "@components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@components/ui/card";
+import { LINKS } from "@feat/navigation/Links";
 import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { prisma } from "@lib/prisma";
@@ -69,7 +70,10 @@ const RoutePage = async (params: PageParams) => {
           <CardTitle>User not found</CardTitle>
         </CardHeader>
         <CardFooter>
-          <Link className={buttonVariants()} href="/account">
+          <Link
+            className={buttonVariants()}
+            href={LINKS.Account.Profile.href({})}
+          >
             Account
           </Link>
         </CardFooter>
@@ -79,7 +83,7 @@ const RoutePage = async (params: PageParams) => {
 
   if (user.emailVerified) {
     redirect(
-      createSearchParamsMessageUrl("/account", {
+      createSearchParamsMessageUrl(LINKS.Account.Profile.href({}), {
         type: "success",
         message: "Your email has been verified.",
       }),
@@ -102,7 +106,7 @@ const RoutePage = async (params: PageParams) => {
   });
 
   redirect(
-    createSearchParamsMessageUrl("/account", {
+    createSearchParamsMessageUrl(LINKS.Account.Profile.href({}), {
       type: "success",
       message: "Your email has been verified.",
     }),

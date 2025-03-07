@@ -1,5 +1,6 @@
 import { LINKS } from "@feat/navigation/Links";
 import type {
+  GeneratedNavigationLinks,
   GeneratedNavigationLinksGroups,
   NavigationLink,
   NavigationLinks,
@@ -37,6 +38,24 @@ export const getOrganizationNavigation = (
             href: link.href({ orgSlug }),
           };
         }),
+    };
+  });
+};
+
+export const ORGANIZATION_SETTINGS_LINKS: NavigationLinks = [
+  LINKS.Organization.Settings,
+  LINKS.Organization.Members,
+  LINKS.Organization.Billing,
+  LINKS.Organization.Danger,
+] satisfies NavigationLinks;
+
+export const getOrganizationSettingsNavigation = (
+  orgSlug: string,
+): GeneratedNavigationLinks => {
+  return ORGANIZATION_SETTINGS_LINKS.map((link: NavigationLink) => {
+    return {
+      ...link,
+      href: link.href({ orgSlug }),
     };
   });
 };
