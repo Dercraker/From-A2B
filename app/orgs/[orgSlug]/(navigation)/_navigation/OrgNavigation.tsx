@@ -3,6 +3,7 @@ import { ContactFeedbackPopover } from "@components/contact/feedback/ContactFeed
 import { NavigationWrapper } from "@components/navigation/NavigationWrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import { Button, buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
 import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { Building } from "lucide-react";
@@ -34,8 +35,8 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
             className={buttonVariants({ variant: "outline", size: "sm" })}
             href={
               SiteConfig.features.enableSingleMemberOrg
-                ? "/account"
-                : `/orgs/${org.slug}/settings`
+                ? LINKS.Account.Profile.href({})
+                : LINKS.Organization.Settings.href({ orgSlug: org.slug })
             }
           >
             <Building size={16} className="mr-2" />

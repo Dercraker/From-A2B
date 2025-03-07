@@ -10,7 +10,7 @@ const GetTripRoadSchema = z.object({
 
 export const GetTripRoadAction = orgAction
   .schema(GetTripRoadSchema)
-  .action(async ({ parsedInput: { tripSlug }, ctx }) => {
+  .action(async ({ parsedInput: { tripSlug } }) => {
     const roads = GetTripRoadsQuery({
       where: {
         slug: tripSlug,

@@ -6,6 +6,7 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@components/page/layout";
+import { LINKS } from "@feat/navigation/Links";
 import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
 import { requiredUser } from "@lib/auth/helper";
 import { redirect } from "next/navigation";
@@ -17,7 +18,7 @@ export default async function RoutePage() {
 
   if (SiteConfig.features.enableSingleMemberOrg) {
     redirect(
-      createSearchParamsMessageUrl(`/orgs`, {
+      createSearchParamsMessageUrl(LINKS.Organization.Middleware.href({}), {
         type: "message",
         message: "You can't create an organization.",
       }),

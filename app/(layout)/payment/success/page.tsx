@@ -6,6 +6,7 @@ import {
   LayoutTitle,
 } from "@components/page/layout";
 import { buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
 import Link from "next/link";
 
 export default function SuccessPaymentPage() {
@@ -20,7 +21,10 @@ export default function SuccessPaymentPage() {
           </LayoutDescription>
         </LayoutHeader>
         <LayoutContent>
-          <Link href="/" className={buttonVariants({ size: "lg" })}>
+          <Link
+            href={LINKS.Landing.Landing.href({})}
+            className={buttonVariants({ size: "lg" })}
+          >
             Get Started
           </Link>
         </LayoutContent>

@@ -3,6 +3,7 @@
 import { AddRoadsToStep } from "@feat/road/addRoadBetweenSteps";
 import { ActionError, orgAction } from "@lib/actions/safe-actions";
 import { generateSlug } from "@lib/format/id";
+import { logger } from "@lib/logger";
 import { GetStepRank } from "@utils/GetStepRank";
 import type { StepDto } from "../dto/stepDto.schema";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
@@ -74,6 +75,7 @@ export const AddStepAction = orgAction
           },
         });
       } catch (e) {
+        logger.error(e);
         await ReorderAllStepQuery({ tripSlug });
         return new ActionError(
           "An error occurred while adding the step, please try again",
@@ -83,6 +85,7 @@ export const AddStepAction = orgAction
       try {
         await AddRoadsToStep({ stepId: newStep.id });
       } catch (error) {
+        logger.error(error);
         return new ActionError("An error occurred while adding road to step");
       }
 

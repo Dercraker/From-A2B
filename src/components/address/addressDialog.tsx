@@ -86,7 +86,6 @@ export const createAddressSchema = (address: AddressFields) => {
 
 const AddressDialog = ({
   address,
-  adrAddress,
   dialogTitle,
   isLoading,
   open,
@@ -99,14 +98,6 @@ const AddressDialog = ({
   const [region, setRegion] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [errorMap, setErrorMap] = useState<Record<string, string>>({});
-
-  const addressSchema = createAddressSchema({
-    address1: address.address1,
-    address2: address.address2,
-    city: address.city,
-    region: address.region,
-    postalCode: address.postalCode,
-  });
 
   useEffect(() => {
     setAddress1(address.address1);

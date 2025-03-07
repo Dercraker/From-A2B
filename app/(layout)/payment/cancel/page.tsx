@@ -8,6 +8,7 @@ import {
 } from "@components/page/layout";
 import { Badge } from "@components/ui/badge";
 import { buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
 import Link from "next/link";
 
 export default function CancelPaymentPage() {
@@ -27,7 +28,10 @@ export default function CancelPaymentPage() {
         </LayoutDescription>
       </LayoutHeader>
       <LayoutContent className="flex items-center gap-2">
-        <Link href="/" className={buttonVariants({ variant: "invert" })}>
+        <Link
+          href={LINKS.Landing.Landing.href({})}
+          className={buttonVariants({ variant: "invert" })}
+        >
           Home
         </Link>
         <ContactSupportDialog />

@@ -3,6 +3,7 @@
 import { authAction } from "@lib/actions/safe-actions";
 import { backendClient } from "@lib/blobStorage/edgestore-server";
 import { getEnvPath } from "@lib/blobStorage/getEnvPath";
+import { logger } from "@lib/logger";
 import { fileToBlob } from "@utils/file";
 import { AddFileQuery } from "./addFile.query";
 import { AddFileSchema } from "./file.schema";
@@ -38,7 +39,7 @@ export const AddFileAction = authAction
         },
       });
     } catch (error) {
-      console.error("Error adding file:", error);
+      logger.error("Error adding file:", error);
       throw new Error("Failed to add file");
     }
   });

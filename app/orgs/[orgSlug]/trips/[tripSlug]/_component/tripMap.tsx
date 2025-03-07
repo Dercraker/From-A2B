@@ -16,7 +16,6 @@ import { CenterMapButton } from "./centerMapButton";
 import { RoadsPath } from "./RoadsPath";
 
 export type TripMapProps = ComponentPropsWithoutRef<"div"> & {
-  tripId: string;
   tripSlug: string;
   orgSlug: string;
 };
@@ -24,7 +23,6 @@ export type TripMapProps = ComponentPropsWithoutRef<"div"> & {
 export const TripMap = ({
   className,
   orgSlug,
-  tripId,
   tripSlug,
   ...props
 }: TripMapProps) => {
