@@ -4,22 +4,23 @@ import { z } from "zod";
 import { backendClient } from "./edgestore-server";
 import { getEnvPath } from "./getEnvPath";
 
-const UploadProfileSchema = z.object({
-  file: z.instanceof(File),
+const UploadPictureSchema = z.object({
+  file: z.instanceof(File).or(z.instanceof(Blob)),
+  entityId: z.string(),
   userId: z.string(),
   oldPicturePath: z.string().url().optional(),
 });
 
-type UploadProfileInput = z.infer<typeof UploadProfileSchema>;
+type UploadPictureSchema = z.infer<typeof UploadPictureSchema>;
 
 export const uploadProfilePicture = async ({
   file,
   userId,
   oldPicturePath,
-}: UploadProfileInput) =>
+}: UploadPictureSchema) =>
   backendClient.profilePictures.upload({
     content: {
-      blob: await fileToBlob(file),
+      blob: file instanceof Blob ? file : await fileToBlob(file),
       extension: file.type,
     },
     ctx: {
@@ -28,6 +29,30 @@ export const uploadProfilePicture = async ({
     },
     options: {
       manualFileName: `${userId}-${nanoid()}`,
+      replaceTargetUrl: oldPicturePath,
+    },
+  });
+
+export const uploadTripPicture = async ({
+  file,
+  entityId: tripSlug,
+  userId,
+  oldPicturePath,
+}: UploadPictureSchema) =>
+  backendClient.tripPictures.upload({
+    content: {
+      blob: file instanceof Blob ? file : await fileToBlob(file),
+      extension: file.type,
+    },
+    ctx: {
+      userId: userId,
+      envPath: getEnvPath(),
+    },
+    input: {
+      tripSlug,
+    },
+    options: {
+      manualFileName: `${tripSlug}-${nanoid()}`,
       replaceTargetUrl: oldPicturePath,
     },
   });

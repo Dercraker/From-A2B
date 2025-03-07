@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageInput } from "@components/images/ImageUploadInput";
 import { Button } from "@components/ui/button";
 import {
   Dialog,
@@ -21,6 +22,7 @@ import {
 import { Input } from "@components/ui/input";
 import { AddTripAction } from "@feat/trip/add/addTrip.action";
 import { AddTripSchema } from "@feat/trip/add/addTrip.schema";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -29,7 +31,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { FormOptionalSection } from "../form/FormOptionalSection";
 import { LoadingButton } from "../form/LoadingButton";
-import { ImageFormItem } from "../images/ImageFormItem";
 import { DateTimePicker } from "../ui/DateTimePicker";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
@@ -41,7 +42,10 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
   const form = useZodForm({
     schema: AddTripSchema,
     defaultValues: {
-      image: "https://picsum.photos/600/400",
+      image: {
+        url: "https://picsum.photos/600/400",
+        file: undefined,
+      },
     },
   });
   const router = useRouter();
@@ -49,26 +53,34 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
   const { mutateAsync: addTripMutationAsync, isPending } = useMutation({
     mutationFn: async (values: AddTripSchema) => {
       const result = await AddTripAction(values);
-      if (!result?.data) {
+      if (!isActionSuccessful(result)) {
         toast.error(result?.serverError);
         return;
       }
 
-      toast.success("Your trip as been created.");
-      phCapture("TripCreate");
-      form.reset();
-      setOpen(false);
+      const blobUrl = form.getValues("image")?.url;
 
-      return result.data;
-    },
-    onSuccess(data) {
-      router.refresh();
-      if (data) router.push(data);
+      phCapture("TripCreate");
+
+      toast.success("Your trip as been created.");
+      form.reset();
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+
+      router.push(result.data);
+      setOpen(false);
     },
   });
 
   return (
-    <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        if (!v) form.reset();
+        setOpen(v);
+      }}
+    >
       <DialogTrigger asChild>
         {props.children ? (
           props.children
@@ -87,6 +99,13 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
           form={form}
           onSubmit={async (v) => addTripMutationAsync(v)}
           className="flex flex-col gap-4"
+          onReset={() => {
+            const blobUrl = form.getValues("image");
+            if (blobUrl?.url) {
+              URL.revokeObjectURL(blobUrl.url);
+            }
+            form.reset();
+          }}
         >
           <FormField
             control={form.control}
@@ -137,11 +156,10 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
                 <FormControl>
                   <DateTimePicker
                     granularity="day"
+                    hideTimezone
                     value={field.value}
                     onChange={(date) => {
-                      form.setValue("startDate", date ?? new Date(), {
-                        shouldDirty: true,
-                      });
+                      field.onChange(date ?? new Date());
                     }}
                   />
                 </FormControl>
@@ -156,18 +174,22 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
               <FormItem>
                 <FormLabel>Picture</FormLabel>
                 <FormControl>
-                  <ImageFormItem
+                  <ImageInput
                     className="h-[200px] w-[300px] rounded-md"
-                    onChange={(url) => field.onChange(url)}
-                    imageUrl={field.value}
-                    maxSizePicture={5}
+                    onChange={(file) => field.onChange(file)}
+                    imageUrl={field.value?.url}
+                    maxSizePicture={20}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <LoadingButton type="submit" loading={isPending}>
+          <LoadingButton
+            type="submit"
+            loading={isPending}
+            disabled={!form.formState.isValid}
+          >
             Create new trip
           </LoadingButton>
         </Form>

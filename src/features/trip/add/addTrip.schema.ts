@@ -12,7 +12,12 @@ export const AddTripSchema = z.object({
   startDate: z.date({
     required_error: "Start date is required to create trip",
   }),
-  image: z.string().url().optional(),
+  image: z
+    .object({
+      url: z.string().url().optional(),
+      file: z.instanceof(File).or(z.instanceof(Blob)).optional(),
+    })
+    .optional(),
 });
 
 export type AddTripSchema = z.infer<typeof AddTripSchema>;

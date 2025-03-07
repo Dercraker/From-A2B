@@ -37,6 +37,23 @@ const edgeStoreRouter = es.router({
       phCapture("DeleteProfilePicture");
       return true;
     }),
+  tripPictures: es
+    .imageBucket({
+      maxSize: 1024 * 1024 * 20, //20Mb
+    })
+    .input(z.object({ tripSlug: z.string() }))
+    .path(({ ctx, input }) => [
+      { env: ctx.envPath },
+      { tripSlug: input.tripSlug },
+    ])
+    .beforeUpload(() => {
+      phCapture("UploadTripPicture");
+      return true;
+    })
+    .beforeDelete(() => {
+      phCapture("DeleteTripPicture");
+      return true;
+    }),
   stepFiles: es
     .fileBucket({
       maxSize: 1024 * 1024 * 50, //50Mb

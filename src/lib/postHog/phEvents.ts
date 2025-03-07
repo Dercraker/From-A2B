@@ -25,6 +25,8 @@ export const tripEvents = z.enum([
   "EditStep",
   "ReOrderStep",
   "UsePlaceInput",
+  "UploadTripPicture",
+  "DeleteTripPicture",
 ]);
 export const taskEvents = z.enum([
   "TaskCreate",
