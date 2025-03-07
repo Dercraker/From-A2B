@@ -24,6 +24,7 @@ import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { IconPlaneArrival, IconPlaneDeparture } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
+import type { OrgPathParams } from "@type/next";
 import { format, isBefore } from "date-fns";
 import { HistoryIcon, PlaneIcon, Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -33,9 +34,8 @@ import { getOrganizationNavigation } from "./orgNavigation.links";
 
 export const OrganizationCommand = () => {
   const [isOpen, { open, close, toggle }] = useDisclosure(false);
-  const params = useParams();
+  const { orgSlug } = useParams<OrgPathParams>();
   const router = useRouter();
-  const orgSlug = typeof params.orgSlug === "string" ? params.orgSlug : "";
 
   const down = () => toggle();
 

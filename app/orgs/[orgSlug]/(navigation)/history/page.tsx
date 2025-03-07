@@ -1,7 +1,7 @@
 import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
 import { GetTripsByCurrentOrgQuery } from "@feat/trips/getTripsByCurrentOrgQuery.query";
 import { combineWithParentMetadata } from "@lib/metadata";
-import type { PageParams } from "@type/next";
+import type { OrgPathParams, PageParams } from "@type/next";
 import { startOfDay } from "date-fns";
 import { TripsContainer } from "../trips/_components/tripsContainer";
 import { TravelHistoryEmpty } from "./_components/TravelHistoryEmpty";
@@ -11,7 +11,7 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Travel history",
 });
 
-const RoutePage = async ({ params }: PageParams<{ orgSlug: string }>) => {
+const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
   const orgSlug = (await params).orgSlug;
 
   const trips: TripsListDtoSchema = await GetTripsByCurrentOrgQuery({

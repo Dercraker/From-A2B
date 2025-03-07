@@ -10,7 +10,7 @@ import { Typography } from "@components/ui/typography";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { isInRoles } from "@lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
-import type { PageParams } from "@type/next";
+import type { OrgPathParams, PageParams } from "@type/next";
 import Link from "next/link";
 import { SiteConfig } from "site-config";
 
@@ -19,11 +19,7 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Dashboard",
 });
 
-const RoutePage = async ({
-  params,
-}: PageParams<{
-  orgSlug: string;
-}>) => {
+const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
   const { orgSlug } = await params;
 
   const org = await getRequiredCurrentOrgCache();

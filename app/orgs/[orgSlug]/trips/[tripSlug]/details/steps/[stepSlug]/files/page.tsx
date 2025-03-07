@@ -1,12 +1,10 @@
 import { Layout, LayoutContent } from "@components/page/layout";
-import type { PageParams } from "@type/next";
+import type { PageParams, StepPathParams } from "@type/next";
 import { Card, CardContent } from "@ui/card";
 import { FilesList } from "./_component/filesList";
 import { FileUploader } from "./_component/fileUploader";
 
-const RoutePage = async ({
-  params,
-}: PageParams<{ orgSlug: string; tripSlug: string; stepSlug: string }>) => {
+const RoutePage = async ({ params }: PageParams<StepPathParams>) => {
   const { tripSlug, stepSlug } = await params;
 
   return (

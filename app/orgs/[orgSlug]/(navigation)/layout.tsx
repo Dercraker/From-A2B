@@ -5,7 +5,7 @@ import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
 import { currentUser } from "@lib/auth/helper";
 import { getCurrentOrgCache } from "@lib/react/cache";
-import type { LayoutParams } from "@type/next";
+import type { LayoutParams, OrgPathParams } from "@type/next";
 import { Rabbit } from "lucide-react";
 import Link from "next/link";
 import { OrgNavigation } from "./_navigation/OrgNavigation";
@@ -13,7 +13,7 @@ import { OrgNavigation } from "./_navigation/OrgNavigation";
 export default async function RouteLayout({
   params,
   children,
-}: LayoutParams<{ orgSlug: string }>) {
+}: LayoutParams<OrgPathParams>) {
   const { orgSlug } = await params;
   const org = await getCurrentOrgCache();
 

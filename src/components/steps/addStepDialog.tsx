@@ -22,6 +22,7 @@ import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { TripPathParams } from "@type/next";
 import { Button } from "@ui/button";
 import { DateTimePicker } from "@ui/DateTimePicker";
 import {
@@ -61,7 +62,7 @@ export const AddStepDialog = ({
   afterStep,
   onClose,
 }: AddStepDialogProps) => {
-  const params = useParams();
+  const { tripSlug } = useParams<TripPathParams>();
   const [open, setOpen] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -69,7 +70,7 @@ export const AddStepDialog = ({
     schema: AddStepSchema,
     defaultValues: {
       TransportMode: TransportMode.Car,
-      tripSlug: String(params.tripSlug),
+      tripSlug: String(tripSlug),
 
       latitude: undefined,
       longitude: undefined,
@@ -109,10 +110,10 @@ export const AddStepDialog = ({
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: TRIP_KEY_Factory.roads(params.tripSlug?.toString() as string),
+        queryKey: TRIP_KEY_Factory.roads(tripSlug.toString() as string),
       });
       await queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
+        queryKey: STEP_KEY_FACTORY.All(tripSlug.toString() as string),
       });
     },
   });

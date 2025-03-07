@@ -1,12 +1,12 @@
 import { GetStepBySlugQuery } from "@feat/steps/get/getStepBySlug.query";
-import type { PageParams } from "@type/next";
+import type { PageParams, StepPathParams } from "@type/next";
 import { Card, CardContent } from "@ui/card";
 import { ScheduleNotesMdxEditor } from "./_component/scheduleNotesMdxEditor";
 import { ScheduleTasks } from "./_component/scheduleTasks";
 
 export default async function RoutePage({
   params,
-}: PageParams<{ orgSlug: string; tripSlug: string; stepSlug: string }>) {
+}: PageParams<StepPathParams>) {
   const { stepSlug, tripSlug } = await params;
   const markdown = (await GetStepBySlugQuery({ stepSlug })).data
     ?.schedulingNotes;

@@ -21,58 +21,55 @@ export type PageParams<T extends Record<string, string> = {}> = {
 };
 
 /**
- * @name OrgPageParams
+ * @name OrgPathParams
  *
  * @usage
  * This type is used to define the parameters of the `org/[orgSlug]/page.tsx` page.
  *
  * @example
  * ```tsx
- * export default function Page(params: OrgPageParams) {
+ * export default function Page(params: PageParams<OrgPathParams>) {
  *   ...
  * }
  * ```
  */
-export type OrgPageParams = PageParams<{
+export type OrgPathParams = {
   orgSlug: string;
-}>;
+};
 
 /**
- * @name TripPageParams
+ * @name TripPathParams
  *
  * @usage
  * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/page.tsx` page.
  *
  * @example
  * ```tsx
- * export default function Page(params: TripPageParams) {
+ * export default function Page(params: PageParams<TripPathParams>) {
  *   ...
  * }
  * ```
  */
-export type TripPageParams = PageParams<{
-  orgSlug: string;
+export type TripPathParams = OrgPathParams & {
   tripSlug: string;
-}>;
+};
 
 /**
- * @name StepPageParams
+ * @name StepPathParams
  *
  * @usage
  * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/steps/[stepSlug]/page.tsx` page.
  *
  * @example
  * ```tsx
- * export default function Page(params: StepPageParams) {
+ * export default function Page(params: PageParams<StepPathParams>) {
  *   ...
  * }
  * ```
  */
-export type StepPageParams = PageParams<{
-  orgSlug: string;
-  tripSlug: string;
+export type StepPathParams = TripPathParams & {
   stepSlug: string;
-}>;
+};
 
 /**
  * @name LayoutParams
@@ -92,57 +89,6 @@ export type LayoutParams<T extends Record<string, string> = {}> = {
   params: Promise<T>;
   children?: ReactNode | undefined;
 };
-
-/**
- * @name OrgLayoutParams
- *
- * @usage
- * This type is used to define the parameters of the `org/[orgSlug]/layout.tsx` page.
- *
- * @example
- * ```tsx
- * export default function Layout(params: OrgLayoutParams) {
- *   ...
- * }
- */
-export type OrgLayoutParams = LayoutParams<{
-  orgSlug: string;
-}>;
-
-/**
- * @name TripLayoutParams
- *
- * @usage
- * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/layout.tsx` page.
- *
- * @example
- * ```tsx
- * export default function Layout(params: TripLayoutParams) {
- *   ...
- * }
- */
-export type TripLayoutParams = LayoutParams<{
-  orgSlug: string;
-  tripSlug: string;
-}>;
-
-/**
- * @name StepLayoutParams
- *
- * @usage
- * This type is used to define the parameters of the `org/[orgSlug]/trips/[tripSlug]/steps/[stepSlug]/layout.tsx` page.
- *
- * @example
- * ```tsx
- * export default function Layout(params: StepLayoutParams) {
- *   ...
- * }
- */
-export type StepLayoutParams = LayoutParams<{
-  orgSlug: string;
-  tripSlug: string;
-  stepSlug: string;
-}>;
 
 /**
  * @name ErrorParams

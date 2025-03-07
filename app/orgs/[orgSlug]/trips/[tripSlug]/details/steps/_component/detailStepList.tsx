@@ -30,6 +30,7 @@ import { useTripStore } from "@feat/trip/trip.store";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { cn } from "@lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
@@ -42,7 +43,7 @@ export type StepListProps = {
 };
 
 export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
-  const params = useParams();
+  const { stepSlug } = useParams<StepPathParams>();
 
   const { steps, SetSteps } = useTripStore(useShallow((s) => s));
 
@@ -140,7 +141,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
                       tripSlug={tripSlug}
                       className={cn(
                         "m-4 ml-0 first:mt-0 last:mb-0 h-16",
-                        params.stepSlug === step.slug &&
+                        stepSlug === step.slug &&
                           "border border-border rounded-lg bg-primary/5",
                       )}
                     />
