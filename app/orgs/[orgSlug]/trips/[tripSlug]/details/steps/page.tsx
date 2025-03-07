@@ -1,5 +1,11 @@
 import { Card, CardContent } from "@components/ui/card";
 import { Typography } from "@components/ui/typography";
+import { combineWithParentMetadata } from "@lib/metadata";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Steps List",
+  description: "Steps List",
+});
 
 export default async function RoutePage() {
   return (

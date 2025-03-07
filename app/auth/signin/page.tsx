@@ -3,11 +3,17 @@ import { LogoSvg } from "@components/svg/LogoSvg";
 import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { currentUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
 import type { PageParams } from "@type/next";
 import { AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getError } from "../error/auth-error-mapping";
 import { SignInProviders } from "./SignInProviders";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Sign in",
+  description: "Sign in to your account",
+});
 
 export default async function AuthSignInPage(params: PageParams) {
   const searchParams = await params.searchParams;

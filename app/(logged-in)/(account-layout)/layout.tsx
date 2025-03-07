@@ -4,17 +4,17 @@ import { Alert } from "@components/ui/alert";
 import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
 import { currentUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
 import type { LayoutParams } from "@type/next";
 import { CircleAlert, Rabbit } from "lucide-react";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { VerifyEmailButton } from "./account/verify-email/VerifyEmailButton";
 import { AccountNavigation } from "./accountNavigation";
 
-export const metadata: Metadata = {
+export const generateMetadata = combineWithParentMetadata({
   title: "Account",
   description: "Manage your account settings.",
-};
+});
 
 export default async function RouteLayout(props: LayoutParams) {
   const user = await currentUser();

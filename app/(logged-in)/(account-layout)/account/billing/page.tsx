@@ -1,8 +1,14 @@
 import { requiredUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
 import { OrgSelectQuery } from "@lib/organizations/getOrg";
 import { prisma } from "@lib/prisma";
 import { notFound } from "next/navigation";
 import { OrganizationBilling } from "../../../../orgs/[orgSlug]/(navigation)/settings/billing/_components/OrganizationBilling";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Billing",
+  description: "Manage your billing settings.",
+});
 
 const RoutePage = async () => {
   const user = await requiredUser();

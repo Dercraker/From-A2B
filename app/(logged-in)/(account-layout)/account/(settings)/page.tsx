@@ -6,7 +6,7 @@ import { EditPasswordForm } from "./EditPasswordForm";
 import { EditProfileCardForm } from "./EditProfileForm";
 
 export const generateMetadata = combineWithParentMetadata({
-  title: "Settings",
+  title: "Profile",
   description: "Update your profile.",
 });
 
