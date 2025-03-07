@@ -3,7 +3,7 @@ import { useMatchingPathname } from "@hooks/useMatchingPathname";
 import { buttonVariants } from "@ui/button";
 import { cx } from "class-variance-authority";
 import Link from "next/link";
-import { DETAIL_LINKS } from "./detailNavigation.link";
+import { GetDetailLinks } from "./detailNavigation.link";
 
 export type detailSelectProps = {
   orgSlug: string;
@@ -16,18 +16,16 @@ export const DetailNavigation = ({
   stepSlug,
   tripSlug,
 }: detailSelectProps) => {
-  const isMatching = useMatchingPathname(DETAIL_LINKS.map((l) => l.href));
+  const detailLinks = GetDetailLinks(orgSlug, tripSlug, stepSlug);
+
+  const isMatching = useMatchingPathname(detailLinks.map((l) => l.href));
 
   return (
     <div className="flex gap-2">
-      {DETAIL_LINKS.map((l) => (
+      {detailLinks.map((l) => (
         <Link
           key={l.href}
-          href={l.generateLink({
-            orgSlug,
-            tripSlug,
-            stepSlug,
-          })}
+          href={l.href}
           className={cx(
             buttonVariants({
               variant: isMatching === l.href ? "outline" : "filled",

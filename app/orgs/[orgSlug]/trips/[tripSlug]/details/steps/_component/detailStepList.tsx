@@ -29,12 +29,11 @@ import { useResortSteps } from "@feat/steps/useResortSteps.hook";
 import { useTripStore } from "@feat/trip/trip.store";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { cn } from "@lib/utils";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { GenerateOrganizationLink } from "../../../../../(navigation)/_navigation/org-navigation.links";
 import { StepItemSortable } from "../../../_component/stepItemSortable";
 
 export type StepListProps = {
@@ -46,8 +45,6 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
   const params = useParams();
 
   const { steps, SetSteps } = useTripStore(useShallow((s) => s));
-
-  const queryClient = useQueryClient();
 
   const { isPending } = useQuery({
     queryKey: STEP_KEY_FACTORY.All(tripSlug),
@@ -109,10 +106,7 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
             Failed to fetch steps. Please try again later.
           </Typography>
           <Link
-            href={GenerateOrganizationLink(
-              LINKS.Organization.Trips.href,
-              orgSlug,
-            )}
+            href={LINKS.Organization.Trips.href({ orgSlug })}
             className={buttonVariants({ variant: "outline" })}
           >
             Back to trip list

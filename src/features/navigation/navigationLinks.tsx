@@ -6,10 +6,10 @@ import { cn } from "@lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
 import type {
-  NavigationLink,
-  NavigationLinksGroup,
-  NavigationLinksGroups,
-  NavigationLinks as NavigationLinksSchema,
+  GeneratedNavigationLink,
+  GeneratedNavigationLinksGroup,
+  GeneratedNavigationLinksGroups,
+  GeneratedNavigationLinks as GeneratedNavigationLinksSchema,
 } from "./navigation.type";
 
 const MotionLink = motion(Link);
@@ -17,10 +17,10 @@ const MotionLink = motion(Link);
 export const NavigationLinks = ({
   navigation,
 }: {
-  navigation: NavigationLinksGroups;
+  navigation: GeneratedNavigationLinksGroups;
 }) => {
-  const links: NavigationLinksSchema = navigation
-    .flatMap((group: NavigationLinksGroup) => group.links)
+  const links: GeneratedNavigationLinksSchema = navigation
+    .flatMap((group: GeneratedNavigationLinksGroup) => group.links)
     .filter((l) => !l.hidden);
 
   const currentPath = useCurrentPath(links);
@@ -29,7 +29,7 @@ export const NavigationLinks = ({
     <LayoutGroup>
       <nav className="mt-4 grid items-start px-2 text-sm font-medium lg:px-4">
         {navigation.map(
-          (group: NavigationLinksGroup, groupIndex: number) =>
+          (group: GeneratedNavigationLinksGroup, groupIndex: number) =>
             group.links.length > 0 && (
               <div
                 className="mb-6 flex flex-col gap-2 px-1"
@@ -38,31 +38,33 @@ export const NavigationLinks = ({
                 <div className="group flex items-center justify-between">
                   <Typography variant="small">{group.title}</Typography>
                 </div>
-                {group.links.map((link: NavigationLink, index: number) => (
-                  <MotionLink
-                    key={index}
-                    href={link.href}
-                    className={cn(
-                      `flex items-center gap-3 rounded-lg px-3 py-2 relative transition`,
-                      {
-                        "text-muted-foreground hover:text-foreground":
-                          currentPath !== link.href,
-                      },
-                    )}
-                  >
-                    {currentPath === link.href && (
-                      <motion.div
-                        layoutId={"motion-link"}
-                        // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
-                        className="absolute inset-0 rounded-lg bg-accent"
-                      ></motion.div>
-                    )}
-                    <div className="relative flex w-full items-center gap-x-1.5 text-left">
-                      {link.Icon && <link.Icon className="size-4" />}
-                      {link.label}
-                    </div>
-                  </MotionLink>
-                ))}
+                {group.links.map(
+                  (link: GeneratedNavigationLink, index: number) => (
+                    <MotionLink
+                      key={index}
+                      href={link.href}
+                      className={cn(
+                        `flex items-center gap-3 rounded-lg px-3 py-2 relative transition`,
+                        {
+                          "text-muted-foreground hover:text-foreground":
+                            currentPath !== link.href,
+                        },
+                      )}
+                    >
+                      {currentPath === link.href && (
+                        <motion.div
+                          layoutId={"motion-link"}
+                          // @ts-expect-error - TODO : Remove this when framer-motion fully supports react 19 (https://mlv.sh/fm-r19)
+                          className="absolute inset-0 rounded-lg bg-accent"
+                        ></motion.div>
+                      )}
+                      <div className="relative flex w-full items-center gap-x-1.5 text-left">
+                        {link.Icon && <link.Icon className="size-4" />}
+                        {link.label}
+                      </div>
+                    </MotionLink>
+                  ),
+                )}
               </div>
             ),
         )}

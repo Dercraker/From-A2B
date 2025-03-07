@@ -2,7 +2,6 @@ import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
 import { LINKS } from "@feat/navigation/Links";
 import Link from "next/link";
-import { GenerateOrganizationLink } from "../../_navigation/org-navigation.links";
 
 export type TravelHistoryEmptyProps = {
   orgSlug: string;
@@ -17,7 +16,7 @@ export const TravelHistoryEmpty = async ({
         No trips found
       </Typography>
       <Link
-        href={GenerateOrganizationLink(LINKS.Organization.Trips.href, orgSlug)}
+        href={LINKS.Organization.Trips.href({ orgSlug })}
         className={buttonVariants({ variant: "outline" })}
       >
         Go to trips

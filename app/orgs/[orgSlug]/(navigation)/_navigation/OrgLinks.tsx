@@ -1,9 +1,9 @@
 "use client";
 
-import type { NavigationLinksGroups } from "@feat/navigation/navigation.type";
+import type { GeneratedNavigationLinksGroups } from "@feat/navigation/navigation.type";
 import { NavigationLinks } from "@feat/navigation/navigationLinks";
 import type { OrganizationMembershipRole } from "@prisma/client";
-import { getOrganizationNavigation } from "./org-navigation.links";
+import { getOrganizationNavigation } from "./orgNavigation.links";
 
 export const OrganizationNavigationLinks = ({
   slug,
@@ -12,7 +12,7 @@ export const OrganizationNavigationLinks = ({
   slug: string;
   roles: OrganizationMembershipRole[] | undefined;
 }) => {
-  const organizationNavigation: NavigationLinksGroups =
+  const organizationNavigation: GeneratedNavigationLinksGroups =
     getOrganizationNavigation(slug, roles);
   return <NavigationLinks navigation={organizationNavigation} />;
 };

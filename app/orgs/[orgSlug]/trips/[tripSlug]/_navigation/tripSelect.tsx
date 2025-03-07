@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select";
-import { GenerateTripLink } from "@feat/trips/trips.link";
+import { LINKS } from "@feat/navigation/Links";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { SiteConfig } from "site-config";
@@ -35,7 +35,7 @@ export const TripSelect = ({
     <Select
       value={currentTripSlug}
       onValueChange={(value) => {
-        router.push(GenerateTripLink({ orgSlug, tripSlug: value }));
+        router.push(LINKS.Trips.Trip.href({ orgSlug, tripSlug: value }));
       }}
     >
       <SelectTrigger className="h-8 justify-start gap-2 border-none bg-transparent px-4 hover:bg-accent [&>span]:flex [&>svg]:hidden hover:[&>svg]:block">

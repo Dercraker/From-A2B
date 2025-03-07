@@ -15,10 +15,10 @@ import {
   KeyboardShortcut,
 } from "@components/ui/keyboard-shortcut";
 import { Typography } from "@components/ui/typography";
+import { LINKS } from "@feat/navigation/Links";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
 import { SearchTripsAction } from "@feat/trips/searchTrips.action";
-import { GenerateTripLink } from "@feat/trips/trips.link";
 import { useDebounce } from "@hooks/use-debounce";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
@@ -29,7 +29,7 @@ import { HistoryIcon, PlaneIcon, Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useKey } from "react-use";
-import { ORGANIZATION_LINKS } from "./org-navigation.links";
+import { getOrganizationNavigation } from "./orgNavigation.links";
 
 export const OrganizationCommand = () => {
   const [isOpen, { open, close, toggle }] = useDisclosure(false);
@@ -95,14 +95,14 @@ export const OrganizationCommand = () => {
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {ORGANIZATION_LINKS.map((link, idx) => (
+          {getOrganizationNavigation(orgSlug, []).map((link, idx) => (
             <CommandGroup heading={link.title} key={idx}>
               {link.links.map(({ href, label, Icon }) => (
                 <CommandItem
                   key={href}
                   onSelect={() => {
                     close();
-                    router.push(href.replace(":organizationSlug", orgSlug));
+                    router.push(href);
                   }}
                 >
                   {Icon && <Icon className="mr-2 size-4" />}
@@ -119,7 +119,7 @@ export const OrganizationCommand = () => {
                 onSelect={() => {
                   close();
                   router.push(
-                    GenerateTripLink({ orgSlug, tripSlug: trip.slug }),
+                    LINKS.Trips.Trip.href({ orgSlug, tripSlug: trip.slug }),
                   );
                 }}
               >

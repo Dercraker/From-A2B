@@ -2,12 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { InlineTooltip } from "@components/ui/tooltip";
 import { Typography } from "@components/ui/typography";
 import type { TripListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
-import { GenerateTripLink } from "@feat/trips/trips.link";
 import { format } from "date-fns";
 import { PlaneLanding, PlaneTakeoff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CardDeleteButton } from "./cardDeleteButton";
+import { LINKS } from "@feat/navigation/Links";
 
 export type TripCardProps = {
   trip: TripListDtoSchema;
@@ -30,7 +30,9 @@ export const TripCard = ({
         <div className="flex items-center justify-between">
           <CardTitle className="overflow-hidden truncate whitespace-nowrap text-primary">
             <Typography variant="link">
-              <Link href={GenerateTripLink({ orgSlug, tripSlug })}>{name}</Link>
+              <Link href={LINKS.Trips.Trip.href({ orgSlug, tripSlug })}>
+                {name}
+              </Link>
             </Typography>
           </CardTitle>
           <CardDeleteButton tripId={tripId} tripName={name} />

@@ -33,7 +33,6 @@ import { useMap } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { GenerateOrganizationLink } from "../../../(navigation)/_navigation/org-navigation.links";
 import { StepItemSortable } from "./stepItemSortable";
 
 export type StepListProps = {
@@ -111,10 +110,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
             Failed to fetch steps. Please try again later.
           </Typography>
           <Link
-            href={GenerateOrganizationLink(
-              LINKS.Organization.Trips.href,
-              orgSlug,
-            )}
+            href={LINKS.Organization.Trips.href({ orgSlug })}
             className={buttonVariants({ variant: "outline" })}
           >
             Back to trip list
