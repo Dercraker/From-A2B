@@ -2,6 +2,7 @@ import { EmailForm } from "@components/email/EmailForm";
 import { EmailFormLoader } from "@components/email/emailForm.loader";
 import { Layout } from "@components/page/layout";
 import { LogoNameSvg } from "@components/svg/LogoNameSvg";
+import { combineWithParentMetadata } from "@lib/metadata";
 import { getServerFeatureFlagPayload } from "@lib/postHog/phFeatureFlags";
 import { IsMaintenanceEnabledSchema } from "@lib/postHog/schema/IsMaintenanceEnabled.schema";
 import { Typography } from "@ui/typography";
@@ -9,6 +10,11 @@ import { Suspense } from "react";
 import { SiteConfig } from "site-config";
 import { MaintenanceTimer } from "./_components/maintenanceTimer";
 import { MaintenanceTimerLoader } from "./_loader/maintenanceTimer.loader";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Maintenance",
+  description: "The maintenance will ends soon",
+});
 
 const RoutePage = async () => {
   const data = await getServerFeatureFlagPayload({

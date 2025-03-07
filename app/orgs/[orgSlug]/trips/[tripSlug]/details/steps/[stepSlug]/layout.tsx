@@ -1,7 +1,16 @@
 import { Layout, LayoutContent, LayoutHeader } from "@components/page/layout";
-import type { LayoutParams, StepPathParams } from "@type/next";
+import { stepMetadata } from "@lib/metadata";
+import type { LayoutParams, PageParams, StepPathParams } from "@type/next";
+import type { Metadata } from "next";
 import { DetailNavigation } from "./_navigation/detailNavigation";
 
+export async function generateMetadata({
+  params,
+}: PageParams<StepPathParams>): Promise<Metadata> {
+  const { stepSlug } = await params;
+
+  return stepMetadata(stepSlug);
+}
 const RouteLayout = async ({
   params,
   children,

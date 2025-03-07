@@ -4,6 +4,13 @@ import { Card, CardContent } from "@ui/card";
 import { ScheduleNotesMdxEditor } from "./_component/scheduleNotesMdxEditor";
 import { ScheduleTasks } from "./_component/scheduleTasks";
 
+import { combineWithParentMetadata } from "@lib/metadata";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Scheduling",
+  description: "Scheduling",
+});
+
 export default async function RoutePage({
   params,
 }: PageParams<StepPathParams>) {

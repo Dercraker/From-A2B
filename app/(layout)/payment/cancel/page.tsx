@@ -9,7 +9,13 @@ import {
 import { Badge } from "@components/ui/badge";
 import { buttonVariants } from "@components/ui/button";
 import { LINKS } from "@feat/navigation/Links";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Link from "next/link";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Payment · cancel",
+  description: "Your payment was cancelled",
+});
 
 export default function CancelPaymentPage() {
   return (

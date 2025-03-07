@@ -8,6 +8,12 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { SiteConfig } from "site-config";
 import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
+import { combineWithParentMetadata } from "@lib/metadata";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Sign up",
+  description: "Sign up to your account",
+});
 
 export default async function AuthSignInPage() {
   const user = await currentUser();

@@ -1,8 +1,14 @@
 import { Layout, LayoutContent } from "@components/page/layout";
 import { Typography } from "@components/ui/typography";
+import { combineWithParentMetadata } from "@lib/metadata";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 
 const markdown = `Privacy demo dsfsdfsdfs`;
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Privacy",
+  description: "Privacy policy",
+});
 
 export default function page() {
   return (

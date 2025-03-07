@@ -7,7 +7,13 @@ import {
 } from "@components/page/layout";
 import { buttonVariants } from "@components/ui/button";
 import { LINKS } from "@feat/navigation/Links";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Link from "next/link";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Payment · success",
+  description: "Your payment was successful!",
+});
 
 export default function SuccessPaymentPage() {
   return (
