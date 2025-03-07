@@ -13,6 +13,7 @@ import {
   User2,
 } from "lucide-react";
 import { SiteConfig } from "site-config";
+import { z } from "zod";
 import type { GenericLinkSchema, NavigationLink } from "./navigation.type";
 
 // Constantes pour les chemins
@@ -21,6 +22,20 @@ const PATHS = {
   TRIP: `/trips/:tripSlug`,
   STEP: `/steps/:stepSlug`,
 };
+
+export const EmptyLinkParamsSchema = z.object({}).strict();
+
+export const OrgLinkParamsSchema = EmptyLinkParamsSchema.extend({
+  orgSlug: z.string(),
+}).strict();
+
+export const TripLinkParamsSchema = OrgLinkParamsSchema.extend({
+  tripSlug: z.string(),
+}).strict();
+
+export const StepLinkParamsSchema = TripLinkParamsSchema.extend({
+  stepSlug: z.string(),
+}).strict();
 
 // Fonction utilitaire pour remplacer les paramètres dans les URLs
 const createLinkGenerator = (path: string, needsParams = false) => {
@@ -136,4 +151,3 @@ export const LINKS = {
     disabled: true,
   }),
 } satisfies GenericLinkSchema;
-

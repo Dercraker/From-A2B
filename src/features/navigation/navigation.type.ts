@@ -1,6 +1,12 @@
 import { OrganizationMembershipRole } from "@prisma/client";
 import type { LucideIcon } from "lucide-react";
 import { z } from "zod";
+import {
+  EmptyLinkParamsSchema,
+  OrgLinkParamsSchema,
+  StepLinkParamsSchema,
+  TripLinkParamsSchema,
+} from "./Links";
 
 //#region Base Types
 
@@ -31,11 +37,20 @@ const BaseNavigationLinkSchema = z
 
 //#region Non Generated Schemas (Links with dynamic href function)
 
-/**
- * Schéma pour un lien de navigation avec href dynamique (fonction)
- */
 const NavigationLinkSchema = BaseNavigationLinkSchema.extend({
-  href: z.function().args(z.record(z.string(), z.string())).returns(z.string()),
+  href: z
+    .function()
+    .args(
+      z
+        .union([
+          EmptyLinkParamsSchema,
+          OrgLinkParamsSchema,
+          TripLinkParamsSchema,
+          StepLinkParamsSchema,
+        ])
+        .optional(),
+    )
+    .returns(z.string()),
 });
 
 /**
@@ -165,4 +180,3 @@ export {
 };
 
 //#endregion Schema Exports
-
