@@ -128,7 +128,7 @@ export const AddStepDialog = ({
       }}
     >
       <DialogTrigger asChild>
-        {children ? children : <Button variant="filled">Add Trip</Button>}
+        {children ?? <Button variant="filled">Add Trip</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

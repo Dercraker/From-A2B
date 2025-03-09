@@ -3,10 +3,10 @@
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useEdgeStore } from "@lib/blobStorage/edgestore";
+import { logger } from "@lib/logger";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { DeleteFileAction } from "./deleteFile.action";
-import { logger } from "@lib/logger";
 
 type UseDeleteFileProps = {
   stepSlug: string;
@@ -32,29 +32,24 @@ export const useDeleteFile = ({ stepSlug, tripSlug }: UseDeleteFileProps) => {
         });
 
         if (!isActionSuccessful(result)) {
-          toast.error(
-            result?.serverError ?? "Échec de la suppression du fichier",
-          );
+          toast.error(result?.serverError ?? "Failed to delete file");
           return null;
         }
 
-        return result.data;
-      } catch (error) {
-        logger.error("Error deleting file:", error);
-        toast.error("Échec de la suppression du fichier");
-        return null;
-      }
-    },
-    onSuccess: async (data) => {
-      if (data) {
+        toast.success("File deleted successfully");
+
         await queryClient.invalidateQueries({
           queryKey: STEP_KEY_FACTORY.Files(tripSlug, stepSlug),
         });
-        toast.success("Fichier supprimé avec succès");
+        return result.data;
+      } catch (error) {
+        logger.error("Error deleting file:", error);
+        toast.error("Failed to delete file");
+        return null;
       }
     },
     onError: () => {
-      toast.error("Échec de la suppression du fichier");
+      toast.error("Failed to delete file");
     },
   });
 };

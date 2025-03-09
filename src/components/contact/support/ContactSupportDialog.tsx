@@ -60,11 +60,7 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
       <DialogTrigger asChild onClick={() => phCapture("ClickContactSupport")}>
-        {props.children ? (
-          props.children
-        ) : (
-          <Button variant="filled">Contact support</Button>
-        )}
+        {props.children ?? <Button variant="filled">Contact support</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

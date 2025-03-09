@@ -4,13 +4,14 @@ model Step {
   tripId String
   trip   Trip?  @relation(fields: [tripId], references: [id], onDelete: Cascade)
 
-  rank          Int
-  name          String
-  startDate     DateTime?
-  endDate       DateTime?
-  description   String?
-  latitude      Decimal
-  longitude     Decimal
+  rank        Int
+  name        String
+  startDate   DateTime?
+  endDate     DateTime?
+  description String?
+
+  latitude      Float
+  longitude     Float
   placeId       String        @default("")
   TransportMode TransportMode @default(Car)
 
@@ -55,7 +56,7 @@ model Task {
   updatedAt DateTime @updatedAt
 
   stepId String
-  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
 }
 
 enum TaskState {
@@ -75,5 +76,5 @@ model File {
   uploadedAt DateTime @default(now())
 
   stepId String
-  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
 }

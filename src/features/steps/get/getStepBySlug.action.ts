@@ -1,6 +1,6 @@
 "use server";
 
-import { StepWithRelationsSchema } from "@generated/modelSchema";
+import { StepSchema } from "@generated/modelSchema";
 import { orgAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 import { GetStepBySlugQuery } from "./getStepBySlug.query";
@@ -14,5 +14,5 @@ export const GetStepBySlugAction = orgAction
   .action(async ({ parsedInput: { stepSlug } }) => {
     const step = await GetStepBySlugQuery({ stepSlug });
 
-    return StepWithRelationsSchema.parseAsync(step);
+    return StepSchema.parseAsync(step);
   });

@@ -1,9 +1,10 @@
 "use server";
 
-import { GetStepBySlugQuery } from "@feat/steps/get/getStepBySlug.query";
+import { TaskSchema } from "@generated/modelSchema";
 import { ActionError, authAction } from "@lib/actions/safe-actions";
 import { logger } from "@lib/logger";
 import { z } from "zod";
+import { GetTasksByStepSlugQuery } from "./getTaskByStepSlug.query";
 
 const GetTasksByStepSlugSchema = z.object({
   stepSlug: z.string(),
@@ -13,16 +14,16 @@ export const GetTasksByStepSlugAction = authAction
   .schema(GetTasksByStepSlugSchema)
   .action(async ({ parsedInput: { stepSlug } }) => {
     try {
-      const step = await GetStepBySlugQuery({
+      const tasks = await GetTasksByStepSlugQuery({
         stepSlug,
-        where: {
-          slug: stepSlug,
+        orderBy: {
+          rank: "asc",
         },
       });
 
-      if (!step) throw new ActionError("Step not found");
+      if (!tasks) throw new ActionError("No tasks found");
 
-      return step.Task;
+      return TaskSchema.array().parseAsync(tasks);
     } catch (error) {
       logger.error("Error fetching tasks:", error);
       throw new ActionError("Failed to fetch tasks");

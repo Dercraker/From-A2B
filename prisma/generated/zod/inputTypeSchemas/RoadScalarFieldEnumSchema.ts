@@ -1,12 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const RoadScalarFieldEnumSchema = z.enum([
-  "id",
-  "distance",
-  "duration",
-  "polyline",
-  "stepId",
-  "tripId",
-]);
+export const RoadScalarFieldEnumSchema = z.enum(['id','distance','duration','polyline','stepId','tripId']);
 
 export default RoadScalarFieldEnumSchema;

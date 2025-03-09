@@ -33,7 +33,7 @@ export const EditStepAction = orgAction
           startDate,
           endDate,
           description,
-          placeId: placeId ? placeId : undefined,
+          placeId: placeId ?? undefined,
           TransportMode,
           trip: {
             connect: {

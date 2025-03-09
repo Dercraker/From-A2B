@@ -1,4 +1,4 @@
-import { TripWithRelationsSchema } from "@generated/modelSchema";
+import { RoadSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -15,7 +15,7 @@ export const GetTripRoadsQuery = async ({ where }: GetTripRoadsQueryProps) => {
     },
   });
 
-  return (await TripWithRelationsSchema.parseAsync(trip)).Road;
+  return RoadSchema.array().parseAsync(trip?.Road);
 };
 
 export type GetTripRoadsQuery = Prisma.PromiseReturnType<

@@ -58,11 +58,7 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
   return (
     <Popover open={open} onOpenChange={(v) => setOpen(v)}>
       <PopoverTrigger asChild onClick={() => phCapture("ClickFeedBack")}>
-        {props.children ? (
-          props.children
-        ) : (
-          <Button variant="filled">Feedback</Button>
-        )}
+        {props.children ?? <Button variant="filled">Feedback</Button>}
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Form

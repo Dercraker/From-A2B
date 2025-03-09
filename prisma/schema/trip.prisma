@@ -8,7 +8,7 @@ model Trip {
   description    String?
   image          String?
 
-  Organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  Organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   steps        Step[]
 
   createdAt DateTime  @default(now())

@@ -18,9 +18,7 @@ export const LoadingOverlay = ({
       )}
       {...props}
     >
-      {children ? (
-        children
-      ) : (
+      {children ?? (
         <Typography variant="lead" className="flex items-center gap-2">
           Loading <Loader className="text-primary" />
         </Typography>

@@ -4,10 +4,7 @@ import type { Prisma } from "@prisma/client";
 
 type GetTasksByStepSlugQueryProps = {
   stepSlug: string;
-  orderBy?: {
-    field: keyof Task;
-    direction: "asc" | "desc";
-  };
+  orderBy?: Prisma.TaskOrderByWithRelationInput;
 };
 
 /**
@@ -18,7 +15,7 @@ type GetTasksByStepSlugQueryProps = {
  */
 export const GetTasksByStepSlugQuery = async ({
   stepSlug,
-  orderBy = { field: "rank", direction: "asc" },
+  orderBy,
 }: GetTasksByStepSlugQueryProps) => {
   const step = await prisma.step.findUnique({
     where: {
@@ -26,9 +23,7 @@ export const GetTasksByStepSlugQuery = async ({
     },
     include: {
       Task: {
-        orderBy: {
-          [orderBy.field]: orderBy.direction,
-        },
+        ...(orderBy && { orderBy }),
       },
     },
   });

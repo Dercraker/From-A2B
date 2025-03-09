@@ -21,7 +21,7 @@ export const GetLastTaskByStepSlugQuery = async ({
     },
   });
 
-  return TaskSchema.parseAsync(step?.Task[0]);
+  return step?.Task[0] ? TaskSchema.parseAsync(step?.Task[0]) : null;
 };
 
 export type GetLastTaskByStepSlugQuery = Prisma.PromiseReturnType<
