@@ -1,3 +1,4 @@
+import { TaskSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -23,5 +24,9 @@ export const AddTaskToStepQuery = async ({
     },
   });
 
-  return task;
+  return TaskSchema.parseAsync(task);
 };
+
+export type AddTaskToStepQuery = Prisma.PromiseReturnType<
+  typeof AddTaskToStepQuery
+>;

@@ -29,3 +29,7 @@ export const GetTripsByCurrentOrgQuery = async ({
     .array(TripSchema)
     .parse(trips.map((trip) => ({ ...trip, orgSlug: org.slug })));
 };
+
+export type GetTripsByCurrentOrgQuery = Prisma.PromiseReturnType<
+  typeof GetTripsByCurrentOrgQuery
+>;

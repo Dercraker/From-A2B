@@ -10,3 +10,7 @@ export const DeleteRoadToStepQuery = async ({
     where,
   });
 };
+
+export type DeleteRoadToStepQuery = Prisma.PromiseReturnType<
+  typeof DeleteRoadToStepQuery
+>;

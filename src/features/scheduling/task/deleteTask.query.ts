@@ -1,5 +1,5 @@
 import { prisma } from "@lib/prisma";
-
+import type { Prisma } from "@prisma/client";
 type DeleteTaskQueryProps = {
   taskId: string;
 };
@@ -11,3 +11,5 @@ export const DeleteTaskQuery = async ({ taskId }: DeleteTaskQueryProps) => {
     },
   });
 };
+
+export type DeleteTaskQuery = Prisma.PromiseReturnType<typeof DeleteTaskQuery>;

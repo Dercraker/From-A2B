@@ -14,6 +14,4 @@ export const AddStepQuery = async ({ step }: AddStepQueryType) => {
   return StepSchema.parseAsync(newStep);
 };
 
-export type AddStepQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof AddStepQuery>
->;
+export type AddStepQuery = Prisma.PromiseReturnType<typeof AddStepQuery>;

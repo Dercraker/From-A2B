@@ -1,5 +1,6 @@
+import { TaskSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
-
+import type { Prisma } from "@prisma/client";
 type UpdateTaskQueryProps = {
   taskId: string;
   dueDate?: Date;
@@ -21,5 +22,7 @@ export const UpdateTaskQuery = async ({
     },
   });
 
-  return task;
+  return TaskSchema.parseAsync(task);
 };
+
+export type UpdateTaskQuery = Prisma.PromiseReturnType<typeof UpdateTaskQuery>;

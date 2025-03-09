@@ -5,6 +5,4 @@ export const DeleteStepQuery = async ({ where }: Prisma.StepDeleteArgs) => {
   await prisma.step.delete({ where });
 };
 
-export type DeleteStepQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof DeleteStepQuery>
->;
+export type DeleteStepQuery = Prisma.PromiseReturnType<typeof DeleteStepQuery>;

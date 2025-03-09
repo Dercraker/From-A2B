@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { TaskStateSchema } from "../inputTypeSchemas/TaskStateSchema";
-import type {
-  StepOptionalDefaultsWithRelations,
-  StepWithRelations,
-} from "./StepSchema";
 import {
-  StepOptionalDefaultsWithRelationsSchema,
   StepWithRelationsSchema,
+  StepOptionalDefaultsWithRelationsSchema,
+} from "./StepSchema";
+import type {
+  StepWithRelations,
+  StepOptionalDefaultsWithRelations,
 } from "./StepSchema";
 
 /////////////////////////////////////////

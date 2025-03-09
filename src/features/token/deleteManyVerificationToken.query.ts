@@ -11,3 +11,7 @@ export const DeleteManyVerificationTokenQuery = async ({
   prisma.verificationToken.deleteMany({
     where,
   });
+
+export type DeleteManyVerificationTokenQuery = Prisma.PromiseReturnType<
+  typeof DeleteManyVerificationTokenQuery
+>;

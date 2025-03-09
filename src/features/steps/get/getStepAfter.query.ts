@@ -20,7 +20,7 @@ export const GetStepAfterQuery = async ({
   });
 
   return nextStep
-    ? StepSchema.parse({
+    ? StepSchema.parseAsync({
         ...nextStep,
         latitude: Number(nextStep.latitude),
         longitude: Number(nextStep.longitude),

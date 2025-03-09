@@ -77,7 +77,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
 
       const newTasks = arrayMove(tasks, oldIndex, newIndex);
 
-      await reSortTasksAsync({ tasks: newTasks });
+      await reSortTasksAsync({ tasks: newTasks as Task[] });
     }
   };
 

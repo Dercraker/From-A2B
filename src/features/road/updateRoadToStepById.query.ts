@@ -1,3 +1,4 @@
+import { RoadSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -20,5 +21,9 @@ export const UpdateRoadToStepByIdQuery = async ({
     create,
   });
 
-  return road;
+  return RoadSchema.parseAsync(road);
 };
+
+export type UpdateRoadToStepByIdQuery = Prisma.PromiseReturnType<
+  typeof UpdateRoadToStepByIdQuery
+>;

@@ -1,12 +1,13 @@
 import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
 import type { DeleteFileSchemaType } from "./file.schema";
 
 export const DeleteFileQuery = async ({ fileId }: DeleteFileSchemaType) => {
-  const file = await prisma.file.delete({
+  await prisma.file.delete({
     where: {
       id: fileId,
     },
   });
-
-  return file;
 };
+
+export type DeleteFileQuery = Prisma.PromiseReturnType<typeof DeleteFileQuery>;

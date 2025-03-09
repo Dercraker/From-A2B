@@ -1,4 +1,6 @@
+import { TaskSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
 import type { TaskStatusType } from "./taskStatus.schema";
 
 type UpdateTaskStatusByTaskIdQueryProps = {
@@ -19,5 +21,9 @@ export const UpdateTaskStatusByTaskIdQuery = async ({
     },
   });
 
-  return updatedTask;
+  return TaskSchema.parseAsync(updatedTask);
 };
+
+export type UpdateTaskStatusByTaskIdQuery = Prisma.PromiseReturnType<
+  typeof UpdateTaskStatusByTaskIdQuery
+>;

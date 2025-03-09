@@ -14,5 +14,7 @@ export const GetTripQuery = async ({
     where,
   });
 
-  return TripSchema.parse(trip);
+  return TripSchema.parseAsync(trip);
 };
+
+export type GetTripQuery = Prisma.PromiseReturnType<typeof GetTripQuery>;

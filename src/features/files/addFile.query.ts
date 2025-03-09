@@ -1,3 +1,4 @@
+import { FileSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -18,5 +19,7 @@ export const AddFileQuery = async ({ data, stepSlug }: AddFileQueryProps) => {
     },
   });
 
-  return file;
+  return FileSchema.parseAsync(file);
 };
+
+export type AddFileQuery = Prisma.PromiseReturnType<typeof AddFileQuery>;

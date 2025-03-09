@@ -1,14 +1,13 @@
-import type { Step } from "@generated/modelSchema";
 import { StepSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
-
+import type { Prisma } from "@prisma/client";
 type GetLastStepQueryType = {
   tripSlug: string;
 };
 
 export const GetLastStepQueryByTripSlug = async ({
   tripSlug,
-}: GetLastStepQueryType): Promise<Step | null> => {
+}: GetLastStepQueryType) => {
   const lastStep = await prisma.step.findFirst({
     where: {
       trip: {
@@ -21,10 +20,14 @@ export const GetLastStepQueryByTripSlug = async ({
   });
 
   return lastStep
-    ? StepSchema.parse({
+    ? StepSchema.parseAsync({
         ...lastStep,
         latitude: Number(lastStep.latitude),
         longitude: Number(lastStep.longitude),
       })
     : null;
 };
+
+export type GetLastStepQueryByTripSlug = Prisma.PromiseReturnType<
+  typeof GetLastStepQueryByTripSlug
+>;

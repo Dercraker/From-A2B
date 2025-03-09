@@ -1,4 +1,4 @@
-import { StepSchema, StepWithRelationsSchema } from "@generated/modelSchema";
+import { StepWithRelationsSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -23,9 +23,9 @@ export const GetStepBySlugQuery = async ({
     },
   });
 
-  return StepWithRelationsSchema.safeParse(step);
+  return StepWithRelationsSchema.parseAsync(step);
 };
 
-export type GetStepBySlugQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof GetStepBySlugQuery>
+export type GetStepBySlugQuery = Prisma.PromiseReturnType<
+  typeof GetStepBySlugQuery
 >;

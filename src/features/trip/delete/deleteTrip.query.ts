@@ -1,4 +1,5 @@
 import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
 import type { DeleteTripSchema } from "./deleteTrip.schema";
 
 export const DeleteTripQuery = async ({ orgId, tripId }: DeleteTripSchema) => {
@@ -12,3 +13,5 @@ export const DeleteTripQuery = async ({ orgId, tripId }: DeleteTripSchema) => {
     },
   });
 };
+
+export type DeleteTripQuery = Prisma.PromiseReturnType<typeof DeleteTripQuery>;

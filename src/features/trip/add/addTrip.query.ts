@@ -1,3 +1,4 @@
+import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -9,9 +10,7 @@ export const AddTripQuery = async (params: Prisma.TripCreateInput) => {
     select: { slug: true },
   });
 
-  return slug;
+  return TripSchema.parseAsync(slug);
 };
 
-export type AddTripQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof AddTripQuery>
->;
+export type AddTripQuery = Prisma.PromiseReturnType<typeof AddTripQuery>;

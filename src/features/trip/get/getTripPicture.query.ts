@@ -1,3 +1,4 @@
+import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -10,7 +11,7 @@ export const GetTripPictureQuery = async ({
     where,
   });
 
-  return trip?.image;
+  return (await TripSchema.parseAsync(trip)).image;
 };
 
 export type GetTripPictureQueryType = Prisma.PromiseReturnType<

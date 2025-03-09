@@ -12,5 +12,7 @@ export const GetStepQuery = async ({ where }: GetStepQueryProps) => {
       ...where,
     },
   });
-  return StepSchema.parse(step);
+  return StepSchema.parseAsync(step);
 };
+
+export type GetStepQuery = Prisma.PromiseReturnType<typeof GetStepQuery>;

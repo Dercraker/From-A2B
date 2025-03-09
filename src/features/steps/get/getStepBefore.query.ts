@@ -18,7 +18,7 @@ export const GetStepBeforeQuery = async ({
     orderBy: { rank: "desc" },
   });
   return previousStep
-    ? StepSchema.parse({
+    ? StepSchema.parseAsync({
         ...previousStep,
         latitude: Number(previousStep.latitude),
         longitude: Number(previousStep.longitude),

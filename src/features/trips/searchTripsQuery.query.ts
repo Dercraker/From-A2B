@@ -1,6 +1,7 @@
 import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
+import type { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 type SearchTripsQueryProps = { searchQuery: string };
@@ -16,8 +17,6 @@ export const SearchTripsQuery = async ({
       OR: [
         { name: { contains: searchQuery, mode: "insensitive" } },
         { description: { contains: searchQuery, mode: "insensitive" } },
-        // { startDate: { gte: new Date(searchQuery) } },
-        // { endDate: { lte: new Date(searchQuery) } },
       ],
       deletedAt: null,
     },
@@ -37,3 +36,7 @@ export const SearchTripsQuery = async ({
     .array(TripSchema)
     .parse(trips.map((trip) => ({ ...trip, orgSlug: org.slug })));
 };
+
+export type SearchTripsQuery = Prisma.PromiseReturnType<
+  typeof SearchTripsQuery
+>;

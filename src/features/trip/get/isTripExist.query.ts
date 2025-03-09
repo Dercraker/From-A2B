@@ -11,3 +11,7 @@ export const IsTripExistQuery = async ({
   !!(await prisma.trip.findFirst({
     where,
   }));
+
+export type IsTripExistQuery = Prisma.PromiseReturnType<
+  typeof IsTripExistQuery
+>;
