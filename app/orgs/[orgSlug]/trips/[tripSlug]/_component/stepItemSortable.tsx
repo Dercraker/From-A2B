@@ -3,7 +3,7 @@ import { Typography } from "@components/ui/typography";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { LINKS } from "@feat/navigation/Links";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import type { Step } from "@generated/modelSchema";
 import { cn } from "@lib/utils";
 import { EllipsisVertical, GripVertical } from "lucide-react";
 import Link from "next/link";
@@ -13,7 +13,7 @@ import { StepItemMenu } from "./stepItemMenu";
 export type StepItemSortableProps = {
   tripSlug: string;
   orgSlug: string;
-  step: StepDto;
+  step: Step;
   idx: number;
   className?: string;
 };

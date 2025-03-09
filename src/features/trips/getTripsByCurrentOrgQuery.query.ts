@@ -1,7 +1,8 @@
+import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import type { Prisma } from "@prisma/client";
-import { TripsListDtoSchema } from "./dto/tripsListDto.schema";
+import { z } from "zod";
 
 type GetTripsByCurrentOrgQueryProps = {
   order?:
@@ -24,7 +25,11 @@ export const GetTripsByCurrentOrgQuery = async ({
     orderBy: order,
   });
 
-  return TripsListDtoSchema.parse(
-    trips.map((trip) => ({ ...trip, orgSlug: org.slug })),
-  );
+  return z
+    .array(TripSchema)
+    .parse(trips.map((trip) => ({ ...trip, orgSlug: org.slug })));
 };
+
+export type GetTripsByCurrentOrgQuery = Prisma.PromiseReturnType<
+  typeof GetTripsByCurrentOrgQuery
+>;

@@ -1,6 +1,6 @@
+import { StepSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepDtoSchema } from "../dto/stepDto.schema";
 
 type AddStepQueryType = {
   step: Prisma.StepCreateInput;
@@ -11,9 +11,7 @@ export const AddStepQuery = async ({ step }: AddStepQueryType) => {
     data: step,
   });
 
-  return StepDtoSchema.parseAsync(newStep);
+  return StepSchema.parseAsync(newStep);
 };
 
-export type AddStepQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof AddStepQuery>
->;
+export type AddStepQuery = Prisma.PromiseReturnType<typeof AddStepQuery>;

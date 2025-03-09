@@ -1,5 +1,6 @@
+import { StepSchema } from "@generated/modelSchema";
+import type { Prisma } from "@prisma/client";
 import { EditStepQuery } from "./editStep.query";
-
 type UpdateSchedulingNoteByStepSlugQueryProps = {
   stepSlug: string;
   markdown: string;
@@ -16,5 +17,9 @@ export const UpdateSchedulingNoteByStepSlugQuery = async ({
     step: { schedulingNotes: markdown },
   });
 
-  return step;
+  return (await StepSchema.parseAsync(step)).schedulingNotes;
 };
+
+export type UpdateSchedulingNoteByStepSlugQuery = Prisma.PromiseReturnType<
+  typeof UpdateSchedulingNoteByStepSlugQuery
+>;

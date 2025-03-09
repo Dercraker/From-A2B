@@ -1,9 +1,9 @@
 "use client";
 
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
-import type { TaskDto } from "@feat/scheduling/dto/taskDto.schema";
 import { UpdateTaskActionAction } from "@feat/scheduling/task/updateTask.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import type { Task } from "@generated/modelSchema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DateTimePicker } from "@ui/DateTimePicker";
@@ -20,7 +20,7 @@ import type { PropsWithChildren } from "react";
 import { toast } from "sonner";
 import { TaskNotesMdxEditor } from "./taskNotesMdxEditor";
 export type TaskUpdateDialogProps = PropsWithChildren<{
-  task: TaskDto;
+  task: Task;
   stepSlug: string;
   tripSlug: string;
 }>;

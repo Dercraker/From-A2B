@@ -20,9 +20,9 @@ export const GetTasksByStepSlugAction = authAction
         },
       });
 
-      if (!step?.data) throw new ActionError("Step not found");
+      if (!step) throw new ActionError("Step not found");
 
-      return step.data.Task;
+      return step.Task;
     } catch (error) {
       logger.error("Error fetching tasks:", error);
       throw new ActionError("Failed to fetch tasks");

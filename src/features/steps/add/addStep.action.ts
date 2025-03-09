@@ -1,11 +1,11 @@
 "use server";
 
 import { AddRoadsToStep } from "@feat/road/addRoadBetweenSteps";
+import type { Step } from "@generated/modelSchema";
 import { ActionError, orgAction } from "@lib/actions/safe-actions";
 import { generateSlug } from "@lib/format/id";
 import { logger } from "@lib/logger";
 import { GetStepRank } from "@utils/GetStepRank";
-import type { StepDto } from "../dto/stepDto.schema";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -45,7 +45,7 @@ export const AddStepAction = orgAction
         tripSlug,
       });
 
-      let newStep: StepDto;
+      let newStep: Step;
 
       try {
         const newRank = GetStepRank({

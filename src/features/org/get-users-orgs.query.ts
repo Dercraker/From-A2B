@@ -1,6 +1,6 @@
 import { requiredUser } from "@lib/auth/helper";
 import { prisma } from "@lib/prisma";
-
+import type { Prisma } from "@prisma/client";
 export async function getUsersOrgs() {
   const user = await requiredUser();
   const userOrganizations = await prisma.organization.findMany({
@@ -21,3 +21,5 @@ export async function getUsersOrgs() {
 
   return userOrganizations;
 }
+
+export type GetUsersOrgsQuery = Prisma.PromiseReturnType<typeof getUsersOrgs>;

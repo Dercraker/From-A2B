@@ -1,4 +1,5 @@
 import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
 import { FileSchema } from "./file.schema";
 
 type GetFilesByStepSlugQueryProps = {
@@ -21,5 +22,13 @@ export const GetFilesByStepSlugQuery = async ({
     throw new Error(`Step with slug ${stepSlug} not found`);
   }
 
-  return step.File.map((file) => FileSchema.parse(file));
+  const files = await Promise.all(
+    step.File.map(async (file) => FileSchema.parseAsync(file)),
+  );
+
+  return files;
 };
+
+export type GetFilesByStepSlugQuery = Prisma.PromiseReturnType<
+  typeof GetFilesByStepSlugQuery
+>;

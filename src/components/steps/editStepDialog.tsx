@@ -22,10 +22,10 @@ import {
   useZodForm,
 } from "@components/ui/form";
 import { Input } from "@components/ui/input";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { EditStepAction } from "@feat/steps/update/editStep.action";
 import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import type { Step } from "@generated/index";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
 import { phCapture } from "@lib/postHog/eventCapture";
@@ -46,7 +46,7 @@ import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
 
 export type EditStepDialogProps = PropsWithChildren<{
-  step: StepDto;
+  step: Step;
   onClose: () => void;
 }>;
 
@@ -71,8 +71,8 @@ export const EditStepDialog = ({
       startDate: step.startDate ?? undefined,
       endDate: step.endDate ?? undefined,
 
-      latitude: step.latitude ?? undefined,
-      longitude: step.longitude ?? undefined,
+      latitude: Number(step.latitude),
+      longitude: Number(step.longitude),
 
       placeId: step.placeId,
       TransportMode: step.TransportMode as TransportMode,

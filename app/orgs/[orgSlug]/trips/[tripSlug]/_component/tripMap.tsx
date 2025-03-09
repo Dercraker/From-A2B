@@ -36,8 +36,8 @@ export const TripMap = ({
         ({
           key: step.name,
           location: {
-            lat: step.latitude,
-            lng: step.longitude,
+            lat: Number(step.latitude),
+            lng: Number(step.longitude),
           },
         }) satisfies Poi,
     ) satisfies Pois;

@@ -1,4 +1,5 @@
 import { DeleteManyVerificationTokenQuery } from "./deleteManyVerificationToken.query";
+import type { Prisma } from "@prisma/client";
 
 type DeleteVerificationTokenUpdateProfileQueryProps = { newEmail: string };
 
@@ -12,3 +13,6 @@ export const DeleteVerificationTokenUpdateProfileQuery = async ({
       },
     },
   });
+
+export type DeleteVerificationTokenUpdateProfileQuery =
+  Prisma.PromiseReturnType<typeof DeleteVerificationTokenUpdateProfileQuery>;

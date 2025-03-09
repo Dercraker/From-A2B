@@ -3,7 +3,7 @@
 import { Typography } from "@components/ui/typography";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { TaskDto } from "@feat/scheduling/dto/taskDto.schema";
+import type { Task } from "@generated/modelSchema";
 import { cn } from "@lib/utils";
 import { InlineTooltip } from "@ui/tooltip";
 import { differenceInHours, format } from "date-fns";
@@ -14,7 +14,7 @@ import { TaskStatusSelect } from "./taskStatusSelect";
 import { TaskUpdateDialog } from "./taskUpdateDialog";
 
 export type TaskItemSortableProps = {
-  task: TaskDto;
+  task: Task;
   className?: string;
 };
 

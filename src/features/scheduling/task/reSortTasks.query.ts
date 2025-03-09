@@ -1,8 +1,9 @@
+import type { Task } from "@generated/modelSchema";
+import type { Prisma } from "@prisma/client";
 import { ReSortEntities } from "@utils/reSort";
-import type { TaskDto } from "../dto/taskDto.schema";
 
 type ReSortTasksQueryType = {
-  tasks: TaskDto[];
+  tasks: Task[];
 };
 
 export const ReSortTasksQuery = async ({ tasks }: ReSortTasksQueryType) => {
@@ -11,3 +12,7 @@ export const ReSortTasksQuery = async ({ tasks }: ReSortTasksQueryType) => {
     entityType: "task",
   });
 };
+
+export type ReSortTasksQuery = Prisma.PromiseReturnType<
+  typeof ReSortTasksQuery
+>;

@@ -1,3 +1,4 @@
+import { VerificationTokenSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 import { addHours } from "date-fns";
@@ -19,5 +20,9 @@ export const CreateVerificationTokenQuery = async ({
     },
   });
 
-  return verificationToken;
+  return VerificationTokenSchema.parseAsync(verificationToken);
 };
+
+export type CreateVerificationTokenQuery = Prisma.PromiseReturnType<
+  typeof CreateVerificationTokenQuery
+>;

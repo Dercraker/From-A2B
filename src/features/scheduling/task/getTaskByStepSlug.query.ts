@@ -1,6 +1,6 @@
+import { TaskSchema, type Task } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
-import type { Prisma, Task } from "@prisma/client";
-import { TaskSchema, type TaskDto } from "../dto/taskDto.schema";
+import type { Prisma } from "@prisma/client";
 
 type GetTasksByStepSlugQueryProps = {
   stepSlug: string;
@@ -19,7 +19,7 @@ type GetTasksByStepSlugQueryProps = {
 export const GetTasksByStepSlugQuery = async ({
   stepSlug,
   orderBy = { field: "rank", direction: "asc" },
-}: GetTasksByStepSlugQueryProps): Promise<TaskDto[] | null> => {
+}: GetTasksByStepSlugQueryProps) => {
   const step = await prisma.step.findUnique({
     where: {
       slug: stepSlug,
@@ -37,7 +37,11 @@ export const GetTasksByStepSlugQuery = async ({
     return null;
   }
 
-  return step.Task.map((task: Task) => TaskSchema.parse(task));
+  const tasks = await Promise.all(
+    step.Task.map(async (task: Task) => TaskSchema.parseAsync(task)),
+  );
+
+  return tasks;
 };
 
 export type GetTasksByStepSlugQueryType = Prisma.PromiseReturnType<

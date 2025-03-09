@@ -1,3 +1,4 @@
+import { TaskSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -19,5 +20,10 @@ export const GetLastTaskByStepSlugQuery = async ({
       },
     },
   });
-  return step?.Task[0];
+
+  return TaskSchema.parseAsync(step?.Task[0]);
 };
+
+export type GetLastTaskByStepSlugQuery = Prisma.PromiseReturnType<
+  typeof GetLastTaskByStepSlugQuery
+>;

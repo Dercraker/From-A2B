@@ -1,8 +1,8 @@
+import type { Step } from "@generated/modelSchema";
 import { ReSortEntities } from "@utils/reSort";
-import type { StepDto } from "../dto/stepDto.schema";
 
 type ReSortStepsQueryType = {
-  steps: StepDto[];
+  steps: Step[];
 };
 
 export const ReSortStepsQuery = async ({ steps }: ReSortStepsQueryType) => {

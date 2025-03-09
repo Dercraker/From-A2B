@@ -1,7 +1,8 @@
+import { VerificationTokenSchema } from "@generated/modelSchema";
+import type { Prisma } from "@prisma/client";
 import { addHours } from "date-fns";
 import { nanoid } from "nanoid";
 import { CreateVerificationTokenQuery } from "./createVerificationToken.query";
-
 type CreateUpdateProfileVerificationTokenQueryProps = { newEmail: string };
 
 export const CreateUpdateProfileVerificationTokenQuery = async ({
@@ -15,5 +16,8 @@ export const CreateUpdateProfileVerificationTokenQuery = async ({
     },
   });
 
-  return verificationToken;
+  return VerificationTokenSchema.parseAsync(verificationToken);
 };
+
+export type CreateUpdateProfileVerificationTokenQuery =
+  Prisma.PromiseReturnType<typeof CreateUpdateProfileVerificationTokenQuery>;

@@ -57,8 +57,8 @@ export const DetailStepList = ({ orgSlug, tripSlug }: StepListProps) => {
         return SetSteps(null);
       }
 
-      SetSteps(result.data.data);
-      return result.data.data;
+      SetSteps(result.data);
+      return result.data;
     },
   });
 

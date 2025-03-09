@@ -46,8 +46,8 @@ export const updateAdjacentStepRoad = async ({
       placeId: stepBefore.placeId,
       location: {
         latLng: {
-          latitude: stepBefore.latitude,
-          longitude: stepBefore.longitude,
+          latitude: Number(stepBefore.latitude),
+          longitude: Number(stepBefore.longitude),
         },
       },
     },
@@ -55,8 +55,8 @@ export const updateAdjacentStepRoad = async ({
       placeId: stepAfter.placeId,
       location: {
         latLng: {
-          latitude: stepAfter.latitude,
-          longitude: stepAfter.longitude,
+          latitude: Number(stepAfter.latitude),
+          longitude: Number(stepAfter.longitude),
         },
       },
     },
@@ -110,8 +110,8 @@ export const updateAdjacentMovedStepRoad = async ({
         placeId: stepBefore.placeId,
         location: {
           latLng: {
-            latitude: stepBefore.latitude,
-            longitude: stepBefore.longitude,
+            latitude: Number(stepBefore.latitude),
+            longitude: Number(stepBefore.longitude),
           },
         },
       },
@@ -119,8 +119,8 @@ export const updateAdjacentMovedStepRoad = async ({
         placeId: currentStep.placeId,
         location: {
           latLng: {
-            latitude: currentStep.latitude,
-            longitude: currentStep.longitude,
+            latitude: Number(currentStep.latitude),
+            longitude: Number(currentStep.longitude),
           },
         },
       },
@@ -152,8 +152,8 @@ export const updateAdjacentMovedStepRoad = async ({
         placeId: currentStep.placeId,
         location: {
           latLng: {
-            latitude: currentStep.latitude,
-            longitude: currentStep.longitude,
+            latitude: Number(currentStep.latitude),
+            longitude: Number(currentStep.longitude),
           },
         },
       },
@@ -161,8 +161,8 @@ export const updateAdjacentMovedStepRoad = async ({
         placeId: stepAfter.placeId,
         location: {
           latLng: {
-            latitude: stepAfter.latitude,
-            longitude: stepAfter.longitude,
+            latitude: Number(stepAfter.latitude),
+            longitude: Number(stepAfter.longitude),
           },
         },
       },
@@ -203,8 +203,8 @@ export const updateAdjacentMovedStepRoad = async ({
       placeId: stepBefore.placeId,
       location: {
         latLng: {
-          latitude: stepBefore.latitude,
-          longitude: stepBefore.longitude,
+          latitude: Number(stepBefore.latitude),
+          longitude: Number(stepBefore.longitude),
         },
       },
     },
@@ -212,8 +212,8 @@ export const updateAdjacentMovedStepRoad = async ({
       placeId: currentStep.placeId,
       location: {
         latLng: {
-          latitude: currentStep.latitude,
-          longitude: currentStep.longitude,
+          latitude: Number(currentStep.latitude),
+          longitude: Number(currentStep.longitude),
         },
       },
     },
@@ -224,8 +224,8 @@ export const updateAdjacentMovedStepRoad = async ({
       placeId: currentStep.placeId,
       location: {
         latLng: {
-          latitude: currentStep.latitude,
-          longitude: currentStep.longitude,
+          latitude: Number(currentStep.latitude),
+          longitude: Number(currentStep.longitude),
         },
       },
     },
@@ -233,8 +233,8 @@ export const updateAdjacentMovedStepRoad = async ({
       placeId: stepAfter.placeId,
       location: {
         latLng: {
-          latitude: stepAfter.latitude,
-          longitude: stepAfter.longitude,
+          latitude: Number(stepAfter.latitude),
+          longitude: Number(stepAfter.longitude),
         },
       },
     },

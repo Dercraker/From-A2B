@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.66.0",
+  "version": "0.67.2",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -41,6 +41,7 @@
     "@googlemaps/routing": "^1.4.0",
     "@hookform/resolvers": "^3.9.1",
     "@mdxeditor/editor": "^3.24.0",
+    "@mermaid-js/mermaid-cli": "^11.4.2",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -100,6 +101,7 @@
     "nuqs": "^2.2.2",
     "posthog-js": "^1.223.3",
     "posthog-node": "^4.8.0",
+    "prisma-erd-generator": "^2.0.4",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
@@ -148,6 +150,7 @@
     "@vitest/ui": "^3.0.5",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
+    "decimal.js": "^10.5.0",
     "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-react": "^7.37.2",
@@ -164,7 +167,8 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.15.0",
     "unified": "^11.0.5",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "zod-prisma-types": "^3.2.4"
   },
   "overrides": {
     "react-is": "^19.0.0-rc-69d4b800-20241021"
