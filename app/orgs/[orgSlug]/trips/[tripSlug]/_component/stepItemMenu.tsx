@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@components/ui/popover";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import type { Step } from "@generated/modelSchema";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { phCapture } from "@lib/postHog/eventCapture";
 import {
@@ -23,7 +23,7 @@ import type { PropsWithChildren } from "react";
 import { CenterMapMenuButton } from "./centerMapMenuButton";
 
 export type StepItemMenuProps = PropsWithChildren<{
-  step: StepDto;
+  step: Step;
 }>;
 
 export const StepItemMenu = ({ children, step }: StepItemMenuProps) => {

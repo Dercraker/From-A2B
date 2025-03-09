@@ -6,6 +6,7 @@ import { useEdgeStore } from "@lib/blobStorage/edgestore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { DeleteFileAction } from "./deleteFile.action";
+import { logger } from "@lib/logger";
 
 type UseDeleteFileProps = {
   stepSlug: string;
@@ -39,7 +40,7 @@ export const useDeleteFile = ({ stepSlug, tripSlug }: UseDeleteFileProps) => {
 
         return result.data;
       } catch (error) {
-        console.error("Error deleting file:", error);
+        logger.error("Error deleting file:", error);
         toast.error("Échec de la suppression du fichier");
         return null;
       }

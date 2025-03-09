@@ -16,9 +16,9 @@ import {
 } from "@components/ui/form";
 import { AddStepAction } from "@feat/steps/add/addStep.action";
 import { AddStepSchema } from "@feat/steps/add/addStep.schema";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import type { Step } from "@generated/modelSchema";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -51,8 +51,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export type AddStepDialogProps = PropsWithChildren<{
-  beforeStep?: StepDto;
-  afterStep?: StepDto;
+  beforeStep?: Step;
+  afterStep?: Step;
   onClose?: () => void;
 }>;
 

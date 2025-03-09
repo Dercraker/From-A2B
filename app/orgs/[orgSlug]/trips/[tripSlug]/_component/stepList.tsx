@@ -45,8 +45,8 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
   const map = useMap();
   if (steps?.[steps.length - 1]) {
     map?.setCenter({
-      lat: steps[steps.length - 1].latitude,
-      lng: steps[steps.length - 1].longitude,
+      lat: Number(steps[steps.length - 1].latitude),
+      lng: Number(steps[steps.length - 1].longitude),
     });
   }
 

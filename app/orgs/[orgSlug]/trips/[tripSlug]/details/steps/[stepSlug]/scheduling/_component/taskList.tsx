@@ -15,10 +15,10 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { TaskDto } from "@feat/scheduling/dto/taskDto.schema";
 import { GetTasksByStepSlugAction } from "@feat/scheduling/task/getTasksByStepSlug.action";
 import { useResortTasks } from "@feat/scheduling/task/useResortTasks.hook";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import type { Task } from "@generated/modelSchema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@ui/alert";
@@ -72,8 +72,8 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
     const { active, over } = event;
 
     if (active.id !== over?.id && !!tasks) {
-      const oldIndex = tasks.findIndex((t: TaskDto) => t.id === active.id);
-      const newIndex = tasks.findIndex((t: TaskDto) => t.id === over?.id);
+      const oldIndex = tasks.findIndex((t: Task) => t.id === active.id);
+      const newIndex = tasks.findIndex((t: Task) => t.id === over?.id);
 
       const newTasks = arrayMove(tasks, oldIndex, newIndex);
 
@@ -115,7 +115,7 @@ export const TaskList = ({ stepSlug, tripSlug }: TaskListProps) => {
               items={tasks}
               strategy={verticalListSortingStrategy}
             >
-              {tasks.map((task: TaskDto) => (
+              {tasks.map((task: Task) => (
                 <TaskItemSortable
                   key={task.id}
                   task={task}

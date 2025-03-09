@@ -26,11 +26,11 @@ import { Textarea } from "@components/ui/textarea";
 import { InlineTooltip } from "@components/ui/tooltip";
 import { Typography } from "@components/ui/typography";
 import { LINKS } from "@feat/navigation/Links";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
 import { GetStepBySlugAction } from "@feat/steps/get/getStepBySlug.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { EditStepAction } from "@feat/steps/update/editStep.action";
 import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import type { Step } from "@generated/modelSchema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
 import { TransportMode } from "@prisma/client";
@@ -84,8 +84,8 @@ export const StepDetail = ({
         description: res.data.description ?? undefined,
         startDate: res.data.startDate ?? new Date(),
         endDate: res.data.endDate ?? new Date(),
-        latitude: res.data.latitude,
-        longitude: res.data.longitude,
+        latitude: Number(res.data.latitude),
+        longitude: Number(res.data.longitude),
         placeId: res.data.placeId,
         TransportMode: res.data.TransportMode as TransportMode,
       });
@@ -116,15 +116,15 @@ export const StepDetail = ({
     },
   });
 
-  const handleReset = (data: StepDto) => {
+  const handleReset = (data: Step) => {
     form.reset({
       tripSlug: data.slug,
       name: data.name,
       description: data.description ?? undefined,
       startDate: data.startDate ?? undefined,
       endDate: data.endDate ?? undefined,
-      latitude: data.latitude,
-      longitude: data.longitude,
+      latitude: Number(data.latitude),
+      longitude: Number(data.longitude),
       placeId: data.placeId,
       TransportMode: data.TransportMode as TransportMode,
     });

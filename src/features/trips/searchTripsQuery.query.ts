@@ -1,6 +1,7 @@
+import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
-import { TripsListDtoSchema } from "./dto/tripsListDto.schema";
+import { z } from "zod";
 
 type SearchTripsQueryProps = { searchQuery: string };
 
@@ -32,7 +33,7 @@ export const SearchTripsQuery = async ({
     });
   }
 
-  return TripsListDtoSchema.parse(
-    trips.map((trip) => ({ ...trip, orgSlug: org.slug })),
-  );
+  return z
+    .array(TripSchema)
+    .parse(trips.map((trip) => ({ ...trip, orgSlug: org.slug })));
 };

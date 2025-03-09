@@ -21,7 +21,6 @@
     ],
     "baseUrl": "src/",
     "paths": {
-      "@/*": ["/*"],
       "@lib/*": ["lib/*"],
       "@ui/*": ["components/ui/*"],
       "@components/*": ["components/*"],
@@ -31,7 +30,8 @@
       "@type/*": ["types/*"],
       "@email/*": ["../emails/*"],
       "@api/*": ["../app/api/*"],
-      "@middleware/*": ["middlewares/*"]
+      "@middleware/*": ["middlewares/*"],
+      "@generated/*": ["../prisma/generated/zod/*"]
     }
   },
 

@@ -9,6 +9,7 @@ import {
 
 import { GoogleMapsContext, useMapsLibrary } from "@vis.gl/react-google-maps";
 
+import { logger } from "@lib/logger";
 import type { Ref } from "react";
 
 type PolylineEventProps = {
@@ -78,7 +79,7 @@ function usePolyline(props: PolylineProps) {
   useEffect(() => {
     if (!map) {
       if (map === undefined)
-        console.error("<Polyline> has to be inside a Map component.");
+        logger.error("<Polyline> has to be inside a Map component.");
 
       return;
     }
@@ -88,7 +89,7 @@ function usePolyline(props: PolylineProps) {
     return () => {
       polyline.setMap(null);
     };
-  }, [map]);
+  }, [map, polyline]);
 
   // attach and re-attach event-handlers when any of the properties change
   useEffect(() => {
@@ -124,7 +125,7 @@ function usePolyline(props: PolylineProps) {
 export const Polyline = forwardRef((props: PolylineProps, ref: PolylineRef) => {
   const polyline = usePolyline(props);
 
-  useImperativeHandle(ref, () => polyline, []);
+  useImperativeHandle(ref, () => polyline, [polyline]);
 
   return null;
 });

@@ -3,12 +3,12 @@
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { SubmitButton } from "@components/form/SubmitButton";
 import { ImageInput } from "@components/images/ImageUploadInput";
-import type { TripDto } from "@feat/trip/get/dto/tripDto.schema";
 import { GetTripAction } from "@feat/trip/get/getTrip.action";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import type { EditTrip } from "@feat/trip/update/editTrip.schema";
 import { EditTripSchema } from "@feat/trip/update/editTrip.schema";
 import { UpdateTripAction } from "@feat/trip/update/updateTrip.action";
+import type { Trip } from "@generated/modelSchema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
 import { phCapture } from "@lib/postHog/eventCapture";
@@ -71,7 +71,7 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
         { shouldDirty: false },
       );
 
-      return result.data as TripDto;
+      return result.data as Trip;
     },
   });
 

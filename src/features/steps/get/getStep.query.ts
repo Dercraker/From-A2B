@@ -1,6 +1,6 @@
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepDtoSchema } from "../dto/stepDto.schema";
+import { StepSchema } from "../../../../prisma/generated/zod";
 
 type GetStepQueryProps = {
   where: Prisma.StepWhereUniqueInput;
@@ -12,5 +12,5 @@ export const GetStepQuery = async ({ where }: GetStepQueryProps) => {
       ...where,
     },
   });
-  return StepDtoSchema.parse(step);
+  return StepSchema.parse(step);
 };

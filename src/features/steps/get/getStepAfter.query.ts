@@ -1,6 +1,6 @@
+import { StepSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepDtoSchema } from "../dto/stepDto.schema";
 
 export const GetStepAfterQuery = async ({
   ...where
@@ -20,7 +20,7 @@ export const GetStepAfterQuery = async ({
   });
 
   return nextStep
-    ? StepDtoSchema.parse({
+    ? StepSchema.parse({
         ...nextStep,
         latitude: Number(nextStep.latitude),
         longitude: Number(nextStep.longitude),

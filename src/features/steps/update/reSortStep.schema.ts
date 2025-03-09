@@ -1,8 +1,8 @@
+import { StepSchema } from "@generated/modelSchema";
 import { z } from "zod";
-import { StepDtoSchema } from "../dto/stepDto.schema";
 
 export const ReSortStepsSchema = z.object({
-  steps: z.array(StepDtoSchema),
+  steps: z.array(StepSchema),
 });
 
 export type ReSortStepsSchema = z.infer<typeof ReSortStepsSchema>;

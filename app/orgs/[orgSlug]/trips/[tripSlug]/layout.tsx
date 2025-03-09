@@ -48,11 +48,7 @@ const RouteLayout = async ({
             <TripSelect
               currentTripSlug={tripSlug}
               orgSlug={org.slug}
-              trips={orgTrips.map((t) => ({
-                slug: t.slug,
-                name: t.name,
-                image: t.image,
-              }))}
+              trips={orgTrips}
             />
           }
           bottomNavigationChildren={

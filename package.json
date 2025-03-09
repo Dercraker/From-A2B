@@ -1,6 +1,6 @@
 {
   "name": "from-a2b",
-  "version": "0.66.0",
+  "version": "0.67.1",
   "private": true,
   "scripts": {
     "clean": "next lint --fix && tsc --noEmit && prettier --write . && next build",
@@ -149,6 +149,7 @@
     "@vitest/ui": "^3.0.5",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
+    "decimal.js": "^10.5.0",
     "eslint": "^9.15.0",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-react": "^7.37.2",

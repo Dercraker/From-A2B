@@ -10,6 +10,6 @@ const UpdateAdjacentMovedStepRoadActionSchema = z.object({
 
 export const UpdateAdjacentMovedStepRoadActionAction = orgAction
   .schema(UpdateAdjacentMovedStepRoadActionSchema)
-  .action(async ({ parsedInput: { stepId }, ctx }) => {
+  .action(async ({ parsedInput: { stepId } }) => {
     await updateAdjacentMovedStepRoad({ centerStepId: stepId });
   });

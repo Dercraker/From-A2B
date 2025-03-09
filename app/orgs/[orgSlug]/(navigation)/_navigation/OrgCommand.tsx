@@ -17,8 +17,8 @@ import {
 import { Typography } from "@components/ui/typography";
 import { LINKS } from "@feat/navigation/Links";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
-import type { TripsListDtoSchema } from "@feat/trips/dto/tripsListDto.schema";
 import { SearchTripsAction } from "@feat/trips/searchTrips.action";
+import type { Trip } from "@generated/modelSchema";
 import { useDebounce } from "@hooks/use-debounce";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
@@ -62,7 +62,7 @@ export const OrganizationCommand = () => {
       });
 
       if (!isActionSuccessful(result)) throw new Error(result?.serverError);
-      return result.data as TripsListDtoSchema;
+      return result.data as Trip[];
     },
     staleTime: 0,
   });

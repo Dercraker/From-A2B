@@ -1,7 +1,7 @@
+import type { Trip } from "@generated/modelSchema";
+import { TripSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import type { TripDto } from "./dto/tripDto.schema";
-import { TripDtoSchema } from "./dto/tripDto.schema";
 
 type GetTripQueryProps = {
   where: Prisma.TripWhereUniqueInput;
@@ -9,10 +9,10 @@ type GetTripQueryProps = {
 
 export const GetTripQuery = async ({
   where,
-}: GetTripQueryProps): Promise<TripDto> => {
+}: GetTripQueryProps): Promise<Trip> => {
   const trip = await prisma.trip.findFirst({
     where,
   });
 
-  return TripDtoSchema.parse(trip);
+  return TripSchema.parse(trip);
 };

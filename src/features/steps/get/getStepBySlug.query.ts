@@ -1,6 +1,6 @@
+import { StepSchema, StepWithRelationsSchema } from "@generated/modelSchema";
 import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepDtoSchema } from "../dto/stepDto.schema";
 
 type GetStepBySlugQueryType = {
   stepSlug: string;
@@ -23,7 +23,7 @@ export const GetStepBySlugQuery = async ({
     },
   });
 
-  return StepDtoSchema.safeParse(step);
+  return StepWithRelationsSchema.safeParse(step);
 };
 
 export type GetStepBySlugQuery = NonNullable<

@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@components/ui/select";
 import { LINKS } from "@feat/navigation/Links";
+import type { Trip } from "@generated/modelSchema";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { SiteConfig } from "site-config";
@@ -17,11 +18,7 @@ type TripsSelectProps = {
   currentTripSlug?: string;
   orgSlug: string;
   children?: ReactNode;
-  trips: {
-    slug: string;
-    name: string;
-    image: string | null;
-  }[];
+  trips: Trip[];
 };
 
 export const TripSelect = ({

@@ -1,8 +1,8 @@
+import type { Task } from "@generated/modelSchema";
 import { ReSortEntities } from "@utils/reSort";
-import type { TaskDto } from "../dto/taskDto.schema";
 
 type ReSortTasksQueryType = {
-  tasks: TaskDto[];
+  tasks: Task[];
 };
 
 export const ReSortTasksQuery = async ({ tasks }: ReSortTasksQueryType) => {

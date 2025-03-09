@@ -2,13 +2,13 @@
 
 import { Button } from "@components/ui/button";
 import { InlineTooltip } from "@components/ui/tooltip";
-import type { StepDto } from "@feat/steps/dto/stepDto.schema";
+import type { Step } from "@generated/modelSchema";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { useMap } from "@vis.gl/react-google-maps";
 import { LocateFixed } from "lucide-react";
 
 export type CenterMapMenuButtonProps = {
-  step: StepDto;
+  step: Step;
   onClick: () => void;
 };
 
@@ -20,8 +20,8 @@ export const CenterMapMenuButton = ({
 
   const handleCenter = () => {
     map?.setCenter({
-      lat: latitude,
-      lng: longitude,
+      lat: Number(latitude),
+      lng: Number(longitude),
     });
 
     onClick();
@@ -34,7 +34,7 @@ export const CenterMapMenuButton = ({
         <Button
           variant="filled"
           className="flex items-center gap-2"
-          disabled={longitude === 0 || latitude === 0 || !map}
+          disabled={Number(longitude) === 0 || Number(latitude) === 0 || !map}
           onClick={handleCenter}
         >
           <LocateFixed />
@@ -47,7 +47,7 @@ export const CenterMapMenuButton = ({
     <Button
       variant="filled"
       className="flex items-center gap-2"
-      disabled={longitude === 0 || latitude === 0 || !map}
+      disabled={Number(longitude) === 0 || Number(latitude) === 0 || !map}
       onClick={handleCenter}
     >
       <LocateFixed />
