@@ -1,7 +1,7 @@
 import { initEdgeStore } from "@edgestore/server";
 import { createEdgeStoreNextHandler } from "@edgestore/server/adapters/next/app";
 import { initEdgeStoreClient } from "@edgestore/server/core";
-import { currentUser } from "@lib/auth/helper";
+import { GetCurrentUser } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { z } from "zod";
@@ -13,7 +13,7 @@ type Context = {
 };
 
 const createContext = async (): Promise<Context> => {
-  const session = await currentUser();
+  const session = await GetCurrentUser();
 
   return {
     userId: session?.id ?? "",

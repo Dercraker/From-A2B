@@ -17,13 +17,7 @@ export const GetAllStepQuery = async ({
     orderBy,
   });
 
-  return z.array(StepSchema).parseAsync(
-    steps.map((step) => ({
-      ...step,
-      latitude: Number(step.latitude),
-      longitude: Number(step.longitude),
-    })),
-  );
+  return z.array(StepSchema).parseAsync(steps);
 };
 
 export type GetAllStepQuery = Prisma.PromiseReturnType<typeof GetAllStepQuery>;

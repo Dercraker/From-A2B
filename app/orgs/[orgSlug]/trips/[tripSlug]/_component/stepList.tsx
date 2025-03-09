@@ -54,6 +54,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
     queryKey: STEP_KEY_FACTORY.All(tripSlug),
     queryFn: async () => {
       const result = await GetAllStepAction({ tripSlug });
+
       if (!isActionSuccessful(result)) {
         toast.error("Failed to fetch steps. Please try again later.");
 

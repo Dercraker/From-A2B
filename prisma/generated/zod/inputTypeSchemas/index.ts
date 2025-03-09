@@ -23,5 +23,3 @@ export { TransportModeSchema } from "./TransportModeSchema";
 export { TaskStateSchema } from "./TaskStateSchema";
 export { InputJsonValueSchema } from "./InputJsonValueSchema";
 export { JsonValueSchema } from "./JsonValueSchema";
-export { DecimalJsLikeSchema } from "./DecimalJsLikeSchema";
-export { isValidDecimalInput } from "./isValidDecimalInput";

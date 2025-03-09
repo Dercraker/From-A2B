@@ -36,7 +36,7 @@ export const TripSelect = ({
       }}
     >
       <SelectTrigger className="h-8 justify-start gap-2 border-none bg-transparent px-4 hover:bg-accent [&>span]:flex [&>svg]:hidden hover:[&>svg]:block">
-        {children ? children : <SelectValue />}
+        {children ?? <SelectValue />}
       </SelectTrigger>
       <SelectContent>
         {trips.map((trip) => (

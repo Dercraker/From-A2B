@@ -47,7 +47,7 @@ export type TaskOptionalDefaults = z.infer<typeof TaskOptionalDefaultsSchema>;
 /////////////////////////////////////////
 
 export type TaskRelations = {
-  step: StepWithRelations;
+  step?: StepWithRelations | null;
 };
 
 export type TaskWithRelations = z.infer<typeof TaskSchema> & TaskRelations;
@@ -55,7 +55,7 @@ export type TaskWithRelations = z.infer<typeof TaskSchema> & TaskRelations;
 export const TaskWithRelationsSchema: z.ZodType<TaskWithRelations> =
   TaskSchema.merge(
     z.object({
-      step: z.lazy(() => StepWithRelationsSchema),
+      step: z.lazy(() => StepWithRelationsSchema).nullable(),
     }),
   );
 
@@ -64,7 +64,7 @@ export const TaskWithRelationsSchema: z.ZodType<TaskWithRelations> =
 /////////////////////////////////////////
 
 export type TaskOptionalDefaultsRelations = {
-  step: StepOptionalDefaultsWithRelations;
+  step?: StepOptionalDefaultsWithRelations | null;
 };
 
 export type TaskOptionalDefaultsWithRelations = z.infer<
@@ -75,7 +75,7 @@ export type TaskOptionalDefaultsWithRelations = z.infer<
 export const TaskOptionalDefaultsWithRelationsSchema: z.ZodType<TaskOptionalDefaultsWithRelations> =
   TaskOptionalDefaultsSchema.merge(
     z.object({
-      step: z.lazy(() => StepOptionalDefaultsWithRelationsSchema),
+      step: z.lazy(() => StepOptionalDefaultsWithRelationsSchema).nullable(),
     }),
   );
 

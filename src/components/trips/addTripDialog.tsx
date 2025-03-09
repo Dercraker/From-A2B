@@ -82,11 +82,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       }}
     >
       <DialogTrigger asChild>
-        {props.children ? (
-          props.children
-        ) : (
-          <Button variant="filled">Add Trip</Button>
-        )}
+        {props.children ?? <Button variant="filled">Add Trip</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

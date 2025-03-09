@@ -3,7 +3,7 @@ import { baseAuth } from "./auth";
 
 export class AuthError extends Error {}
 
-export const currentUser = async () => {
+export const GetCurrentUser = async () => {
   const session = await baseAuth();
 
   if (session?.user) {
@@ -14,8 +14,8 @@ export const currentUser = async () => {
   return null;
 };
 
-export const requiredUser = async () => {
-  const user = await currentUser();
+export const GetRequiredUser = async () => {
+  const user = await GetCurrentUser();
 
   if (!user) {
     throw new AuthError("You must be authenticated to access this resource");

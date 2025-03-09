@@ -39,6 +39,7 @@ import { Separator } from "@ui/separator";
 import { Bike, Car, Footprints, Plane, Sailboat, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { StepDetailLoader } from "../_loader/StepDetail.loader";
 
 export type StepDetailProps = {
   stepSlug: string;
@@ -130,7 +131,7 @@ export const StepDetail = ({
     });
   };
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return <StepDetailLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

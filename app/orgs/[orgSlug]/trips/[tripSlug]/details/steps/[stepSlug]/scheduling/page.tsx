@@ -15,7 +15,14 @@ export default async function RoutePage({
   params,
 }: PageParams<StepPathParams>) {
   const { stepSlug, tripSlug } = await params;
-  const markdown = (await GetStepBySlugQuery({ stepSlug })).schedulingNotes;
+  const markdown = (
+    await GetStepBySlugQuery({
+      stepSlug,
+      select: {
+        schedulingNotes: true,
+      },
+    })
+  ).schedulingNotes;
 
   return (
     <Card className="max-h-[calc(100vh-12rem)] overflow-y-auto pt-6">

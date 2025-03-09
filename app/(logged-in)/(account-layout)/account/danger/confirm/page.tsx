@@ -1,4 +1,4 @@
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import { combineWithParentMetadata } from "@lib/metadata";
 import type { PageParams } from "@type/next";
 import { verifyDeleteAccountToken } from "../delete-account.action";
@@ -13,7 +13,7 @@ export const generateMetadata = combineWithParentMetadata({
 const RoutePage = async (params: PageParams) => {
   const searchParams = await params.searchParams;
   const token = searchParams.token;
-  const user = await requiredUser();
+  const user = await GetRequiredUser();
 
   try {
     if (typeof token !== "string") {

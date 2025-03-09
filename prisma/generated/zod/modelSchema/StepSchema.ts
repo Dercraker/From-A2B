@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Prisma } from "@prisma/client";
 import { TransportModeSchema } from "../inputTypeSchemas/TransportModeSchema";
 import {
   TripWithRelationsSchema,
@@ -48,13 +47,8 @@ export const StepSchema = z.object({
   startDate: z.coerce.date().nullable(),
   endDate: z.coerce.date().nullable(),
   description: z.string().nullable(),
-  latitude: z.instanceof(Prisma.Decimal, {
-    message: "Field 'latitude' must be a Decimal. Location: ['Models', 'Step']",
-  }),
-  longitude: z.instanceof(Prisma.Decimal, {
-    message:
-      "Field 'longitude' must be a Decimal. Location: ['Models', 'Step']",
-  }),
+  latitude: z.number(),
+  longitude: z.number(),
   placeId: z.string(),
   schedulingNotes: z.string().nullable(),
   roadId: z.string().nullable(),

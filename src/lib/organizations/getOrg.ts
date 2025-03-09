@@ -1,7 +1,7 @@
 import type { OrganizationMembershipRole, Prisma } from "@prisma/client";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
-import { currentUser } from "../auth/helper";
+import { GetCurrentUser } from "../auth/helper";
 import { prisma } from "../prisma";
 
 const getOrgSlugFromUrl = async () => {
@@ -52,7 +52,7 @@ export type CurrentOrgPayload = Prisma.OrganizationGetPayload<{
 }>;
 
 export const getCurrentOrg = async (roles?: OrganizationMembershipRole[]) => {
-  const user = await currentUser();
+  const user = await GetCurrentUser();
 
   if (!user) {
     return null;

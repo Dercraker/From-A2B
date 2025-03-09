@@ -8,13 +8,13 @@ import {
 } from "@components/page/layout";
 import { LINKS } from "@feat/navigation/Links";
 import { createSearchParamsMessageUrl } from "@feat/searchparams-message/createSearchParamsMessageUrl";
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import { redirect } from "next/navigation";
 import { SiteConfig } from "site-config";
 import { NewOrganizationForm } from "./NewOrgForm";
 
 export default async function RoutePage() {
-  await requiredUser();
+  await GetRequiredUser();
 
   if (SiteConfig.features.enableSingleMemberOrg) {
     redirect(

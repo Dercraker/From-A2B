@@ -42,7 +42,7 @@ export type FileOptionalDefaults = z.infer<typeof FileOptionalDefaultsSchema>;
 /////////////////////////////////////////
 
 export type FileRelations = {
-  step: StepWithRelations;
+  step?: StepWithRelations | null;
 };
 
 export type FileWithRelations = z.infer<typeof FileSchema> & FileRelations;
@@ -50,7 +50,7 @@ export type FileWithRelations = z.infer<typeof FileSchema> & FileRelations;
 export const FileWithRelationsSchema: z.ZodType<FileWithRelations> =
   FileSchema.merge(
     z.object({
-      step: z.lazy(() => StepWithRelationsSchema),
+      step: z.lazy(() => StepWithRelationsSchema).nullable(),
     }),
   );
 
@@ -59,7 +59,7 @@ export const FileWithRelationsSchema: z.ZodType<FileWithRelations> =
 /////////////////////////////////////////
 
 export type FileOptionalDefaultsRelations = {
-  step: StepOptionalDefaultsWithRelations;
+  step?: StepOptionalDefaultsWithRelations | null;
 };
 
 export type FileOptionalDefaultsWithRelations = z.infer<
@@ -70,7 +70,7 @@ export type FileOptionalDefaultsWithRelations = z.infer<
 export const FileOptionalDefaultsWithRelationsSchema: z.ZodType<FileOptionalDefaultsWithRelations> =
   FileOptionalDefaultsSchema.merge(
     z.object({
-      step: z.lazy(() => StepOptionalDefaultsWithRelationsSchema),
+      step: z.lazy(() => StepOptionalDefaultsWithRelationsSchema).nullable(),
     }),
   );
 
