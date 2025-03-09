@@ -1,14 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { Loader } from "@components/ui/loader";
 import { Typography } from "@components/ui/typography";
-import { currentUser } from "@lib/auth/helper";
+import { GetCurrentUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { SiteConfig } from "site-config";
 import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
-import { combineWithParentMetadata } from "@lib/metadata";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Sign up",
@@ -16,7 +16,7 @@ export const generateMetadata = combineWithParentMetadata({
 });
 
 export default async function AuthSignInPage() {
-  const user = await currentUser();
+  const user = await GetCurrentUser();
 
   if (user) {
     redirect("/");

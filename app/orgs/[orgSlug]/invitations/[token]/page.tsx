@@ -16,7 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@components/ui/card";
-import { currentUser } from "@lib/auth/helper";
+import { GetCurrentUser } from "@lib/auth/helper";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { prisma } from "@lib/prisma";
 import { getServerUrl } from "@lib/server-url";
@@ -60,7 +60,7 @@ export default async function RoutePage({
     return <Page400 title="Invalid token 2" />;
   }
 
-  const user = await currentUser();
+  const user = await GetCurrentUser();
 
   const tokenData = TokenSchema.parse(verificationToken.data);
 

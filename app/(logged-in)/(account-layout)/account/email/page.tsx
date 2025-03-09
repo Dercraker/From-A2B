@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@components/ui/card";
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import { env } from "@lib/env/server";
 import { resend } from "@lib/mail/resend";
 import { combineWithParentMetadata } from "@lib/metadata";
@@ -19,7 +19,7 @@ export const generateMetadata = combineWithParentMetadata({
 });
 
 export default async function MailProfilePage() {
-  const user = await requiredUser();
+  const user = await GetRequiredUser();
 
   if (!user.resendContactId) {
     return <ErrorComponent />;

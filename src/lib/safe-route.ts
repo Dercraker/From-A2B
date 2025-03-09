@@ -1,7 +1,7 @@
 // app/api/hello/route.ts
 import { createZodRoute } from "next-zod-route";
 import { NextResponse } from "next/server";
-import { AuthError, currentUser } from "./auth/helper";
+import { AuthError, GetCurrentUser } from "./auth/helper";
 import { getRequiredCurrentOrg } from "./organizations/getOrg";
 
 export class RouteError extends Error {
@@ -39,7 +39,7 @@ export const route = createZodRoute({
 });
 
 export const authRoute = route.use(async () => {
-  const user = await currentUser();
+  const user = await GetCurrentUser();
 
   if (!user) {
     throw new RouteError("Session not found!");

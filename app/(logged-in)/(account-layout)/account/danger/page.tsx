@@ -1,4 +1,4 @@
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { DeleteDangerCard } from "./_components/DeleteDangerCard";
 
@@ -8,7 +8,7 @@ export const generateMetadata = combineWithParentMetadata({
 });
 
 const DeleteProfilePage = async () => {
-  const { email, name } = await requiredUser();
+  const { email, name } = await GetRequiredUser();
 
   return <DeleteDangerCard displayName={name ?? email} />;
 };

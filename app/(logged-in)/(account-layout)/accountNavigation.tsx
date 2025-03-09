@@ -3,13 +3,13 @@ import { NavigationWrapper } from "@components/navigation/NavigationWrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import { Button } from "@components/ui/button";
 import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import type { PropsWithChildren } from "react";
 import { OrgsSelect } from "../../orgs/[orgSlug]/(navigation)/_navigation/OrgsSelect";
 import { AccountNavigationLinks } from "./accountNavigationLinks";
 
 export async function AccountNavigation({ children }: PropsWithChildren) {
-  const user = await requiredUser();
+  const user = await GetRequiredUser();
   const userOrgs = await getUsersOrgs();
   return (
     <NavigationWrapper

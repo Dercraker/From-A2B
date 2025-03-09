@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { requiredUser } from "@lib/auth/helper";
+import { GetRequiredUser } from "@lib/auth/helper";
 import { combineWithParentMetadata } from "@lib/metadata";
 import { prisma } from "@lib/prisma";
 import { EditPasswordForm } from "./EditPasswordForm";
@@ -11,7 +11,7 @@ export const generateMetadata = combineWithParentMetadata({
 });
 
 export default async function EditProfilePage() {
-  const user = await requiredUser();
+  const user = await GetRequiredUser();
 
   const hasPassword = await prisma.user.count({
     where: {
