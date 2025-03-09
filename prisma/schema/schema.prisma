@@ -8,7 +8,7 @@ generator client {
 
 // https://github.com/chrishoermann/zod-prisma-types?tab=readme-ov-file#installation
 generator zod {
-  provider                         = "zod-prisma-types"
+  provider                         = "pnpx zod-prisma-types"
   output                           = "../generated/zod"
   useMultipleFiles                 = true
   writeBarrelFiles                 = true
