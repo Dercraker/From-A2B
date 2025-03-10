@@ -76,13 +76,19 @@ export const LINKS = {
   },
 
   Organization: {
-    Middleware: createLink("/orgs", "Middleware", { hidden: true }, false),
+    Middleware: createLink("/orgs", "Middleware", { hidden: true }),
+    New: createLink("/orgs/new", "New", { hidden: true }),
     Dashboard: createLink(`${PATHS.ORG}`, "Dashboard", { Icon: Home }, true),
-    Trips: createLink(`${PATHS.ORG}/trips`, "Trips", { Icon: Plane }, true),
+    Trips: createLink(
+      `${PATHS.ORG}/trips`,
+      "Trips",
+      { Icon: Plane, id: "OnboardingTour-Step3" },
+      true,
+    ),
     History: createLink(
       `${PATHS.ORG}/history`,
       "Travel history",
-      { Icon: History },
+      { Icon: History, id: "OnboardingTour-Step4" },
       true,
     ),
     Settings: createLink(
@@ -175,4 +181,17 @@ export const LINKS = {
     hidden: true,
     disabled: true,
   }),
+
+  Auth: {
+    SignIn: createLink("/auth/signin", "SignIn", { hidden: true }),
+  },
+
+  Onboarding: {
+    Trips: createLink("/orgs/trips", "OnboardingTrips", {
+      hidden: true,
+    }),
+    History: createLink("/orgs/history", "OnboardingHistory", {
+      hidden: true,
+    }),
+  },
 } satisfies GenericLinkSchema;

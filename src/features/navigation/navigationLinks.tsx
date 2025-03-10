@@ -5,6 +5,7 @@ import { useCurrentPath } from "@hooks/useCurrentPath";
 import { cn } from "@lib/utils";
 import { LayoutGroup, motion } from "framer-motion";
 import Link from "next/link";
+import { useNextStep } from "nextstepjs";
 import type {
   GeneratedNavigationLink,
   GeneratedNavigationLinksGroup,
@@ -24,6 +25,8 @@ export const NavigationLinks = ({
     .filter((l) => !l.hidden);
 
   const currentPath = useCurrentPath(links);
+
+  const { currentTour, setCurrentStep, currentStep } = useNextStep();
 
   return (
     <LayoutGroup>
@@ -50,6 +53,7 @@ export const NavigationLinks = ({
                             currentPath !== link.href,
                         },
                       )}
+                      id={link.id}
                     >
                       {currentPath === link.href && (
                         <motion.div

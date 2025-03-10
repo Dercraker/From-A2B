@@ -25,9 +25,8 @@ const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
     },
   });
 
-  if (!trips.length) return <TravelHistoryEmpty orgSlug={orgSlug} />;
-
-  return <TripsContainer trips={trips} orgSlug={orgSlug} />;
+  if (trips.length) return <TripsContainer trips={trips} orgSlug={orgSlug} />;
+  return <TravelHistoryEmpty orgSlug={orgSlug} />;
 };
 
 export default RoutePage;

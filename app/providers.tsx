@@ -1,6 +1,7 @@
 "use client";
 
 import { GlobalDialogLazy } from "@components/globalDialog/GlobalDialogLazy";
+import { NextStepCard } from "@components/nextStep/nextStepCard";
 import { SearchParamsMessageToastSuspended } from "@components/searchparams-message/SearchParamsMessageToast";
 import { Toaster } from "@components/ui/sonner";
 import { AlertDialogRenderer } from "@feat/alert-dialog/AlertDialogRenderer";
@@ -14,9 +15,11 @@ import { Analytics } from "@vercel/analytics/react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { SessionProvider, useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import type { CardComponentProps } from "nextstepjs";
 import { NextStep, NextStepProvider } from "nextstepjs";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import type { ComponentType } from "react";
 import { useEffect, type PropsWithChildren } from "react";
 
 const queryClient = new QueryClient({});
@@ -50,7 +53,16 @@ export const Providers = ({
             <SessionProvider>
               <QueryClientProvider client={queryClient}>
                 <NextStepProvider>
-                  <NextStep steps={nextStepTours} {...tourTrackProgress}>
+                  <NextStep
+                    steps={nextStepTours}
+                    {...tourTrackProgress}
+                    cardComponent={
+                      NextStepCard as ComponentType<CardComponentProps>
+                    }
+                    disableConsoleLogs
+                    shadowRgb="0, 0, 0"
+                    shadowOpacity="0.85"
+                  >
                     <Analytics />
                     <Toaster />
                     <AlertDialogRenderer />

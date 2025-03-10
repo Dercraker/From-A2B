@@ -12,8 +12,10 @@ import { isInRoles } from "@lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import type { OrgPathParams, PageParams } from "@type/next";
 import Link from "next/link";
+import { NextStepViewport } from "nextstepjs";
 import { Suspense } from "react";
 import { SiteConfig } from "site-config";
+import { TourList } from "./_components/TourList";
 import { DashboardContentLoader } from "./_loader/dashboardContentLoader";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -41,11 +43,14 @@ const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
           </Link>
         ) : null}
       </LayoutActions>
-      <LayoutContent className="flex  gap-6">
-        <Suspense fallback={<DashboardContentLoader />}>
-          <Typography>TODO : ADD CONTENT</Typography>
-        </Suspense>
-      </LayoutContent>
+      <NextStepViewport id="OnboardingTour-Step1">
+        <LayoutContent className="flex  gap-6">
+          <Suspense fallback={<DashboardContentLoader />}>
+            <Typography>TODO : ADD CONTENT</Typography>
+            <TourList />
+          </Suspense>
+        </LayoutContent>
+      </NextStepViewport>
     </Layout>
   );
 };

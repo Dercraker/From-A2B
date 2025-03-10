@@ -8,6 +8,7 @@ import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { Building } from "lucide-react";
 import Link from "next/link";
+import { NextStepViewport } from "nextstepjs";
 import type { PropsWithChildren } from "react";
 import { SiteConfig } from "site-config";
 import { OrganizationCommand } from "./OrgCommand";
@@ -26,7 +27,9 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
         <OrgsSelect currentOrgSlug={org.slug} orgs={userOrganizations} />
       }
       navigationChildren={
-        <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        <NextStepViewport id="OnboardingTour-Step2">
+          <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        </NextStepViewport>
       }
       bottomNavigationChildren={
         <div className="flex flex-col gap-2">
