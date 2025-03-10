@@ -1,6 +1,11 @@
 ---
 description: Streaming Component enable to load page faster
 globs: 
+alwaysApply: false
+---
+---
+description: Streaming Component enable to load page faster
+globs: 
 ---
 ## Context
 

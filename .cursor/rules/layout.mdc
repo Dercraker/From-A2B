@@ -1,8 +1,11 @@
 ---
 description: EXPLAIN how to use Layout to have consistant UI
 globs: page.tsx, layout.tsx
+alwaysApply: false
 ---
 ---
+description: EXPLAIN how to use Layout to have consistant UI
+globs: page.tsx, layout.tsx
 alwaysApply: false
 ---
 We have utilities named `layout` to handle the layout of Dashboard page.

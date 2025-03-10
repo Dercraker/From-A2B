@@ -1,6 +1,11 @@
 ---
 description: How write PostgreSQL queries
 globs: *.sql
+alwaysApply: false
+---
+---
+description: How write PostgreSQL queries
+globs: *.sql
 ---
 ## Context
 

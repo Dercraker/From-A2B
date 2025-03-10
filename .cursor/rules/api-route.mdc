@@ -1,8 +1,11 @@
 ---
 description: EXPLAIN how to use API Route in our project
 globs: **/route.ts
+alwaysApply: false
 ---
 ---
+description: EXPLAIN how to use API Route in our project
+globs: **/route.ts
 alwaysApply: false
 ---
 ## Context

@@ -7,12 +7,14 @@ import { AlertDialogRenderer } from "@feat/alert-dialog/AlertDialogRenderer";
 import { EdgeStoreProvider } from "@lib/blobStorage/edgestore";
 import { env } from "@lib/env/client";
 import { logger } from "@lib/logger";
+import { getTours, tourTrackProgress } from "@lib/onBoarding/nextStepTours";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { SessionProvider, useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { NextStep, NextStepProvider } from "nextstepjs";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { useEffect, type PropsWithChildren } from "react";
@@ -35,6 +37,8 @@ export const Providers = ({
   children,
   GOOGLE_MAPS_JS_API_KEY,
 }: ProvidersProps) => {
+  const nextStepTours = getTours();
+
   return (
     <PostHogProvider client={posthog}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -45,15 +49,19 @@ export const Providers = ({
           <EdgeStoreProvider>
             <SessionProvider>
               <QueryClientProvider client={queryClient}>
-                <Analytics />
-                <Toaster />
-                <AlertDialogRenderer />
-                <GlobalDialogLazy />
-                <SearchParamsMessageToastSuspended />
-                <ReactQueryDevtools />
-                <IdentifyUserPosthog />
+                <NextStepProvider>
+                  <NextStep steps={nextStepTours} {...tourTrackProgress}>
+                    <Analytics />
+                    <Toaster />
+                    <AlertDialogRenderer />
+                    <GlobalDialogLazy />
+                    <SearchParamsMessageToastSuspended />
+                    <ReactQueryDevtools />
+                    <IdentifyUserPosthog />
 
-                {children}
+                    {children}
+                  </NextStep>
+                </NextStepProvider>
               </QueryClientProvider>
             </SessionProvider>
           </EdgeStoreProvider>

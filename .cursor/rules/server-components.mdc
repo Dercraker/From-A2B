@@ -1,6 +1,11 @@
 ---
 description: Create and understand Server Components in NextJS 15
 globs: *.tsx
+alwaysApply: false
+---
+---
+description: Create and understand Server Components in NextJS 15
+globs: *.tsx
 ---
 ## Context
 

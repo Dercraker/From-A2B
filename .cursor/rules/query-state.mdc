@@ -1,13 +1,11 @@
 ---
-description: 
-globs: 
+description: EXPLAIN how to use NUQS to create Query State that sync React useState with the URL Query
+globs: *.tsx, *.ts
 alwaysApply: false
 ---
 ---
 description: EXPLAIN how to use NUQS to create Query State that sync React useState with the URL Query
 globs: *.tsx, *.ts
----
----
 alwaysApply: false
 ---
 ## Context
