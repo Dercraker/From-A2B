@@ -26,7 +26,6 @@ type TaskStatusSelectProps = {
   currentState: TaskStatusType;
   stepSlug: string;
   tripSlug: string;
-  orgSlug: string;
   isBadge?: boolean;
 };
 
@@ -35,7 +34,6 @@ export const TaskStatusSelect = ({
   currentState,
   stepSlug,
   tripSlug,
-  orgSlug,
   isBadge = false,
 }: TaskStatusSelectProps) => {
   const { mutate: updateTaskStatus } = useUpdateTaskStatus({

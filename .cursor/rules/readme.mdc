@@ -1,6 +1,11 @@
 ---
 description: ENFORCE README.md standards to ensure comprehensive project documentation
 globs: **/README.md
+alwaysApply: false
+---
+---
+description: ENFORCE README.md standards to ensure comprehensive project documentation
+globs: **/README.md
 ---
 # README Standards
 

@@ -2,11 +2,13 @@
 
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { LoadingButton } from "@components/form/LoadingButton";
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import { AddTaskSchema } from "@feat/scheduling/task/addTask.schema";
 import { AddTaskToStepByStepSlugActionAction } from "@feat/scheduling/task/addTaskToStepByStepSlug.action";
 import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
 import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { StepPathParams } from "@type/next";
 import { Checkbox } from "@ui/checkbox";
@@ -31,6 +33,7 @@ import {
 import { Input } from "@ui/input";
 import { Separator } from "@ui/separator";
 import { useParams } from "next/navigation";
+import { NextStepViewport, useNextStep } from "nextstepjs";
 import { type PropsWithChildren, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -39,7 +42,7 @@ export type AddTaskDialogProps = PropsWithChildren<{}>;
 export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { tripSlug, stepSlug } = useParams<StepPathParams>();
-  const [isDialogOpen, { close, open, toggle }] = useDisclosure(false);
+  const [isDialogOpen, { close, open }] = useDisclosure(false);
   const [addAnother, setAddAnother] = useState(false);
   const form = useZodForm({
     schema: AddTaskSchema,
@@ -82,20 +85,30 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
     },
   });
 
+  const { currentTour } = useNextStep();
+
   return (
     <Dialog
       open={isDialogOpen}
-      onOpenChange={() => {
-        toggle();
-
-        form.reset();
+      onOpenChange={(v) => {
+        if (!v && !currentTour) {
+          form.reset();
+          close();
+        } else open();
       }}
     >
       <DialogTrigger>{children}</DialogTrigger>
 
       <DialogContent className="flex flex-col gap-2">
         <DialogHeader>
-          <DialogTitle>Add new task</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            Add new task
+            <StartTourBadge
+              tourName={TourNames.AddTaskTour}
+              tooltip="Tour : Add Task"
+              className="size-5"
+            />
+          </DialogTitle>
           <DialogDescription>
             Fill form below to create a new task on this step
           </DialogDescription>
@@ -114,7 +127,9 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem>
+              <FormItem
+                id={getTourStepSelector(TourNames.AddTaskTour, "TaskName")}
+              >
                 <FormLabel>Task name</FormLabel>
                 <FormControl>
                   <Input
@@ -128,35 +143,43 @@ export const AddTaskDialog = ({ children }: AddTaskDialogProps) => {
               </FormItem>
             )}
           />
-          <FormOptionalSection
-            defaultOpen={Boolean(form.getValues("dueDate"))}
-            label="Due Date"
-            onToggle={(v) => {
-              if (!v) form.setValue("dueDate", undefined);
-            }}
+          <NextStepViewport
+            id={getTourStepSelector(TourNames.AddTaskTour, "DueDate")}
           >
-            <FormField
-              control={form.control}
-              name="dueDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-1 flex-col">
-                  <DateTimePicker
-                    value={field.value}
-                    className="w-full"
-                    granularity="day"
-                    onChange={(date) => {
-                      form.setValue("dueDate", date, {
-                        shouldDirty: true,
-                      });
-                    }}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </FormOptionalSection>
+            <FormOptionalSection
+              defaultOpen={Boolean(form.getValues("dueDate"))}
+              label="Due Date"
+              onToggle={(v) => {
+                if (!v) form.setValue("dueDate", undefined);
+              }}
+            >
+              <FormField
+                control={form.control}
+                name="dueDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-1 flex-col">
+                    <DateTimePicker
+                      value={field.value}
+                      className="w-full"
+                      granularity="day"
+                      hideTimezone
+                      onChange={(date) => {
+                        form.setValue("dueDate", date, {
+                          shouldDirty: true,
+                        });
+                      }}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
+          </NextStepViewport>
           <Separator />
-          <div className="flex items-center space-x-2">
+          <div
+            className="flex items-center space-x-2"
+            id={getTourStepSelector(TourNames.AddTaskTour, "AddAnother")}
+          >
             <Checkbox
               id="addAnother"
               checked={addAnother}

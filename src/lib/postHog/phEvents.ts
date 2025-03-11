@@ -48,6 +48,13 @@ export const blobEvents = z.enum([
   "DeleteFile",
 ]);
 
+export const tourEvents = z.enum([
+  "TourStart",
+  "TourComplete",
+  "TourStepViewed",
+  "TourSkipped",
+]);
+
 export const errorEvents = z.enum([
   "ServerActionFailed",
   "ServerActionError",
@@ -63,6 +70,7 @@ export const combinedPhEvents = z.union([
   dateEvents,
   mapEvents,
   blobEvents,
+  tourEvents,
   errorEvents,
 ]);
 

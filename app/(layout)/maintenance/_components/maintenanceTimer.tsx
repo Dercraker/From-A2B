@@ -5,7 +5,7 @@ import {
   differenceInMilliseconds,
   intervalToDuration,
 } from "date-fns";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { TimeBox } from "./timeBox";
 
 type TimeLeft = {
@@ -20,11 +20,12 @@ type MaintenanceTimerProps = {
 };
 
 export const MaintenanceTimer = ({ time }: MaintenanceTimerProps) => {
-  const targetDate = time
-    ? new Date(Number(time) * 1000)
-    : addDays(new Date(), 30);
+  const targetDate = useMemo(
+    () => (time ? new Date(Number(time) * 1000) : addDays(new Date(), 30)),
+    [time],
+  );
 
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = useCallback(() => {
     const difference = differenceInMilliseconds(targetDate, new Date());
     const duration = intervalToDuration({ start: 0, end: difference });
 
@@ -34,7 +35,7 @@ export const MaintenanceTimer = ({ time }: MaintenanceTimerProps) => {
       minutes: duration.minutes ?? 0,
       seconds: duration.seconds ?? 0,
     } satisfies TimeLeft;
-  };
+  }, [targetDate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,7 +43,7 @@ export const MaintenanceTimer = ({ time }: MaintenanceTimerProps) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [calculateTimeLeft]);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const formatNumber = (num: number) => num.toString().padStart(2, "0");

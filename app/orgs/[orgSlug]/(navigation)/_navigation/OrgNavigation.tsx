@@ -5,9 +5,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import { Button, buttonVariants } from "@components/ui/button";
 import { LINKS } from "@feat/navigation/Links";
 import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { Building } from "lucide-react";
 import Link from "next/link";
+import { NextStepViewport } from "nextstepjs";
 import type { PropsWithChildren } from "react";
 import { SiteConfig } from "site-config";
 import { OrganizationCommand } from "./OrgCommand";
@@ -26,7 +28,11 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
         <OrgsSelect currentOrgSlug={org.slug} orgs={userOrganizations} />
       }
       navigationChildren={
-        <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        <NextStepViewport
+          id={getTourStepSelector(TourNames.OnBoardingTour, "Menu")}
+        >
+          <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        </NextStepViewport>
       }
       bottomNavigationChildren={
         <div className="flex flex-col gap-2">

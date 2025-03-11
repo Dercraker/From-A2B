@@ -1,13 +1,11 @@
 ---
-description: 
-globs: 
+description: Create a form using NextJS / React Hook Form / Server Actions.
+globs: *.tsx
 alwaysApply: false
 ---
 ---
 description: Create a form using NextJS / React Hook Form / Server Actions.
 globs: *.tsx
----
----
 alwaysApply: false
 ---
 ## Context

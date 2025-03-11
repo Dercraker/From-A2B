@@ -1,6 +1,5 @@
 import { Button } from "@components/ui/button";
 import { Loader } from "@components/ui/loader";
-import { logger } from "@lib/logger";
 import { getServerUrl } from "@lib/server-url";
 import { useMutation } from "@tanstack/react-query";
 import { clsx } from "clsx";

@@ -27,6 +27,7 @@ const BaseNavigationLinkSchema = z
   .object({
     Icon: z.custom<LucideIcon>().optional(),
     label: z.string(),
+    id: z.string().optional(),
     roles: z.array(z.nativeEnum(OrganizationMembershipRole)).optional(),
     hidden: z.boolean().optional(),
     disabled: z.boolean().optional(),

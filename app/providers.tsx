@@ -1,20 +1,25 @@
 "use client";
 
 import { GlobalDialogLazy } from "@components/globalDialog/GlobalDialogLazy";
+import { NextStepCard } from "@components/nextStep/nextStepCard";
 import { SearchParamsMessageToastSuspended } from "@components/searchparams-message/SearchParamsMessageToast";
 import { Toaster } from "@components/ui/sonner";
 import { AlertDialogRenderer } from "@feat/alert-dialog/AlertDialogRenderer";
 import { EdgeStoreProvider } from "@lib/blobStorage/edgestore";
 import { env } from "@lib/env/client";
 import { logger } from "@lib/logger";
+import { getTours, tourTrackProgress } from "@lib/onBoarding/nextStepTours";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { SessionProvider, useSession } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import type { CardComponentProps } from "nextstepjs";
+import { NextStep, NextStepProvider } from "nextstepjs";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import type { ComponentType } from "react";
 import { useEffect, type PropsWithChildren } from "react";
 
 const queryClient = new QueryClient({});
@@ -35,6 +40,8 @@ export const Providers = ({
   children,
   GOOGLE_MAPS_JS_API_KEY,
 }: ProvidersProps) => {
+  const nextStepTours = getTours();
+
   return (
     <PostHogProvider client={posthog}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -45,15 +52,28 @@ export const Providers = ({
           <EdgeStoreProvider>
             <SessionProvider>
               <QueryClientProvider client={queryClient}>
-                <Analytics />
-                <Toaster />
-                <AlertDialogRenderer />
-                <GlobalDialogLazy />
-                <SearchParamsMessageToastSuspended />
-                <ReactQueryDevtools />
-                <IdentifyUserPosthog />
+                <NextStepProvider>
+                  <NextStep
+                    steps={nextStepTours}
+                    {...tourTrackProgress}
+                    cardComponent={
+                      NextStepCard as ComponentType<CardComponentProps>
+                    }
+                    disableConsoleLogs
+                    shadowRgb="0, 0, 0"
+                    shadowOpacity="0.85"
+                  >
+                    <Analytics />
+                    <Toaster />
+                    <AlertDialogRenderer />
+                    <GlobalDialogLazy />
+                    <SearchParamsMessageToastSuspended />
+                    <ReactQueryDevtools />
+                    <IdentifyUserPosthog />
 
-                {children}
+                    {children}
+                  </NextStep>
+                </NextStepProvider>
               </QueryClientProvider>
             </SessionProvider>
           </EdgeStoreProvider>

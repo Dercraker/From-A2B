@@ -1,6 +1,11 @@
 ---
 description: EXPLAIN how to create email template and how to use them
 globs: 
+alwaysApply: false
+---
+---
+description: EXPLAIN how to create email template and how to use them
+globs: 
 ---
 ## Context
 

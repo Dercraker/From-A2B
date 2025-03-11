@@ -1,8 +1,11 @@
 ---
 description: How to use useMutation is my application
 globs: *.tsx
+alwaysApply: false
 ---
 ---
+description: How to use useMutation is my application
+globs: *.tsx
 alwaysApply: false
 ---
 ## Usage with server-action

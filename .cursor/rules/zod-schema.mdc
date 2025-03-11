@@ -1,6 +1,11 @@
 ---
 description: ENFORE rules for zod schema
 globs: *.store.ts, *.ts, *.schema.ts
+alwaysApply: false
+---
+---
+description: ENFORE rules for zod schema
+globs: *.store.ts, *.ts, *.schema.ts
 ---
 ## Context
 

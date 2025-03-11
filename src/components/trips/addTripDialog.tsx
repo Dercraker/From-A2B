@@ -1,6 +1,7 @@
 "use client";
 
 import { ImageInput } from "@components/images/ImageUploadInput";
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import { Button } from "@components/ui/button";
 import {
   Dialog,
@@ -22,12 +23,14 @@ import {
 import { Input } from "@components/ui/input";
 import { AddTripAction } from "@feat/trip/add/addTrip.action";
 import { AddTripSchema } from "@feat/trip/add/addTrip.schema";
+import { useDisclosure } from "@hooks/useDisclosure";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { NextStepViewport, useNextStep } from "nextstepjs";
 import type { PropsWithChildren } from "react";
-import { useState } from "react";
 import { toast } from "sonner";
 import { FormOptionalSection } from "../form/FormOptionalSection";
 import { LoadingButton } from "../form/LoadingButton";
@@ -38,7 +41,7 @@ import { Textarea } from "../ui/textarea";
 type AddTripDialogProps = PropsWithChildren;
 
 export const AddTripDialog = (props: AddTripDialogProps) => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, { close, open }] = useDisclosure(false);
   const form = useZodForm({
     schema: AddTripSchema,
     defaultValues: {
@@ -69,16 +72,20 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       }
 
       router.push(result.data);
-      setOpen(false);
+      close();
     },
   });
 
+  const { currentTour } = useNextStep();
+
   return (
     <Dialog
-      open={open}
+      open={isOpen}
       onOpenChange={(v) => {
-        if (!v) form.reset();
-        setOpen(v);
+        if (!v && !currentTour) {
+          form.reset();
+          close();
+        } else open();
       }}
     >
       <DialogTrigger asChild>
@@ -86,7 +93,14 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Trip</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            Add Trip
+            <StartTourBadge
+              tourName={TourNames.NewTripTour}
+              tooltip="Tour : Add Trip"
+              className="size-5"
+            />
+          </DialogTitle>
           <DialogDescription>
             Fill the form bellow to create a new trip.
           </DialogDescription>
@@ -107,7 +121,9 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem
+                id={getTourStepSelector(TourNames.NewTripTour, "Title")}
+              >
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input placeholder="My great trip to London" {...field} />
@@ -119,27 +135,33 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
 
           <Separator />
 
-          <FormOptionalSection
-            defaultOpen={Boolean(form.getValues("description"))}
-            label="Description"
-            onToggle={(open) => {
-              if (!open)
-                form.setValue("description", undefined, { shouldDirty: true });
-            }}
+          <NextStepViewport
+            id={getTourStepSelector(TourNames.NewTripTour, "Description")}
           >
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea placeholder="Any description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </FormOptionalSection>
+            <FormOptionalSection
+              defaultOpen={Boolean(form.getValues("description"))}
+              label="Description"
+              onToggle={(open) => {
+                if (!open)
+                  form.setValue("description", undefined, {
+                    shouldDirty: true,
+                  });
+              }}
+            >
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea placeholder="Any description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
+          </NextStepViewport>
 
           <Separator />
 
@@ -147,7 +169,10 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             control={form.control}
             name="startDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
+              <FormItem
+                className="flex flex-col"
+                id={getTourStepSelector(TourNames.NewTripTour, "StartDate")}
+              >
                 <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <DateTimePicker
@@ -167,7 +192,9 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             control={form.control}
             name="image"
             render={({ field }) => (
-              <FormItem>
+              <FormItem
+                id={getTourStepSelector(TourNames.NewTripTour, "Picture")}
+              >
                 <FormLabel>Picture</FormLabel>
                 <FormControl>
                   <ImageInput
@@ -185,6 +212,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
             type="submit"
             loading={isPending}
             disabled={!form.formState.isValid}
+            id={getTourStepSelector(TourNames.NewTripTour, "Submit")}
           >
             Create new trip
           </LoadingButton>

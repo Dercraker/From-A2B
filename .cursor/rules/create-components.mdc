@@ -1,6 +1,11 @@
 ---
 description: EXPLAIN how to create a component
 globs: *.tsx
+alwaysApply: false
+---
+---
+description: EXPLAIN how to create a component
+globs: *.tsx
 ---
 ## Context
 

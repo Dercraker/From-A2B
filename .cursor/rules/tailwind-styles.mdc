@@ -1,8 +1,11 @@
 ---
 description: ENFORE usage of Tailwind CSS
 globs: **/*
+alwaysApply: false
 ---
 ---
+description: ENFORE usage of Tailwind CSS
+globs: **/*
 alwaysApply: true
 ---
 

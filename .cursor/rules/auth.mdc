@@ -1,8 +1,11 @@
 ---
 description: EXPLAIN how authentification work and HOW to use it
 globs: *.tsx, *.ts
+alwaysApply: false
 ---
 ---
+description: EXPLAIN how authentification work and HOW to use it
+globs: *.tsx, *.ts
 alwaysApply: false
 ---
 ## Context

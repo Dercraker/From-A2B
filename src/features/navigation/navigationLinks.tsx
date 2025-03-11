@@ -50,6 +50,7 @@ export const NavigationLinks = ({
                             currentPath !== link.href,
                         },
                       )}
+                      id={link.id}
                     >
                       {currentPath === link.href && (
                         <motion.div

@@ -1,10 +1,12 @@
 "use client";
 
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import { MdxEditor } from "@feat/markdown/mdxEditor";
 import type { MdxEditorSyncState } from "@feat/markdown/MdxEditorSyncState";
 import { MdxEditorSyncStateSchema } from "@feat/markdown/MdxEditorSyncState";
 import { UpdateSchedulingNoteActionAction } from "@feat/steps/scheduling/updateSchedulingNote.action";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import "@mdxeditor/editor/style.css";
 import { useMutation } from "@tanstack/react-query";
 import type { StepPathParams } from "@type/next";
@@ -72,8 +74,15 @@ export const ScheduleNotesMdxEditor = ({
   }, [debouncedMarkdown]);
 
   return (
-    <div>
-      <Typography variant="h2">Notes</Typography>
+    <div id={getTourStepSelector(TourNames.StepSchedulingTour, "Notes")}>
+      <Typography variant="h2" className="flex items-center gap-2">
+        Notes
+        <StartTourBadge
+          tourName={TourNames.StepSchedulingTour}
+          tooltip="Tour : Step Scheduling"
+          className="size-5"
+        />
+      </Typography>
       <MdxEditor
         markdown={debouncedMarkdown ?? ""}
         syncState={syncState}

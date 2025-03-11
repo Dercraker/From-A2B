@@ -1,6 +1,11 @@
 ---
 description: EXPLAIN how Client Component work in React 19
 globs: *.tsx, *.ts
+alwaysApply: false
+---
+---
+description: EXPLAIN how Client Component work in React 19
+globs: *.tsx, *.ts
 ---
 ## Context
 

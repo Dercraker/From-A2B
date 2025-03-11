@@ -1,6 +1,11 @@
 ---
 description: ENFORCE consistent naming conventions across all project files to ensure code readability, maintainability, and searchability
 globs: **/*
+alwaysApply: false
+---
+---
+description: ENFORCE consistent naming conventions across all project files to ensure code readability, maintainability, and searchability
+globs: **/*
 ---
 ## Context
 - Apply these naming conventions to all code elements including files, folders, functions, classes, interfaces, types, enums, etc.

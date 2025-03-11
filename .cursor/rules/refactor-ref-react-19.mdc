@@ -1,8 +1,11 @@
 ---
 description: PLAN to refactor React 19 Ref
 globs: *.tsx
+alwaysApply: false
 ---
 ---
+description: PLAN to refactor React 19 Ref
+globs: *.tsx
 alwaysApply: false
 ---
 ## Context
