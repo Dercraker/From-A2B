@@ -4,6 +4,7 @@ import { EditTripForm } from "@components/trips/editTripForm";
 import { Dialog, DialogContent } from "@components/ui/dialog";
 import { LINKS } from "@feat/navigation/Links";
 import { usePathname, useRouter } from "next/navigation";
+import { useNextStep } from "nextstepjs";
 
 export type DetailsDialogProps = {
   orgSlug: string;
@@ -16,11 +17,13 @@ export const DetailsDialog = ({ tripSlug, orgSlug }: DetailsDialogProps) => {
 
   const uri = LINKS.Trips.Trip.href({ orgSlug, tripSlug });
 
+  const { currentTour } = useNextStep();
+
   return (
     <Dialog
       open={path.includes(uri)}
       onOpenChange={(open) => {
-        if (!open) {
+        if (!open && !currentTour) {
           router.back();
         }
       }}

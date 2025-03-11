@@ -57,7 +57,6 @@ export const TaskItemSortable = ({
           currentState={task.state}
           stepSlug={stepSlug as string}
           tripSlug={tripSlug as string}
-          orgSlug={orgSlug as string}
         />
         <TaskUpdateDialog
           task={task}
@@ -98,7 +97,6 @@ export const TaskItemSortable = ({
           currentState={task.state}
           stepSlug={stepSlug as string}
           tripSlug={tripSlug as string}
-          orgSlug={orgSlug as string}
           isBadge
         />
         <DeleteTaskAlertDialog

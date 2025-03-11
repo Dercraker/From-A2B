@@ -1,6 +1,7 @@
 "use server";
 
 import { authAction } from "@lib/actions/safe-actions";
+import { logger } from "@lib/logger";
 import { prisma } from "@lib/prisma";
 import { z } from "zod";
 import { FileSchema } from "./file.schema";
@@ -28,7 +29,7 @@ export const GetFilesByStepSlugAction = authAction
 
       return step.File.map((file) => FileSchema.parse(file));
     } catch (error) {
-      console.error("Error getting files:", error);
+      logger.error("Error getting files:", error);
       throw new Error("Failed to get files");
     }
   });

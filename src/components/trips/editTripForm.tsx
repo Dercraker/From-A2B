@@ -3,6 +3,7 @@
 import { FormOptionalSection } from "@components/form/FormOptionalSection";
 import { SubmitButton } from "@components/form/SubmitButton";
 import { ImageInput } from "@components/images/ImageUploadInput";
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import { GetTripAction } from "@feat/trip/get/getTrip.action";
 import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
 import type { EditTrip } from "@feat/trip/update/editTrip.schema";
@@ -11,6 +12,7 @@ import { UpdateTripAction } from "@feat/trip/update/updateTrip.action";
 import type { Trip } from "@generated/modelSchema";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { logger } from "@lib/logger";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { cn } from "@lib/utils";
 import { Separator } from "@radix-ui/react-separator";
@@ -30,6 +32,7 @@ import { Input } from "@ui/input";
 import { Loader } from "@ui/loader";
 import { Textarea } from "@ui/textarea";
 import { useRouter } from "next/navigation";
+import { NextStepViewport } from "nextstepjs";
 import { toast } from "sonner";
 
 export type EditTripFormProps = {
@@ -104,7 +107,14 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
     >
       <Card className={cn(className)}>
         <CardHeader>
-          <CardTitle>Trip details</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            Trip details{" "}
+            <StartTourBadge
+              tourName={TourNames.TripDetailsTour}
+              tooltip="Tour : Trip Details"
+              className="size-5"
+            />
+          </CardTitle>
         </CardHeader>
         {isTripPending ? (
           <Loader className="text-primary" />
@@ -115,7 +125,9 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
                 control={editTripForm.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem
+                    id={getTourStepSelector(TourNames.TripDetailsTour, "Title")}
+                  >
                     <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="My trip to London..." />
@@ -125,40 +137,53 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
                 )}
               />
               <Separator />
-              <FormOptionalSection
-                defaultOpen={Boolean(editTripForm.getValues("description"))}
-                label="Description"
-                onToggle={(open) => {
-                  if (!open)
-                    editTripForm.setValue("description", null, {
-                      shouldDirty: true,
-                    });
-                }}
+              <NextStepViewport
+                id={getTourStepSelector(
+                  TourNames.TripDetailsTour,
+                  "Description",
+                )}
               >
-                <FormField
-                  control={editTripForm.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          value={field.value ?? ""}
-                          placeholder="Any description"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </FormOptionalSection>
+                <FormOptionalSection
+                  defaultOpen={Boolean(editTripForm.getValues("description"))}
+                  label="Description"
+                  onToggle={(open) => {
+                    if (!open)
+                      editTripForm.setValue("description", null, {
+                        shouldDirty: true,
+                      });
+                  }}
+                >
+                  <FormField
+                    control={editTripForm.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            value={field.value ?? ""}
+                            placeholder="Any description"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </FormOptionalSection>
+              </NextStepViewport>
               <Separator />
 
               <FormField
                 control={editTripForm.control}
                 name="startDate"
                 render={({ field }) => (
-                  <FormItem className="flex flex-1 flex-col">
+                  <FormItem
+                    className="flex flex-1 flex-col"
+                    id={getTourStepSelector(
+                      TourNames.TripDetailsTour,
+                      "StartDate",
+                    )}
+                  >
                     <FormLabel>Start Date</FormLabel>
                     <DateTimePicker
                       value={field.value ?? new Date()}
@@ -180,7 +205,12 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
                 control={editTripForm.control}
                 name="image"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem
+                    id={getTourStepSelector(
+                      TourNames.TripDetailsTour,
+                      "Picture",
+                    )}
+                  >
                     <FormLabel>Picture</FormLabel>
                     <FormControl>
                       <ImageInput
@@ -199,6 +229,7 @@ export const EditTripForm = ({ tripSlug, className }: EditTripFormProps) => {
               <SubmitButton
                 className="w-fit self-end"
                 disabled={!editTripForm.formState.isDirty}
+                id={getTourStepSelector(TourNames.TripDetailsTour, "Submit")}
               >
                 Save
               </SubmitButton>

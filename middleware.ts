@@ -33,13 +33,13 @@ export const middleware = async (req: NextRequest) => {
 
   const maintenanceLink = LINKS.Maintenance.href({});
 
-  // if (isUnderMaintenance && req.nextUrl.pathname !== maintenanceLink) {
-  //   url.pathname = maintenanceLink;
-  //   return NextResponse.redirect(url.toString());
-  // } else if (!isUnderMaintenance && req.nextUrl.pathname === maintenanceLink) {
-  //   url.pathname = LINKS.Landing.Home.href({});
-  //   return NextResponse.redirect(url.toString());
-  // }
+  if (isUnderMaintenance && req.nextUrl.pathname !== maintenanceLink) {
+    url.pathname = maintenanceLink;
+    return NextResponse.redirect(url.toString());
+  } else if (!isUnderMaintenance && req.nextUrl.pathname === maintenanceLink) {
+    url.pathname = LINKS.Landing.Home.href({});
+    return NextResponse.redirect(url.toString());
+  }
 
   if (
     req.nextUrl.pathname === "/" &&

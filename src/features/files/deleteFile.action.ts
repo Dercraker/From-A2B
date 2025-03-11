@@ -1,6 +1,7 @@
 "use server";
 
 import { authAction } from "@lib/actions/safe-actions";
+import { logger } from "@lib/logger";
 import { DeleteFileQuery } from "./deleteFile.query";
 import { DeleteFileSchema } from "./file.schema";
 
@@ -15,7 +16,7 @@ export const DeleteFileAction = authAction
 
       return file;
     } catch (error) {
-      console.error("Error deleting file:", error);
+      logger.error("Error deleting file:", error);
       throw new Error("Failed to delete file");
     }
   });
