@@ -3,6 +3,7 @@
 import { AddTripDialog } from "@components/trips/addTripDialog";
 import { Button } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { cn } from "@lib/utils";
 import { useNextStep } from "nextstepjs";
 import type { ComponentPropsWithoutRef } from "react";
@@ -28,7 +29,7 @@ export const EmptyTrips = ({
         <AddTripDialog>
           <Button
             variant="invert"
-            id="OnboardingTour-Step6"
+            id={getTourStepSelector(TourNames.OnBoardingTour, "NewTrip")}
             onClick={() => (currentTour ? closeNextStep() : null)}
           >
             Create

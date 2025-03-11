@@ -33,6 +33,7 @@ import {
 } from "@components/ui/select";
 import { generateAIDateAction } from "@feat/dateTimePicker/generateAiDate.action";
 import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { phCapture } from "@lib/postHog/eventCapture";
 import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
@@ -40,7 +41,6 @@ import { DayPicker } from "react-day-picker";
 import { useEffectOnce } from "react-use";
 import { Loader } from "./loader";
 import { Typography } from "./typography";
-
 // ---------- utils start ----------
 /**
  * regular expression to check for valid hour format (01-23)
@@ -803,11 +803,19 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
 
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div
+          className={cn("flex flex-col gap-2", className)}
+          id={getTourStepSelector(TourNames.NewTripTour, "StartDateTextInput")}
+        >
           <InputUnit
             ref={inputRef}
             prevChildren={
-              <PopoverTrigger>
+              <PopoverTrigger
+                id={getTourStepSelector(
+                  TourNames.NewTripTour,
+                  "StartDateCalendar",
+                )}
+              >
                 <CalendarIcon className="size-4 text-muted-foreground" />
               </PopoverTrigger>
             }

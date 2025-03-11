@@ -1,3 +1,4 @@
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import {
   Layout,
   LayoutActions,
@@ -8,6 +9,7 @@ import {
 import { buttonVariants } from "@components/ui/button";
 import { Typography } from "@components/ui/typography";
 import { combineWithParentMetadata } from "@lib/metadata";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { isInRoles } from "@lib/organizations/isInRoles";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import type { OrgPathParams, PageParams } from "@type/next";
@@ -15,7 +17,6 @@ import Link from "next/link";
 import { NextStepViewport } from "nextstepjs";
 import { Suspense } from "react";
 import { SiteConfig } from "site-config";
-import { TourList } from "./_components/TourList";
 import { DashboardContentLoader } from "./_loader/dashboardContentLoader";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -30,7 +31,13 @@ const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
   return (
     <Layout>
       <LayoutHeader>
-        <LayoutTitle>Dashboard</LayoutTitle>
+        <LayoutTitle className="flex items-center gap-2">
+          Dashboard
+          <StartTourBadge
+            tourName={TourNames.OnBoardingTour}
+            tooltip="Tour : Onboarding"
+          />
+        </LayoutTitle>
       </LayoutHeader>
       <LayoutActions>
         {isInRoles(org.roles, ["ADMIN"]) &&
@@ -43,11 +50,12 @@ const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
           </Link>
         ) : null}
       </LayoutActions>
-      <NextStepViewport id="OnboardingTour-Step1">
+      <NextStepViewport
+        id={getTourStepSelector(TourNames.OnBoardingTour, "Dashboard")}
+      >
         <LayoutContent className="flex  gap-6">
           <Suspense fallback={<DashboardContentLoader />}>
             <Typography>TODO : ADD CONTENT</Typography>
-            <TourList />
           </Suspense>
         </LayoutContent>
       </NextStepViewport>

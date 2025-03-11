@@ -1,7 +1,6 @@
 import { EmailFormSection } from "@components/email/EmailFormSection";
 import { Footer } from "@components/layout/Footer";
 import { Pricing } from "@components/plans/PricingSection";
-import Link from "next/link";
 import { BentoGridSection } from "./_components/BentoSection";
 import { CTAImageSection } from "./_components/cta/CTAImageSection";
 import { CtaSection } from "./_components/cta/CTASection";

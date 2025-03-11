@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import { Button, buttonVariants } from "@components/ui/button";
 import { LINKS } from "@feat/navigation/Links";
 import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
 import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { Building } from "lucide-react";
 import Link from "next/link";
@@ -27,7 +28,9 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
         <OrgsSelect currentOrgSlug={org.slug} orgs={userOrganizations} />
       }
       navigationChildren={
-        <NextStepViewport id="OnboardingTour-Step2">
+        <NextStepViewport
+          id={getTourStepSelector(TourNames.OnBoardingTour, "Menu")}
+        >
           <OrganizationNavigationLinks roles={roles} slug={org.slug} />
         </NextStepViewport>
       }
