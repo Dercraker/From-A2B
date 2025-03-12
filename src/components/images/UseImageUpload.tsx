@@ -65,7 +65,7 @@ export const UseImageUpload = ({
         accept={["*.png"]}
       >
         {uploadImageMutation.isPending ? (
-          <Loader />
+          <Loader className="animate-spin" />
         ) : (
           <Typography variant="muted">Upload</Typography>
         )}
