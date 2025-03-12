@@ -22,7 +22,7 @@ export const TaskItemSortable = ({
   task,
   className,
 }: TaskItemSortableProps) => {
-  const { stepSlug, tripSlug, orgSlug } = useParams();
+  const { stepSlug, tripSlug } = useParams();
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
 
