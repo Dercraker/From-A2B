@@ -1,4 +1,5 @@
 import MagicLinkMail from "@email/MagicLinkEmail.email";
+import { sendEmail } from "@lib/mail/sendEmail";
 import type { NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -7,7 +8,6 @@ import { SiteConfig } from "site-config";
 import { env } from "../env/server";
 import { logger } from "../logger";
 import { getCredentialsProvider } from "./credentials-provider";
-import { sendEmail } from "@lib/mail/sendEmail";
 
 type Providers = NonNullable<NextAuthConfig["providers"]>;
 
@@ -47,6 +47,7 @@ export const getNextAuthConfigProviders = (): Providers => {
       Google({
         clientId: env.GOOGLE_ID,
         clientSecret: env.GOOGLE_SECRET,
+        allowDangerousEmailAccountLinking: true,
       }),
     );
   }
