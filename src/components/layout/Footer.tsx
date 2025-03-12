@@ -3,7 +3,7 @@ import { LogoNameSvg } from "@components/svg/LogoNameSvg";
 import { Typography } from "@components/ui/typography";
 import Link from "next/link";
 import { SiteConfig } from "site-config";
-import { version } from "../../../package.json";
+import packageJson from "../../../package.json";
 
 export const Footer = () => {
   return (
@@ -15,7 +15,7 @@ export const Footer = () => {
               <Link href="/" className="flex items-center gap-2">
                 <LogoNameSvg height={36} width={160} />
               </Link>
-              <Typography variant="muted">V{version}</Typography>
+              <Typography variant="muted">V{packageJson.version}</Typography>
               <Typography variant="muted">{SiteConfig.company.name}</Typography>
               <Typography variant="muted">
                 {SiteConfig.company.address}
