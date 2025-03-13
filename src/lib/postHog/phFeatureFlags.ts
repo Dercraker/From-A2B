@@ -11,7 +11,7 @@ export const getServerFeatureFlags = async ({
 }) => {
   const data = await decide(distinct_id ?? undefined);
 
-  return data.featureFlags[flag];
+  return data.featureFlags?.[flag];
 };
 /**Server side ONLY */
 export const getServerFeatureFlagPayload = async ({
