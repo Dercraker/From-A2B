@@ -60,6 +60,7 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
         toast.error(result?.serverError);
         return;
       }
+      router.push(result.data);
 
       const blobUrl = form.getValues("image")?.url;
 
@@ -70,9 +71,6 @@ export const AddTripDialog = (props: AddTripDialogProps) => {
       if (blobUrl) {
         URL.revokeObjectURL(blobUrl);
       }
-
-      router.push(result.data);
-      close();
     },
   });
 

@@ -11,7 +11,7 @@ import { AddTripSchema } from "./addTrip.schema";
 export const AddTripAction = orgAction
   .schema(AddTripSchema)
   .action(async ({ parsedInput, ctx }) => {
-    const trip = await AddTripQuery({
+    const slug = await AddTripQuery({
       ...parsedInput,
       slug: generateSlug(parsedInput.name),
       endDate: parsedInput.startDate,
@@ -28,7 +28,7 @@ export const AddTripAction = orgAction
       image = await uploadTripPicture({
         file: parsedInput.image?.file,
         userId: ctx.user.id,
-        entityId: trip.slug,
+        entityId: slug,
       });
     }
 
@@ -38,12 +38,12 @@ export const AddTripAction = orgAction
           image: image.url,
         },
         where: {
-          slug: trip.slug,
+          slug,
         },
       });
     }
     return LINKS.Trips.Trip.href({
       orgSlug: ctx.org.slug,
-      tripSlug: trip.slug,
+      tripSlug: slug,
     });
   });

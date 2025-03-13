@@ -89,7 +89,7 @@ export const EditStepDialog = ({
         return;
       }
 
-      toast.success(`The step ${result.data} as been updated.`);
+      toast.success(`The step ${result.data.name} as been updated.`);
       form.reset();
       setOpen(false);
       onClose();
