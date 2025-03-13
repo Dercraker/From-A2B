@@ -7,98 +7,98 @@ const reviews: ReviewItemProps[] = [
     review:
       "From-A2B has completely transformed how I plan my trips! The intuitive interface and smart recommendations make every journey stress-free. **This is a must-have for anyone who loves to travel efficiently.**",
     name: "Michael Carter",
-    role: "A Tale of Two Cities",
+    role: "Product Manager",
     image: "https://i.pravatar.cc/300?img=3",
   },
   {
     review:
       "I never thought planning a trip could be this easy! From-A2B takes care of everything, from itinerary management to travel suggestions. **It’s like having a personal travel assistant in your pocket.**",
     name: "Jessica Thompson",
-    role: "Hamlet",
+    role: "Marketing Director",
     image: "https://i.pravatar.cc/300?img=1",
   },
   {
     review:
-      "From-A2B saved me hours of planning! The ability to customize my trip and get real-time updates is a game-changer. **If you love traveling but hate the hassle of organizing, this app is for you!.**",
+      "From-A2B saved me hours of planning! The ability to customize my trip and get real-time updates is a game-changer. **If you love traveling but hate the hassle of organizing, this app is for you!**",
     name: "David Reynolds",
-    role: "A Dream Within a Dream",
+    role: "Sales Executive",
     image: "https://i.pravatar.cc/300?img=4",
   },
   {
     review:
       "I’ve tried many travel apps, but From-A2B is by far the best! The seamless experience and smart features make it the perfect travel companion. **I can’t imagine planning another trip without it!**",
     name: "Rachel Adams",
-    role: "Pride and Prejudice",
+    role: "HR Manager",
     image: "https://i.pravatar.cc/300?img=2",
   },
   {
     review:
       "From-A2B takes the stress out of travel planning. With its easy-to-use features and smart trip organization, **it’s the only tool I need to create the perfect itinerary.**",
     name: "Daniel Brooks",
-    role: "Moby-Dick",
+    role: "Financial Analyst",
     image: "https://i.pravatar.cc/300?img=6",
   },
   {
     review:
       "Traveling has never been this simple! From-A2B handles everything, from accommodations to activities, all in one place. **Highly recommended for frequent travelers!**",
     name: "Samantha Miller",
-    role: "Moby-Dick",
+    role: "Operations Manager",
     image: "https://i.pravatar.cc/300?img=5",
   },
   {
     review:
       "From-A2B’s smart trip planner helps me stay organized while exploring new places. **I love how it automatically optimizes my routes and schedule!**",
     name: "James Richardson",
-    role: "Moby-Dick",
+    role: "IT Specialist",
     image: "https://i.pravatar.cc/300?img=8",
   },
   {
     review:
       "As a solo traveler, I rely on From-A2B to keep everything in one place. **No more juggling between multiple apps—this is the ultimate travel organizer!**",
     name: "Olivia Collins",
-    role: "Moby-Dick",
+    role: "UX Designer",
     image: "https://i.pravatar.cc/300?img=9",
   },
   {
     review:
       "Planning a trip used to be stressful, but not anymore! From-A2B streamlines everything, so I can focus on enjoying my travels. **A must-have for adventure lovers!**",
     name: "Ethan Walker",
-    role: "Moby-Dick",
+    role: "Legal Consultant",
     image: "https://i.pravatar.cc/300?img=7",
   },
   {
     review:
       "From-A2B makes trip planning seamless and fun! **I no longer worry about missing reservations or getting lost—it’s all in the app.**",
     name: "Emma Harrison",
-    role: "Moby-Dick",
+    role: "Customer Success Manager",
     image: "https://i.pravatar.cc/300?img=10",
   },
   {
     review:
       "I used to spend hours researching and organizing my itinerary. With From-A2B, I do it in minutes! **The best investment for stress-free travel.**",
     name: "William Cooper",
-    role: "Moby-Dick",
+    role: "Business Analyst",
     image: "https://i.pravatar.cc/300?img=11",
   },
   {
     review:
       "From-A2B helped me plan the perfect family vacation! **Everything was organized flawlessly, making our trip smooth and enjoyable.**",
     name: "Sophia Bennett",
-    role: "Moby-Dick",
+    role: "Event Coordinator",
     image: "https://i.pravatar.cc/300?img=19",
   },
   {
     review:
       "From-A2B is an absolute game-changer! **The AI-powered suggestions helped me discover amazing hidden gems in every destination.**",
     name: "Jacob Foster",
-    role: "Moby-Dick",
+    role: "Chief Technology Officer (CTO)",
     image: "https://i.pravatar.cc/300?img=13",
   },
   {
     review:
       "I love how From-A2B keeps all my travel details in one place. **It’s like having a personal concierge at my fingertips!**",
     name: "Madison Clark",
-    role: "Moby-Dick",
+    role: "Chief Financial Officer (CFO)",
     image: "https://i.pravatar.cc/300?img=16",
   },
 ];

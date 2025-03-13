@@ -1,4 +1,5 @@
 import { LINKS } from "@feat/navigation/Links";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { Separator } from "@ui/separator";
 import { Typography } from "@ui/typography";
 import {
@@ -969,19 +970,19 @@ export const getTourStepSelector = <T extends TourName>(
  */
 export const tourTrackProgress = {
   onStart: (tourName: string | null) => {
-    // phCapture("TourStart", { tourName });
+    phCapture("TourStart", { tourName });
   },
   onStepChange: (step: number, tourName: string | null) => {
-    // phCapture("TourStepViewed", {
-    //   tourName,
-    //   step,
-    // });
+    phCapture("TourStepViewed", {
+      tourName,
+      step,
+    });
   },
   onComplete: (tourName: string | null) => {
-    // phCapture("TourComplete", { tourName });
+    phCapture("TourComplete", { tourName });
   },
   onSkip: (step: number, tourName: string | null) => {
-    // phCapture("TourSkipped", { tourName, step });
+    phCapture("TourSkipped", { tourName, step });
   },
 };
 

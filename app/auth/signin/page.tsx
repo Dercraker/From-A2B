@@ -28,7 +28,7 @@ export default async function AuthSignInPage(params: PageParams) {
   return (
     <div className="flex h-full flex-col">
       <HeaderBase />
-      <div className="flex flex-1 items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <Card className="w-full max-w-md lg:max-w-lg lg:p-6">
           <CardHeader className="flex flex-col items-center justify-center gap-2">
             <LogoSvg />

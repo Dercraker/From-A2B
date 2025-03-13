@@ -5,7 +5,7 @@ import { Layout } from "../page/layout";
 
 export const HeaderBase = async ({ children }: PropsWithChildren) => {
   return (
-    <header className="sticky top-0 flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+    <header className="sticky top-0 z-50 flex h-14 items-center gap-4 border-b bg-card px-4 lg:h-[60px] lg:px-6">
       <Layout className="my-2">
         <div className="flex items-center gap-2">
           <Link
