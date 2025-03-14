@@ -1,9 +1,10 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Divider } from "@/components/ui/divider";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Typography } from "@/components/ui/typography";
+import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
+import { Divider } from "@components/ui/divider";
+import { Skeleton } from "@components/ui/skeleton";
+import { Typography } from "@components/ui/typography";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
@@ -67,8 +68,18 @@ export const SignInProviders = () => {
 
       <div className="flex flex-col gap-2 lg:gap-4">
         {/* ℹ️ Add provider you want to support here */}
-        {providers.github ? <ProviderButton providerId="github" /> : null}
-        {providers.google ? <ProviderButton providerId="google" /> : null}
+        {providers.github ? (
+          <ProviderButton
+            providerId="github"
+            onClick={() => phCapture("SigninWithGithub")}
+          />
+        ) : null}
+        {providers.google ? (
+          <ProviderButton
+            providerId="google"
+            onClick={() => phCapture("SigninWithGoogle")}
+          />
+        ) : null}
       </div>
 
       {providers.credentials ? (

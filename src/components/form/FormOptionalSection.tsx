@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { Label } from "@components/ui/label";
+import { Switch } from "@components/ui/switch";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
 

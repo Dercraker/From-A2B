@@ -1,5 +1,4 @@
-import { getServerUrl } from "@/lib/server-url";
-import { SiteConfig } from "@/site-config";
+import { getServerUrl } from "@lib/server-url";
 import {
   Body,
   Container,
@@ -11,6 +10,7 @@ import {
 } from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
 import type { PropsWithChildren } from "react";
+import { SiteConfig } from "site-config";
 
 /**
  * EmailLayout is used to create a layout for your email.

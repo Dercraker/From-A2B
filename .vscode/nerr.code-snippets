@@ -6,8 +6,8 @@
     "body": [
       "\"use client\";",
       "",
-      "import { Header } from \"@/features/layout/Header\";",
-      "import { Page400 } from \"@/features/page/Page400\";",
+      "import { Header } from \"@feat/layout/Header\";",
+      "import { Page400 } from \"@feat/page/Page400\";",
       "",
       "export default function NotFoundPage() {",
       "  return (",

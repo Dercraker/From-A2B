@@ -1,6 +1,6 @@
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { buttonVariants } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { buttonVariants } from "@components/ui/button";
+import { Typography } from "@components/ui/typography";
 import Link from "next/link";
 
 export const CTAImageSection = () => {

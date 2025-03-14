@@ -1,6 +1,6 @@
-import { env } from "@/lib/env/server";
-import { logger } from "@/lib/logger";
-import { stripe } from "@/lib/stripe";
+import { env } from "@lib/env/server";
+import { logger } from "@lib/logger";
+import { stripe } from "@lib/stripe";
 import { headers } from "next/headers";
 import type { Stripe } from "stripe";
 

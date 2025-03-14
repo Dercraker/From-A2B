@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@lib/utils";
 import type { ComponentPropsWithoutRef, PropsWithChildren } from "react";
 import ReactPlayer from "react-player";
 

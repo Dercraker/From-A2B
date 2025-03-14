@@ -1,27 +1,24 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { GenerateTripLink } from "@/features/trips/trips.link";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/select";
+import { LINKS } from "@feat/navigation/Links";
+import type { Trip } from "@generated/modelSchema";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+import { SiteConfig } from "site-config";
 
 type TripsSelectProps = {
   currentTripSlug?: string;
   orgSlug: string;
   children?: ReactNode;
-  trips: {
-    slug: string;
-    name: string;
-    image: string | null;
-  }[];
+  trips: Trip[];
 };
 
 export const TripSelect = ({
@@ -35,11 +32,11 @@ export const TripSelect = ({
     <Select
       value={currentTripSlug}
       onValueChange={(value) => {
-        router.push(GenerateTripLink({ orgSlug, tripSlug: value }));
+        router.push(LINKS.Trips.Trip.href({ orgSlug, tripSlug: value }));
       }}
     >
       <SelectTrigger className="h-8 justify-start gap-2 border-none bg-transparent px-4 hover:bg-accent [&>span]:flex [&>svg]:hidden hover:[&>svg]:block">
-        {children ? children : <SelectValue />}
+        {children ?? <SelectValue />}
       </SelectTrigger>
       <SelectContent>
         {trips.map((trip) => (

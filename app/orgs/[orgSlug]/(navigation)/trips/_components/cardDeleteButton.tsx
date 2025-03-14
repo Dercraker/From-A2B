@@ -1,9 +1,10 @@
 "use client";
 
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { DeleteTripAction } from "@/features/trip/delete/deleteTrip.action";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { DeleteTripAction } from "@feat/trip/delete/deleteTrip.action";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -59,6 +60,7 @@ export const CardDeleteButton = ({
               label: "Delete",
               onClick: async () => {
                 await deleteTripAsync();
+                phCapture("TripDelete");
               },
             },
           });

@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/prisma";
+import { StepSchema } from "@generated/modelSchema";
+import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
 type EditStepQueryType = {
@@ -12,9 +13,7 @@ export const EditStepQuery = async ({ step, where }: EditStepQueryType) => {
     data: step,
   });
 
-  return newStep.name;
+  return StepSchema.parseAsync(newStep);
 };
 
-export type AddStepQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof EditStepQuery>
->;
+export type EditStepQuery = Prisma.PromiseReturnType<typeof EditStepQuery>;

@@ -3,8 +3,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Loader } from "@/components/ui/loader";
+} from "@components/ui/dialog";
+import { Loader } from "@components/ui/loader";
 
 export default async function RouteLoading() {
   return (

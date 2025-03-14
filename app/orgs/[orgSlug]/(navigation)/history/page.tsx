@@ -1,7 +1,8 @@
-import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { GetTripsByCurrentOrgQuery } from "@/features/trips/getTripsByCurrentOrgQuery.query";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import type { PageParams } from "@/types/next";
+import { GetTripsByCurrentOrgQuery } from "@feat/trips/getTripsByCurrentOrgQuery.query";
+import type { Trip } from "@generated/modelSchema";
+import { combineWithParentMetadata } from "@lib/metadata";
+import type { OrgPathParams, PageParams } from "@type/next";
+import { startOfDay } from "date-fns";
 import { TripsContainer } from "../trips/_components/tripsContainer";
 import { TravelHistoryEmpty } from "./_components/TravelHistoryEmpty";
 
@@ -10,23 +11,22 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Travel history",
 });
 
-const RoutePage = async ({ params }: PageParams<{ orgSlug: string }>) => {
+const RoutePage = async ({ params }: PageParams<OrgPathParams>) => {
   const orgSlug = (await params).orgSlug;
 
-  const trips: TripsListDtoSchema = await GetTripsByCurrentOrgQuery({
+  const trips: Trip[] = await GetTripsByCurrentOrgQuery({
     order: {
       startDate: "asc",
     },
     where: {
       startDate: {
-        lt: new Date(),
+        lt: startOfDay(new Date()),
       },
     },
   });
 
-  if (!trips.length) return <TravelHistoryEmpty orgSlug={orgSlug} />;
-
-  return <TripsContainer trips={trips} />;
+  if (trips.length) return <TripsContainer trips={trips} orgSlug={orgSlug} />;
+  return <TravelHistoryEmpty orgSlug={orgSlug} />;
 };
 
 export default RoutePage;

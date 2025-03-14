@@ -2,15 +2,10 @@
 
 import type { PropsWithChildren } from "react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { AutocompleteComponent } from "@components/address/autocompleteComponent";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
+import { LoadingButton } from "@components/form/LoadingButton";
+import { StartTourBadge } from "@components/nextStepJs/StartTourBadge";
 import {
   Form,
   FormControl,
@@ -19,30 +14,49 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AddStepAction } from "@/features/steps/add/addStep.action";
-import { AddStepSchema } from "@/features/steps/add/addStep.schema";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+} from "@components/ui/form";
+import { AddStepAction } from "@feat/steps/add/addStep.action";
+import { AddStepSchema } from "@feat/steps/add/addStep.schema";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import type { Step } from "@generated/modelSchema";
+import { useDisclosure } from "@hooks/useDisclosure";
+import { TourNames, getTourStepSelector } from "@lib/onBoarding/nextStepTours";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
-import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { TripPathParams } from "@type/next";
+import { Button } from "@ui/button";
+import { DateTimePicker } from "@ui/DateTimePicker";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@ui/dialog";
+import { Input } from "@ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@ui/select";
+import { Separator } from "@ui/separator";
+import { Textarea } from "@ui/textarea";
+import { Typography } from "@ui/typography";
+import { isActionSuccessful } from "lib/actions/actions-utils";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { NextStepViewport, useNextStep } from "nextstepjs";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { AutocompleteComponent } from "../address/autocompleteComponent";
-import { LoadingButton } from "../form/LoadingButton";
-import { DateTimePicker } from "../ui/DateTimePicker";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
-import { Textarea } from "../ui/textarea";
-import { Typography } from "../ui/typography";
 
 export type AddStepDialogProps = PropsWithChildren<{
-  beforeStep?: StepDto;
-  afterStep?: StepDto;
+  beforeStep?: Step;
+  afterStep?: Step;
   onClose?: () => void;
 }>;
 
@@ -52,21 +66,32 @@ export const AddStepDialog = ({
   afterStep,
   onClose,
 }: AddStepDialogProps) => {
-  const params = useParams();
-  const [open, setOpen] = useState(false);
+  const { tripSlug } = useParams<TripPathParams>();
+  const [isOpen, { close, open }] = useDisclosure(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const form = useZodForm({
     schema: AddStepSchema,
     defaultValues: {
-      startDate: new Date(),
-      endDate: new Date(),
       TransportMode: TransportMode.Car,
-      tripSlug: String(params.tripSlug),
+      tripSlug: String(tripSlug),
+
+      latitude: undefined,
+      longitude: undefined,
+      placeId: undefined,
 
       stepAfter: afterStep,
       stepBefore: beforeStep,
     },
   });
+
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      setIsFormValid(form.formState.isValid);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   const queryClient = useQueryClient();
 
@@ -80,33 +105,49 @@ export const AddStepDialog = ({
 
       toast.success(`The step ${result.data} as been added.`);
       form.reset();
-      setOpen(false);
+      close();
 
       if (onClose) onClose();
 
+      phCapture("AddStep");
       return result.data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(params.tripSlug?.toString() as string),
+        queryKey: TRIP_KEY_Factory.roads(tripSlug.toString() as string),
+      });
+      await queryClient.invalidateQueries({
+        queryKey: STEP_KEY_FACTORY.All(tripSlug.toString() as string),
       });
     },
   });
 
+  const { currentTour } = useNextStep();
+
   return (
     <Dialog
-      open={open}
+      open={isOpen}
       onOpenChange={(v) => {
-        setOpen(v);
-        if (!v && onClose) onClose();
+        if (!v && !currentTour) {
+          form.reset();
+          if (onClose) onClose();
+          close();
+        } else open();
       }}
     >
       <DialogTrigger asChild>
-        {children ? children : <Button variant="filled">Add Trip</Button>}
+        {children ?? <Button variant="filled">Add Trip</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Step</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            New Step
+            <StartTourBadge
+              tooltip="Tour : Add Step"
+              tourName={TourNames.AddStepTour}
+              className="size-5"
+            />
+          </DialogTitle>
           <DialogDescription>
             Fill the form bellow to add a step in your trip.
           </DialogDescription>
@@ -117,15 +158,42 @@ export const AddStepDialog = ({
           onSubmit={() => {}}
           className="flex flex-col gap-4"
           onReset={() => {
-            setOpen(false);
+            close();
             if (onClose) onClose();
+            form.reset();
           }}
         >
           <FormField
             control={form.control}
+            name="placeId"
+            render={() => (
+              <FormItem
+                id={getTourStepSelector(TourNames.AddStepTour, "Place")}
+              >
+                <FormLabel>Place</FormLabel>
+                <AutocompleteComponent
+                  onChange={(address) => {
+                    if (address.lat !== 0)
+                      form.setValue("latitude", address.lat);
+                    if (address.lng !== 0)
+                      form.setValue("longitude", address.lng);
+                    form.setValue("placeId", address.placeId ?? undefined);
+
+                    phCapture("UsePlaceInput");
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem
+                id={getTourStepSelector(TourNames.AddStepTour, "Title")}
+              >
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input placeholder="Go to the airport" {...field} />
@@ -134,79 +202,95 @@ export const AddStepDialog = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Any description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>Start Date</FormLabel>
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("startDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
+          <Separator />
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <NextStepViewport
+            id={getTourStepSelector(TourNames.AddStepTour, "Description")}
+          >
+            <FormOptionalSection
+              defaultOpen={Boolean(form.getValues("description"))}
+              label="Description"
+              onToggle={(open) => {
+                if (!open) form.setValue("description", undefined);
+              }}
+            >
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea placeholder="Any description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
+          </NextStepViewport>
 
-          <FormField
-            control={form.control}
-            name="endDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <FormLabel>End Date</FormLabel>
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("endDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
+          <Separator />
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <NextStepViewport
+            id={getTourStepSelector(TourNames.AddStepTour, "Dates")}
+          >
+            <FormOptionalSection
+              label="Dates"
+              defaultOpen={Boolean(
+                form.getValues("endDate") && form.getValues("startDate"),
+              )}
+              onToggle={(open) => {
+                if (!open) {
+                  form.setValue("endDate", undefined);
+                  form.setValue("startDate", undefined);
+                }
+              }}
+            >
+              <FormField
+                control={form.control}
+                name="startDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-1 flex-col">
+                    <FormLabel>Start Date</FormLabel>
+                    <DateTimePicker
+                      value={field.value}
+                      className="w-full"
+                      onChange={(date) => {
+                        form.setValue("startDate", date, {
+                          shouldDirty: true,
+                        });
+                      }}
+                    />
 
-          <FormField
-            control={form.control}
-            name="latitude"
-            render={() => (
-              <FormItem>
-                <FormLabel>Place</FormLabel>
-                <AutocompleteComponent
-                  onChange={(address) => {
-                    form.setValue("latitude", address.lat);
-                    form.setValue("longitude", address.lng);
-                    form.setValue("placeId", address.placeId ?? undefined);
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="endDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-1 flex-col">
+                    <FormLabel>End Date</FormLabel>
+                    <DateTimePicker
+                      value={field.value}
+                      className="w-full"
+                      onChange={(date) => {
+                        form.setValue("endDate", date, {
+                          shouldDirty: true,
+                        });
+                      }}
+                    />
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </FormOptionalSection>
+          </NextStepViewport>
+
+          <Separator />
 
           <FormField
             control={form.control}
@@ -218,7 +302,12 @@ export const AddStepDialog = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl
+                    id={getTourStepSelector(
+                      TourNames.AddStepTour,
+                      "TransportMode",
+                    )}
+                  >
                     <SelectTrigger>
                       <SelectValue
                         className="text-muted"
@@ -270,7 +359,8 @@ export const AddStepDialog = ({
               className="flex-1"
               onClick={async () => addStepAsync(form.getValues())}
               loading={isPending}
-              disabled={!form.formState.isValid}
+              disabled={!isFormValid}
+              id={getTourStepSelector(TourNames.AddStepTour, "Submit")}
             >
               Add new step
             </LoadingButton>

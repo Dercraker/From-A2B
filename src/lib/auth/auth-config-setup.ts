@@ -43,9 +43,23 @@ export const setupDefaultOrganizationsOrInviteUser = async (user: User) => {
       },
     },
   });
+
+  const organization = await prisma.organization.findFirst({
+    where: {
+      members: {
+        some: {
+          userId: user.id,
+        },
+      },
+    },
+    select: {
+      id: true,
+      slug: true,
+    },
+  });
   // If there is no token, there is no invitation
   // We create a default organization for the user
-  if (tokens.length === 0) {
+  if (tokens.length === 0 && !organization) {
     const orgSlug = getSlugFromUser(user);
     await createOrganizationQuery({
       slug: orgSlug,

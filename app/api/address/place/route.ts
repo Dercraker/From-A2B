@@ -1,6 +1,6 @@
-import type { AddressType } from "@/features/address/address.schema";
-import { env } from "@/lib/env/server";
-import { authRoute } from "@/lib/safe-route";
+import type { AddressType } from "@feat/address/address.schema";
+import { env } from "@lib/env/server";
+import { authRoute } from "@lib/safe-route";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

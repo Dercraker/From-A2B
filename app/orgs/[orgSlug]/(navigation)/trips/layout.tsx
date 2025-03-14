@@ -4,10 +4,10 @@ import {
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { AddTripDialog } from "@/components/trips/addTripDialog";
-import { Button } from "@/components/ui/button";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import { AddTripDialog } from "@components/trips/addTripDialog";
+import { Button } from "@components/ui/button";
+import type { LayoutParams } from "@type/next";
 
 const TripsLayout = async ({ children }: LayoutParams) => {
   return (

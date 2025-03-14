@@ -1,8 +1,11 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
-import { generateSlug } from "@/lib/format/id";
-import { getMiddleRank } from "@/utils/getMiddleRank";
+import { AddRoadsToStep } from "@feat/road/addRoadBetweenSteps";
+import type { Step } from "@generated/modelSchema";
+import { ActionError, orgAction } from "@lib/actions/safe-actions";
+import { generateSlug } from "@lib/format/id";
+import { logger } from "@lib/logger";
+import { GetStepRank } from "@utils/GetStepRank";
 import { GetLastStepQueryByTripSlug } from "../get/getLastStep.query";
 import { GetStepAfterQuery } from "../get/getStepAfter.query";
 import { GetStepBeforeQuery } from "../get/getStepBefore.query";
@@ -32,7 +35,6 @@ export const AddStepAction = orgAction
         return new ActionError(
           "You must provide only one of stepAfter or stepBefore",
         );
-
       const otherStep = stepBefore
         ? await GetStepAfterQuery({ id: stepBefore.id })
         : stepAfter
@@ -42,12 +44,18 @@ export const AddStepAction = orgAction
       const lastTripStep = await GetLastStepQueryByTripSlug({
         tripSlug,
       });
+
+      let newStep: Step;
+
       try {
-        const newRank = getMiddleRank({
-          downRank: stepBefore?.rank ?? otherStep?.rank,
-          upRank: stepAfter?.rank ?? otherStep?.rank ?? lastTripStep?.rank,
+        const newRank = GetStepRank({
+          previousRank:
+            stepBefore?.rank ??
+            (stepAfter ? otherStep?.rank : lastTripStep?.rank),
+          nextRank: stepAfter?.rank ?? otherStep?.rank,
         });
-        const newStep = await AddStepQuery({
+
+        newStep = await AddStepQuery({
           step: {
             name,
             slug: generateSlug(name),
@@ -57,7 +65,7 @@ export const AddStepAction = orgAction
             endDate,
             description,
             placeId,
-            transportMode: TransportMode,
+            TransportMode,
             trip: {
               connect: {
                 slug: tripSlug,
@@ -66,12 +74,21 @@ export const AddStepAction = orgAction
             rank: newRank,
           },
         });
-        return newStep.name;
-      } catch {
+      } catch (e) {
+        logger.error(e);
         await ReorderAllStepQuery({ tripSlug });
         return new ActionError(
           "An error occurred while adding the step, please try again",
         );
       }
+
+      try {
+        await AddRoadsToStep({ stepId: newStep.id });
+      } catch (error) {
+        logger.error(error);
+        return new ActionError("An error occurred while adding road to step");
+      }
+
+      return newStep.name;
     },
   );

@@ -1,17 +1,17 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { MultiStepLoader } from "@/components/ui/multi-step-loader";
-import { RemoveVerificationTokenAction } from "@/features/account/delete/RemoveVerificationToken.action";
-import { useDisclosure } from "@/hooks/useDisclosure";
-import { cn } from "@/lib/utils";
+} from "@components/ui/card";
+import { MultiStepLoader } from "@components/ui/multi-step-loader";
+import { RemoveVerificationTokenAction } from "@feat/account/delete/RemoveVerificationToken.action";
+import { useDisclosure } from "@hooks/useDisclosure";
+import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { orgConfirmDeletionAction } from "../../delete-account.action";

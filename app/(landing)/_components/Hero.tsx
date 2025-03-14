@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Spotlight } from "@/components/ui/spotlight";
-import { Typography } from "@/components/ui/typography";
-import { Video } from "@/components/video/video";
+import { Button } from "@components/ui/button";
+import { Spotlight } from "@components/ui/spotlight";
+import { Typography } from "@components/ui/typography";
+import { Video } from "@components/video/video";
 import Link from "next/link";
 import React from "react";
 

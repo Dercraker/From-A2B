@@ -6,6 +6,32 @@ generator client {
   previewFeatures = ["prismaSchemaFolder"]
 }
 
+// https://github.com/chrishoermann/zod-prisma-types?tab=readme-ov-file#installation
+generator zod {
+  provider                         = "pnpx zod-prisma-types"
+  output                           = "../generated/zod"
+  useMultipleFiles                 = true
+  writeBarrelFiles                 = true
+  createInputTypes                 = false
+  createModelTypes                 = true
+  addInputTypeValidation           = true
+  addIncludeType                   = true
+  addSelectType                    = true
+  validateWhereUniqueInput         = true
+  createOptionalDefaultValuesTypes = true
+  createRelationValuesTypes        = true
+  createPartialTypes               = false
+  useDefaultValidators             = true
+  coerceDate                       = true
+  writeNullishInModelTypes         = false
+}
+
+generator erd {
+  provider                  = "prisma-erd-generator"
+  includeRelationFromFields = true
+  output                    = "../ERD.svg"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

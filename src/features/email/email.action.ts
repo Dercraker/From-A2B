@@ -1,8 +1,8 @@
 "use server";
 
-import { ActionError, action } from "@/lib/actions/safe-actions";
-import { setupResendCustomer } from "@/lib/auth/auth-config-setup";
-import { prisma } from "@/lib/prisma";
+import { ActionError, action } from "@lib/actions/safe-actions";
+import { setupResendCustomer } from "@lib/auth/auth-config-setup";
+import { prisma } from "@lib/prisma";
 import { EmailActionSchema } from "./email.schema";
 
 export const addEmailAction = action

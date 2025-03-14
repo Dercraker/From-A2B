@@ -1,9 +1,9 @@
 "use server";
 
-import { action } from "@/lib/actions/safe-actions";
-import { sendEmail } from "@/lib/mail/sendEmail";
+import { action } from "@lib/actions/safe-actions";
+import { env } from "@lib/env/client";
+import { sendEmail } from "@lib/mail/sendEmail";
 import { ContactSupportSchema } from "./contact-support.schema";
-import { env } from "@/lib/env/client";
 
 export const contactSupportAction = action
   .schema(ContactSupportSchema)

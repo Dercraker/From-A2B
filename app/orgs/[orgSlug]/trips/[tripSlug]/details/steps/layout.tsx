@@ -4,19 +4,19 @@ import {
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import type { LayoutParams, TripPathParams } from "@type/next";
 import { DetailStepList } from "./_component/detailStepList";
 
 const RouteLayout = async ({
   children,
 
   params,
-}: LayoutParams<{ orgSlug: string; tripSlug: string }>) => {
+}: LayoutParams<TripPathParams>) => {
   const { tripSlug, orgSlug } = await params;
 
   return (
-    <Layout>
+    <Layout size="lg">
       <LayoutHeader>
         <LayoutTitle>Steps</LayoutTitle>
         <LayoutDescription>Manage all your steps</LayoutDescription>

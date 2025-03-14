@@ -9,8 +9,15 @@ export const AddTripSchema = z.object({
     .string()
     .max(1000, "The description must be less than 1000 characters long")
     .optional(),
-  startDate: z.date(),
-  image: z.string().url().optional(),
+  startDate: z.date({
+    required_error: "Start date is required to create trip",
+  }),
+  image: z
+    .object({
+      url: z.string().url().optional(),
+      file: z.instanceof(File).or(z.instanceof(Blob)).optional(),
+    })
+    .optional(),
 });
 
 export type AddTripSchema = z.infer<typeof AddTripSchema>;

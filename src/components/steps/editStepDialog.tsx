@@ -2,7 +2,8 @@
 
 import type { PropsWithChildren } from "react";
 
-import { Button } from "@/components/ui/button";
+import { FormOptionalSection } from "@components/form/FormOptionalSection";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -19,31 +20,33 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { EditStepAction } from "@/features/steps/update/editStep.action";
-import { EditStepSchema } from "@/features/steps/update/editStep.schema";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { logger } from "@/lib/logger";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { EditStepAction } from "@feat/steps/update/editStep.action";
+import { EditStepSchema } from "@feat/steps/update/editStep.schema";
+import type { Step } from "@generated/index";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { logger } from "@lib/logger";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { TransportMode } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
+import { Separator } from "@ui/separator";
 import { Bike, Car, Footprints, Plane, Sailboat } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AutocompleteComponent } from "../address/autocompleteComponent";
 import { LoadingButton } from "../form/LoadingButton";
-import { CalendarDatePicker } from "../ui/calendar-date-picker";
 import { DateTimePicker } from "../ui/DateTimePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Typography } from "../ui/typography";
 
 export type EditStepDialogProps = PropsWithChildren<{
-  step: StepDto;
+  step: Step;
   onClose: () => void;
 }>;
 
@@ -52,14 +55,14 @@ export const EditStepDialog = ({
   step,
   onClose,
 }: EditStepDialogProps) => {
-  const params = useParams();
+  const { tripSlug } = useParams<StepPathParams>();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const form = useZodForm({
     schema: EditStepSchema,
     defaultValues: {
-      tripSlug: params.tripSlug?.toString(),
+      tripSlug: tripSlug.toString(),
       stepId: step.id,
 
       name: step.name,
@@ -68,11 +71,11 @@ export const EditStepDialog = ({
       startDate: step.startDate ?? undefined,
       endDate: step.endDate ?? undefined,
 
-      latitude: step.latitude ?? undefined,
-      longitude: step.longitude ?? undefined,
+      latitude: Number(step.latitude),
+      longitude: Number(step.longitude),
 
       placeId: step.placeId,
-      transportMode: step.transportMode as TransportMode,
+      TransportMode: step.TransportMode as TransportMode,
     },
   });
 
@@ -86,20 +89,20 @@ export const EditStepDialog = ({
         return;
       }
 
-      toast.success(`The step ${result.data} as been updated.`);
+      toast.success(`The step ${result.data.name} as been updated.`);
       form.reset();
       setOpen(false);
       onClose();
 
+      phCapture("EditStep");
+
       return result.data;
     },
     onSuccess: async () => {
-      if (!params.tripSlug) logger.warn("Invalid TripSlug :", { params });
+      if (!tripSlug) logger.warn("Invalid TripSlug :", { tripSlug });
 
       await queryClient.invalidateQueries({
-        queryKey: STEP_KEY_FACTORY.All(
-          (params.tripSlug ?? "undefined").toString(),
-        ),
+        queryKey: STEP_KEY_FACTORY.All((tripSlug ?? "undefined").toString()),
       });
       router.refresh();
     },
@@ -144,66 +147,86 @@ export const EditStepDialog = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    value={field.value ?? ""}
-                    placeholder="Any description"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(form.getValues("description"))}
+            label="Description"
+            onToggle={(open) => {
+              if (!open) form.setValue("description", undefined);
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea placeholder="Any description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
+
+          <FormOptionalSection
+            defaultOpen={Boolean(
+              form.getValues("endDate") && form.getValues("startDate"),
             )}
-          />
-
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-1 flex-col">
-                <DateTimePicker
-                  value={field.value ?? new Date()}
-                  className="w-full"
-                  onChange={(date) => {
-                    form.setValue("startDate", date ?? new Date(), {
-                      shouldDirty: true,
-                    });
-                  }}
-                />
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="startDate"
-            render={() => (
-              <FormItem>
-                <FormLabel>Dates of step</FormLabel>
-                <FormControl>
-                  <CalendarDatePicker
-                    date={{
-                      from: form.getValues().startDate ?? undefined,
-                      to: form.getValues().endDate ?? undefined,
-                    }}
-                    onDateSelect={(v) => {
-                      form.setValue("startDate", v.from);
-                      form.setValue("endDate", v.to);
+            label="Dates"
+            onToggle={(open) => {
+              if (!open) {
+                form.setValue("endDate", undefined);
+                form.setValue("startDate", undefined);
+              }
+            }}
+          >
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>Start Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("startDate", date, {
+                        shouldDirty: true,
+                      });
                     }}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="flex flex-1 flex-col">
+                  <FormLabel>End Date</FormLabel>
+                  <DateTimePicker
+                    value={field.value}
+                    className="w-full"
+                    onChange={(date) => {
+                      form.setValue("endDate", date ?? new Date(), {
+                        shouldDirty: true,
+                      });
+                    }}
+                  />
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FormOptionalSection>
+
+          <Separator />
 
           <FormField
             control={form.control}
@@ -228,7 +251,7 @@ export const EditStepDialog = ({
 
           <FormField
             control={form.control}
-            name="transportMode"
+            name="TransportMode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Transport Mode</FormLabel>

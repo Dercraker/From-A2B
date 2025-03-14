@@ -1,11 +1,9 @@
 "use client";
 
-import { PoiMarkers } from "@/components/map/poiMarkers";
-import type { Poi, Pois } from "@/features/map/poi.type";
-import { useTripStore } from "@/features/trip/trip.store";
-import { logger } from "@/lib/logger";
-import { cn } from "@/lib/utils";
-import type { MapCameraChangedEvent } from "@vis.gl/react-google-maps";
+import { PoiMarkers } from "@components/map/poiMarkers";
+import type { Poi, Pois } from "@feat/map/poi.type";
+import { useTripStore } from "@feat/trip/trip.store";
+import { cn } from "@lib/utils";
 import {
   ControlPosition,
   Map,
@@ -15,9 +13,9 @@ import {
 import { useMemo, type ComponentPropsWithoutRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { CenterMapButton } from "./centerMapButton";
+import { RoadsPath } from "./RoadsPath";
 
 export type TripMapProps = ComponentPropsWithoutRef<"div"> & {
-  tripId: string;
   tripSlug: string;
   orgSlug: string;
 };
@@ -25,7 +23,6 @@ export type TripMapProps = ComponentPropsWithoutRef<"div"> & {
 export const TripMap = ({
   className,
   orgSlug,
-  tripId,
   tripSlug,
   ...props
 }: TripMapProps) => {
@@ -39,37 +36,32 @@ export const TripMap = ({
         ({
           key: step.name,
           location: {
-            lat: step.latitude,
-            lng: step.longitude,
+            lat: Number(step.latitude),
+            lng: Number(step.longitude),
           },
         }) satisfies Poi,
     ) satisfies Pois;
   }, [steps]);
 
   return (
-    <div className={cn("", className)} {...props}>
-      <Map
-        reuseMaps
-        renderingType={RenderingType.VECTOR}
-        defaultZoom={13}
-        defaultCenter={{ lat: -33.860664, lng: 151.208138 }}
-        mapId={"a18fd5fb0c24af78"}
-        onCameraChanged={(ev: MapCameraChangedEvent) =>
-          logger.debug(
-            "camera changed:",
-            ev.detail.center,
-            "zoom:",
-            ev.detail.zoom,
-          )
-        }
-        gestureHandling={"greedy"}
-        minZoom={3}
-      >
-        <MapControl position={ControlPosition.RIGHT_TOP}>
-          <CenterMapButton />
-        </MapControl>
-        <PoiMarkers pois={poi} />
-      </Map>
-    </div>
+    <>
+      <div className={cn("", className)} {...props}>
+        <Map
+          reuseMaps
+          renderingType={RenderingType.VECTOR}
+          defaultZoom={13}
+          defaultCenter={{ lat: -33.860664, lng: 151.208138 }}
+          mapId={"a18fd5fb0c24af78"}
+          gestureHandling={"greedy"}
+          minZoom={3}
+        >
+          <MapControl position={ControlPosition.RIGHT_TOP}>
+            <CenterMapButton />
+          </MapControl>
+          <PoiMarkers pois={poi} />
+          <RoadsPath tripSlug={tripSlug} />
+        </Map>
+      </div>
+    </>
   );
 };

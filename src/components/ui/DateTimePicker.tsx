@@ -4,14 +4,14 @@
 /* eslint-disable no-case-declarations */
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import type { CalendarProps } from "@/components/ui/calendar";
-import { Input, InputUnit } from "@/components/ui/input";
+import { buttonVariants } from "@components/ui/button";
+import type { CalendarProps } from "@components/ui/calendar";
+import { Input, InputUnit } from "@components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@components/ui/popover";
 import { add, format } from "date-fns";
 import type { Locale } from "date-fns/locale";
 import { enUS } from "date-fns/locale";
@@ -30,16 +30,17 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { generateAIDateAction } from "@/features/dateTimePicker/generateAiDate.action";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { cn } from "@/lib/utils";
+} from "@components/ui/select";
+import { generateAIDateAction } from "@feat/dateTimePicker/generateAiDate.action";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
+import { phCapture } from "@lib/postHog/eventCapture";
+import { cn } from "@lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { DayPicker } from "react-day-picker";
 import { useEffectOnce } from "react-use";
 import { Loader } from "./loader";
 import { Typography } from "./typography";
-
 // ---------- utils start ----------
 /**
  * regular expression to check for valid hour format (01-23)
@@ -705,7 +706,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       value,
       onChange,
       hourCycle = 24,
-      yearRange = 50,
+      yearRange = 25,
       hideTimezone = false,
       displayFormat,
       granularity = "second",
@@ -736,6 +737,8 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
       onChange?.(newDateFull);
       setMonth(newDateFull);
       setInputValue(formatValue(newDateFull));
+
+      phCapture("DateUseCalendar");
     };
 
     const timeZoneStr = `${Intl.DateTimeFormat().resolvedOptions().timeZone} (UTC
@@ -757,6 +760,10 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
     };
 
     const formatValue = (date: Date) => {
+      if (granularity === "day") {
+        return format(date, "PPP", { locale });
+      }
+
       return format(
         date,
         hourCycle === 24 ? initHourFormat.hour24 : initHourFormat.hour12,
@@ -784,6 +791,7 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
         onChange?.(date);
 
         setInputValue(formatValue(date));
+        phCapture("DateUseAiPrompt");
       },
     });
 
@@ -795,11 +803,19 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
 
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div
+          className={cn("flex flex-col gap-2", className)}
+          id={getTourStepSelector(TourNames.NewTripTour, "StartDateTextInput")}
+        >
           <InputUnit
             ref={inputRef}
             prevChildren={
-              <PopoverTrigger>
+              <PopoverTrigger
+                id={getTourStepSelector(
+                  TourNames.NewTripTour,
+                  "StartDateCalendar",
+                )}
+              >
                 <CalendarIcon className="size-4 text-muted-foreground" />
               </PopoverTrigger>
             }
@@ -814,7 +830,11 @@ const DateTimePicker = React.forwardRef<DateTimePickerRef, DateTimePickerProps>(
             }}
             value={inputValue}
             className={cn("w-full", className)}
-            placeholder='Write any time here, eg: "tomorrow at 9am" or "in 3 hours"'
+            placeholder={
+              granularity === "day"
+                ? "Write any date here, eg: 'tomorrow' or 'next week' or 'in 3 days'"
+                : "Write any time here, eg: 'tomorrow at 9am' or 'in 3 hours'"
+            }
             onChange={(e) => {
               const value = e.target.value;
               setInputValue(value);

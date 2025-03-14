@@ -1,11 +1,17 @@
-import { requiredAuth } from "@/lib/auth/helper";
-import { OrgSelectQuery } from "@/lib/organizations/getOrg";
-import { prisma } from "@/lib/prisma";
+import { GetRequiredUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { OrgSelectQuery } from "@lib/organizations/getOrg";
+import { prisma } from "@lib/prisma";
 import { notFound } from "next/navigation";
 import { OrganizationBilling } from "../../../../orgs/[orgSlug]/(navigation)/settings/billing/_components/OrganizationBilling";
 
+export const generateMetadata = combineWithParentMetadata({
+  title: "Billing",
+  description: "Manage your billing settings.",
+});
+
 const RoutePage = async () => {
-  const user = await requiredAuth();
+  const user = await GetRequiredUser();
   const org = await prisma.organization.findFirst({
     where: {
       members: {

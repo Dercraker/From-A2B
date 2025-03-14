@@ -1,23 +1,36 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepDtoSchema } from "../dto/stepDto.schema";
 
 type GetStepBySlugQueryType = {
   stepSlug: string;
   where?: Prisma.StepWhereUniqueInput;
+  include?: Prisma.StepInclude;
+  select?: Prisma.StepSelect;
 };
 
 export const GetStepBySlugQuery = async ({
   stepSlug,
   where,
+  include,
+  select,
 }: GetStepBySlugQueryType) => {
   const step = await prisma.step.findUniqueOrThrow({
     where: { ...where, slug: stepSlug },
+    ...(include && { include }),
+    ...(select && { select }),
+    // include: {
+    //   File: true,
+    //   Task: {
+    //     orderBy: {
+    //       rank: "asc",
+    //     },
+    //   },
+    // },
   });
 
-  return StepDtoSchema.safeParse(step);
+  return step;
 };
 
-export type GetStepBySlugQuery = NonNullable<
-  Prisma.PromiseReturnType<typeof GetStepBySlugQuery>
+export type GetStepBySlugQuery = Prisma.PromiseReturnType<
+  typeof GetStepBySlugQuery
 >;

@@ -1,3 +1,4 @@
+import { ContactSupportDialog } from "@components/contact/support/ContactSupportDialog";
 import {
   Card,
   CardContent,
@@ -5,13 +6,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth/helper";
-import { resend } from "@/lib/mail/resend";
-import { combineWithParentMetadata } from "@/lib/metadata";
+} from "@components/ui/card";
+import { GetRequiredUser } from "@lib/auth/helper";
+import { env } from "@lib/env/server";
+import { resend } from "@lib/mail/resend";
+import { combineWithParentMetadata } from "@lib/metadata";
 import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
-import { env } from "@/lib/env/server";
-import { ContactSupportDialog } from "@/components/contact/support/ContactSupportDialog";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Email",
@@ -19,7 +19,7 @@ export const generateMetadata = combineWithParentMetadata({
 });
 
 export default async function MailProfilePage() {
-  const user = await requiredAuth();
+  const user = await GetRequiredUser();
 
   if (!user.resendContactId) {
     return <ErrorComponent />;

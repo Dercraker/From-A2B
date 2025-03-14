@@ -1,9 +1,11 @@
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@ui/loader";
 
-export default async function RouteLoading() {
+const RouteLoading = () => {
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="flex  gap-2">
       <Loader size={32} />
     </div>
   );
-}
+};
+
+export default RouteLoading;

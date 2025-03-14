@@ -1,5 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { OrganizationSchema } from "@generated/modelSchema";
+import { prisma } from "@lib/prisma";
+import { stripe } from "@lib/stripe";
 import type { Prisma } from "@prisma/client";
 
 export const createOrganizationQuery = async (
@@ -18,5 +19,9 @@ export const createOrganizationQuery = async (
     },
   });
 
-  return organization;
+  return OrganizationSchema.parseAsync(organization);
 };
+
+export type CreateOrganizationQuery = Prisma.PromiseReturnType<
+  typeof createOrganizationQuery
+>;

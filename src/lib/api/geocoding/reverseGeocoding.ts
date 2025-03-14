@@ -1,4 +1,4 @@
-import { env } from "@/lib/env/server";
+import { env } from "@lib/env/server";
 
 export const reverseGeoCoding = async (lat: number, lon: number) => {
   const response = await fetch(

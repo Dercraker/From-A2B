@@ -1,6 +1,6 @@
-import { Typography } from "@/components/ui/typography";
-import { PLANS } from "@/features/plans/plans";
-import { SiteConfig } from "@/site-config";
+import { Typography } from "@components/ui/typography";
+import { PLANS } from "@feat/plans/plans";
+import { SiteConfig } from "site-config";
 import { SectionLayout } from "../../components/layout/SectionLayout";
 import AvatarCircles from "../ui/avatar-circles";
 import { PricingCard } from "./PricingCard";

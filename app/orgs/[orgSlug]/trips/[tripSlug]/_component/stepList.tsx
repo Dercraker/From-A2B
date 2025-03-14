@@ -1,18 +1,11 @@
 "use client";
 
-import { AddStepDialog } from "@/components/steps/addStepDialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
-import { LoadingOverlay } from "@/components/ui/loadingOverlay";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Typography } from "@/components/ui/typography";
-import { LINKS } from "@/features/navigation/Links";
-import { GetAllStepAction } from "@/features/steps/get/getAllStep.action";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import type { ReSortStepsSchema } from "@/features/steps/update/reSortStep.schema";
-import { ReSortStepsAction } from "@/features/steps/update/reSortSteps.action";
-import { useTripStore } from "@/features/trip/trip.store";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { AddStepDialog } from "@components/steps/addStepDialog";
+import { Button, buttonVariants } from "@components/ui/button";
+import { Loader } from "@components/ui/loader";
+import { LoadingOverlay } from "@components/ui/loadingOverlay";
+import { ScrollArea } from "@components/ui/scroll-area";
+import { Typography } from "@components/ui/typography";
 import type { DragEndEvent } from "@dnd-kit/core";
 import {
   closestCenter,
@@ -28,12 +21,18 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { LINKS } from "@feat/navigation/Links";
+import { useUpdateAdjacentStepRoad } from "@feat/road/updateAdjacentStepRoad.hook";
+import { GetAllStepAction } from "@feat/steps/get/getAllStep.action";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { useResortSteps } from "@feat/steps/useResortSteps.hook";
+import { useTripStore } from "@feat/trip/trip.store";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { useQuery } from "@tanstack/react-query";
 import { useMap } from "@vis.gl/react-google-maps";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useShallow } from "zustand/react/shallow";
-import { GenerateOrganizationLink } from "../../../(navigation)/_navigation/org-navigation.links";
 import { StepItemSortable } from "./stepItemSortable";
 
 export type StepListProps = {
@@ -46,45 +45,29 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
   const map = useMap();
   if (steps?.[steps.length - 1]) {
     map?.setCenter({
-      lat: steps[steps.length - 1].latitude,
-      lng: steps[steps.length - 1].longitude,
+      lat: Number(steps[steps.length - 1].latitude),
+      lng: Number(steps[steps.length - 1].longitude),
     });
   }
-
-  const queryClient = useQueryClient();
 
   const { isPending } = useQuery({
     queryKey: STEP_KEY_FACTORY.All(tripSlug),
     queryFn: async () => {
       const result = await GetAllStepAction({ tripSlug });
+
       if (!isActionSuccessful(result)) {
         toast.error("Failed to fetch steps. Please try again later.");
 
         return SetSteps(null);
       }
 
-      SetSteps(result.data.data);
-      return result.data.data;
+      SetSteps(result.data);
+      return result.data;
     },
   });
 
   const { isPending: reSortStepIsPending, mutateAsync: reSortStepAsync } =
-    useMutation({
-      mutationFn: async ({ steps }: ReSortStepsSchema) => {
-        const result = await ReSortStepsAction({ steps });
-        if (!isActionSuccessful(result)) {
-          return toast.error(
-            "Failed to reorder steps. Please try again later.",
-          );
-        }
-      },
-      onSuccess: async () => {
-        toast.success("Steps reordered successfully");
-        await queryClient.invalidateQueries({
-          queryKey: STEP_KEY_FACTORY.All(tripSlug),
-        });
-      },
-    });
+    useResortSteps({ tripSlug });
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -93,6 +76,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
     }),
   );
 
+  const { mutateAsync: updateRoads } = useUpdateAdjacentStepRoad({ tripSlug });
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -104,6 +88,8 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
 
       SetSteps(newSteps);
       await reSortStepAsync({ steps: newSteps });
+      await updateRoads({ stepId: steps[oldIndex].id });
+      await updateRoads({ stepId: steps[newIndex].id });
     }
   };
 
@@ -125,10 +111,7 @@ export const StepList = ({ orgSlug, tripSlug }: StepListProps) => {
             Failed to fetch steps. Please try again later.
           </Typography>
           <Link
-            href={GenerateOrganizationLink(
-              LINKS.Organization.Trips.href,
-              orgSlug,
-            )}
+            href={LINKS.Organization.Trips.href({ orgSlug })}
             className={buttonVariants({ variant: "outline" })}
           >
             Back to trip list

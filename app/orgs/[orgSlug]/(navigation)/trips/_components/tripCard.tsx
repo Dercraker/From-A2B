@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import type { TripListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { GenerateTripLink } from "@/features/trips/trips.link";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
+import { LINKS } from "@feat/navigation/Links";
+import type { Trip } from "@generated/modelSchema";
 import { format } from "date-fns";
 import { PlaneLanding, PlaneTakeoff } from "lucide-react";
 import Image from "next/image";
@@ -10,19 +10,13 @@ import Link from "next/link";
 import { CardDeleteButton } from "./cardDeleteButton";
 
 export type TripCardProps = {
-  trip: TripListDtoSchema;
+  trip: Trip;
+  orgSlug: string;
 };
 
 export const TripCard = ({
-  trip: {
-    endDate,
-    id: tripId,
-    slug: tripSlug,
-    image,
-    name,
-    startDate,
-    orgSlug,
-  },
+  trip: { endDate, id: tripId, slug: tripSlug, image, name, startDate },
+  orgSlug,
 }: TripCardProps) => {
   return (
     <Card className="group max-h-96 max-w-[422px]">
@@ -30,7 +24,9 @@ export const TripCard = ({
         <div className="flex items-center justify-between">
           <CardTitle className="overflow-hidden truncate whitespace-nowrap text-primary">
             <Typography variant="link">
-              <Link href={GenerateTripLink({ orgSlug, tripSlug })}>{name}</Link>
+              <Link href={LINKS.Trips.Trip.href({ orgSlug, tripSlug })}>
+                {name}
+              </Link>
             </Typography>
           </CardTitle>
           <CardDeleteButton tripId={tripId} tripName={name} />

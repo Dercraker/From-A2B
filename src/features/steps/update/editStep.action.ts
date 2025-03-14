@@ -1,15 +1,16 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
+import { orgAction } from "@lib/actions/safe-actions";
 import { EditStepQuery } from "./editStep.query";
 import { EditStepSchema } from "./editStep.schema";
 
 export const EditStepAction = orgAction
+  .metadata({ roles: ["ADMIN"] })
   .schema(EditStepSchema)
   .action(
     async ({
       parsedInput: {
-        transportMode,
+        TransportMode,
         endDate,
         latitude,
         stepId,
@@ -32,8 +33,8 @@ export const EditStepAction = orgAction
           startDate,
           endDate,
           description,
-          placeId: placeId ? placeId : undefined,
-          transportMode,
+          placeId: placeId ?? undefined,
+          TransportMode,
           trip: {
             connect: {
               slug: tripSlug,

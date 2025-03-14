@@ -1,0 +1,53 @@
+---
+description: EXPLAIN how to use API Route in our project
+globs: **/route.ts
+alwaysApply: false
+---
+---
+description: EXPLAIN how to use API Route in our project
+globs: **/route.ts
+alwaysApply: false
+---
+## Context
+
+* API Route in NextJS enable developer to create API Endpoint to make GET / POST / PATCH / PUT / DELETE request
+* We use `next-zod-route` to create safe-route.
+* A safe-route is a route that verify the permission of the user, that parse params, body and query.
+
+## Example 1 : Org Route
+
+```ts
+// api/schools/[schoolId]/products/[productId]/route.ts
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { schoolTeamRoute } from '@lib/safe-route';
+
+export const GET = schoolTeamRoute
+  .params(
+    z.object({
+      productId: z.string(),
+    })
+  )
+  .handler(async (req, context) => {
+    return NextResponse.json(sections);
+  });
+
+```
+
+Our application use @organization.mdc to handle persmission
+
+## Rules
+
+- Always create org related routes insides `/api/org/[orgId]/*`
+- Always use `orgRoute` to create safe routes inside `/api/org/[orgId]/*`
+- In general, you can use `authRoute` to create safe routes that is NOT related to orgs.
+
+## Route Type
+
+* `authRoute` work everywhere and accept only authentificated user
+* `route` work everywhere and accept everything.
+
+
+## Files
+
+- [safe-route.ts](mdc:src/lib/safe-route.ts)

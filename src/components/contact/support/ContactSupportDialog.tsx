@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -17,10 +17,11 @@ import {
   FormLabel,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { env } from "@/lib/env/client";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { Textarea } from "@components/ui/textarea";
+import { env } from "@lib/env/client";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
@@ -58,12 +59,8 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
-      <DialogTrigger asChild>
-        {props.children ? (
-          props.children
-        ) : (
-          <Button variant="filled">Contact support</Button>
-        )}
+      <DialogTrigger asChild onClick={() => phCapture("ClickContactSupport")}>
+        {props.children ?? <Button variant="filled">Contact support</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -125,7 +122,9 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Send</Button>
+          <Button type="submit" onClick={() => phCapture("SendContactSupport")}>
+            Send
+          </Button>
         </Form>
       </DialogContent>
     </Dialog>

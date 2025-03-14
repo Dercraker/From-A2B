@@ -1,11 +1,11 @@
 "use client";
 
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { BentoGrid, BentoGridItem } from "@/components/ui/Bento";
-import { Alert, AlertTitle } from "@/components/ui/alert";
-import { Loader } from "@/components/ui/loader";
-import { Typography } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { BentoGrid, BentoGridItem } from "@components/ui/Bento";
+import { Alert, AlertTitle } from "@components/ui/alert";
+import { Loader } from "@components/ui/loader";
+import { Typography } from "@components/ui/typography";
+import { cn } from "@lib/utils";
 import type { Variants } from "framer-motion";
 import { motion } from "framer-motion";
 import {

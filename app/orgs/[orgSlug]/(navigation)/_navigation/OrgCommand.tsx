@@ -8,34 +8,34 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/command";
+import { Input } from "@components/ui/input";
 import {
   CmdOrOption,
   KeyboardShortcut,
-} from "@/components/ui/keyboard-shortcut";
-import { Typography } from "@/components/ui/typography";
-import { TRIP_KEY_Factory } from "@/features/trip/tripKey.factory";
-import type { TripsListDtoSchema } from "@/features/trips/dto/tripsListDto.schema";
-import { SearchTripsAction } from "@/features/trips/searchTrips.action";
-import { GenerateTripLink } from "@/features/trips/trips.link";
-import { useDebounce } from "@/hooks/use-debounce";
-import { useDisclosure } from "@/hooks/useDisclosure";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+} from "@components/ui/keyboard-shortcut";
+import { Typography } from "@components/ui/typography";
+import { LINKS } from "@feat/navigation/Links";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import { SearchTripsAction } from "@feat/trips/searchTrips.action";
+import type { Trip } from "@generated/modelSchema";
+import { useDebounce } from "@hooks/use-debounce";
+import { useDisclosure } from "@hooks/useDisclosure";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
 import { IconPlaneArrival, IconPlaneDeparture } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
+import type { OrgPathParams } from "@type/next";
 import { format, isBefore } from "date-fns";
 import { HistoryIcon, PlaneIcon, Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useKey } from "react-use";
-import { ORGANIZATION_LINKS } from "./org-navigation.links";
+import { getOrganizationNavigation } from "./orgNavigation.links";
 
 export const OrganizationCommand = () => {
   const [isOpen, { open, close, toggle }] = useDisclosure(false);
-  const params = useParams();
+  const { orgSlug } = useParams<OrgPathParams>();
   const router = useRouter();
-  const orgSlug = typeof params.orgSlug === "string" ? params.orgSlug : "";
 
   const down = () => toggle();
 
@@ -62,7 +62,7 @@ export const OrganizationCommand = () => {
       });
 
       if (!isActionSuccessful(result)) throw new Error(result?.serverError);
-      return result.data as TripsListDtoSchema;
+      return result.data as Trip[];
     },
     staleTime: 0,
   });
@@ -95,14 +95,14 @@ export const OrganizationCommand = () => {
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {ORGANIZATION_LINKS.map((link, idx) => (
+          {getOrganizationNavigation(orgSlug, []).map((link, idx) => (
             <CommandGroup heading={link.title} key={idx}>
               {link.links.map(({ href, label, Icon }) => (
                 <CommandItem
                   key={href}
                   onSelect={() => {
                     close();
-                    router.push(href.replace(":organizationSlug", orgSlug));
+                    router.push(href);
                   }}
                 >
                   {Icon && <Icon className="mr-2 size-4" />}
@@ -119,7 +119,7 @@ export const OrganizationCommand = () => {
                 onSelect={() => {
                   close();
                   router.push(
-                    GenerateTripLink({ orgSlug, tripSlug: trip.slug }),
+                    LINKS.Trips.Trip.href({ orgSlug, tripSlug: trip.slug }),
                   );
                 }}
               >

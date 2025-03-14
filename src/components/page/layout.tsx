@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 
 export const Layout = (
   props: ComponentPropsWithoutRef<"div"> & {
-    size?: "sm" | "default" | "lg";
+    size?: "sm" | "default" | "lg" | "full";
   },
 ) => {
   return (
@@ -13,8 +13,9 @@ export const Layout = (
       className={cn(
         "max-w-4xl flex-wrap w-full flex gap-4 m-auto px-4 mt-4",
         {
-          "max-w-7xl": props.size === "lg",
           "max-w-3xl": props.size === "sm",
+          "max-w-7xl": props.size === "lg",
+          "max-w-full": props.size === "full",
         },
         props.className,
       )}

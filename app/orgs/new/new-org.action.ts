@@ -1,7 +1,7 @@
 "use server";
 
-import { createOrganizationQuery } from "@/features/org/org-create.query";
-import { authAction } from "@/lib/actions/safe-actions";
+import { createOrganizationQuery } from "@feat/org/org-create.query";
+import { authAction } from "@lib/actions/safe-actions";
 import { NewOrgsSchema } from "./new-org.schema";
 
 export const createOrganizationAction = authAction

@@ -1,4 +1,4 @@
-import { SectionLayout } from "@/components/layout/SectionLayout";
+import { SectionLayout } from "@components/layout/SectionLayout";
 import type { ReviewItemProps } from "./ReviewItem";
 import { ReviewItem } from "./ReviewItem";
 
