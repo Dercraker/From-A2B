@@ -1,10 +1,10 @@
-import { InlineTooltip } from "@/components/ui/tooltip";
-import { Typography } from "@/components/ui/typography";
-import type { StepDto } from "@/features/steps/dto/stepDto.schema";
-import { GenerateStepLink } from "@/features/steps/steps.link";
-import { cn } from "@/lib/utils";
+import { InlineTooltip } from "@components/ui/tooltip";
+import { Typography } from "@components/ui/typography";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { LINKS } from "@feat/navigation/Links";
+import type { Step } from "@generated/modelSchema";
+import { cn } from "@lib/utils";
 import { EllipsisVertical, GripVertical } from "lucide-react";
 import Link from "next/link";
 import { StepCounter } from "./stepCounter";
@@ -13,7 +13,7 @@ import { StepItemMenu } from "./stepItemMenu";
 export type StepItemSortableProps = {
   tripSlug: string;
   orgSlug: string;
-  step: StepDto;
+  step: Step;
   idx: number;
   className?: string;
 };
@@ -53,7 +53,11 @@ export const StepItemSortable = ({
       <InlineTooltip title={step.name}>
         <Typography
           as={Link}
-          href={GenerateStepLink({ orgSlug, tripSlug, stepSlug: step.slug })}
+          href={LINKS.Trips.Steps.Detail.href({
+            orgSlug,
+            tripSlug,
+            stepSlug: step.slug,
+          })}
           variant="link"
           className="mr-2 overflow-hidden text-ellipsis text-nowrap text-xl"
         >

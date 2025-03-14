@@ -1,11 +1,11 @@
 "use client";
 
-import type { ButtonProps } from "@/components/ui/button";
+import { LoadingButton } from "@components/form/LoadingButton";
+import type { ButtonProps } from "@components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { Check, X } from "lucide-react";
 import { toast } from "sonner";
 import { createVerifyEmailAction } from "./verify-email.action";
-import { LoadingButton } from "@/components/form/LoadingButton";
 
 export const VerifyEmailButton = (props: ButtonProps) => {
   const mutation = useMutation({

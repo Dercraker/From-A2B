@@ -1,14 +1,17 @@
-import { UserDropdown } from "@/components/auth/UserDropDown";
-import { ContactFeedbackPopover } from "@/components/contact/feedback/ContactFeedbackPopover";
-import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { getUsersOrgs } from "@/features/org/get-users-orgs.query";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import { SiteConfig } from "@/site-config";
+import { UserDropdown } from "@components/auth/UserDropDown";
+import { ContactFeedbackPopover } from "@components/contact/feedback/ContactFeedbackPopover";
+import { NavigationWrapper } from "@components/navigation/NavigationWrapper";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
+import { Button, buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
+import { getUsersOrgs } from "@feat/org/get-users-orgs.query";
+import { getTourStepSelector, TourNames } from "@lib/onBoarding/nextStepTours";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { Building } from "lucide-react";
 import Link from "next/link";
+import { NextStepViewport } from "nextstepjs";
 import type { PropsWithChildren } from "react";
+import { SiteConfig } from "site-config";
 import { OrganizationCommand } from "./OrgCommand";
 import { OrganizationNavigationLinks } from "./OrgLinks";
 import { OrgsSelect } from "./OrgsSelect";
@@ -25,7 +28,11 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
         <OrgsSelect currentOrgSlug={org.slug} orgs={userOrganizations} />
       }
       navigationChildren={
-        <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        <NextStepViewport
+          id={getTourStepSelector(TourNames.OnBoardingTour, "Menu")}
+        >
+          <OrganizationNavigationLinks roles={roles} slug={org.slug} />
+        </NextStepViewport>
       }
       bottomNavigationChildren={
         <div className="flex flex-col gap-2">
@@ -34,8 +41,8 @@ export async function OrgNavigation({ children }: PropsWithChildren) {
             className={buttonVariants({ variant: "outline", size: "sm" })}
             href={
               SiteConfig.features.enableSingleMemberOrg
-                ? "/account"
-                : `/orgs/${org.slug}/settings`
+                ? LINKS.Account.Profile.href({})
+                : LINKS.Organization.Settings.href({ orgSlug: org.slug })
             }
           >
             <Building size={16} className="mr-2" />

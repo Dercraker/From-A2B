@@ -1,10 +1,13 @@
 "use client";
 
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { DeleteStepAction } from "@/features/steps/delete/deleteStep.action";
-import { STEP_KEY_FACTORY } from "@/features/steps/stepKey.factory";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { DeleteStepAction } from "@feat/steps/delete/deleteStep.action";
+import { STEP_KEY_FACTORY } from "@feat/steps/stepKey.factory";
+import { TRIP_KEY_Factory } from "@feat/trip/tripKey.factory";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { phCapture } from "@lib/postHog/eventCapture";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { StepPathParams } from "@type/next";
 import { useParams } from "next/navigation";
 import type { PropsWithChildren } from "react";
 import { toast } from "sonner";
@@ -23,24 +26,28 @@ export const DeleteStepAlertDialog = ({
   onDeleted,
 }: DeleteStepAlertDialogProps) => {
   const queryClient = useQueryClient();
-  const params = useParams();
-  const tripSlug = params.tripSlug as string;
+  const { tripSlug } = useParams<StepPathParams>();
 
   const { isPending, mutateAsync: deleteStepAsync } = useMutation({
     mutationFn: async () => {
       const result = await DeleteStepAction({
         stepId,
       });
-      if (!isActionSuccessful(result)) {
-        toast.error(result?.serverError);
-      }
-    },
-    onSuccess: async () => {
+      if (!isActionSuccessful(result))
+        return toast.error("An error occurred when deleting the step", {
+          description: "Please try again later or contact support",
+        });
+
       toast.success(`Step "${name}" deleted successfully`);
+      if (onDeleted) onDeleted();
+      await queryClient.invalidateQueries({
+        queryKey: TRIP_KEY_Factory.roads(tripSlug),
+      });
       await queryClient.invalidateQueries({
         queryKey: STEP_KEY_FACTORY.All(tripSlug),
       });
-      if (onDeleted) onDeleted();
+
+      phCapture("RemoveStep");
     },
   });
 
@@ -60,7 +67,6 @@ export const DeleteStepAlertDialog = ({
               </Typography>
             </>
           ),
-          confirmText: name,
           loading: isPending,
           action: {
             label: "Delete",

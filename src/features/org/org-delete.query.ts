@@ -1,6 +1,7 @@
-import { ActionError } from "@/lib/actions/safe-actions";
-import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe";
+import { ActionError } from "@lib/actions/safe-actions";
+import { prisma } from "@lib/prisma";
+import { stripe } from "@lib/stripe";
+import type { Prisma } from "@prisma/client";
 
 export const deleteOrganizationQuery = async (id: string) => {
   const org = await prisma.organization.findUnique({
@@ -31,3 +32,7 @@ export const deleteOrganizationQuery = async (id: string) => {
     },
   });
 };
+
+export type DeleteOrganizationQuery = Prisma.PromiseReturnType<
+  typeof deleteOrganizationQuery
+>;

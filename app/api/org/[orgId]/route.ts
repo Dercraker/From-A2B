@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/prisma";
-import { orgRoute } from "@/lib/safe-route";
+import { prisma } from "@lib/prisma";
+import { orgRoute } from "@lib/safe-route";
 import { z } from "zod";
 
 export const POST = orgRoute

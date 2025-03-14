@@ -1,6 +1,6 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
+import { orgAction } from "@lib/actions/safe-actions";
 import { ReSortStepsSchema } from "./reSortStep.schema";
 import { ReSortStepsQuery } from "./reSortSteps.query";
 

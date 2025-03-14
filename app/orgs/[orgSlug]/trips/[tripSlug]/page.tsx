@@ -1,22 +1,24 @@
-import { GetTripQuery } from "@/features/trip/get/getTrip.query";
-import type { PageParams } from "@/types/next";
+import { tripMetadata } from "@lib/metadata";
+import type { PageParams, TripPathParams } from "@type/next";
+import type { Metadata } from "next";
 import { StepList } from "./_component/stepList";
 import { TripMap } from "./_component/tripMap";
 
-const RoutePage = async ({
+export async function generateMetadata({
   params,
-}: PageParams<{ orgSlug: string; tripSlug: string }>) => {
-  const { orgSlug, tripSlug } = await params;
+}: PageParams<TripPathParams>): Promise<Metadata> {
+  const { tripSlug } = await params;
 
-  const trip = await GetTripQuery({
-    where: { slug: tripSlug, Organization: { slug: orgSlug } },
-  });
+  return tripMetadata(tripSlug);
+}
+
+const RoutePage = async ({ params }: PageParams<TripPathParams>) => {
+  const { orgSlug, tripSlug } = await params;
 
   return (
     <>
       <StepList tripSlug={tripSlug} orgSlug={orgSlug} />
       <TripMap
-        tripId={trip.id}
         tripSlug={tripSlug}
         orgSlug={orgSlug}
         className="hidden size-full items-center justify-center border bg-slate-500 md:flex"

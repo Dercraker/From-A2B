@@ -1,16 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader } from "@/components/ui/loader";
-import { Typography } from "@/components/ui/typography";
-import { auth } from "@/lib/auth/helper";
-import { SiteConfig } from "@/site-config";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { Loader } from "@components/ui/loader";
+import { Typography } from "@components/ui/typography";
+import { GetCurrentUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { SiteConfig } from "site-config";
 import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
 
+export const generateMetadata = combineWithParentMetadata({
+  title: "Sign up",
+  description: "Sign up to your account",
+});
+
 export default async function AuthSignInPage() {
-  const user = await auth();
+  const user = await GetCurrentUser();
 
   if (user) {
     redirect("/");

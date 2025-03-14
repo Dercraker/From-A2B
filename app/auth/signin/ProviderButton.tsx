@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
-import { getServerUrl } from "@/lib/server-url";
+import { Button } from "@components/ui/button";
+import { Loader } from "@components/ui/loader";
+import { getServerUrl } from "@lib/server-url";
 import { useMutation } from "@tanstack/react-query";
+import { clsx } from "clsx";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
-import { clsx } from "clsx";
 
 // ℹ️ Update this object with the providers you want to support
 const ProviderData: Record<string, { icon: ReactNode; name: string }> = {
@@ -63,16 +63,18 @@ const ProviderData: Record<string, { icon: ReactNode; name: string }> = {
 
 type ProviderButtonProps = {
   providerId: string;
+  onClick: () => void;
 };
 
 export const ProviderButton = (props: ProviderButtonProps) => {
   const searchParams = useSearchParams();
 
   const githubSignInMutation = useMutation({
-    mutationFn: async () =>
-      signIn(props.providerId, {
+    mutationFn: async () => {
+      await signIn(props.providerId, {
         callbackUrl: searchParams.get("callbackUrl") ?? `${getServerUrl()}/`,
-      }),
+      });
+    },
   });
 
   const data = ProviderData[props.providerId];
@@ -88,6 +90,7 @@ export const ProviderButton = (props: ProviderButtonProps) => {
       size="lg"
       onClick={() => {
         githubSignInMutation.mutate();
+        props.onClick();
       }}
     >
       {githubSignInMutation.isPending ? <Loader size={16} /> : data.icon}

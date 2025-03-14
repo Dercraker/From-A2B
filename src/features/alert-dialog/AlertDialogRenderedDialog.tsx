@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/LoadingButton";
+import { LoadingButton } from "@components/form/LoadingButton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,10 +10,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Typography } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
+} from "@components/ui/alert-dialog";
+import { Input } from "@components/ui/input";
+import { Typography } from "@components/ui/typography";
+import { cn } from "@lib/utils";
 import { useState, type ReactElement, type ReactNode } from "react";
 type DialogBaseProps = {
   loading?: boolean;

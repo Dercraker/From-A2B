@@ -1,4 +1,4 @@
-import { LoadingButton } from "@/components/form/LoadingButton";
+import { LoadingButton } from "@components/form/LoadingButton";
 import {
   Form,
   FormControl,
@@ -6,9 +6,10 @@ import {
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { getServerUrl } from "@/lib/server-url";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { phCapture } from "@lib/postHog/eventCapture";
+import { getServerUrl } from "@lib/server-url";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -30,6 +31,8 @@ export const MagicLinkForm = () => {
         redirect: true,
         email,
       });
+
+      phCapture("SigninWithMagicLink", { email });
     },
   });
 

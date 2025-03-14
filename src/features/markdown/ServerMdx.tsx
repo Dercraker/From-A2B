@@ -1,5 +1,5 @@
-import { Loader } from "@/components/ui/loader";
-import { cn } from "@/lib/utils";
+import { Loader } from "@components/ui/loader";
+import { cn } from "@lib/utils";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
 import { ErrorBoundary } from "../../components/utils/ErrorBoundaries";

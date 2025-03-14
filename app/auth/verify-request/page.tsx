@@ -3,10 +3,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Typography } from "@/components/ui/typography";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/card";
+import { Typography } from "@components/ui/typography";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Image from "next/image";
+import { SiteConfig } from "site-config";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Sign in",
+  description: "Sign in to your account",
+});
 
 export default async function AuthNewUserPage() {
   return (

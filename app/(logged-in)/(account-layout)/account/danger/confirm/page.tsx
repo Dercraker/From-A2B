@@ -1,6 +1,6 @@
-import { requiredAuth } from "@/lib/auth/helper";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import type { PageParams } from "@/types/next";
+import { GetRequiredUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
+import type { PageParams } from "@type/next";
 import { verifyDeleteAccountToken } from "../delete-account.action";
 import { DeleteAccountCard } from "./_components/DeleteAccountCard";
 import { InvalidTokenCard } from "./_components/InvalidTokenCard";
@@ -13,7 +13,7 @@ export const generateMetadata = combineWithParentMetadata({
 const RoutePage = async (params: PageParams) => {
   const searchParams = await params.searchParams;
   const token = searchParams.token;
-  const user = await requiredAuth();
+  const user = await GetRequiredUser();
 
   try {
     if (typeof token !== "string") {

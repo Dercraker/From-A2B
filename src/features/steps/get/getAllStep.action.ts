@@ -1,6 +1,7 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { StepSchema } from "@generated/modelSchema";
+import { orgAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 import { GetAllStepQuery } from "./getAllSteps.query";
 
@@ -22,6 +23,5 @@ export const GetAllStepAction = orgAction
       },
     });
 
-    if (!steps.success) throw new ActionError(steps.error.message);
-    return steps;
+    return z.array(StepSchema).parseAsync(steps);
   });

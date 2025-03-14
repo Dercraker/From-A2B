@@ -1,4 +1,4 @@
-import { logger } from "@/lib/logger";
+import { logger } from "@lib/logger";
 import { env } from "../env/server";
 import { resend } from "./resend";
 

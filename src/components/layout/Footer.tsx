@@ -1,9 +1,9 @@
-import { version } from "@/../package.json";
-import { Typography } from "@/components/ui/typography";
-import { SiteConfig } from "@/site-config";
+import { Layout, LayoutContent } from "@components/page/layout";
+import { LogoNameSvg } from "@components/svg/LogoNameSvg";
+import { Typography } from "@components/ui/typography";
 import Link from "next/link";
-import { Layout, LayoutContent } from "../page/layout";
-import { LogoSvg } from "../svg/LogoSvg";
+import { SiteConfig } from "site-config";
+import packageJson from "../../../package.json";
 
 export const Footer = () => {
   return (
@@ -13,10 +13,9 @@ export const Footer = () => {
           <div className="flex flex-col gap-4">
             <div className="space-y-1">
               <Link href="/" className="flex items-center gap-2">
-                <LogoSvg />
-                <Typography variant="h3">{SiteConfig.title}</Typography>
+                <LogoNameSvg height={36} width={160} />
               </Link>
-              <Typography variant="muted">V{version}</Typography>
+              <Typography variant="muted">V{packageJson.version}</Typography>
               <Typography variant="muted">{SiteConfig.company.name}</Typography>
               <Typography variant="muted">
                 {SiteConfig.company.address}

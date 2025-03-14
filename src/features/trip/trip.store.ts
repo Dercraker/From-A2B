@@ -1,9 +1,9 @@
+import type { Step } from "@generated/modelSchema";
 import { create } from "zustand";
-import type { StepsDto } from "../steps/dto/stepDto.schema";
 
 type TripStore = {
-  steps: StepsDto | null | undefined;
-  SetSteps: (steps: StepsDto | null | undefined) => void;
+  steps: Step[] | null | undefined;
+  SetSteps: (steps: Step[] | null | undefined) => void;
 };
 
 export const useTripStore = create<TripStore>((set) => ({

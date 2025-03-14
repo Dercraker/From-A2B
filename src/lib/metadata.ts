@@ -1,4 +1,4 @@
-import type { PageParams } from "@/types/next";
+import type { PageParams } from "@type/next";
 import type { Metadata, ResolvingMetadata } from "next";
 import { unstable_cache as cache } from "next/cache";
 import { prisma } from "./prisma";
@@ -46,5 +46,66 @@ export const orgMetadata = cache(
     };
   },
   ["org-metadata"],
+  { revalidate: 100 },
+);
+
+export const tripMetadata = cache(
+  async (tripSlug: string): Promise<Metadata> => {
+    const trip = await prisma.trip.findFirst({
+      where: { slug: tripSlug },
+    });
+
+    if (!trip) {
+      return {
+        title: "Trip not found",
+      };
+    }
+
+    const org = await prisma.organization.findFirst({
+      where: { id: trip.organizationId },
+    });
+
+    if (!org) {
+      return {
+        title: "Organization not found",
+      };
+    }
+    return {
+      title: `${org.name} · ${trip.name}`,
+      description: "Trip details",
+    };
+  },
+  ["trip-metadata"],
+  { revalidate: 100 },
+);
+
+export const stepMetadata = cache(
+  async (stepSlug: string): Promise<Metadata> => {
+    const step = await prisma.step.findFirst({
+      where: { slug: stepSlug },
+    });
+
+    if (!step) {
+      return {
+        title: "Step not found",
+      };
+    }
+
+    const trip = await prisma.trip.findFirst({
+      where: { id: step.tripId },
+    });
+
+    if (!trip) {
+      return {
+        title: "Trip not found",
+      };
+    }
+
+    return {
+      title: `${trip.name} · ${step.name}`,
+      description: "Step details",
+    };
+  },
+  ["step-metadata"],
   { revalidate: 100 },
 );

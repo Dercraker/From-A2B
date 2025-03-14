@@ -1,14 +1,21 @@
-import { ContactSupportDialog } from "@/components/contact/support/ContactSupportDialog";
+import { ContactSupportDialog } from "@components/contact/support/ContactSupportDialog";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+} from "@components/page/layout";
+import { Badge } from "@components/ui/badge";
+import { buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Link from "next/link";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Payment · cancel",
+  description: "Your payment was cancelled",
+});
 
 export default function CancelPaymentPage() {
   return (
@@ -27,7 +34,10 @@ export default function CancelPaymentPage() {
         </LayoutDescription>
       </LayoutHeader>
       <LayoutContent className="flex items-center gap-2">
-        <Link href="/" className={buttonVariants({ variant: "invert" })}>
+        <Link
+          href={LINKS.Landing.Landing.href({})}
+          className={buttonVariants({ variant: "invert" })}
+        >
           Home
         </Link>
         <ContactSupportDialog />

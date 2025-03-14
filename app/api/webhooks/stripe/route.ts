@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/switch-exhaustiveness-check */
-import { logger } from "@/lib/logger";
-import { stripe } from "@/lib/stripe";
+import { logger } from "@lib/logger";
+import { stripe } from "@lib/stripe";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";

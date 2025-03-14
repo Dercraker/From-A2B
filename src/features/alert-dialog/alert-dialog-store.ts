@@ -1,6 +1,6 @@
 "use client";
 
-import { logger } from "@/lib/logger";
+import { logger } from "@lib/logger";
 import { toast } from "sonner";
 import { create } from "zustand";
 import {

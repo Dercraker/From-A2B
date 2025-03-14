@@ -1,8 +1,7 @@
-import { getOrgsMembers } from "@/features/org/get-orgs-members";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
-import type { PageParams } from "@/types/next";
+import { getOrgsMembers } from "@feat/org/get-orgs-members";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
+import { getRequiredCurrentOrgCache } from "@lib/react/cache";
 import { OrgMembersForm } from "./OrgMembersForm";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -10,7 +9,7 @@ export const generateMetadata = combineWithParentMetadata({
   description: "Manage your organization members.",
 });
 
-export default async function RoutePage(props: PageParams) {
+export default async function RoutePage() {
   const { org } = await getRequiredCurrentOrgCache(["ADMIN"]);
 
   const members = await getOrgsMembers(org.id);

@@ -1,21 +1,22 @@
 "use client";
 
-import { ImageFormItem } from "@/components/images/ImageFormItem";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
+import { ImageFormItem } from "@components/images/ImageFormItem";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -24,7 +25,6 @@ import {
   OrgDetailsFormSchema,
   type OrgDetailsFormSchemaType,
 } from "../org.schema";
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
 
 type ProductFormProps = {
   defaultValues: OrgDetailsFormSchemaType;
@@ -54,7 +54,9 @@ export const OrgDetailsForm = ({ defaultValues }: ProductFormProps) => {
   return (
     <FormUnsavedBar
       form={form}
-      onSubmit={async (v) => mutation.mutateAsync(v)}
+      submit={async (v) => mutation.mutateAsync(v)}
+      reset={() => form.reset(defaultValues)}
+      onSubmit={() => void 0}
       className="flex w-full flex-col gap-6 lg:gap-8"
     >
       <Card>
@@ -75,6 +77,7 @@ export const OrgDetailsForm = ({ defaultValues }: ProductFormProps) => {
                     className="size-32 rounded-full"
                     onChange={(url) => field.onChange(url)}
                     imageUrl={field.value}
+                    maxSizePicture={1}
                   />
                 </FormControl>
                 <FormMessage />

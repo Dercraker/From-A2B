@@ -6,14 +6,14 @@
     "body": [
       "\"use server\";",
       "",
-      "import { orgAction } from \"@/lib/actions/safe-actions\";",
+      "import { orgAction } from \"@lib/actions/safe-actions\";",
       "import { z } from \"zod\";",
       "",
-      "const $1Schema = z.object({",
+      "const ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1:/capitalize}${2:/capitalize}/g}}Schema = z.object({",
       "  $2",
       "});",
       "",
-      "export const $1Action = orgAction.schema($1Schema).action(async ({parsedInput: {$3}, ctx}) => {$4});",
+      "export const ${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1:/capitalize}${2:/capitalize}/g}}Action = orgAction.schema(${1:${TM_FILENAME_BASE/([\\w]+)\\.([\\w]+)/${1:/capitalize}${2:/capitalize}/g}}Schema).action(async ({parsedInput: {$3}, ctx}) => {$4});",
     ],
   },
 }

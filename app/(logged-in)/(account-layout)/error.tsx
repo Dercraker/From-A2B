@@ -1,10 +1,10 @@
 "use client";
 
-import { SignInButton } from "@/components/auth/SignInButton";
-import { Page400 } from "@/components/page/Page400";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { logger } from "@/lib/logger";
-import type { ErrorParams } from "@/types/next";
+import { SignInButton } from "@components/auth/SignInButton";
+import { Page400 } from "@components/page/Page400";
+import { Card, CardFooter, CardHeader, CardTitle } from "@components/ui/card";
+import { logger } from "@lib/logger";
+import type { ErrorParams } from "@type/next";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 

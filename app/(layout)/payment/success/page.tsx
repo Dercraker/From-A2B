@@ -4,9 +4,16 @@ import {
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
+} from "@components/page/layout";
+import { buttonVariants } from "@components/ui/button";
+import { LINKS } from "@feat/navigation/Links";
+import { combineWithParentMetadata } from "@lib/metadata";
 import Link from "next/link";
+
+export const generateMetadata = combineWithParentMetadata({
+  title: "Payment · success",
+  description: "Your payment was successful!",
+});
 
 export default function SuccessPaymentPage() {
   return (
@@ -20,7 +27,10 @@ export default function SuccessPaymentPage() {
           </LayoutDescription>
         </LayoutHeader>
         <LayoutContent>
-          <Link href="/" className={buttonVariants({ size: "lg" })}>
+          <Link
+            href={LINKS.Landing.Landing.href({})}
+            className={buttonVariants({ size: "lg" })}
+          >
             Get Started
           </Link>
         </LayoutContent>

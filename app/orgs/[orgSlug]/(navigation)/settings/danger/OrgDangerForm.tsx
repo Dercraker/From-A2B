@@ -1,24 +1,24 @@
 "use client";
 
-import { FormUnsavedBar } from "@/components/form/FormUnsavedBar";
+import { FormUnsavedBar } from "@components/form/FormUnsavedBar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { alertDialog } from "@/features/alert-dialog/alert-dialog-store";
-import { isActionSuccessful } from "@/lib/actions/actions-utils";
-import { formatId } from "@/lib/format/id";
+} from "@components/ui/form";
+import { Input } from "@components/ui/input";
+import { alertDialog } from "@feat/alert-dialog/alert-dialog-store";
+import { isActionSuccessful } from "@lib/actions/actions-utils";
+import { formatId } from "@lib/format/id";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -58,7 +58,7 @@ export const OrganizationDangerForm = ({ defaultValues }: ProductFormProps) => {
   return (
     <FormUnsavedBar
       form={form}
-      onSubmit={(v) => {
+      submit={(v) => {
         alertDialog.add({
           title: "Are you sure ?",
           description:
@@ -66,11 +66,13 @@ export const OrganizationDangerForm = ({ defaultValues }: ProductFormProps) => {
           action: {
             label: "Yes, change the slug",
             onClick: () => {
-              mutation.mutate(v);
+              mutation.mutate({ ...v, slug: v.slug });
             },
           },
         });
       }}
+      reset={() => form.reset(defaultValues)}
+      onSubmit={() => void 0}
       className="flex w-full flex-col gap-6 lg:gap-8"
     >
       <Card>

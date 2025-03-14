@@ -1,20 +1,19 @@
-import { prisma } from "@/lib/prisma";
-import type { EditTrip } from "./editTrip.schema";
+import { TripSchema } from "@generated/modelSchema";
+import { prisma } from "@lib/prisma";
+import type { Prisma } from "@prisma/client";
 
 type UpdateTripQueryType = {
-  data: EditTrip;
+  where: Prisma.TripWhereUniqueInput;
+  data: Prisma.TripUpdateInput;
 };
 
-export const UpdateTripQuery = async ({ data }: UpdateTripQueryType) => {
-  return prisma.trip.update({
-    where: {
-      id: data.tripId,
-    },
-    data: {
-      name: data.name,
-      startDate: data.startDate,
-      description: data.description,
-      image: data.image,
-    },
+export const UpdateTripQuery = async ({ data, where }: UpdateTripQueryType) => {
+  const trip = await prisma.trip.update({
+    where,
+    data,
   });
+
+  return TripSchema.parseAsync(trip);
 };
+
+export type UpdateTripQuery = Prisma.PromiseReturnType<typeof UpdateTripQuery>;

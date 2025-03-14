@@ -1,6 +1,8 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
+import { Input } from "@components/ui/input";
+import { useMutation } from "@tanstack/react-query";
 import {
   Form,
   FormControl,
@@ -8,12 +10,12 @@ import {
   FormItem,
   FormMessage,
   useZodForm,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
+} from "@ui/form";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, CheckCircle } from "lucide-react";
+import { useSession } from "next-auth/react";
 import posthog from "posthog-js";
+import { useEffect, useState } from "react";
 import { addEmailAction } from "../../features/email/email.action";
 import type { EmailActionSchemaType } from "../../features/email/email.schema";
 import { EmailActionSchema } from "../../features/email/email.schema";
@@ -28,8 +30,20 @@ export const EmailForm = ({
   submitButtonLabel = "Subscribe",
   successMessage = "You have subscribed to our newsletter.",
 }: EmailFormProps) => {
+  const session = useSession();
+  const [userEmail, setUserEmail] = useState(
+    session.data?.user?.email ?? undefined,
+  );
+  useEffect(() => {
+    setUserEmail(session.data?.user?.email ?? undefined);
+    form.setValue("email", session.data?.user?.email as string);
+  }, [session.data?.user?.email]);
+
   const form = useZodForm({
     schema: EmailActionSchema,
+    defaultValues: {
+      email: session.data?.user?.email ?? undefined,
+    },
   });
 
   const submit = useMutation({
@@ -91,6 +105,9 @@ export const EmailForm = ({
                       <Input
                         className="rounded-lg border-accent-foreground/20 bg-accent px-4 py-6 text-lg focus-visible:ring-foreground"
                         placeholder="You email"
+                        disabled={
+                          form.getValues("email") === userEmail && !!userEmail
+                        }
                         {...field}
                       />
                     </FormControl>
@@ -102,6 +119,7 @@ export const EmailForm = ({
                 className="px-4 py-6 text-lg font-normal"
                 variant="invert"
                 loading={submit.isPending}
+                disabled={form.getValues("email") === userEmail && !!userEmail}
                 onClick={() =>
                   posthog.capture("JoinWaitingList", {
                     email: form.getValues().email,

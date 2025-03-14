@@ -1,7 +1,7 @@
 import { OrganizationMembershipRole, type User } from "@prisma/client";
 import { createSafeActionClient } from "next-safe-action";
 import { z } from "zod";
-import { auth, AuthError } from "../auth/helper";
+import { AuthError, GetCurrentUser } from "../auth/helper";
 import { logger } from "../logger";
 import { getRequiredCurrentOrg } from "../organizations/getOrg";
 
@@ -30,7 +30,7 @@ export const action = createSafeActionClient({
 });
 
 const getUser = async () => {
-  const user = await auth();
+  const user = await GetCurrentUser();
 
   if (!user) {
     throw new ActionError("Session not found!");

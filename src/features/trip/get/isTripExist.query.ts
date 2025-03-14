@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
 
 type IsTripExistQueryProps = {
@@ -11,3 +11,7 @@ export const IsTripExistQuery = async ({
   !!(await prisma.trip.findFirst({
     where,
   }));
+
+export type IsTripExistQuery = Prisma.PromiseReturnType<
+  typeof IsTripExistQuery
+>;

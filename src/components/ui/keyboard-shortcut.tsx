@@ -1,7 +1,7 @@
 "use client";
 
-import { useIsClient } from "@/hooks/useIsClient";
-import { cn } from "@/lib/utils";
+import { useIsClient } from "@hooks/useIsClient";
+import { cn } from "@lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useState, type ComponentPropsWithoutRef } from "react";
 import { useKey } from "react-use";

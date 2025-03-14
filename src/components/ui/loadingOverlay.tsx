@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 import { Loader } from "./loader";
 import { Typography } from "./typography";
@@ -18,9 +18,7 @@ export const LoadingOverlay = ({
       )}
       {...props}
     >
-      {children ? (
-        children
-      ) : (
+      {children ?? (
         <Typography variant="lead" className="flex items-center gap-2">
           Loading <Loader className="text-primary" />
         </Typography>

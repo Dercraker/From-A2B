@@ -1,4 +1,3 @@
-import { SiteConfig } from "@/site-config";
 import type { Prisma } from "@prisma/client";
 import type {
   DefaultArgs,
@@ -6,6 +5,7 @@ import type {
   InternalArgs,
 } from "@prisma/client/runtime/library";
 import { env } from "process";
+import { SiteConfig } from "site-config";
 import { setupResendCustomer } from "../auth/auth-config-setup";
 import { resend } from "../mail/resend";
 import { prisma } from "../prisma";

@@ -1,5 +1,5 @@
-import { logger } from "@/lib/logger";
-import { getServerUrl } from "@/lib/server-url";
+import { logger } from "@lib/logger";
+import { getServerUrl } from "@lib/server-url";
 
 export const SearchParamsMessageKeys = {
   error: "spm-error",
@@ -23,8 +23,8 @@ export const createSearchParamsMessageUrl = (
   let absoluteBaseUrl: string;
   if (baseUrl.startsWith("/")) {
     absoluteBaseUrl = isServer
-      ? `${getServerUrl()}/${baseUrl}`
-      : `${window.location.origin}/${baseUrl}`;
+      ? `${getServerUrl()}${baseUrl}`
+      : `${window.location.origin}${baseUrl}`;
   } else {
     absoluteBaseUrl = baseUrl;
   }

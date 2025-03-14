@@ -1,20 +1,20 @@
-import { ContactSupportDialog } from "@/components/contact/support/ContactSupportDialog";
-import { HeaderBase } from "@/components/layout/HeaderBase";
+import { ContactSupportDialog } from "@components/contact/support/ContactSupportDialog";
+import { HeaderBase } from "@components/layout/HeaderBase";
 import {
   Layout,
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
+} from "@components/page/layout";
+import { buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import type { PageParams } from "@/types/next";
+} from "@components/ui/card";
+import type { PageParams } from "@type/next";
 import Link from "next/link";
 import { getError } from "./auth-error-mapping";
 

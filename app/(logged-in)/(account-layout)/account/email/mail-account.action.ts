@@ -1,8 +1,8 @@
 "use server";
 
-import { ActionError, authAction } from "@/lib/actions/safe-actions";
-import { env } from "@/lib/env/server";
-import { resend } from "@/lib/mail/resend";
+import { ActionError, authAction } from "@lib/actions/safe-actions";
+import { env } from "@lib/env/server";
+import { resend } from "@lib/mail/resend";
 import { z } from "zod";
 
 const ToggleSubscribedActionSchema = z.object({

@@ -1,6 +1,6 @@
 "use server";
 
-import { orgAction } from "@/lib/actions/safe-actions";
+import { orgAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 import { GetTripQuery } from "./getTrip.query";
 

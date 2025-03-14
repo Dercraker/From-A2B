@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/LoadingButton";
+import { LoadingButton } from "@components/form/LoadingButton";
 import { useFormStatus } from "react-dom";
 import type { ButtonProps } from "../ui/button";
 

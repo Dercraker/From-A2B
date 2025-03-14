@@ -1,5 +1,3 @@
-"use client";
-
 import type { OrganizationPlan } from "@prisma/client";
 import type { PropsWithChildren } from "react";
 import { create } from "zustand";

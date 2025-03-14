@@ -1,13 +1,13 @@
-import { Header } from "@/components/layout/Header";
+import { Header } from "@components/layout/Header";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
-import type { PageParams } from "@/types/next";
+} from "@components/page/layout";
+import { buttonVariants } from "@components/ui/button";
+import type { PageParams } from "@type/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 

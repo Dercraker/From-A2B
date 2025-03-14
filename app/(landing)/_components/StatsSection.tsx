@@ -1,7 +1,7 @@
 "use client";
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { Counter } from "@/components/ui/counter";
-import { SiteConfig } from "@/site-config";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { Counter } from "@components/ui/counter";
+import { SiteConfig } from "site-config";
 
 type StatProps = {
   number: number;

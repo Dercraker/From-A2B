@@ -5,4 +5,6 @@ export const TRIP_KEY_Factory = {
     ...TRIP_KEY_Factory.All,
     searchQuery,
   ],
+
+  roads: (tripSlug: string) => [...TRIP_KEY_Factory.byId(tripSlug), "Roads"],
 };

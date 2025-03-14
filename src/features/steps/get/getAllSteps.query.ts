@@ -1,6 +1,7 @@
-import { prisma } from "@/lib/prisma";
+import { StepSchema } from "@generated/modelSchema";
+import { prisma } from "@lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { StepsDtoSchema } from "../dto/stepDto.schema";
+import { z } from "zod";
 
 type GetAllStepByTripQueryProps = {
   where: Prisma.StepWhereInput;
@@ -16,11 +17,7 @@ export const GetAllStepQuery = async ({
     orderBy,
   });
 
-  return StepsDtoSchema.safeParse(
-    steps.map((step) => ({
-      ...step,
-      latitude: Number(step.latitude),
-      longitude: Number(step.longitude),
-    })),
-  );
+  return z.array(StepSchema).parseAsync(steps);
 };
+
+export type GetAllStepQuery = Prisma.PromiseReturnType<typeof GetAllStepQuery>;

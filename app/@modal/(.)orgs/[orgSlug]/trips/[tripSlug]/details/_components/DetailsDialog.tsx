@@ -1,9 +1,10 @@
 "use client";
 
-import { EditTripForm } from "@/components/trips/editTripForm";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { GenerateTripLink } from "@/features/trips/trips.link";
+import { EditTripForm } from "@components/trips/editTripForm";
+import { Dialog, DialogContent } from "@components/ui/dialog";
+import { LINKS } from "@feat/navigation/Links";
 import { usePathname, useRouter } from "next/navigation";
+import { useNextStep } from "nextstepjs";
 
 export type DetailsDialogProps = {
   orgSlug: string;
@@ -14,13 +15,15 @@ export const DetailsDialog = ({ tripSlug, orgSlug }: DetailsDialogProps) => {
   const router = useRouter();
   const path = usePathname();
 
-  const uri = GenerateTripLink({ orgSlug, tripSlug });
+  const uri = LINKS.Trips.Trip.href({ orgSlug, tripSlug });
+
+  const { currentTour } = useNextStep();
 
   return (
     <Dialog
       open={path.includes(uri)}
       onOpenChange={(open) => {
-        if (!open) {
+        if (!open && !currentTour) {
           router.back();
         }
       }}

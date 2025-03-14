@@ -1,10 +1,10 @@
 "use client";
 
-import { SectionLayout } from "@/components/layout/SectionLayout";
-import { DotPattern } from "@/components/svg/DotPattern";
-import { Badge } from "@/components/ui/badge";
-import { Typography } from "@/components/ui/typography";
-import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
+import { SectionLayout } from "@components/layout/SectionLayout";
+import { DotPattern } from "@components/svg/DotPattern";
+import { Badge } from "@components/ui/badge";
+import { Typography } from "@components/ui/typography";
+import { ClientMarkdown } from "@feat/markdown/ClientMarkdown";
 import type { ReactNode } from "react";
 
 export const FeaturesSection = ({

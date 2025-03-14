@@ -1,16 +1,16 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SiteConfig } from "@/site-config";
+} from "@components/ui/select";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
+import { SiteConfig } from "site-config";
 
 type OrganizationsSelectProps = {
   currentOrgSlug?: string;
@@ -40,7 +40,7 @@ export const OrgsSelect = (props: OrganizationsSelectProps) => {
       }}
     >
       <SelectTrigger className="h-8 justify-start gap-2 border-none bg-transparent px-4 hover:bg-accent [&>span]:flex [&>svg]:hidden hover:[&>svg]:block">
-        {props.children ? props.children : <SelectValue />}
+        {props.children ?? <SelectValue />}
       </SelectTrigger>
       <SelectContent>
         {props.orgs.map((org) => (

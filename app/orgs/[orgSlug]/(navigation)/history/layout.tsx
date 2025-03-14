@@ -3,8 +3,8 @@ import {
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import type { LayoutParams } from "@/types/next";
+} from "@components/page/layout";
+import type { LayoutParams } from "@type/next";
 
 const HistoryLayout = async ({ children }: LayoutParams) => {
   return (

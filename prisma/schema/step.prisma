@@ -1,0 +1,80 @@
+model Step {
+  id     String @id @unique @default(cuid())
+  slug   String @unique
+  tripId String
+  trip   Trip?  @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  rank        Int
+  name        String
+  startDate   DateTime?
+  endDate     DateTime?
+  description String?
+
+  latitude      Float
+  longitude     Float
+  placeId       String        @default("")
+  TransportMode TransportMode @default(Car)
+
+  schedulingNotes String?
+
+  road   Road?
+  roadId String? @unique
+  Task   Task[]
+  File   File[]
+}
+
+model Road {
+  id       String @id @unique @default(cuid())
+  distance Int
+  duration Int
+  polyline String
+
+  step   Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  stepId String @unique
+
+  trip   Trip?  @relation(fields: [tripId], references: [id])
+  tripId String
+}
+
+enum TransportMode {
+  Walk
+  Bike
+  Car
+  Boat
+  Plane
+}
+
+model Task {
+  id      String    @id @unique @default(cuid())
+  title   String
+  notes   String?
+  dueDate DateTime?
+  rank    Int
+  state   TaskState @default(Todo)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stepId String
+  step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
+}
+
+enum TaskState {
+  Todo
+  InProgress
+  Blocked
+  Done
+  Canceled
+}
+
+model File {
+  id         String   @id @unique @default(cuid())
+  name       String
+  url        String   @unique
+  type       String
+  size       Int
+  uploadedAt DateTime @default(now())
+
+  stepId String
+  step   Step?  @relation(fields: [stepId], references: [id], onDelete: Cascade)
+}

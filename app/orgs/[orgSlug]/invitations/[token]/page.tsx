@@ -1,26 +1,26 @@
-import { SubmitButton } from "@/components/form/SubmitButton";
-import AuthNavigationWrapper from "@/components/navigation/LogInNavigationWrapper";
-import { NavigationWrapper } from "@/components/navigation/NavigationWrapper";
+import { SubmitButton } from "@components/form/SubmitButton";
+import AuthNavigationWrapper from "@components/navigation/LogInNavigationWrapper";
+import { NavigationWrapper } from "@components/navigation/NavigationWrapper";
 import {
   Layout,
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { Page400 } from "@/components/page/Page400";
-import { buttonVariants } from "@/components/ui/button";
+} from "@components/page/layout";
+import { Page400 } from "@components/page/Page400";
+import { buttonVariants } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { auth } from "@/lib/auth/helper";
-import { combineWithParentMetadata } from "@/lib/metadata";
-import { prisma } from "@/lib/prisma";
-import { getServerUrl } from "@/lib/server-url";
-import type { PageParams } from "@/types/next";
+} from "@components/ui/card";
+import { GetCurrentUser } from "@lib/auth/helper";
+import { combineWithParentMetadata } from "@lib/metadata";
+import { prisma } from "@lib/prisma";
+import { getServerUrl } from "@lib/server-url";
+import type { OrgPathParams, PageParams } from "@type/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -37,7 +37,7 @@ export const generateMetadata = combineWithParentMetadata({
 
 export default async function RoutePage({
   params,
-}: PageParams<{ orgSlug: string; token: string }>) {
+}: PageParams<OrgPathParams & { token: string }>) {
   const { orgSlug, token } = await params;
 
   const organization = await prisma.organization.findFirst({
@@ -60,7 +60,7 @@ export default async function RoutePage({
     return <Page400 title="Invalid token 2" />;
   }
 
-  const user = await auth();
+  const user = await GetCurrentUser();
 
   const tokenData = TokenSchema.parse(verificationToken.data);
 

@@ -1,14 +1,14 @@
 "use server";
 
-import { RemoveVerificationTokenQuery } from "@/features/account/delete/RemoveVerificationToken.query";
-import { LINKS } from "@/features/navigation/Links";
-import { deleteOrganizationQuery } from "@/features/org/org-delete.query";
-import { ActionError, authAction } from "@/lib/actions/safe-actions";
-import { sendEmail } from "@/lib/mail/sendEmail";
-import { prisma } from "@/lib/prisma";
-import { getServerUrl } from "@/lib/server-url";
 import AccountAskDeletionEmail from "@email/AccountAskDeletion.email";
 import AccountConfirmDeletionEmail from "@email/AccountConfirmDeletion.email";
+import { RemoveVerificationTokenQuery } from "@feat/account/delete/RemoveVerificationToken.query";
+import { LINKS } from "@feat/navigation/Links";
+import { deleteOrganizationQuery } from "@feat/org/org-delete.query";
+import { ActionError, authAction } from "@lib/actions/safe-actions";
+import { sendEmail } from "@lib/mail/sendEmail";
+import { prisma } from "@lib/prisma";
+import { getServerUrl } from "@lib/server-url";
 import { addHours } from "date-fns";
 import { nanoid } from "nanoid";
 import { z } from "zod";

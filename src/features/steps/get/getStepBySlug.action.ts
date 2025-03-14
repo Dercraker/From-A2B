@@ -1,6 +1,7 @@
 "use server";
 
-import { ActionError, orgAction } from "@/lib/actions/safe-actions";
+import { StepSchema } from "@generated/modelSchema";
+import { orgAction } from "@lib/actions/safe-actions";
 import { z } from "zod";
 import { GetStepBySlugQuery } from "./getStepBySlug.query";
 
@@ -13,8 +14,5 @@ export const GetStepBySlugAction = orgAction
   .action(async ({ parsedInput: { stepSlug } }) => {
     const step = await GetStepBySlugQuery({ stepSlug });
 
-    if (!step.success)
-      throw new ActionError("Failed to fetch step. Please try again later.");
-
-    return step.data;
+    return StepSchema.parseAsync(step);
   });
