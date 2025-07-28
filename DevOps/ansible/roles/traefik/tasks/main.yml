@@ -1,0 +1,55 @@
+- name: Create /opt/certs if not exist
+  when: inventory_hostname == "rpi-manager"
+  file:
+    path: /opt/certs
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Upload SSL certificates
+  when: inventory_hostname == "rpi-manager"
+  copy:
+    src: dercraker.fr.crt
+    dest: /opt/certs/dercraker.fr.crt
+    mode: "0644"
+
+- name: Upload SSL key
+  when: inventory_hostname == "rpi-manager"
+  copy:
+    src: dercraker.fr.key
+    dest: /opt/certs/dercraker.fr.key
+    mode: "0644"
+
+- name: Create traefik network
+  shell: docker network create --driver=overlay --attachable traefik-public
+  when: inventory_hostname == "rpi-manager"
+
+- name: Deploy Traefik reverse proxy
+  when: inventory_hostname == "rpi-manager"
+  shell: |
+    docker service create \
+      --name traefik \
+      --constraint=node.role==manager \
+      --publish 80:80 \
+      --publish 443:443 \
+      --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+      --mount type=bind,source=/opt/certs,target=/certs \
+      --network traefik-public \
+      --label traefik.enable=true \
+      --label traefik.http.routers.api.rule=Host(`traefik.dercraker.fr`) \
+      --label traefik.http.routers.api.service=api@internal \
+      --label traefik.http.routers.api.entrypoints=websecure \
+      --label traefik.http.routers.api.tls=true \
+      --label traefik.http.routers.api.tls.domains[0].main=traefik.dercraker.fr \
+      --label traefik.http.routers.api.tls.domains[0].sans=traefik.dercraker.fr \
+      traefik:latest \
+        --api.dashboard=true \
+        --entrypoints.web.address=:80 \
+        --entrypoints.websecure.address=:443
+        --providers.docker \
+        --providers.docker.swarmMode=true \
+        --providers.docker.exposedbydefault=false \
+        --certificatesresolvers.default.acme.enable=false \
+        --tls.store.default.defaultCertificate.cert=/certs/traefik.dercraker.fr.crt \
+        --tls.store.default.defaultCertificate.key=/certs/traefik.dercraker.fr.key \

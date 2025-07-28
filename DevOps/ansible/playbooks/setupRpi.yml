@@ -1,0 +1,8 @@
+- name: Setup Raspberry Pi Swarm Cluster
+  hosts: all
+  become: true
+  roles:
+    - docker
+    - swarm
+    - portainer
+    - traefik

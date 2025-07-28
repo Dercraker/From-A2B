@@ -1,0 +1,4 @@
+all:
+  hosts:
+    rpi-manager:
+      ansible_host: 192.168.1.100

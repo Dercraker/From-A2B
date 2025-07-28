@@ -57,5 +57,6 @@
     ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
     ["twc\\([^`]*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "checkpoints.showActiveFileOnly": true
+  "checkpoints.showActiveFileOnly": true,
+  "ansible.python.interpreterPath": "c:\\Users\\Dercraker\\AppData\\Local\\Microsoft\\WindowsApps\\python3.13.exe"
 }
