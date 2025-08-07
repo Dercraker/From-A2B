@@ -53,7 +53,7 @@ describe("randomizeArray", () => {
     const arr = [1, 2, 3, 4, 5];
     const result = randomizeArray([...arr]);
     expect(result).not.toEqual(arr);
-    // Impossible de garantir l'ordre, mais on vérifie que tous les éléments sont présents
+    // Cannot guarantee order, but we verify all elements are present
   });
 });
 
