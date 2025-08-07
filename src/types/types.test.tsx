@@ -406,7 +406,7 @@ describe("TripPathParams", () => {
       tripSlug: "my-trip",
     };
 
-    // Test d'assignation (compatibilité de type)
+    // Assignment test (type compatibility)
     const orgParams: OrgPathParams = tripParams;
     expect(orgParams.orgSlug).toBe("test-org");
   });
