@@ -178,7 +178,7 @@ describe("useIsMobile", () => {
 });
 
 describe("useClientFeatureFlag", () => {
-  it("Cannot test this hook because it's i dont know how to mock it", () => {
+  it("Cannot test this hook because I don't know how to mock it", () => {
     expect(true).toBe(true);
   });
 });
