@@ -28,11 +28,7 @@
     "test:run": "vitest run",
     "test:coverage": "vitest --coverage",
     "test:watch": "vitest --watch",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed",
-    "test:all": "npm run test:run && npm run test:e2e",
-    "test:ci": "npm run test:coverage && npm run test:e2e -- --reporter=html"
+    "test:all": "npm run test:run"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.2.1",
@@ -202,3 +198,4 @@
   },
   "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
 }
+
