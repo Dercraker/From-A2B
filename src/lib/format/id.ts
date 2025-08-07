@@ -3,6 +3,7 @@ import { customAlphabet, nanoid } from "nanoid";
 export const formatId = (id: string) => {
   return id
     .replace(/\s/g, "-")
+    .replace(/\./g, "")
     .replace(/[^a-zA-Z0-9_-]/g, "")
     .toLowerCase();
 };

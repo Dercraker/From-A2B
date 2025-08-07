@@ -33,6 +33,7 @@ export default async function RoutePage() {
           <LayoutDescription>
             Each organization has its own billing account and can be used to
             manage multiple members.
+            <div className="bg-blue-500 px-4 py-1"></div>
           </LayoutDescription>
         </LayoutHeader>
         <LayoutContent>

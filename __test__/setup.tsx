@@ -1,22 +1,78 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { PrismaClient } from "@prisma/client";
 import "@testing-library/jest-dom";
 import { cleanup } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
+import { mockDeep, mockReset } from "vitest-mock-extended";
 
-// Mock window.matchMedia pour les tests
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: vi.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
+// Mock Prisma
+const prisma = mockDeep<PrismaClient>();
+vi.mock("@/lib/prisma", () => ({ prisma }));
+// Mock Server Actions
+export const mockServerAction = vi.fn();
+
+// Mock Google Maps API
+export const mockGoogleMapsAPI = {
+  computeRoutes: vi.fn(),
+  searchText: vi.fn(),
+  findPlaceFromText: vi.fn(),
+};
+
+vi.mock("@lib/api/routes/computeRoutes", () => ({
+  ComputeRoutes: mockGoogleMapsAPI.computeRoutes,
+}));
+
+vi.mock("@lib/api/places/search", () => ({
+  SearchPlaces: mockGoogleMapsAPI.searchText,
+}));
+
+// Mock Resend
+export const mockResend = {
+  emails: {
+    send: vi.fn(),
+  },
+  contacts: {
+    create: vi.fn(),
+    remove: vi.fn(),
+  },
+};
+
+vi.mock("@lib/mail/resend", () => ({
+  resend: mockResend,
+}));
+
+// Mock Stripe
+export const mockStripe = {
+  customers: {
+    create: vi.fn(),
+    update: vi.fn(),
+    delete: vi.fn(),
+  },
+  subscriptions: {
+    create: vi.fn(),
+    update: vi.fn(),
+    cancel: vi.fn(),
+  },
+  webhooks: {
+    constructEvent: vi.fn(),
+  },
+};
+
+vi.mock("@lib/stripe", () => ({
+  stripe: mockStripe,
+}));
+
+// Mock getComputedStyle
+Object.defineProperty(window, "getComputedStyle", {
+  value: () => ({
+    getPropertyValue: () => "",
+  }),
+});
+
+// Mock scrollTo
+Object.defineProperty(window, "scrollTo", {
+  value: vi.fn(),
 });
 
 // Mock ResizeObserver
@@ -48,32 +104,6 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-// Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
-// Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
-// Mock getComputedStyle
-Object.defineProperty(window, "getComputedStyle", {
-  value: () => ({
-    getPropertyValue: () => "",
-  }),
-});
-
-// Mock scrollTo
-Object.defineProperty(window, "scrollTo", {
-  value: vi.fn(),
-});
-
 // Mock Next.js
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -103,6 +133,12 @@ vi.mock("next-auth/react", () => ({
   signOut: vi.fn(),
   getSession: vi.fn(),
   SessionProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+
+// Mock nanoid
+vi.mock("nanoid", () => ({
+  customAlphabet: vi.fn(() => () => "abcd1234"),
+  nanoid: vi.fn(() => "xyz789"),
 }));
 
 // Mock PostHog
@@ -178,6 +214,32 @@ vi.mock("@components/page/NextTopLoader", () => ({
     }),
   },
 }));
+
+// Mock sonner toast
+vi.mock("sonner", () => ({
+  toast: {
+    error: vi.fn(),
+    success: vi.fn(),
+    info: vi.fn(),
+    warning: vi.fn(),
+  },
+}));
+
+beforeEach(() => {
+  cleanup();
+  mockReset(prisma);
+
+  // Mock localStorage
+  Object.defineProperty(window, "localStorage", {
+    value: {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+      clear: vi.fn(),
+    },
+    writable: true,
+  });
+});
 
 // Cleanup après chaque test
 afterEach(() => {
