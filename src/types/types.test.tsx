@@ -472,7 +472,7 @@ describe("StepPathParams", () => {
       stepSlug: "step-1",
     };
 
-    // Test d'assignation (compatibilité de type)
+    // Assignment test (type compatibility)
     const orgParams: OrgPathParams = stepParams;
     expect(orgParams.orgSlug).toBe("test-org");
   });
