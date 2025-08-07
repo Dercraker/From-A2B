@@ -241,7 +241,7 @@ beforeEach(() => {
   });
 });
 
-// Cleanup après chaque test
+// Cleanup after each test
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
