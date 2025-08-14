@@ -4,11 +4,11 @@ type User = {
 };
 
 export function displayName(user: User): string {
-  return (
-    user.name ??
-    user.email
-      .split("@")[0]
-      .replaceAll(".", " ")
-      .replace(/^\w/, (c) => c.toUpperCase())
-  );
+  return user.name && !!user.name.length
+    ? user.name
+    : user.email
+        .split("@")[0]
+        .replaceAll(".", " ")
+        .replaceAll("+", " ")
+        .replace(/^\w/, (c) => c.toUpperCase());
 }

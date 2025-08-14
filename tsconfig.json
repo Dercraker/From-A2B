@@ -32,7 +32,8 @@
       "@api/*": ["../app/api/*"],
       "@middleware/*": ["middlewares/*"],
       "@generated/*": ["../prisma/generated/zod/*"]
-    }
+    },
+    "types": ["@testing-library/jest-dom"]
   },
 
   "include": [
