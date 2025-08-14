@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import type { FileType } from "@type/blobStorage";
 import { FileTypeSchema } from "@type/blobStorage";
 import type {

@@ -480,7 +480,7 @@ describe("useWarnIfUnsavedChanges", () => {
 
     // Trigger the beforeunload handler
     if (window.onbeforeunload) {
-      window.onbeforeunload();
+      window.onbeforeunload({} as BeforeUnloadEvent);
     }
 
     expect(mockConfirm).toHaveBeenCalledWith(
@@ -496,7 +496,7 @@ describe("useWarnIfUnsavedChanges", () => {
     renderHook(() => useWarnIfUnsavedChanges(true, customMessage));
 
     if (window.onbeforeunload) {
-      window.onbeforeunload();
+      window.onbeforeunload({} as BeforeUnloadEvent);
     }
 
     expect(mockConfirm).toHaveBeenCalledWith(customMessage);
@@ -509,7 +509,7 @@ describe("useWarnIfUnsavedChanges", () => {
     renderHook(() => useWarnIfUnsavedChanges(true));
 
     if (window.onbeforeunload) {
-      window.onbeforeunload();
+      window.onbeforeunload({} as BeforeUnloadEvent);
     }
 
     expect(mockConfirm).toHaveBeenCalled();

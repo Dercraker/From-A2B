@@ -269,12 +269,12 @@ function Calendar({
 }: CalendarProps & { yearRange?: number }) {
   const MONTHS = React.useMemo(
     () => genMonths((props.locale || enUS) as Locale),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [],
   );
   const YEARS = React.useMemo(
     () => genYears((props.locale || enUS) as Locale, yearRange),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [],
   );
 
